@@ -9,6 +9,26 @@ class Queue
 		$this->file = $file;
 	}
 
+	public function peek()
+	{
+		$fh = fopen($this->file, 'rb');
+		flock($fh, LOCK_EX);
+
+		fseek($fh, 0, SEEK_END);
+		$size = ftell($fh);
+		fseek($fh, 0, SEEK_SET);
+		$data = $size > 0
+			? fread($fh, $size)
+			: null;
+
+		$lines = explode("\n", $data);
+		$firstLine = array_shift($lines);
+
+		fclose($fh);
+		return $firstLine ?: null;
+	}
+
+
 	public function dequeue()
 	{
 		$fh = fopen($this->file, 'r+b');
