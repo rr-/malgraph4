@@ -1,14 +1,34 @@
 <?php
 require_once 'config.php';
-require_once 'error.php';
 require_once 'queue.php';
+require_once 'downloader.php';
 
 class Processor
 {
 	public function processOne()
 	{
 		$queue = new Queue(Config::$userQueuePath);
-		var_dump($queue->dequeue());
+		$userName = Config::$debugCron
+			? $queue->peek()
+			: $queue->dequeue();
+		if (empty($userName))
+		{
+			return;
+		}
+
+		$urls =
+		[
+			'http://myanimelist.net/profile/' . $userName,
+			#'http://myanimelist.net/animelist/' . $userName,
+			#'http://myanimelist.net/mangalist/' . $userName,
+			'http://myanimelist.net/malappinfo.php?u=' . $userName . '&status=all&type=anime',
+			'http://myanimelist.net/malappinfo.php?u=' . $userName . '&status=all&type=manga',
+		];
+		print_r($urls);
+		$downloader = new Downloader();
+		$results = $downloader->downloadMulti($urls);
+		var_dump($results);
+
 		#todo:
 		#1. download user info
 		#2. convert user info to sqlite
