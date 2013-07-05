@@ -1,0 +1,18 @@
+DirectorySlash Off
+Options -Indexes
+
+RewriteEngine On
+RewriteRule ^/?$ /index.php [QSA,L]
+RewriteRule ^/?([0-9a-zA-Z_-]{2,})/?$ /index.php?user=$1 [L]
+RewriteRule ^/?([0-9a-zA-Z_-]{2,})/?(profile|list|achi|rati|acti|favs|misc|sug)(,(anime|manga))?/?$ /index.php?user=$1&am=$4&module=$2 [QSA,L]
+
+
+AddOutputFilterByType DEFLATE text/plain
+AddOutputFilterByType DEFLATE text/html
+AddOutputFilterByType DEFLATE text/xml
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE application/xml
+AddOutputFilterByType DEFLATE application/xhtml+xml
+AddOutputFilterByType DEFLATE application/rss+xml
+AddOutputFilterByType DEFLATE application/javascript
+AddOutputFilterByType DEFLATE application/x-javascript
