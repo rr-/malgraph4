@@ -8,5 +8,7 @@ try
 }
 catch (Exception $e)
 {
+	#todo:
+	#better error handling
 	var_dump($e);
 }
