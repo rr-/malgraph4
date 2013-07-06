@@ -18,7 +18,7 @@ class Downloader
 	{
 		$pos = strpos($result, "\r\n\r\n");
 		$headers = [];
-		$contents = substr($result, $pos + 4);
+		$content = substr($result, $pos + 4);
 		$headerLines = explode("\r\n", substr($result, 0, $pos));
 
 		preg_match('/\d{3}/', array_shift($headerLines), $matches);
@@ -42,9 +42,13 @@ class Downloader
 		//別ハックは、	Another hack
 		//私は静かに	makes me
 		//泣きます		quietly weep
-		$contents = '<?xml encoding="utf-8" ?'.'>' . $contents;
+		$content = '<?xml encoding="utf-8" ?'.'>' . $content;
 
-		return [$code, $headers, $contents];
+		$cls = new StdClass();
+		$cls->code = $code;
+		$cls->headers = $headers;
+		$cls->content = $content;
+		return $cls;
 	}
 
 	public function downloadMulti(array $urls)
