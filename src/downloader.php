@@ -3,7 +3,7 @@ require_once 'config.php';
 
 class Downloader
 {
-	private function prepareHandle($url)
+	private static function prepareHandle($url)
 	{
 		$handle = curl_init();
 		curl_setopt($handle, CURLOPT_URL, $url);
@@ -14,17 +14,38 @@ class Downloader
 		return $handle;
 	}
 
+	private static function parseResult($result)
+	{
+		return $result;
+	}
+
 	public function downloadMulti(array $urls)
 	{
 		$handles = [];
 		$results = [];
 
-		$multiHandle = curl_multi_init();
-		foreach ($urls as $i => $url)
+		$mirrorPaths = [];
+		if (Config::$mirrorEnabled)
 		{
-			$handle = $this->prepareHandle($url);
+			foreach ($urls + [] as $key => $url)
+			{
+				$path = Config::$mirrorPath . DIRECTORY_SEPARATOR . rawurlencode($url) . '.dat';
+				$mirrorPaths[$key] = $path;
+				if (file_exists($path))
+				{
+					$rawResult = file_get_contents($path);
+					$results[$key] = self::parseResult($rawResult);
+					unset($urls[$key]);
+				}
+			}
+		}
+
+		$multiHandle = curl_multi_init();
+		foreach ($urls as $key => $url)
+		{
+			$handle = self::prepareHandle($url);
 			curl_multi_add_handle($multiHandle, $handle);
-			$handles[$i] = $handle;
+			$handles[$key] = $handle;
 		}
 
 		$running = null;
@@ -46,9 +67,14 @@ class Downloader
 			}
 		}
 
-		foreach ($handles as $i => $handle)
+		foreach ($handles as $key => $handle)
 		{
-			$results[$i] = curl_multi_getcontent($handle);
+			$rawResult = curl_multi_getcontent($handle);
+			if (Config::$mirrorEnabled)
+			{
+				file_put_contents($mirrorPaths[$key], $rawResult);
+			}
+			$results[$key] = self::parseResult($rawResult);
 			curl_multi_remove_handle($multiHandle, $handle);
 		}
 
