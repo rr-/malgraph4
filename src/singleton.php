@@ -1,16 +1,20 @@
 <?php
 abstract class Singleton
 {
-	private static $initialized = false;
+	private static function isInitialized()
+	{
+		static $initialized = false;
+		$ret = $initialized;
+		$initialized = true;
+		return $ret;
+	}
 
 	public static function init()
 	{
-		if (self::$initialized)
+		if (!static::isInitialized())
 		{
-			return;
+			static::doInit();
 		}
-		self::$initialized = true;
-		static::doInit();
 	}
 
 	protected static abstract function doInit();
