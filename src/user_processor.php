@@ -1,6 +1,7 @@
 <?php
 require_once 'downloader.php';
 require_once 'processor.php';
+require_once 'strings.php';
 
 class UserProcessor implements Processor
 {
@@ -12,6 +13,77 @@ class UserProcessor implements Processor
 	const URL_HISTORY = 6;
 	const URL_FRIENDS = 7;
 	const URL_CLUBS = 8;
+
+	private static function getNodeValue(DOMDocument $doc, $query, $attrib = null)
+	{
+		$xpath = new DOMXPath($doc);
+		$node = $xpath->query($query)->item(0);
+		if (!empty($node))
+		{
+			return $attrib
+				? $node->getAttribute($attrib)
+				: $node->nodeValue;
+		}
+		return null;
+	}
+
+	private static function getDOM($document)
+	{
+		$doc = new DOMDocument;
+		$doc->preserveWhiteSpace = false;
+		ErrorHandler::suppress();
+		$doc->loadHTML($document->content);
+		ErrorHandler::restore();
+		return $doc;
+	}
+
+	private function processProfile(array $documents)
+	{
+		$doc = self::getDOM($documents[self::URL_PROFILE]);
+
+		$userName = Strings::removeSpaces(self::getNodeValue($doc, '//title'));
+		$userName = substr($userName, 0, strpos($userName, '\'s Profile'));
+		$profilePictureURL = self::getNodeValue($doc, '//td[@class = \'profile_leftcell\']//img', 'src');
+		$joinDate = Strings::makeDate(self::getNodeValue($doc, '//td[text() = \'Join Date\']/following-sibling::td'));
+		$malID = Strings::makeInteger(Strings::parseURL(self::getNodeValue($doc, '//a[text() = \'All Comments\']', 'href'))['query']['id']);
+		$animeViewCount = Strings::makeInteger(self::getNodeValue($doc, '//td[text() = \'Anime List Views\']/following-sibling::td'));
+		$mangaViewCount = Strings::makeInteger(self::getNodeValue($doc, '//td[text() = \'Manga List Views\']/following-sibling::td'));
+		$commentCount = Strings::makeInteger(self::getNodeValue($doc, '//td[text() = \'Comments\']/following-sibling::td'));
+		$postCount = Strings::makeInteger(self::getNodeValue($doc, '//td[text() = \'Forum Posts\']/following-sibling::td'));
+		$birthday = Strings::makeDate(self::getNodeValue($doc, '//td[text() = \'Birthday\']/following-sibling::td'));
+		$location = Strings::removespaces(self::getNodeValue($doc, '//td[text() = \'Location\']/following-sibling::td'));
+		$website = Strings::removeSpaces(self::getNodeValue($doc, '//td[text() = \'Website\']/following-sibling::td'));
+		$gender = self::getNodeValue($doc, '//td[text() = \'Gender\']/following-sibling::td');
+		switch($gender)
+		{
+			case 'Female': $gender = 'F'; break;
+			case 'Male': $gender = 'M'; break;
+			default: $gender = '?'; break;
+		}
+	}
+
+	private function processClubs(array $documents)
+	{
+		$doc = self::getDOM($documents[self::URL_CLUBS]);
+		$xpath = new DOMXPath($doc);
+		foreach ($xpath->query('//ol/li/a[contains(@href, \'/club\')]') as $node)
+		{
+			$url = Strings::parseURL($node->getAttribute('href'));
+			$clubID = Strings::makeInteger($url['query']['cid']);
+			$clubName = Strings::removeSpaces($node->nodeValue);
+		}
+	}
+
+	private function processFriends(array $documents)
+	{
+		$doc = self::getDOM($documents[self::URL_FRIENDS]);
+		$doc->preserveWhiteSpace = false;
+		$xpath = new DOMXPath($doc);
+		foreach ($xpath->query('//a[contains(@href, \'profile\')]/strong') as $node)
+		{
+			$friendName = Strings::removeSpaces($node->nodeValue);
+		}
+	}
 
 	public function process($userName)
 	{
@@ -31,28 +103,11 @@ class UserProcessor implements Processor
 			self::URL_CLUBS => 'http://myanimelist.net/profile/' . $userName . '/clubs',
 			self::URL_FRIENDS => 'http://myanimelist.net/profile/' . $userName . '/friends',
 		];
-		print_r($urls);
 		$downloader = new Downloader();
 		$results = $downloader->downloadMulti($urls);
-		var_dump($results);
 
-		#todo:
-		#1. download user info
-		#2. convert user info to sqlite
-		#3. get from sqlite info on missing a/m
-		#4. download a/m info
-		#5. convert a/m info  to sqlite
-		#6. make html from sqlite
-
-		#1. downloading should be done in separate class
-		#2. updating should cascade on delete, and then insert back
-		#3. creating html should be separate file for each module,
-		#but common output should be abstracted in separate file
-	}
-
-	public function processGlobals()
-	{
-		#just create html from sqlite.
-		#don't think about downloading or anything like that here
+		$this->processProfile($results);
+		$this->processClubs($results);
+		$this->processFriends($results);
 	}
 }
