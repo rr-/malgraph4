@@ -1,10 +1,17 @@
 <?php
-require_once 'src/processor.php';
+require_once 'src/user_processor.php';
+require_once 'src/config.php';
+require_once 'src/queue.php';
 
 try
 {
-	$processor = new Processor();
-	$processor->processOne();
+	$queue = new Queue(Config::$userQueuePath);
+	$userName = Config::$debugCron
+		? $queue->peek()
+		: $queue->dequeue();
+
+	$processor = new UserProcessor();
+	$processor->process($userName);
 }
 catch (Exception $e)
 {
