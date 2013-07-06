@@ -1,12 +1,16 @@
 <?php
-class Config
+require_once 'singleton.php';
+
+class Config extends Singleton
 {
 	static $userQueuePath;
 	static $debugCron;
 
-	private function __construct()
+	protected static function doInit()
 	{
+		self::$userQueuePath = __DIR__ . '/../data/users.lst';
+		self::$debugCron = true;
 	}
 }
-Config::$userQueuePath = __DIR__ . '/../data/users.lst';
-Config::$debugCron = true;
+
+Config::init();
