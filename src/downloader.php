@@ -16,7 +16,35 @@ class Downloader
 
 	private static function parseResult($result)
 	{
-		return $result;
+		$pos = strpos($result, "\r\n\r\n");
+		$headers = [];
+		$contents = substr($result, $pos + 4);
+		$headerLines = explode("\r\n", substr($result, 0, $pos));
+
+		preg_match('/\d{3}/', array_shift($headerLines), $matches);
+		$code = intval($matches[0]);
+
+		foreach ($headerLines as $line)
+		{
+			list($key, $value) = explode(': ', $line);
+			if (!isset($headers[$key]))
+			{
+				$headers[$key] = $value;
+			}
+			else
+			{
+				$headers[$key] = array_merge(
+					array($headers[$key]),
+					array($value));
+			}
+		}
+
+		//別ハックは、	Another hack
+		//私は静かに	makes me
+		//泣きます		quietly weep
+		$contents = '<?xml encoding="utf-8" ?'.'>' . $contents;
+
+		return [$code, $headers, $contents];
 	}
 
 	public function downloadMulti(array $urls)
