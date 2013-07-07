@@ -21,6 +21,13 @@ class Strings
 		return $subject;
 	}
 
+	public static function makeFloat($subject)
+	{
+		$subject = str_replace(' ', '', $subject);
+		$subject = floatval($subject);
+		return $subject;
+	}
+
 	public static function makeDate($str)
 	{
 		$str = trim(str_replace('  ', ' ', $str));
@@ -89,5 +96,17 @@ class Strings
 			parse_str(urldecode($parts['query']), $parts['query']);
 		}
 		return $parts;
+	}
+
+	public static function makeEnum($source, $table, $default = null)
+	{
+		foreach ($table as $key => $replacement)
+		{
+			if ($source == $key)
+			{
+				return $replacement;
+			}
+		}
+		return $default;
 	}
 }
