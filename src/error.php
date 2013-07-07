@@ -13,7 +13,7 @@ class ErrorHandler extends Singleton
 		restore_error_handler();
 	}
 
-	protected static function doInit()
+	public static function doInit()
 	{
 		set_error_handler([__CLASS__, 'handler']);
 	}

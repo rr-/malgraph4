@@ -1,5 +1,10 @@
 <?php
-abstract class Singleton
+interface ISingleton
+{
+	static function doInit();
+}
+
+abstract class Singleton implements ISingleton
 {
 	private static function isInitialized()
 	{
@@ -16,8 +21,6 @@ abstract class Singleton
 			static::doInit();
 		}
 	}
-
-	protected static abstract function doInit();
 
 	private function __construct()
 	{

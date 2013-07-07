@@ -8,7 +8,7 @@ class Config extends Singleton
 	static $mirrorEnabled;
 	static $debugCron;
 
-	protected static function doInit()
+	public static function doInit()
 	{
 		self::$userQueuePath = __DIR__ . '/../data/users.lst';
 		self::$mirrorPath = __DIR__ . '/../data/mirror/';
