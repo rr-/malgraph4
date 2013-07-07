@@ -14,7 +14,7 @@ class Downloader
 		return $handle;
 	}
 
-	private static function parseResult($result)
+	private static function parseResult($result, $url)
 	{
 		$pos = strpos($result, "\r\n\r\n");
 		$headers = [];
@@ -48,6 +48,7 @@ class Downloader
 		$cls->code = $code;
 		$cls->headers = $headers;
 		$cls->content = $content;
+		$cls->url = $url;
 		return $cls;
 	}
 
@@ -66,7 +67,7 @@ class Downloader
 				if (file_exists($path))
 				{
 					$rawResult = file_get_contents($path);
-					$results[$key] = self::parseResult($rawResult);
+					$results[$key] = self::parseResult($rawResult, $url);
 					unset($urls[$key]);
 				}
 			}
@@ -106,7 +107,7 @@ class Downloader
 			{
 				file_put_contents($mirrorPaths[$key], $rawResult);
 			}
-			$results[$key] = self::parseResult($rawResult);
+			$results[$key] = self::parseResult($rawResult, $urls[$key]);
 			curl_multi_remove_handle($multiHandle, $handle);
 		}
 
