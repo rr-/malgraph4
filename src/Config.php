@@ -1,6 +1,4 @@
 <?php
-require_once 'singleton.php';
-
 class Config extends Singleton
 {
 	static $userQueuePath;

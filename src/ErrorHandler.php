@@ -1,6 +1,4 @@
 <?php
-require_once 'singleton.php';
-
 class ErrorHandler extends Singleton
 {
 	public static function suppress()

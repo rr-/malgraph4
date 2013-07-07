@@ -1,6 +1,4 @@
 <?php
-require_once 'config.php';
-
 class Downloader
 {
 	private static function prepareHandle($url)
@@ -52,42 +50,68 @@ class Downloader
 		return $cls;
 	}
 
-	public function downloadMulti(array $urls)
+	private static function flatten(array $input)
+	{
+		//map input, that can be multidimensional array, to flat array of urls
+		$urls = [];
+		array_walk_recursive($input, function($url, $key) use (&$urls)
+		{
+			$urls[$url] = $url;
+		});
+		return $urls;
+	}
+
+	private static function deflatten(array $documents, array $input)
+	{
+		$output = [];
+		foreach ($input as $key => $value)
+		{
+			$output[$key] = is_array($value)
+				? self::deflatten($documents, $input[$key])
+				: $documents[$value];
+		}
+		return $output;
+	}
+
+	public function downloadMulti(array $input)
 	{
 		$handles = [];
-		$results = [];
+		$documents = [];
+		$urls = self::flatten($input);
 
+		//if mirror exists, load its content and purge url from download queue
 		$mirrorPaths = [];
 		if (Config::$mirrorEnabled)
 		{
-			foreach ($urls + [] as $key => $url)
+			foreach ($urls + [] as $url)
 			{
 				$path = Config::$mirrorPath . DIRECTORY_SEPARATOR . rawurlencode($url) . '.dat';
-				$mirrorPaths[$key] = $path;
+				$mirrorPaths[$url] = $path;
 				if (file_exists($path))
 				{
 					$rawResult = file_get_contents($path);
-					$results[$key] = self::parseResult($rawResult, $url);
-					unset($urls[$key]);
+					$documents[$url] = self::parseResult($rawResult, $url);
+					unset($urls[$url]);
 				}
 			}
 		}
 
+		//prepare curl handles
 		$multiHandle = curl_multi_init();
-		foreach ($urls as $key => $url)
+		foreach ($urls as $url)
 		{
 			$handle = self::prepareHandle($url);
 			curl_multi_add_handle($multiHandle, $handle);
-			$handles[$key] = $handle;
+			$handles[$url] = $handle;
 		}
 
+		//run the query
 		$running = null;
 		do
 		{
 			$status = curl_multi_exec($multiHandle, $running);
 		}
 		while ($status == CURLM_CALL_MULTI_PERFORM);
-
 		while ($running and $status == CURLM_OK)
 		{
 			if (curl_multi_select($multiHandle) != -1)
@@ -100,19 +124,22 @@ class Downloader
 			}
 		}
 
-		foreach ($handles as $key => $handle)
+		//get the documents from curl
+		foreach ($handles as $url => $handle)
 		{
 			$rawResult = curl_multi_getcontent($handle);
 			if (Config::$mirrorEnabled)
 			{
-				file_put_contents($mirrorPaths[$key], $rawResult);
+				file_put_contents($mirrorPaths[$url], $rawResult);
 			}
-			$results[$key] = self::parseResult($rawResult, $urls[$key]);
+			$documents[$url] = self::parseResult($rawResult, $urls[$url]);
 			curl_multi_remove_handle($multiHandle, $handle);
 		}
 
+		//close curl handles
 		curl_multi_close($multiHandle);
 
-		return $results;
+		//convert back to multidimensional array
+		return self::deflatten($documents, $input);
 	}
 }

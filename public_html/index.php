@@ -1,8 +1,6 @@
 <?php
 chdir('..');
-require_once('src/config.php');
-require_once('src/error.php');
-require_once('src/queue.php');
+require_once('src/core.php');
 
 try
 {
