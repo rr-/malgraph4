@@ -1,6 +1,4 @@
 <?php
-require_once 'ErrorHandler.php';
-
 function __autoload($className)
 {
 	$paths = [
@@ -16,3 +14,5 @@ function __autoload($className)
 		}
 	}
 }
+
+ErrorHandler::init();
