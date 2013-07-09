@@ -43,5 +43,7 @@ class UserSubProcessorProfile extends UserSubProcessor
 
 		$stmt = $pdo->prepare('INSERT INTO users_manga_data(user_id, view_count) VALUES (?, ?)');
 		$stmt->execute([$userId, $mangaViewCount]);
+
+		$context->userId = $userId;
 	}
 }
