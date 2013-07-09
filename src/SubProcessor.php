@@ -13,13 +13,26 @@ abstract class SubProcessor implements Processor
 		return null;
 	}
 
+	static $domCache = [];
+
 	protected static function getDOM($document)
 	{
+		if (isset(self::$domCache[$document->url]))
+		{
+			return self::$domCache[$document->url];
+		}
+
 		$doc = new DOMDocument;
 		$doc->preserveWhiteSpace = false;
 		ErrorHandler::suppress();
 		$doc->loadHTML($document->content);
 		ErrorHandler::restore();
+
+		if (count(self::$domCache) > 20)
+		{
+			self::$domCache = [];
+		}
+		self::$domCache[$document->url] = $doc;
 		return $doc;
 	}
 }
