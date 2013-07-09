@@ -39,6 +39,8 @@ abstract class AbstractProcessor
 		$downloader = new Downloader();
 		$documents = $downloader->downloadMulti($urls);
 
+		$context = new StdClass();
+
 		foreach ($subProcessors as $subProcessor)
 		{
 			$subDocuments = [];
@@ -49,7 +51,7 @@ abstract class AbstractProcessor
 					$subDocuments []= $documents[$url];
 				}
 			}
-			$subProcessor->process($subDocuments);
+			$subProcessor->process($subDocuments, $context);
 		}
 
 		$this->afterProcessing();

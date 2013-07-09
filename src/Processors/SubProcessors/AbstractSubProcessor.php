@@ -36,5 +36,5 @@ abstract class AbstractSubProcessor
 		return null;
 	}
 
-	public abstract function process(array $documents);
+	public abstract function process(array $documents, &$context);
 }

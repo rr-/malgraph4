@@ -6,7 +6,7 @@ class MangaSubProcessorBasic extends MediaSubProcessor
 		parent::__construct(Media::Manga);
 	}
 
-	public function process(array $documents)
+	public function process(array $documents, &$context)
 	{
 		$doc = self::getDOM($documents[self::URL_MEDIA]);
 		$xpath = new DOMXPath($doc);

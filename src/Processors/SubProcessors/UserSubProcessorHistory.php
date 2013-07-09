@@ -11,7 +11,7 @@ class UserSubProcessorHistory extends UserSubProcessor
 		];
 	}
 
-	public function process(array $documents)
+	public function process(array $documents, &$context)
 	{
 		$doc = self::getDOM($documents[self::URL_HISTORY]);
 		$xpath = new DOMXPath($doc);

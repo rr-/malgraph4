@@ -1,7 +1,7 @@
 <?php
 class MediaSubProcessorRelations extends MediaSubProcessor
 {
-	public function process(array $documents)
+	public function process(array $documents, &$context)
 	{
 		$doc = self::getDOM($documents[self::URL_MEDIA]);
 		$xpath = new DOMXPath($doc);

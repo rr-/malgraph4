@@ -17,7 +17,7 @@ class UserSubProcessorLists extends UserSubProcessor
 		];
 	}
 
-	public function process(array $documents)
+	public function process(array $documents, &$context)
 	{
 		foreach (Media::getConstList() as $media)
 		{
