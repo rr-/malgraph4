@@ -1,5 +1,5 @@
 <?php
-class UserProcessor implements Processor
+class UserProcessor implements AbstractProcessor
 {
 	public function process($userName)
 	{

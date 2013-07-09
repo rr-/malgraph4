@@ -4,6 +4,7 @@ function __autoload($className)
 	$paths =
 	[
 		__DIR__ . '/' . $className . '.php',
+		__DIR__ . '/Processors/SubProcessors/' . $className . '.php',
 		__DIR__ . '/Processors/' . $className . '.php',
 		__DIR__ . '/Enums/' . $className . '.php',
 		__DIR__ . '/Exceptions/' . $className . '.php',

@@ -1,5 +1,5 @@
 <?php
-abstract class MediaSubProcessor extends SubProcessor
+abstract class MediaSubProcessor extends AbstractSubProcessor
 {
 	const URL_MEDIA = 0;
 	protected $media;

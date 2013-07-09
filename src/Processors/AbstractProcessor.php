@@ -1,5 +1,5 @@
 <?php
-interface Processor
+interface AbstractProcessor
 {
 	public function process($key);
 }

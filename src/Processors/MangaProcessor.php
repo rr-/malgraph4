@@ -1,5 +1,5 @@
 <?php
-class MangaProcessor implements Processor
+class MangaProcessor implements AbstractProcessor
 {
 	public function process($id)
 	{
