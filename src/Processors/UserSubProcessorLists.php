@@ -33,7 +33,7 @@ class UserSubProcessorLists extends UserSubProcessor
 			$xpath = new DOMXPath($doc);
 			if ($xpath->query('//myinfo')->length == 0)
 			{
-				throw new Exception('Expected myinfo block not found in ' . $documents[$key]->url);
+				throw new BadDocumentNodeException($documents[$key], 'myinfo');
 			}
 
 			$nodes = $xpath->query('//anime | //manga');

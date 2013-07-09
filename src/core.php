@@ -1,10 +1,12 @@
 <?php
 function __autoload($className)
 {
-	$paths = [
+	$paths =
+	[
 		__DIR__ . '/' . $className . '.php',
 		__DIR__ . '/Processors/' . $className . '.php',
-		__DIR__ . '/Enums/' . $className . '.php'
+		__DIR__ . '/Enums/' . $className . '.php',
+		__DIR__ . '/Exceptions/' . $className . '.php',
 	];
 	foreach ($paths as $path)
 	{
