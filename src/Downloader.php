@@ -42,12 +42,7 @@ class Downloader
 		//泣きます		quietly weep
 		$content = '<?xml encoding="utf-8" ?'.'>' . $content;
 
-		$cls = new StdClass();
-		$cls->code = $code;
-		$cls->headers = $headers;
-		$cls->content = $content;
-		$cls->url = $url;
-		return $cls;
+		return new Document($url, $code, $headers, $content);
 	}
 
 	private static function flatten(array $input)

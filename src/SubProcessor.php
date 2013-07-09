@@ -1,21 +1,9 @@
 <?php
 abstract class SubProcessor implements Processor
 {
-	protected static function getNodeValue(DOMXPath $xpath, $query, DOMNode $parentNode = null, $attrib = null)
-	{
-		$node = $xpath->query($query, $parentNode)->item(0);
-		if (!empty($node))
-		{
-			return $attrib
-				? $node->getAttribute($attrib)
-				: $node->nodeValue;
-		}
-		return null;
-	}
-
 	static $domCache = [];
 
-	protected static function getDOM($document)
+	protected static function getDOM(Document $document)
 	{
 		if (isset(self::$domCache[$document->url]))
 		{
@@ -34,5 +22,17 @@ abstract class SubProcessor implements Processor
 		}
 		self::$domCache[$document->url] = $doc;
 		return $doc;
+	}
+
+	protected static function getNodeValue(DOMXPath $xpath, $query, DOMNode $parentNode = null, $attrib = null)
+	{
+		$node = $xpath->query($query, $parentNode)->item(0);
+		if (!empty($node))
+		{
+			return $attrib
+				? $node->getAttribute($attrib)
+				: $node->nodeValue;
+		}
+		return null;
 	}
 }
