@@ -20,7 +20,7 @@ class UserSubProcessorProfile extends UserSubProcessor
 		$userName       = substr($userName, 0, strpos($userName, '\'s Profile'));
 		$pictureURL     = self::getNodeValue($xpath, '//td[@class = \'profile_leftcell\']//img', null, 'src');
 		$joinDate       = Strings::makeDate(self::getNodeValue($xpath, '//td[text() = \'Join Date\']/following-sibling::td'));
-		$malID          = Strings::makeInteger(Strings::parseURL(self::getNodeValue($xpath, '//a[text() = \'All Comments\']', null, 'href'))['query']['id']);
+		$malId          = Strings::makeInteger(Strings::parseURL(self::getNodeValue($xpath, '//a[text() = \'All Comments\']', null, 'href'))['query']['id']);
 		$animeViewCount = Strings::makeInteger(self::getNodeValue($xpath, '//td[text() = \'Anime List Views\']/following-sibling::td'));
 		$mangaViewCount = Strings::makeInteger(self::getNodeValue($xpath, '//td[text() = \'Manga List Views\']/following-sibling::td'));
 		$commentCount   = Strings::makeInteger(self::getNodeValue($xpath, '//td[text() = \'Comments\']/following-sibling::td'));
@@ -29,5 +29,19 @@ class UserSubProcessorProfile extends UserSubProcessor
 		$location       = Strings::removespaces(self::getNodeValue($xpath, '//td[text() = \'Location\']/following-sibling::td'));
 		$website        = Strings::removeSpaces(self::getNodeValue($xpath, '//td[text() = \'Website\']/following-sibling::td'));
 		$gender         = Strings::makeEnum(self::getNodeValue($xpath, '//td[text() = \'Gender\']/following-sibling::td'), ['Female' => UserGender::Female, 'Male' => UserGender::Male], UserGender::Unknown);
+
+		$pdo = Database::getPDO();
+		$stmt = $pdo->prepare('DELETE FROM users WHERE LOWER(name) = LOWER(?)');
+		$stmt->execute([$userName]);
+
+		$stmt = $pdo->prepare('INSERT INTO users(name, picture, join_date, mal_id, comment_count, post_count, birthday, location, website, gender) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+		$stmt->execute([$userName, $pictureURL, $joinDate, $malId, $commentCount, $postCount, $birthday, $location, $website, $gender]);
+		$userId = $pdo->lastInsertId();
+
+		$stmt = $pdo->prepare('INSERT INTO users_anime_data(user_id, view_count) VALUES (?, ?)');
+		$stmt->execute([$userId, $animeViewCount]);
+
+		$stmt = $pdo->prepare('INSERT INTO users_manga_data(user_id, view_count) VALUES (?, ?)');
+		$stmt->execute([$userId, $mangaViewCount]);
 	}
 }
