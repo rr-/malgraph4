@@ -15,5 +15,5 @@ catch (Exception $e)
 {
 	#todo:
 	#better error handling
-	var_dump($e);
+	echo $e . PHP_EOL;
 }
