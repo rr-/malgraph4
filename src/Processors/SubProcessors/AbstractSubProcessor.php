@@ -1,5 +1,5 @@
 <?php
-abstract class AbstractSubProcessor implements AbstractProcessor
+abstract class AbstractSubProcessor
 {
 	static $domCache = [];
 
@@ -35,4 +35,6 @@ abstract class AbstractSubProcessor implements AbstractProcessor
 		}
 		return null;
 	}
+
+	public abstract function process($documents);
 }

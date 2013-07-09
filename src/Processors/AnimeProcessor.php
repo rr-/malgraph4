@@ -1,33 +1,15 @@
 <?php
-class AnimeProcessor implements AbstractProcessor
+class AnimeProcessor extends AbstractProcessor
 {
-	public function process($id)
+	public function getSubProcessors()
 	{
-		if (empty($id))
-		{
-			return;
-		}
-
-		$processors = [];
-		$processors []= new MediaSubProcessorBasic(Media::Anime);
-		$processors []= new MediaSubProcessorGenres(Media::Anime);
-		$processors []= new MediaSubProcessorTags(Media::Anime);
-		$processors []= new MediaSubProcessorRelations(Media::Anime);
-		$processors []= new AnimeSubProcessorBasic();
-		$processors []= new AnimeSubProcessorProducers();
-
-		$urls = [];
-		foreach ($processors as $processor)
-		{
-			$urls[get_class($processor)] = $processor->getURLs($id);
-		}
-
-		$downloader = new Downloader();
-		$documents = $downloader->downloadMulti($urls);
-
-		foreach ($processors as $processor)
-		{
-			$processor->process($documents[get_class($processor)]);
-		}
+		$subProcessors = [];
+		$subProcessors []= new MediaSubProcessorBasic(Media::Anime);
+		$subProcessors []= new MediaSubProcessorGenres(Media::Anime);
+		$subProcessors []= new MediaSubProcessorTags(Media::Anime);
+		$subProcessors []= new MediaSubProcessorRelations(Media::Anime);
+		$subProcessors []= new AnimeSubProcessorBasic();
+		$subProcessors []= new AnimeSubProcessorProducers();
+		return $subProcessors;
 	}
 }

@@ -1,35 +1,16 @@
 <?php
-class MangaProcessor implements AbstractProcessor
+class MangaProcessor extends AbstractProcessor
 {
-	public function process($id)
+	public function getSubProcessors()
 	{
-		if (empty($id))
-		{
-			return;
-		}
-
-		$processors = [];
-		$processors []= new MediaSubProcessorBasic(Media::Manga);
-		$processors []= new MediaSubProcessorGenres(Media::Manga);
-		$processors []= new MediaSubProcessorTags(Media::Manga);
-		$processors []= new MediaSubProcessorRelations(Media::Manga);
-		$processors []= new MangaSubProcessorBasic();
-		$processors []= new MangaSubProcessorAuthors();
-		$processors []= new MangaSubProcessorSerializations();
-
-		$urls = [];
-		foreach ($processors as $processor)
-		{
-			$urls[get_class($processor)] = $processor->getURLs($id);
-		}
-
-		$downloader = new Downloader();
-		$documents = $downloader->downloadMulti($urls);
-
-		foreach ($processors as $processor)
-		{
-			$processor->process($documents[get_class($processor)]);
-		}
+		$subProcessors = [];
+		$subProcessors []= new MediaSubProcessorBasic(Media::Manga);
+		$subProcessors []= new MediaSubProcessorGenres(Media::Manga);
+		$subProcessors []= new MediaSubProcessorTags(Media::Manga);
+		$subProcessors []= new MediaSubProcessorRelations(Media::Manga);
+		$subProcessors []= new MangaSubProcessorBasic();
+		$subProcessors []= new MangaSubProcessorAuthors();
+		$subProcessors []= new MangaSubProcessorSerializations();
+		return $subProcessors;
 	}
 }
-

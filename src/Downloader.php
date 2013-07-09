@@ -45,34 +45,10 @@ class Downloader
 		return new Document($url, $code, $headers, $content);
 	}
 
-	private static function flatten(array $input)
-	{
-		//map input, that can be multidimensional array, to flat array of urls
-		$urls = [];
-		array_walk_recursive($input, function($url, $key) use (&$urls)
-		{
-			$urls[$url] = $url;
-		});
-		return $urls;
-	}
-
-	private static function deflatten(array $documents, array $input)
-	{
-		$output = [];
-		foreach ($input as $key => $value)
-		{
-			$output[$key] = is_array($value)
-				? self::deflatten($documents, $input[$key])
-				: $documents[$value];
-		}
-		return $output;
-	}
-
-	public function downloadMulti(array $input)
+	public function downloadMulti(array $urls)
 	{
 		$handles = [];
 		$documents = [];
-		$urls = self::flatten($input);
 
 		//if mirror exists, load its content and purge url from download queue
 		$mirrorPaths = [];
@@ -134,7 +110,6 @@ class Downloader
 		//close curl handles
 		curl_multi_close($multiHandle);
 
-		//convert back to multidimensional array
-		return self::deflatten($documents, $input);
+		return $documents;
 	}
 }

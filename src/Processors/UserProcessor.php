@@ -1,32 +1,14 @@
 <?php
-class UserProcessor implements AbstractProcessor
+class UserProcessor extends AbstractProcessor
 {
-	public function process($userName)
+	public function getSubProcessors()
 	{
-		if (empty($userName))
-		{
-			return;
-		}
-
-		$processors = [];
-		$processors []= new UserSubProcessorProfile();
-		$processors []= new UserSubProcessorClubs();
-		$processors []= new UserSubProcessorFriends();
-		$processors []= new UserSubProcessorHistory();
-		$processors []= new UserSubProcessorLists();
-
-		$urls = [];
-		foreach ($processors as $processor)
-		{
-			$urls[get_class($processor)] = $processor->getURLs($userName);
-		}
-
-		$downloader = new Downloader();
-		$documents = $downloader->downloadMulti($urls);
-
-		foreach ($processors as $processor)
-		{
-			$processor->process($documents[get_class($processor)]);
-		}
+		$subProcessors = [];
+		$subProcessors []= new UserSubProcessorProfile();
+		$subProcessors []= new UserSubProcessorClubs();
+		$subProcessors []= new UserSubProcessorFriends();
+		$subProcessors []= new UserSubProcessorHistory();
+		$subProcessors []= new UserSubProcessorLists();
+		return $subProcessors;
 	}
 }
