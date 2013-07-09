@@ -1,0 +1,71 @@
+<?php
+class MediaSubProcessorRelations extends MediaSubProcessor
+{
+	public function process($documents)
+	{
+		$doc = self::getDOM($documents[self::URL_MEDIA]);
+		$xpath = new DOMXPath($doc);
+
+		$lastType = '';
+		foreach ($xpath->query('//h2[starts-with(text(), \'Related\')]/../*') as $node)
+		{
+			if ($node->nodeName == 'h2' and strpos($node->textContent, 'Related') === false)
+			{
+				break;
+			}
+			if ($node->nodeName != 'a')
+			{
+				continue;
+			}
+			$link = $node->attributes->getNamedItem('href')->nodeValue;
+
+			//relation type
+			$malType = strtolower(Strings::removeSpaces($node->previousSibling->textContent));
+			if ($malType == ',')
+			{
+				$type = $lastType;
+			}
+			else
+			{
+				$type = Strings::makeEnum($malType, [
+					'sequel'              => MediaRelation::Sequel,
+					'prequel'             => MediaRelation::Prequel,
+					'side story'          => MediaRelation::SideStory,
+					'parent story'        => MediaRelation::ParentStory,
+					'adaptation'          => MediaRelation::Adaptation,
+					'alternative version' => MediaRelation::AlternativeVersion,
+					'summary'             => MediaRelation::Summary,
+					'character'           => MediaRelation::Character,
+					'spin-off'            => MediaRelation::SpinOff,
+				], null);
+				if ($type === null)
+				{
+					throw new BadDocumentNodeException($documents[self::URL_MEDIA], 'relation-type', $malType);
+				}
+				$lastType = $type;
+			}
+
+			//relation id
+			preg_match_all('/([0-9]+)/', $link, $matches);
+			if (!isset($matches[0][0]))
+			{
+				continue;
+			}
+			$id = Strings::makeInteger($matches[0][0]);
+
+			//relation media
+			if (strpos($link, '/anime') !== false)
+			{
+				$media = Media::Anime;
+			}
+			elseif (strpos($link, '/manga') !== false)
+			{
+				$media = Media::Manga;
+			}
+			else
+			{
+				continue;
+			}
+		}
+	}
+}
