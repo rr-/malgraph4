@@ -11,7 +11,7 @@ class UserSubProcessorFriends extends UserSubProcessor
 		];
 	}
 
-	public function process($documents)
+	public function process(array $documents)
 	{
 		$doc = self::getDOM($documents[self::URL_FRIENDS]);
 		$doc->preserveWhiteSpace = false;

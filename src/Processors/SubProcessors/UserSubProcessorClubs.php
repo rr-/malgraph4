@@ -11,7 +11,7 @@ class UserSubProcessorClubs extends UserSubProcessor
 		];
 	}
 
-	public function process($documents)
+	public function process(array $documents)
 	{
 		$doc = self::getDOM($documents[self::URL_CLUBS]);
 		$xpath = new DOMXPath($doc);

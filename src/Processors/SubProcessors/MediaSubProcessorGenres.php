@@ -1,7 +1,7 @@
 <?php
 class MediaSubProcessorGenres extends MediaSubProcessor
 {
-	public function process($documents)
+	public function process(array $documents)
 	{
 		$doc = self::getDOM($documents[self::URL_MEDIA]);
 		$xpath = new DOMXPath($doc);

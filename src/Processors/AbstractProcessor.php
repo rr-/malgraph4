@@ -2,9 +2,11 @@
 abstract class AbstractProcessor
 {
 	public abstract function getSubProcessors();
+
 	public function beforeProcessing()
 	{
 	}
+
 	public function afterProcessing()
 	{
 	}
@@ -20,31 +22,34 @@ abstract class AbstractProcessor
 
 		$subProcessors = $this->getSubProcessors();
 		$urlMap = [];
+		$urks = [];
 		foreach ($subProcessors as $processor)
 		{
 			foreach ($processor->getURLs($key) as $url)
 			{
-				$urlMap[$url] = isset($urlMap[$url])
-					? array_merge($urlMap[$url], [$processor])
-					: [$processor];
+				if (!isset($urlMap[$url]))
+				{
+					$urlMap[$url] = [];
+				}
+				$urlMap[$url] []= $processor;
+				$urls[$url] = $url;
 			}
 		}
 
-		$urls = array_combine(array_keys($urlMap), array_keys($urlMap));
 		$downloader = new Downloader();
 		$documents = $downloader->downloadMulti($urls);
 
-		foreach ($subProcessors as $processor)
+		foreach ($subProcessors as $subProcessor)
 		{
-			$processorDocuments = [];
-			foreach ($urls as $url)
+			$subDocuments = [];
+			foreach ($urlMap as $url => $urlProcessors)
 			{
-				if (in_array($processor, $urlMap[$url]))
+				if (in_array($subProcessor, $urlProcessors))
 				{
-					$processorDocuments []= $documents[$url];
+					$subDocuments []= $documents[$url];
 				}
 			}
-			$processor->process($processorDocuments);
+			$subProcessor->process($subDocuments);
 		}
 
 		$this->afterProcessing();
