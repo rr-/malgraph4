@@ -61,5 +61,10 @@ abstract class AbstractProcessor
 		}
 
 		$this->afterProcessing($context);
+
+		if (!empty($context->exception))
+		{
+			throw $e;
+		}
 	}
 }
