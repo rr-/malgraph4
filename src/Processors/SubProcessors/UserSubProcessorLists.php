@@ -19,6 +19,8 @@ class UserSubProcessorLists extends UserSubProcessor
 
 	public function process(array $documents, &$context)
 	{
+		$pdo = Database::getPDO();
+
 		foreach (Media::getConstList() as $media)
 		{
 			$key = $media == Media::Anime
@@ -62,7 +64,10 @@ class UserSubProcessorLists extends UserSubProcessor
 				}
 			}
 
-			$timeSpent = Strings::makeFloat(self::getNodeValue($xpath, '//user_days_spent_watching'));
+			$daysSpent = Strings::makeFloat(self::getNodeValue($xpath, '//user_days_spent_watching'));
+
+			$stmt = $pdo->prepare('UPDATE user_' . Media::toString($media) . '_data SET days_spent = ? WHERE user_id = ?');
+			$stmt->execute([$daysSpent, $context->userId]);
 		}
 	}
 }

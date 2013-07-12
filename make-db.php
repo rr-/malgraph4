@@ -22,6 +22,7 @@ try
 	$pdo->exec("CREATE TABLE IF NOT EXISTS user_anime_data (
 		user_id INTEGER,
 		view_count INTEGER,
+		days_spent FLOAT,
 		FOREIGN KEY(user_id) REFERENCES users(user_id)
 		ON DELETE CASCADE
 	)");
@@ -29,6 +30,7 @@ try
 	$pdo->exec("CREATE TABLE IF NOT EXISTS user_manga_data (
 		user_id INTEGER,
 		view_count INTEGER,
+		days_spent FLOAT,
 		FOREIGN KEY(user_id) REFERENCES users(user_id)
 		ON DELETE CASCADE
 	)");
