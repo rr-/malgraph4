@@ -58,6 +58,7 @@ try
 		progress INTEGER,
 		timestamp TIMESTAMP,
 		FOREIGN KEY(user_id) REFERENCES users(user_id)
+		ON DELETE CASCADE
 	)');
 }
 catch (Exception $e)
