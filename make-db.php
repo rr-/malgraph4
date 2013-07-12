@@ -9,11 +9,11 @@ try
 		user_id INTEGER PRIMARY KEY,
 		name VARCHAR(32) UNIQUE,
 		picture VARCHAR(256),
-		join_date TIMESTAMP,
+		join_date VARCHAR(10), --TIMESTAMP
 		mal_id INTEGER,
 		comment_count INTEGER,
 		post_count INTEGER,
-		birthday TIMESTAMP,
+		birthday VARCHAR(10), --TIMESTAMP
 		location VARCHAR(100),
 		website VARCHAR(100),
 		gender VARCHAR(1)
@@ -67,8 +67,8 @@ try
 		media_id INTEGER,
 		media VARCHAR(1),
 		score INTEGER,
-		start_date TIMESTAMP,
-		end_date TIMESTAMP,
+		start_date VARCHAR(10), --TIMESTAMP
+		end_date VARCHAR(10), --TIMESTAMP
 		status VARCHAR(1),
 		FOREIGN KEY(user_id) REFERENCES users(user_id)
 		ON DELETE CASCADE
