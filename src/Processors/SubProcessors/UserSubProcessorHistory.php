@@ -13,6 +13,8 @@ class UserSubProcessorHistory extends UserSubProcessor
 
 	public function process(array $documents, &$context)
 	{
+		$pdo = Database::getPDO();
+
 		$doc = self::getDOM($documents[self::URL_HISTORY]);
 		$xpath = new DOMXPath($doc);
 
@@ -22,17 +24,9 @@ class UserSubProcessorHistory extends UserSubProcessor
 			//basic info
 			$link = $node->childNodes->item(0)->childNodes->item(0)->getAttribute('href');
 			preg_match('/(\d+)\/?$/', $link, $matches);
-			$id = intval($matches[0]);
-			if (strpos($link, 'manga') !== false)
-			{
-				$chapter = intval($node->childNodes->item(0)->childNodes->item(2)->nodeValue);
-				$type = Media::Manga;
-			}
-			else
-			{
-				$episode = intval($node->childNodes->item(0)->childNodes->item(2)->nodeValue);
-				$type = Media::Anime;
-			}
+			$media = strpos($link, 'manga') !== false ? Media::Manga : Media::Anime;
+			$mediaId = intval($matches[0]);
+			$mediaProgress = Strings::makeInteger($node->childNodes->item(0)->childNodes->item(2)->nodeValue);
 
 			//parse time
 			//That's what MAL servers output for MG client
@@ -59,11 +53,11 @@ class UserSubProcessorHistory extends UserSubProcessor
 			}
 			elseif (preg_match('/(\d*) minutes? ago/', $dateString, $matches))
 			{
-				$second += - intval($matches[1]) * 60;
+				$second -= intval($matches[1]) * 60;
 			}
 			elseif (preg_match('/(\d*) hours? ago/', $dateString, $matches))
 			{
-				$minute += - intval($matches[1]) * 60;
+				$minute -= intval($matches[1]) * 60;
 			}
 			elseif (preg_match('/Today, (\d*):(\d\d) (AM|PM)/', $dateString, $matches))
 			{
@@ -89,6 +83,9 @@ class UserSubProcessorHistory extends UserSubProcessor
 			}
 			$timestamp = mktime($hour, $minute, $second, $month, $day, $year);
 			date_default_timezone_set('UTC');
+
+			$stmt = $pdo->prepare('INSERT INTO user_history(user_id, media_id, media, progress, timestamp) VALUES(?, ?, ?, ?, ?)');
+			$stmt->execute([$context->userId, $mediaId, $media, $mediaProgress, $timestamp]);
 		}
 	}
 }
