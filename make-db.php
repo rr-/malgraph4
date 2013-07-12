@@ -19,14 +19,14 @@ try
 		gender VARCHAR(1)
 	)");
 
-	$pdo->exec("CREATE TABLE IF NOT EXISTS users_anime_data (
+	$pdo->exec("CREATE TABLE IF NOT EXISTS user_anime_data (
 		user_id INTEGER,
 		view_count INTEGER,
 		FOREIGN KEY(user_id) REFERENCES users(user_id)
 		ON DELETE CASCADE
 	)");
 
-	$pdo->exec("CREATE TABLE IF NOT EXISTS users_manga_data (
+	$pdo->exec("CREATE TABLE IF NOT EXISTS user_manga_data (
 		user_id INTEGER,
 		view_count INTEGER,
 		FOREIGN KEY(user_id) REFERENCES users(user_id)

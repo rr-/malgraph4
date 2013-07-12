@@ -38,10 +38,10 @@ class UserSubProcessorProfile extends UserSubProcessor
 		$stmt->execute([$userName, $pictureURL, $joinDate, $malId, $commentCount, $postCount, $birthday, $location, $website, $gender]);
 		$userId = $pdo->lastInsertId();
 
-		$stmt = $pdo->prepare('INSERT INTO users_anime_data(user_id, view_count) VALUES (?, ?)');
+		$stmt = $pdo->prepare('INSERT INTO user_anime_data(user_id, view_count) VALUES (?, ?)');
 		$stmt->execute([$userId, $animeViewCount]);
 
-		$stmt = $pdo->prepare('INSERT INTO users_manga_data(user_id, view_count) VALUES (?, ?)');
+		$stmt = $pdo->prepare('INSERT INTO user_manga_data(user_id, view_count) VALUES (?, ?)');
 		$stmt->execute([$userId, $mangaViewCount]);
 
 		$context->userId = $userId;
