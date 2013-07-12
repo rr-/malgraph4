@@ -11,4 +11,17 @@ class UserProcessor extends AbstractProcessor
 		$subProcessors []= new UserSubProcessorLists();
 		return $subProcessors;
 	}
+
+	public function beforeProcessing()
+	{
+		$pdo = Database::getPDO();
+		$pdo->exec('BEGIN');
+	}
+
+	public function afterProcessing()
+	{
+		$pdo = Database::getPDO();
+		$pdo->exec('END');
+	}
+
 }
