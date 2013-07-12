@@ -19,6 +19,11 @@ class UserSubProcessorFriends extends UserSubProcessor
 		foreach ($xpath->query('//a[contains(@href, \'profile\')]/strong') as $node)
 		{
 			$friendName = Strings::removeSpaces($node->nodeValue);
+
+			$pdo = Database::getPDO();
+
+			$stmt = $pdo->prepare('INSERT INTO user_friends(user_id,friend_name) VALUES(?, ?)');
+			$stmt->execute([$context->userId, $friendName]);
 		}
 	}
 }

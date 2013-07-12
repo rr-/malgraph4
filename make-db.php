@@ -32,6 +32,14 @@ try
 		FOREIGN KEY(user_id) REFERENCES users(user_id)
 		ON DELETE CASCADE
 	)");
+
+	$pdo->exec("CREATE TABLE IF NOT EXISTS user_friends (
+		user_id INTEGER,
+		friend_name VARCHAR(32) UNIQUE,
+		FOREIGN KEY(user_id) REFERENCES users(user_id)
+		ON DELETE CASCADE
+	)");
+
 }
 catch (Exception $e)
 {
