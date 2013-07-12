@@ -1,5 +1,5 @@
 <?php
-public class BadMediaException extends Exception
+class BadMediaException extends Exception
 {
 	public function __construct()
 	{
