@@ -16,14 +16,13 @@ class UserSubProcessorClubs extends UserSubProcessor
 		$pdo = Database::getPDO();
 
 		$doc = self::getDOM($documents[self::URL_CLUBS]);
+		$stmt = $pdo->prepare('INSERT INTO user_clubs(user_id, club_id, club_name) VALUES(?, ?, ?)');
 		$xpath = new DOMXPath($doc);
 		foreach ($xpath->query('//ol/li/a[contains(@href, \'/club\')]') as $node)
 		{
 			$url = Strings::parseURL($node->getAttribute('href'));
 			$clubId = Strings::makeInteger($url['query']['cid']);
 			$clubName = Strings::removeSpaces($node->nodeValue);
-
-			$stmt = $pdo->prepare('INSERT INTO user_clubs(user_id, club_id, club_name) VALUES(?, ?, ?)');
 			$stmt->execute([$context->userId, $clubId, $clubName]);
 		}
 	}

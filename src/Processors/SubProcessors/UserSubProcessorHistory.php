@@ -17,6 +17,7 @@ class UserSubProcessorHistory extends UserSubProcessor
 
 		$doc = self::getDOM($documents[self::URL_HISTORY]);
 		$xpath = new DOMXPath($doc);
+		$stmt = $pdo->prepare('INSERT INTO user_history(user_id, media_id, media, progress, timestamp) VALUES(?, ?, ?, ?, ?)');
 
 		$nodes = $xpath->query('//table//td[@class = \'borderClass\']/..');
 		foreach ($nodes as $node)
@@ -84,8 +85,7 @@ class UserSubProcessorHistory extends UserSubProcessor
 			$timestamp = mktime($hour, $minute, $second, $month, $day, $year);
 			date_default_timezone_set('UTC');
 
-			$stmt = $pdo->prepare('INSERT INTO user_history(user_id, media_id, media, progress, timestamp) VALUES(?, ?, ?, ?, ?)');
-			$stmt->execute([$context->userId, $mediaId, $media, $mediaProgress, $timestamp]);
+			$stmt->execute([$context->userId, $mediaId, $media, $mediaProgress, date('Y-m-d H:i:s', $timestamp)]);
 		}
 	}
 }
