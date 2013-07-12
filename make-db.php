@@ -42,6 +42,13 @@ try
 		ON DELETE CASCADE
 	)");
 
+	$pdo->exec("CREATE TABLE IF NOT EXISTS user_clubs (
+		user_id INTEGER,
+		club_id INTEGER UNIQUE,
+		club_name VARCHAR(96),
+		FOREIGN KEY(user_id) REFERENCES users(user_id)
+		ON DELETE CASCADE
+	)");
 }
 catch (Exception $e)
 {
