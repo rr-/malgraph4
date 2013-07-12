@@ -39,9 +39,12 @@ class UserSubProcessorLists extends UserSubProcessor
 			}
 
 			$nodes = $xpath->query('//anime | //manga');
+			$listStmt = $pdo->prepare('INSERT INTO user_list (user_id, media_id, media, score, start_date, end_date, status) VALUES (?, ?, ?, ?, ?, ?, ?)');
+			$animeStmt = $pdo->prepare('INSERT INTO user_list_anime_data (user_list_id, episodes) VALUES (?, ?)');
+			$mangaStmt = $pdo->prepare('INSERT INTO user_list_manga_data (user_list_id, chapters, volumes) VALUES (?, ?, ?)');
 			foreach ($nodes as $root)
 			{
-				$id         = Strings::makeInteger(self::getNodeValue($xpath, 'series_animedb_id | series_mangadb_id', $root));
+				$mediaId    = Strings::makeInteger(self::getNodeValue($xpath, 'series_animedb_id | series_mangadb_id', $root));
 				$score      = Strings::makeInteger(self::getNodeValue($xpath, 'my_score', $root));
 				$startDate  = Strings::makeDate(self::getNodeValue($xpath, 'my_start_date', $root));
 				$finishDate = Strings::makeDate(self::getNodeValue($xpath, 'my_finish_date', $root));
@@ -53,19 +56,25 @@ class UserSubProcessorLists extends UserSubProcessor
 					6 => UserListStatus::Planned
 				], UserListStatus::Unknown);
 
-				if ($media == Media::Anime)
+				$listStmt->execute([$context->userId, $mediaId, $media, $score, $startDate, $finishDate, $status]);
+				$userListId = $pdo->lastInsertId();
+				switch ($media)
 				{
-					$finishedEpisodes = Strings::makeInteger(self::getNodeValue($xpath, 'my_watched_episodes', $root));
-				}
-				else
-				{
-					$finishedChapters = Strings::makeInteger(self::getNodeValue($xpath, 'my_read_chapters', $root));
-					$finishedVolumes  = Strings::makeInteger(self::getNodeValue($xpath, 'my_read_volumes', $root));
+					case Media::Anime:
+						$finishedEpisodes = Strings::makeInteger(self::getNodeValue($xpath, 'my_watched_episodes', $root));
+						$animeStmt->execute([$userListId, $finishedEpisodes]);
+						break;
+					case Media::Manga:
+						$finishedChapters = Strings::makeInteger(self::getNodeValue($xpath, 'my_read_chapters', $root));
+						$finishedVolumes  = Strings::makeInteger(self::getNodeValue($xpath, 'my_read_volumes', $root));
+						$mangaStmt->execute([$userListId, $finishedChapters, $finishedVolumes]);
+						break;
+					default:
+						throw new BadMediaException();
 				}
 			}
 
 			$daysSpent = Strings::makeFloat(self::getNodeValue($xpath, '//user_days_spent_watching'));
-
 			$stmt = $pdo->prepare('UPDATE user_' . Media::toString($media) . '_data SET days_spent = ? WHERE user_id = ?');
 			$stmt->execute([$daysSpent, $context->userId]);
 		}
