@@ -22,7 +22,7 @@ class UserSubProcessorFriends extends UserSubProcessor
 		{
 			$friendName = Strings::removeSpaces($node->nodeValue);
 
-			$stmt = $pdo->prepare('INSERT INTO user_friends(user_id,friend_name) VALUES(?, ?)');
+			$stmt = $pdo->prepare('INSERT INTO user_friends(user_id, friend_name) VALUES(?, ?)');
 			$stmt->execute([$context->userId, $friendName]);
 		}
 	}

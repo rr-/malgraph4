@@ -23,5 +23,4 @@ class UserProcessor extends AbstractProcessor
 		$pdo = Database::getPDO();
 		$pdo->exec('END');
 	}
-
 }
