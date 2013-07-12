@@ -3,11 +3,11 @@ abstract class AbstractProcessor
 {
 	public abstract function getSubProcessors();
 
-	public function beforeProcessing()
+	public function beforeProcessing($context)
 	{
 	}
 
-	public function afterProcessing()
+	public function afterProcessing($context)
 	{
 	}
 
@@ -18,7 +18,8 @@ abstract class AbstractProcessor
 			return;
 		}
 
-		$this->beforeProcessing();
+		$context = new StdClass();
+		$this->beforeProcessing($context);
 
 		$subProcessors = $this->getSubProcessors();
 		$urlMap = [];
@@ -39,21 +40,26 @@ abstract class AbstractProcessor
 		$downloader = new Downloader();
 		$documents = $downloader->downloadMulti($urls);
 
-		$context = new StdClass();
-
-		foreach ($subProcessors as $subProcessor)
+		try
 		{
-			$subDocuments = [];
-			foreach ($urlMap as $url => $urlProcessors)
+			foreach ($subProcessors as $subProcessor)
 			{
-				if (in_array($subProcessor, $urlProcessors))
+				$subDocuments = [];
+				foreach ($urlMap as $url => $urlProcessors)
 				{
-					$subDocuments []= $documents[$url];
+					if (in_array($subProcessor, $urlProcessors))
+					{
+						$subDocuments []= $documents[$url];
+					}
 				}
+				$subProcessor->process($subDocuments, $context);
 			}
-			$subProcessor->process($subDocuments, $context);
+		}
+		catch (Exception $e)
+		{
+			$context->exception = $e;
 		}
 
-		$this->afterProcessing();
+		$this->afterProcessing($context);
 	}
 }

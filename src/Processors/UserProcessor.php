@@ -12,15 +12,20 @@ class UserProcessor extends AbstractProcessor
 		return $subProcessors;
 	}
 
-	public function beforeProcessing()
+	public function beforeProcessing($context)
 	{
 		$pdo = Database::getPDO();
-		$pdo->exec('BEGIN');
+		$pdo->exec('BEGIN TRANSACTION');
 	}
 
-	public function afterProcessing()
+	public function afterProcessing($context)
 	{
 		$pdo = Database::getPDO();
-		$pdo->exec('END');
+		if (!empty($context->exception))
+		{
+			$pdo->exec('ROLLBACK TRANSACTION');
+			return;
+		}
+		$pdo->exec('COMMIT TRANSACTION');
 	}
 }
