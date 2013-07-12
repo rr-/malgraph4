@@ -60,6 +60,34 @@ try
 		FOREIGN KEY(user_id) REFERENCES users(user_id)
 		ON DELETE CASCADE
 	)');
+
+	$pdo->exec('CREATE TABLE IF NOT EXISTS user_list (
+		user_list_id INTEGER PRIMARY KEY,
+		user_id INTEGER,
+		media_id INTEGER,
+		media VARCHAR(1),
+		score INTEGER,
+		start_date TIMESTAMP,
+		end_date TIMESTAMP,
+		status VARCHAR(1),
+		FOREIGN KEY(user_id) REFERENCES users(user_id)
+		ON DELETE CASCADE
+	)');
+
+	$pdo->exec('CREATE TABLE IF NOT EXISTS user_list_anime_data (
+		user_list_id INTEGER,
+		episodes INTEGER,
+		FOREIGN KEY(user_list_id) REFERENCES user_list(user_list_id)
+		ON DELETE CASCADE
+	)');
+
+	$pdo->exec('CREATE TABLE IF NOT EXISTS user_list_manga_data (
+		user_list_id INTEGER,
+		chapters INTEGER,
+		volumes INTEGER,
+		FOREIGN KEY(user_list_id) REFERENCES user_list(user_list_id)
+		ON DELETE CASCADE
+	)');
 }
 catch (Exception $e)
 {
