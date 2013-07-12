@@ -11,10 +11,7 @@ abstract class MediaSubProcessor extends AbstractSubProcessor
 
 	public function getURLs($id)
 	{
-		$infix = Strings::makeEnum($this->media, [
-			Media::Anime => 'anime',
-			Media::Manga => 'manga',
-		], null);
+		$infix = Media::toString($this->media);
 		if ($infix === null)
 		{
 			throw new BadMediaException();
