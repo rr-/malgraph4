@@ -66,5 +66,7 @@ abstract class AbstractProcessor
 		{
 			throw $e;
 		}
+
+		return $context;
 	}
 }
