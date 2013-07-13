@@ -89,6 +89,61 @@ try
 		FOREIGN KEY(user_media_id) REFERENCES user_media(user_media_id)
 		ON DELETE CASCADE
 	)');
+
+	$pdo->exec('CREATE TABLE IF NOT EXISTS media (
+		media_id INTEGER PRIMARY KEY,
+		media_mal_id INTEGER,
+		media VARCHAR(1),
+		title VARCHAR(96),
+		sub_type INTEGER,
+		picture_url VARCHAR(256),
+		ranking INTEGER,
+		status VARCHAR(1),
+		published_from VARCHAR(10), --TIMESTAMP
+		published_to VARCHAR(10), --TIMESTAMP
+		UNIQUE (media_mal_id, media)
+	)');
+
+	$pdo->exec('CREATE TABLE IF NOT EXISTS media_anime_data (
+		media_id INTEGER,
+		duration INTEGER,
+		episode_count INTEGER,
+		FOREIGN KEY(media_id) REFERENCES media(media_id)
+		ON DELETE CASCADE
+	)');
+
+	$pdo->exec('CREATE TABLE IF NOT EXISTS media_manga_data (
+		media_id INTEGER,
+		chapter_count INTEGER,
+		volume_count INTEGER,
+		FOREIGN KEY(media_id) REFERENCES media(media_id)
+		ON DELETE CASCADE
+	)');
+
+	$pdo->exec('CREATE TABLE IF NOT EXISTS media_genres (
+		media_id INTEGER,
+		genre_mal_id INTEGER,
+		genre_name VARCHAR(30),
+		FOREIGN KEY(media_id) REFERENCES media(media_id)
+		ON DELETE CASCADE
+	)');
+
+	$pdo->exec('CREATE TABLE IF NOT EXISTS media_tags (
+		media_id INTEGER,
+		tag_name INTEGER,
+		tag_count VARCHAR(30),
+		FOREIGN KEY(media_id) REFERENCES media(media_id)
+		ON DELETE CASCADE
+	)');
+
+	$pdo->exec('CREATE TABLE IF NOT EXISTS media_relations (
+		media_id INTEGER,
+		media_mal_id INTEGER,
+		media VARCHAR(1),
+		relation_type INTEGER,
+		FOREIGN KEY(media_id) REFERENCES media(media_id)
+		ON DELETE CASCADE
+	)');
 }
 catch (Exception $e)
 {

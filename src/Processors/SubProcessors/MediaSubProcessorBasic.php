@@ -6,7 +6,7 @@ class MediaSubProcessorBasic extends MediaSubProcessor
 		$doc = self::getDOM($documents[self::URL_MEDIA]);
 		$xpath = new DOMXPath($doc);
 
-		if ( $xpath->query('//div[@class = \'badresult\']')->length >= 1)
+		if ($xpath->query('//div[@class = \'badresult\']')->length >= 1)
 		{
 			throw new BadDocumentNodeException($documents[self::URL_MEDIA], 'badresult', '');
 		}
@@ -39,8 +39,11 @@ class MediaSubProcessorBasic extends MediaSubProcessor
 			throw new BadDocumentNodeException($documents[self::URL_MEDIA], 'sub-type', $malSubType);
 		}
 
+		//mal id
+		$malId  = self::getNodeValue($xpath, '//input[starts-with(@id, \'myinfo_\')]', null, 'value');
+
 		//picture
-		$pictureURL = self::getNodeValue($xpath, '//td[@class = \'borderClass\']//img', null, 'src');
+		$pictureUrl = self::getNodeValue($xpath, '//td[@class = \'borderClass\']//img', null, 'src');
 
 		//rank
 		preg_match_all('/#([0-9]+)/', self::getNodeValue($xpath, '//h1/*'), $matches);
@@ -74,5 +77,19 @@ class MediaSubProcessorBasic extends MediaSubProcessor
 			$publishedFrom = Strings::makeDate($publishedString);
 			$publishedTo = Strings::makeDate($publishedString);
 		}
+
+		$this->delete('media', ['media_mal_id' => $malId, 'media' => $this->media]);
+		$mediaId = $this->insert('media', [
+			'media_mal_id' => $malId,
+			'media' => $this->media,
+			'title' => $title,
+			'sub_type' => $subType,
+			'picture_url' => $pictureUrl,
+			'ranking' => $ranking,
+			'status' => $status,
+			'published_from' => $publishedFrom,
+			'published_to' => $publishedTo
+		]);
+		$context->mediaId = $mediaId;
 	}
 }

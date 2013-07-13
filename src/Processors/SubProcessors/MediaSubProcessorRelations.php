@@ -5,7 +5,7 @@ class MediaSubProcessorRelations extends MediaSubProcessor
 	{
 		$doc = self::getDOM($documents[self::URL_MEDIA]);
 		$xpath = new DOMXPath($doc);
-
+		$data = [];
 		$lastType = '';
 		foreach ($xpath->query('//h2[starts-with(text(), \'Related\')]/../*') as $node)
 		{
@@ -51,7 +51,7 @@ class MediaSubProcessorRelations extends MediaSubProcessor
 			{
 				continue;
 			}
-			$id = Strings::makeInteger($matches[0][0]);
+			$mediaMalId = Strings::makeInteger($matches[0][0]);
 
 			//relation media
 			if (strpos($link, '/anime') !== false)
@@ -66,6 +66,9 @@ class MediaSubProcessorRelations extends MediaSubProcessor
 			{
 				continue;
 			}
+
+			$data []= ['media_id' => $context->mediaId, 'media_mal_id' => $mediaMalId, 'media' => $media, 'relation_type' => $type];
 		}
+		$this->insert('media_relations', $data);
 	}
 }
