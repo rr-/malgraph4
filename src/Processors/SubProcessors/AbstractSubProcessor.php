@@ -36,25 +36,53 @@ abstract class AbstractSubProcessor
 		return null;
 	}
 
-	public function insert($tableName, $rows)
+	public function insert($tableName, $allRows)
 	{
-		if (!is_array(reset($rows)))
+		if (!is_array(reset($allRows)))
 		{
-			$rows = [$rows];
+			$allRows = [$allRows];
 		}
-		$columns = array_keys(reset($rows));
-		$single = '(' . join(', ', array_fill(0, count($columns), '?')) . ')';
-		$sql = sprintf('INSERT INTO %s(%s) VALUES %s',
+
+		foreach (array_chunk($allRows, 50) as $rows)
+		{
+			$columns = array_keys(reset($rows));
+			$single = '(' . join(', ', array_fill(0, count($columns), '?')) . ')';
+			$sql = sprintf('INSERT INTO %s(%s) VALUES %s',
+				$tableName,
+				join(', ', $columns),
+				join(', ', array_fill(0, count($rows), $single))
+			);
+			$flattened = call_user_func_array('array_merge', array_map('array_values', $rows));
+
+			$pdo = Database::getPDO();
+			$stmt = $pdo->prepare($sql);
+			$stmt->execute($flattened);
+		}
+		return $pdo->lastInsertId();
+	}
+
+	public function update($tableName, $conditions, $newData)
+	{
+		$single1 = [];
+		foreach ($newData as $key => $val)
+		{
+			$single1 []= $key . ' = ?';
+		}
+		$single2 = [];
+		foreach ($conditions as $key => $val)
+		{
+			$single2 []= $key . ' = ?';
+		}
+		$sql = sprintf('UPDATE %s SET %s WHERE %s',
 			$tableName,
-			join(', ', $columns),
-			join(', ', array_fill(0, count($rows), $single))
+			join(', ', $single1),
+			join(' AND ', $single2)
 		);
-		$flattened = call_user_func_array('array_merge', array_map('array_values', $rows));
+		$flattened = array_merge(array_values($conditions), array_values($newData));
 
 		$pdo = Database::getPDO();
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute($flattened);
-		return $pdo->lastInsertId();
 	}
 
 	public function delete($tableName, $conditions)

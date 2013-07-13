@@ -78,9 +78,9 @@ class MediaSubProcessorBasic extends MediaSubProcessor
 			$publishedTo = Strings::makeDate($publishedString);
 		}
 
-		$this->delete('media', ['media_mal_id' => $malId, 'media' => $this->media]);
+		$this->delete('media', ['mal_id' => $malId, 'media' => $this->media]);
 		$mediaId = $this->insert('media', [
-			'media_mal_id' => $malId,
+			'mal_id' => $malId,
 			'media' => $this->media,
 			'title' => $title,
 			'sub_type' => $subType,

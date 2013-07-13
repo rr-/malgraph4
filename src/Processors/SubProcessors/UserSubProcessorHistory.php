@@ -13,12 +13,10 @@ class UserSubProcessorHistory extends UserSubProcessor
 
 	public function process(array $documents, &$context)
 	{
-		$pdo = Database::getPDO();
-
 		$doc = self::getDOM($documents[self::URL_HISTORY]);
 		$xpath = new DOMXPath($doc);
-		$stmt = $pdo->prepare('INSERT INTO user_history(user_id, media_id, media, progress, timestamp) VALUES(?, ?, ?, ?, ?)');
 
+		$data = [];
 		$nodes = $xpath->query('//table//td[@class = \'borderClass\']/..');
 		foreach ($nodes as $node)
 		{
@@ -26,8 +24,8 @@ class UserSubProcessorHistory extends UserSubProcessor
 			$link = $node->childNodes->item(0)->childNodes->item(0)->getAttribute('href');
 			preg_match('/(\d+)\/?$/', $link, $matches);
 			$media = strpos($link, 'manga') !== false ? Media::Manga : Media::Anime;
-			$mediaId = intval($matches[0]);
-			$mediaProgress = Strings::makeInteger($node->childNodes->item(0)->childNodes->item(2)->nodeValue);
+			$mediaMalId = intval($matches[0]);
+			$progress = Strings::makeInteger($node->childNodes->item(0)->childNodes->item(2)->nodeValue);
 
 			//parse time
 			//That's what MAL servers output for MG client
@@ -85,7 +83,14 @@ class UserSubProcessorHistory extends UserSubProcessor
 			$timestamp = mktime($hour, $minute, $second, $month, $day, $year);
 			date_default_timezone_set('UTC');
 
-			$stmt->execute([$context->userId, $mediaId, $media, $mediaProgress, date('Y-m-d H:i:s', $timestamp)]);
+			$data []= [
+				'user_id' => $context->userId,
+				'mal_id' => $mediaMalId,
+				'media' => $media,
+				'progress' => $progress,
+				'timestamp' => date('Y-m-d H:i:s', $timestamp)
+			];
 		}
+		$this->insert('user_history', $data);
 	}
 }

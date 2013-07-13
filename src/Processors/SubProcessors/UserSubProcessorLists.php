@@ -19,8 +19,6 @@ class UserSubProcessorLists extends UserSubProcessor
 
 	public function process(array $documents, &$context)
 	{
-		$pdo = Database::getPDO();
-
 		foreach (Media::getConstList() as $media)
 		{
 			$key = $media == Media::Anime
@@ -39,9 +37,7 @@ class UserSubProcessorLists extends UserSubProcessor
 			}
 
 			$nodes = $xpath->query('//anime | //manga');
-			$listStmt = $pdo->prepare('INSERT INTO user_media (user_id, media_mal_id, media, score, start_date, end_date, status) VALUES (?, ?, ?, ?, ?, ?, ?)');
-			$animeStmt = $pdo->prepare('INSERT INTO user_media_anime_data (user_media_id, episodes) VALUES (?, ?)');
-			$mangaStmt = $pdo->prepare('INSERT INTO user_media_manga_data (user_media_id, chapters, volumes) VALUES (?, ?, ?)');
+			$data = [];
 			foreach ($nodes as $root)
 			{
 				$mediaMalId = Strings::makeInteger(self::getNodeValue($xpath, 'series_animedb_id | series_mangadb_id', $root));
@@ -56,27 +52,39 @@ class UserSubProcessorLists extends UserSubProcessor
 					6 => UserListStatus::Planned
 				], UserListStatus::Unknown);
 
-				$listStmt->execute([$context->userId, $mediaMalId, $media, $score, $startDate, $finishDate, $status]);
-				$userListId = $pdo->lastInsertId();
+				$finishedEpisodes = null;
+				$finishedChapters = null;
+				$finishedVolumes = null;
 				switch ($media)
 				{
 					case Media::Anime:
 						$finishedEpisodes = Strings::makeInteger(self::getNodeValue($xpath, 'my_watched_episodes', $root));
-						$animeStmt->execute([$userListId, $finishedEpisodes]);
 						break;
 					case Media::Manga:
 						$finishedChapters = Strings::makeInteger(self::getNodeValue($xpath, 'my_read_chapters', $root));
 						$finishedVolumes  = Strings::makeInteger(self::getNodeValue($xpath, 'my_read_volumes', $root));
-						$mangaStmt->execute([$userListId, $finishedChapters, $finishedVolumes]);
 						break;
 					default:
 						throw new BadMediaException();
 				}
+
+				$data [] = [
+					'user_id' => $context->userId,
+					'mal_id' => $mediaMalId,
+					'media' => $media,
+					'score' => $score,
+					'start_date' => $startDate,
+					'end_date' => $finishDate,
+					'episodes' => $finishedEpisodes,
+					'chapters' => $finishedChapters,
+					'volumes' => $finishedVolumes,
+					'status' => $status
+				];
 			}
+			$this->insert('user_media_list', $data);
 
 			$daysSpent = Strings::makeFloat(self::getNodeValue($xpath, '//user_days_spent_watching'));
-			$stmt = $pdo->prepare('UPDATE user_' . Media::toString($media) . '_data SET days_spent = ? WHERE user_id = ?');
-			$stmt->execute([$daysSpent, $context->userId]);
+			$this->update('users', ['user_id' => $context->userId], [Media::toString($media) . '_days_spent' => $daysSpent]);
 		}
 	}
 }

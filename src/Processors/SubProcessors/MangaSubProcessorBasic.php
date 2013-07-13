@@ -19,10 +19,9 @@ class MangaSubProcessorBasic extends MediaSubProcessor
 		preg_match_all('/([0-9]+|Unknown)/', self::getNodeValue($xpath, '//span[starts-with(text(), \'Volume\')]/following-sibling::node()[self::text()]'), $matches);
 		$volumeCount = Strings::makeInteger($matches[0][0]);
 
-		$this->insert('media_' . Media::toString($this->media) . '_data', [
-			'media_id' => $context->mediaId,
-			'chapter_count' => $chapterCount,
-			'volume_count' => $volumeCount
+		$this->update('media', ['media_id' => $context->mediaId], [
+			'chapters' => $chapterCount,
+			'volumes' => $volumeCount
 		]);
 	}
 }

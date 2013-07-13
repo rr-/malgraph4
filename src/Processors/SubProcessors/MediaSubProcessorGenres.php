@@ -11,7 +11,11 @@ class MediaSubProcessorGenres extends MediaSubProcessor
 			preg_match('/=([0-9]+)/', $node->getAttribute('href'), $matches);
 			$genreMalId = Strings::makeInteger($matches[1]);
 			$genreName = Strings::removeSpaces($node->textContent);
-			$data []= ['media_id' => $context->mediaId, 'genre_mal_id' => $genreMalId, 'genre_name' => $genreName];
+			$data []= [
+				'media_id' => $context->mediaId,
+				'mal_id' => $genreMalId,
+				'name' => $genreName
+			];
 		}
 		$this->insert('media_genres', $data);
 	}

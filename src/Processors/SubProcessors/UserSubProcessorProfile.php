@@ -30,20 +30,21 @@ class UserSubProcessorProfile extends UserSubProcessor
 		$website        = Strings::removeSpaces(self::getNodeValue($xpath, '//td[text() = \'Website\']/following-sibling::td'));
 		$gender         = Strings::makeEnum(self::getNodeValue($xpath, '//td[text() = \'Gender\']/following-sibling::td'), ['Female' => UserGender::Female, 'Male' => UserGender::Male], UserGender::Unknown);
 
-		$pdo = Database::getPDO();
-		$stmt = $pdo->prepare('DELETE FROM users WHERE LOWER(name) = LOWER(?)');
-		$stmt->execute([$userName]);
-
-		$stmt = $pdo->prepare('INSERT INTO users(name, picture_url, join_date, user_mal_id, comment_count, post_count, birthday, location, website, gender) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-		$stmt->execute([$userName, $pictureUrl, $joinDate, $malId, $commentCount, $postCount, $birthday, $location, $website, $gender]);
-		$userId = $pdo->lastInsertId();
-
-		$stmt = $pdo->prepare('INSERT INTO user_anime_data(user_id, view_count) VALUES (?, ?)');
-		$stmt->execute([$userId, $animeViewCount]);
-
-		$stmt = $pdo->prepare('INSERT INTO user_manga_data(user_id, view_count) VALUES (?, ?)');
-		$stmt->execute([$userId, $mangaViewCount]);
-
+		$this->delete('users', ['LOWER(name)' => strtolower($userName)]);
+		$userId = $this->insert('users', [
+			'name' => $userName,
+			'picture_url' => $pictureUrl,
+			'join_date' => $joinDate,
+			'mal_id' => $malId,
+			'comments' => $commentCount,
+			'posts' => $postCount,
+			'birthday' => $birthday,
+			'location' => $location,
+			'website' => $website,
+			'gender' => $gender,
+			'anime_views' => $animeViewCount,
+			'manga_views' => $mangaViewCount,
+		]);
 		$context->userId = $userId;
 	}
 }

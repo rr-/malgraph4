@@ -13,15 +13,17 @@ class UserSubProcessorFriends extends UserSubProcessor
 
 	public function process(array $documents, &$context)
 	{
-		$pdo = Database::getPDO();
-
 		$doc = self::getDOM($documents[self::URL_FRIENDS]);
-		$stmt = $pdo->prepare('INSERT INTO user_friends(user_id, friend_name) VALUES(?, ?)');
 		$xpath = new DOMXPath($doc);
+		$data = [];
 		foreach ($xpath->query('//a[contains(@href, \'profile\')]/strong') as $node)
 		{
 			$friendName = Strings::removeSpaces($node->nodeValue);
-			$stmt->execute([$context->userId, $friendName]);
+			$data []= [
+				'user_id' => $context->userId,
+				'name' => $friendName
+			];
 		}
+		$this->insert('user_friends', $data);
 	}
 }

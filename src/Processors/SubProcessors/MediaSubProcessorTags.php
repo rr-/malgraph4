@@ -10,7 +10,11 @@ class MediaSubProcessorTags extends MediaSubProcessor
 		{
 			$tagName = Strings::removeSpaces($node->textContent);
 			$tagCount = Strings::makeInteger($node->getAttribute('title'));
-			$data []= ['media_id' => $context->mediaId, 'tag_name' => $tagName, 'tag_count' => $tagCount];
+			$data []= [
+				'media_id' => $context->mediaId,
+				'name' => $tagName,
+				'count' => $tagCount
+			];
 		}
 		$this->insert('media_tags', $data);
 	}

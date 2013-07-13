@@ -10,6 +10,12 @@ try
 
 	$processor = new UserProcessor();
 	$processor->process($userName);
+
+	$processor = new AnimeProcessor();
+	$processor->process(1);
+
+	$processor = new MangaProcessor();
+	$processor->process(3);
 }
 catch (Exception $e)
 {

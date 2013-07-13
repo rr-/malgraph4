@@ -67,7 +67,12 @@ class MediaSubProcessorRelations extends MediaSubProcessor
 				continue;
 			}
 
-			$data []= ['media_id' => $context->mediaId, 'media_mal_id' => $mediaMalId, 'media' => $media, 'relation_type' => $type];
+			$data []= [
+				'media_id' => $context->mediaId,
+				'mal_id' => $mediaMalId,
+				'media' => $media,
+				'type' => $type
+			];
 		}
 		$this->insert('media_relations', $data);
 	}
