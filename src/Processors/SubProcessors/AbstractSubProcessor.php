@@ -38,6 +38,10 @@ abstract class AbstractSubProcessor
 
 	public function insert($tableName, $allRows)
 	{
+		if (empty($allRows))
+		{
+			return;
+		}
 		if (!is_array(reset($allRows)))
 		{
 			$allRows = [$allRows];
