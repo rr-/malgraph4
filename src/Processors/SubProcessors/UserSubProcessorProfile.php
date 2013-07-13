@@ -34,7 +34,7 @@ class UserSubProcessorProfile extends UserSubProcessor
 		$stmt = $pdo->prepare('DELETE FROM users WHERE LOWER(name) = LOWER(?)');
 		$stmt->execute([$userName]);
 
-		$stmt = $pdo->prepare('INSERT INTO users(name, picture_url, join_date, mal_id, comment_count, post_count, birthday, location, website, gender) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+		$stmt = $pdo->prepare('INSERT INTO users(name, picture_url, join_date, user_mal_id, comment_count, post_count, birthday, location, website, gender) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
 		$stmt->execute([$userName, $pictureUrl, $joinDate, $malId, $commentCount, $postCount, $birthday, $location, $website, $gender]);
 		$userId = $pdo->lastInsertId();
 

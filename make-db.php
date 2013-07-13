@@ -10,7 +10,7 @@ try
 		name VARCHAR(32) UNIQUE,
 		picture_url VARCHAR(256),
 		join_date VARCHAR(10), --TIMESTAMP
-		mal_id INTEGER,
+		user_mal_id INTEGER,
 		comment_count INTEGER,
 		post_count INTEGER,
 		birthday VARCHAR(10), --TIMESTAMP
@@ -64,13 +64,13 @@ try
 	$pdo->exec('CREATE TABLE IF NOT EXISTS user_media (
 		user_media_id INTEGER PRIMARY KEY,
 		user_id INTEGER,
-		mal_media_id INTEGER,
+		media_mal_id INTEGER,
 		media VARCHAR(1),
 		score INTEGER,
 		start_date VARCHAR(10), --TIMESTAMP
 		end_date VARCHAR(10), --TIMESTAMP
 		status VARCHAR(1),
-		UNIQUE (mal_media_id, media),
+		UNIQUE (media_mal_id, media),
 		FOREIGN KEY(user_id) REFERENCES users(user_id)
 		ON DELETE CASCADE
 	)');
