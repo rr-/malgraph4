@@ -8,7 +8,7 @@ try
 	$pdo->exec('CREATE TABLE IF NOT EXISTS users (
 		user_id INTEGER PRIMARY KEY,
 		name VARCHAR(32) UNIQUE,
-		picture VARCHAR(256),
+		picture_url VARCHAR(256),
 		join_date VARCHAR(10), --TIMESTAMP
 		mal_id INTEGER,
 		comment_count INTEGER,

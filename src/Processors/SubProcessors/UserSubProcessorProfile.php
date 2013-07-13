@@ -18,7 +18,7 @@ class UserSubProcessorProfile extends UserSubProcessor
 
 		$userName       = Strings::removeSpaces(self::getNodeValue($xpath, '//title'));
 		$userName       = substr($userName, 0, strpos($userName, '\'s Profile'));
-		$pictureURL     = self::getNodeValue($xpath, '//td[@class = \'profile_leftcell\']//img', null, 'src');
+		$pictureUrl     = self::getNodeValue($xpath, '//td[@class = \'profile_leftcell\']//img', null, 'src');
 		$joinDate       = Strings::makeDate(self::getNodeValue($xpath, '//td[text() = \'Join Date\']/following-sibling::td'));
 		$malId          = Strings::makeInteger(Strings::parseURL(self::getNodeValue($xpath, '//a[text() = \'All Comments\']', null, 'href'))['query']['id']);
 		$animeViewCount = Strings::makeInteger(self::getNodeValue($xpath, '//td[text() = \'Anime List Views\']/following-sibling::td'));
@@ -34,8 +34,8 @@ class UserSubProcessorProfile extends UserSubProcessor
 		$stmt = $pdo->prepare('DELETE FROM users WHERE LOWER(name) = LOWER(?)');
 		$stmt->execute([$userName]);
 
-		$stmt = $pdo->prepare('INSERT INTO users(name, picture, join_date, mal_id, comment_count, post_count, birthday, location, website, gender) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-		$stmt->execute([$userName, $pictureURL, $joinDate, $malId, $commentCount, $postCount, $birthday, $location, $website, $gender]);
+		$stmt = $pdo->prepare('INSERT INTO users(name, picture_url, join_date, mal_id, comment_count, post_count, birthday, location, website, gender) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+		$stmt->execute([$userName, $pictureUrl, $joinDate, $malId, $commentCount, $postCount, $birthday, $location, $website, $gender]);
 		$userId = $pdo->lastInsertId();
 
 		$stmt = $pdo->prepare('INSERT INTO user_anime_data(user_id, view_count) VALUES (?, ?)');
