@@ -39,12 +39,12 @@ class UserSubProcessorLists extends UserSubProcessor
 			}
 
 			$nodes = $xpath->query('//anime | //manga');
-			$listStmt = $pdo->prepare('INSERT INTO user_list (user_id, media_id, media, score, start_date, end_date, status) VALUES (?, ?, ?, ?, ?, ?, ?)');
-			$animeStmt = $pdo->prepare('INSERT INTO user_list_anime_data (user_list_id, episodes) VALUES (?, ?)');
-			$mangaStmt = $pdo->prepare('INSERT INTO user_list_manga_data (user_list_id, chapters, volumes) VALUES (?, ?, ?)');
+			$listStmt = $pdo->prepare('INSERT INTO user_media (user_id, mal_media_id, media, score, start_date, end_date, status) VALUES (?, ?, ?, ?, ?, ?, ?)');
+			$animeStmt = $pdo->prepare('INSERT INTO user_media_anime_data (user_media_id, episodes) VALUES (?, ?)');
+			$mangaStmt = $pdo->prepare('INSERT INTO user_media_manga_data (user_media_id, chapters, volumes) VALUES (?, ?, ?)');
 			foreach ($nodes as $root)
 			{
-				$mediaId    = Strings::makeInteger(self::getNodeValue($xpath, 'series_animedb_id | series_mangadb_id', $root));
+				$malMediaId = Strings::makeInteger(self::getNodeValue($xpath, 'series_animedb_id | series_mangadb_id', $root));
 				$score      = Strings::makeInteger(self::getNodeValue($xpath, 'my_score', $root));
 				$startDate  = Strings::makeDate(self::getNodeValue($xpath, 'my_start_date', $root));
 				$finishDate = Strings::makeDate(self::getNodeValue($xpath, 'my_finish_date', $root));
@@ -56,7 +56,7 @@ class UserSubProcessorLists extends UserSubProcessor
 					6 => UserListStatus::Planned
 				], UserListStatus::Unknown);
 
-				$listStmt->execute([$context->userId, $mediaId, $media, $score, $startDate, $finishDate, $status]);
+				$listStmt->execute([$context->userId, $malMediaId, $media, $score, $startDate, $finishDate, $status]);
 				$userListId = $pdo->lastInsertId();
 				switch ($media)
 				{

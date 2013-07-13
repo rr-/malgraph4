@@ -61,31 +61,32 @@ try
 		ON DELETE CASCADE
 	)');
 
-	$pdo->exec('CREATE TABLE IF NOT EXISTS user_list (
-		user_list_id INTEGER PRIMARY KEY,
+	$pdo->exec('CREATE TABLE IF NOT EXISTS user_media (
+		user_media_id INTEGER PRIMARY KEY,
 		user_id INTEGER,
-		media_id INTEGER,
+		mal_media_id INTEGER,
 		media VARCHAR(1),
 		score INTEGER,
 		start_date VARCHAR(10), --TIMESTAMP
 		end_date VARCHAR(10), --TIMESTAMP
 		status VARCHAR(1),
+		UNIQUE (mal_media_id, media),
 		FOREIGN KEY(user_id) REFERENCES users(user_id)
 		ON DELETE CASCADE
 	)');
 
-	$pdo->exec('CREATE TABLE IF NOT EXISTS user_list_anime_data (
-		user_list_id INTEGER,
+	$pdo->exec('CREATE TABLE IF NOT EXISTS user_media_anime_data (
+		user_media_id INTEGER,
 		episodes INTEGER,
-		FOREIGN KEY(user_list_id) REFERENCES user_list(user_list_id)
+		FOREIGN KEY(user_media_id) REFERENCES user_media(user_media_id)
 		ON DELETE CASCADE
 	)');
 
-	$pdo->exec('CREATE TABLE IF NOT EXISTS user_list_manga_data (
-		user_list_id INTEGER,
+	$pdo->exec('CREATE TABLE IF NOT EXISTS user_media_manga_data (
+		user_media_id INTEGER,
 		chapters INTEGER,
 		volumes INTEGER,
-		FOREIGN KEY(user_list_id) REFERENCES user_list(user_list_id)
+		FOREIGN KEY(user_media_id) REFERENCES user_media(user_media_id)
 		ON DELETE CASCADE
 	)');
 }
