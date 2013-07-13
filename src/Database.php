@@ -7,6 +7,7 @@ class Database extends Singleton
 	{
 		self::$pdo = new PDO('sqlite:' . Config::$dbPath);
 		self::$pdo->setAttribute(PDO::ATTR_PERSISTENT, true);
+		self::$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
 		self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		$stmt = self::$pdo->prepare('PRAGMA foreign_keys = ON');
