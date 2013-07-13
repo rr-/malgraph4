@@ -10,4 +10,6 @@ class MediaRelation extends Enum
 	const Summary = 7;
 	const Character = 8;
 	const SpinOff = 9;
+	const AlternativeSetting = 10;
+	const Other = 11;
 }
