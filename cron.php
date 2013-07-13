@@ -9,13 +9,22 @@ try
 		: $queue->dequeue();
 
 	$processor = new UserProcessor();
-	$processor->process($userName);
+	$context = $processor->process($userName);
 
-	$processor = new AnimeProcessor();
-	$processor->process(1);
+	$mediaProcessors =
+	[
+		Media::Anime => new AnimeProcessor(),
+		Media::Manga => new MangaProcessor()
+	];
 
-	$processor = new MangaProcessor();
-	$processor->process(3);
+	$pdo = Database::getPDO();
+	$stmt = $pdo->prepare('SELECT mal_id, media FROM user_media_list WHERE user_id = ?');
+	$stmt->execute([$context->userId]);
+	foreach ($stmt->fetchAll() as $row)
+	{
+		echo sprintf('Processing %s #%d' . PHP_EOL, Media::toString($row->media), $row->mal_id);
+		$mediaProcessors[$row->media]->process($row->mal_id);
+	}
 }
 catch (Exception $e)
 {
