@@ -5,6 +5,7 @@ class MediaSubProcessorGenres extends MediaSubProcessor
 	{
 		$doc = self::getDOM($documents[self::URL_MEDIA]);
 		$xpath = new DOMXPath($doc);
+
 		$data = [];
 		foreach ($xpath->query('//span[starts-with(text(), \'Genres\')]/../a') as $node)
 		{

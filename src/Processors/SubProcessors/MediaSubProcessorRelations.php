@@ -5,6 +5,7 @@ class MediaSubProcessorRelations extends MediaSubProcessor
 	{
 		$doc = self::getDOM($documents[self::URL_MEDIA]);
 		$xpath = new DOMXPath($doc);
+
 		$data = [];
 		$lastType = '';
 		foreach ($xpath->query('//h2[starts-with(text(), \'Related\')]/../*') as $node)

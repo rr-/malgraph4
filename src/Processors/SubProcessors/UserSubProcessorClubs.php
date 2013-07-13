@@ -14,8 +14,9 @@ class UserSubProcessorClubs extends UserSubProcessor
 	public function process(array $documents, &$context)
 	{
 		$doc = self::getDOM($documents[self::URL_CLUBS]);
-		$data = [];
 		$xpath = new DOMXPath($doc);
+
+		$data = [];
 		foreach ($xpath->query('//ol/li/a[contains(@href, \'/club\')]') as $node)
 		{
 			$url = Strings::parseURL($node->getAttribute('href'));

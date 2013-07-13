@@ -19,9 +19,23 @@ class MangaSubProcessorBasic extends MediaSubProcessor
 		preg_match_all('/([0-9]+|Unknown)/', self::getNodeValue($xpath, '//span[starts-with(text(), \'Volume\')]/following-sibling::node()[self::text()]'), $matches);
 		$volumeCount = Strings::makeInteger($matches[0][0]);
 
+		//serialization
+		$serializationMalId = null;
+		$serializationName = null;
+		$q = $xpath->query('//span[starts-with(text(), \'Serialization\')]/../a');
+		if ($q->length > 0)
+		{
+			$node = $q->item(0);
+			preg_match('/=([0-9]+)/', $node->getAttribute('href'), $matches);
+			$serializationMalId = Strings::makeInteger($matches[1]);
+			$serializationName = Strings::removeSpaces($q->item(0)->nodeValue);
+		}
+
 		$this->update('media', ['media_id' => $context->mediaId], [
 			'chapters' => $chapterCount,
-			'volumes' => $volumeCount
+			'volumes' => $volumeCount,
+			'serialization_id' => $serializationMalId,
+			'serialization_name' => $serializationName,
 		]);
 	}
 }

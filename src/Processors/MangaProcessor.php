@@ -10,7 +10,6 @@ class MangaProcessor extends AbstractProcessor
 		$subProcessors []= new MediaSubProcessorRelations(Media::Manga);
 		$subProcessors []= new MangaSubProcessorBasic();
 		$subProcessors []= new MangaSubProcessorAuthors();
-		$subProcessors []= new MangaSubProcessorSerializations();
 		return $subProcessors;
 	}
 

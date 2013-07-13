@@ -5,6 +5,7 @@ class MediaSubProcessorTags extends MediaSubProcessor
 	{
 		$doc = self::getDOM($documents[self::URL_MEDIA]);
 		$xpath = new DOMXPath($doc);
+
 		$data = [];
 		foreach ($xpath->query('//h2[starts-with(text(), \'Popular Tags\')]/following-sibling::*/a') as $node)
 		{

@@ -15,6 +15,7 @@ class UserSubProcessorFriends extends UserSubProcessor
 	{
 		$doc = self::getDOM($documents[self::URL_FRIENDS]);
 		$xpath = new DOMXPath($doc);
+
 		$data = [];
 		foreach ($xpath->query('//a[contains(@href, \'profile\')]/strong') as $node)
 		{
