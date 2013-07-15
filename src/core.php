@@ -1,18 +1,20 @@
 <?php
 function __autoload($className)
 {
-	$paths =
+	$name = $className . '.php';
+	$dirs =
 	[
-		__DIR__ . '/' . $className . '.php',
-		__DIR__ . '/Processors/SubProcessors/' . $className . '.php',
-		__DIR__ . '/Processors/' . $className . '.php',
-		__DIR__ . '/Enums/' . $className . '.php',
-		__DIR__ . '/Exceptions/' . $className . '.php',
-		__DIR__ . '/Controllers/' . $className . '.php',
-		__DIR__ . '/Views/' . $className . '.php',
+		'',
+		'Processors' . DIRECTORY_SEPARATOR . 'SubProcessors',
+		'Processors',
+		'Enums',
+		'Exceptions',
+		'Controllers',
+		'Views',
 	];
-	foreach ($paths as $path)
+	foreach ($dirs as $dir)
 	{
+		$path = implode(DIRECTORY_SEPARATOR, [__DIR__, $dir, $name]);
 		if (file_exists($path))
 		{
 			include $path;
@@ -22,7 +24,7 @@ function __autoload($className)
 
 ErrorHandler::init();
 
-$localCore = __DIR__ . '/local.php';
+$localCore = __DIR__ . DIRECTORY_SEPARATOR . 'local.php';
 if (file_exists($localCore))
 {
 	include $localCore;

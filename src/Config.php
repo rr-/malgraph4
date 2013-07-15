@@ -12,10 +12,11 @@ class Config extends Singleton
 
 	public static function doInit()
 	{
-		self::$userQueuePath = __DIR__ . '/../data/users.lst';
-		self::$mirrorPath = __DIR__ . '/../data/mirror/';
-		self::$cachePath = __DIR__ . '/../data/cache/';
-		self::$dbPath = __DIR__ . '/../data/db.sqlite';
+		$rootDir = join(DIRECTORY_SEPARATOR, [__DIR__, '..', 'data', '']);
+		self::$userQueuePath = $rootDir . 'users.lst';
+		self::$mirrorPath = $rootDir . 'mirror';
+		self::$cachePath = $rootDir . 'cache';
+		self::$dbPath = $rootDir . 'db.sqlite';
 		self::$debugCron = true;
 		self::$mirrorEnabled = false;
 		self::$cacheEnabled = true;
