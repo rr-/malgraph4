@@ -1,15 +1,25 @@
 <?php
 abstract class AbstractController
 {
-	public static function match($url)
+	public static function parseRequest($url, &$controllerContext)
 	{
 		throw new UnimplementedException();
 	}
 
-	public function work($url)
+	public static function getViewName()
 	{
-		$this->doWork($url);
+		throw new UnimplementedException();
 	}
 
-	public abstract function doWork($url);
+	public function work($controllerContext)
+	{
+		$viewContext = new ViewContext();
+		$this->doWork($controllerContext, $viewContext);
+		View::render($this->getViewName(), $viewContext);
+	}
+
+	public function doWork($controllerContext, &$viewContext)
+	{
+		throw new UnimplementedException();
+	}
 }

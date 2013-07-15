@@ -10,28 +10,29 @@ foreach (glob('src/Controllers/*') as $fileName)
 $classNames = array_filter(get_declared_classes(), function($className)
 {
 	$isAbstract = (new ReflectionClass($className))->isAbstract();
-	return !$isAbstract and strpos($className, 'Controller') !== false;
+	return !$isAbstract and preg_match('/Controller$/', $className);
 });
 
+$controllerContext = new ControllerContext();
 try
 {
-	$request = $_SERVER['REQUEST_URI'];
+	$url = $_SERVER['REQUEST_URI'];
 	foreach ($classNames as $className)
 	{
-		if ($className::match($request))
+		if ($className::parseRequest($url, $controllerContext))
 		{
 			$class = new $className();
-			$class->work($request);
+			$class->work($controllerContext);
 			exit(0);
 		}
 	}
-	throw new Exception('Bad URL');
+	$viewContext = new ViewContext();
+	View::render('error-404', $viewContext);
 }
 catch (Exception $e)
 {
-	#todo:
-	#better error handler
-	echo '<pre>';
-	var_dump($e);
-	echo '</pre>';
+	#log error information
+	$viewContext = new ViewContext();
+	$viewContext->exception = $e;
+	View::render('error', $viewContext);
 }

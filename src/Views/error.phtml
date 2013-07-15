@@ -1,0 +1,23 @@
+<h1>Serious error</h1>
+<p>If you see this, please mail <a href="mailto:chrupky@gmail.com">chrupky@gmail.com</a> with information below.<br>
+Also, please use "MALgraph" as the subject and include your MAL nickname. Thank you!</p>
+<hr>
+<p><?php echo $viewContext->exception->getMessage() ?> at <?php echo $viewContext->exception->getFile() ?>:<?php echo $viewContext->exception->getLine() ?></p>
+<?php $backtrace = $viewContext->exception->getTrace() ?>
+<ul>
+	<?php for ($k = 0, $i = 0; $i < count($backtrace); $i ++, $k ++): ?>
+		<?php $b = $backtrace[$i]; ?>
+		<li><?php
+			printf
+			(
+				'#%d %s%s(%s) called at [%s:%d]',
+				$k,
+				empty($b['type']) ? '' : $b['class'] . $b['type'],
+				$b['function'],
+				'...', //join(', ', array_map(function($x) { return @json_encode($x); }, empty($b['args']) ? array() : $b['args'])),
+				empty($b['file']) ? '[anonymous function]' : $b['file'],
+				isset($b['line']) ? $b['line'] : null
+			);
+		?></li>
+	<?php endfor ?>
+</ul>

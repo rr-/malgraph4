@@ -6,7 +6,7 @@ abstract class UserController extends AbstractController
 		throw new UnimplementedException();
 	}
 
-	public static function match($url)
+	public static function parseRequest($url, &$controllerContext)
 	{
 		$userRegex = '[0-9a-zA-Z_-]{2,}';
 
@@ -20,33 +20,32 @@ abstract class UserController extends AbstractController
 			'(,(anime|manga))?' .
 			'/?$';
 
-		return preg_match('#' . $regex . '#', $url);
-	}
+		if (!preg_match('#' . $regex . '#', $url, $matches))
+		{
+			return false;
+		}
 
-	public function doWork($url)
-	{
-		$url = trim($url, '/');
-		$url = strtr($url, '/,', '::');
-		$tmp = explode(':', $url);
-		$user = array_shift($tmp);
-		$module = array_shift($tmp);
-		$media = array_shift($tmp) ?: 'anime';
+		$controllerContext->userName = $matches[1];
+		$media = isset($matches[3]) ? $matches[3] : 'anime';
 		switch ($media)
 		{
 			case 'anime':
-				$media = Media::Anime;
+				$controllerContext->media = Media::Anime;
 				break;
 			case 'manga':
-				$media = Media::Manga;
+				$controllerContext->media = Media::Manga;
 				break;
 			default:
 				throw new BadMediaException();
 		}
+		return true;
+	}
 
-		$this->user = $user;
-		$this->media = $media;
+	public function work($controllerContext)
+	{
+		parent::work($controllerContext);
 
 		$queue = new Queue(Config::$userQueuePath);
-		$queue->enqueue($user);
+		$queue->enqueue($controllerContext->userName);
 	}
 }

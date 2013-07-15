@@ -8,6 +8,8 @@ function __autoload($className)
 		__DIR__ . '/Processors/' . $className . '.php',
 		__DIR__ . '/Enums/' . $className . '.php',
 		__DIR__ . '/Exceptions/' . $className . '.php',
+		__DIR__ . '/Controllers/' . $className . '.php',
+		__DIR__ . '/Views/' . $className . '.php',
 	];
 	foreach ($paths as $path)
 	{

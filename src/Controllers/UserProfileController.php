@@ -6,11 +6,14 @@ class UserProfileController extends UserController
 		return ['', 'profile'];
 	}
 
-	public function doWork($url)
+	public static function getViewName()
 	{
-		parent::doWork($url);
+		return 'user-profile';
+	}
 
-		#$this->user;
-		#$this->media;
+	public function doWork($controllerContext, &$viewContext)
+	{
+		$viewContext->userName = $controllerContext->userName;
+		$viewContext->media = $controllerContext->media;
 	}
 }
