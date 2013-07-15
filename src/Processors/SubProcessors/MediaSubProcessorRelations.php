@@ -40,6 +40,7 @@ class MediaSubProcessorRelations extends MediaSubProcessor
 					'spin-off'            => MediaRelation::SpinOff,
 					'alternative setting' => MediaRelation::AlternativeSetting,
 					'other'               => MediaRelation::Other,
+					'full story'          => MediaRelation::FullStory,
 				], null);
 				if ($type === null)
 				{
