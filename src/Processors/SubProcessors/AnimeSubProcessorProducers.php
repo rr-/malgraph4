@@ -14,7 +14,10 @@ class AnimeSubProcessorProducers extends MediaSubProcessor
 		$data = [];
 		foreach ($xpath->query('//span[starts-with(text(), \'Producers\')]/../a') as $node)
 		{
-			preg_match('/\?p=([0-9]+)/', $node->getAttribute('href'), $matches);
+			if (!preg_match('/\?p=([0-9]+)/', $node->getAttribute('href'), $matches))
+			{
+				continue;
+			}
 			$producerMalId = Strings::makeInteger($matches[1]);
 			$producerName = Strings::removeSpaces($node->textContent);
 			$data []= [
