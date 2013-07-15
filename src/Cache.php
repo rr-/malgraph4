@@ -24,6 +24,10 @@ class Cache
 	public static function isFresh($url)
 	{
 		$path = self::urlToPath($url);
+		if (!Config::$cacheEnabled)
+		{
+			return false;
+		}
 		if (!file_exists($path))
 		{
 			return false;
