@@ -1,10 +1,11 @@
 <?php
 class AnimeMediaType extends MediaType
 {
-	const TV = 0;
-	const OVA = 1;
-	const Movie = 2;
-	const Special = 3;
-	const ONA = 4;
-	const Music = 5;
+	const Unknown = 0;
+	const TV = 1;
+	const OVA = 2;
+	const Movie = 3;
+	const Special = 4;
+	const ONA = 5;
+	const Music = 6;
 }

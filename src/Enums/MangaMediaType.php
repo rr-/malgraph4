@@ -1,6 +1,7 @@
 <?php
 class MangaMediaType extends MediaType
 {
+	const Unknown = 0;
 	const Manga = 1;
 	const Novel = 2;
 	const OneShot = 3;

@@ -33,6 +33,7 @@ class MediaSubProcessorBasic extends MediaSubProcessor
 			'manhwa'   => MangaMediaType::Manhwa,
 			'manhua'   => MangaMediaType::Manhua,
 			'oel'      => MangaMediaType::OEL,
+			''         => $this->media == Media::Manga ? MangaMediaType::Unknown : AnimeMediaType::Unknown,
 		], null);
 		if ($subType === null)
 		{
