@@ -21,7 +21,7 @@ class UserController extends AbstractController
 
 		$controllerContext->userName = $matches[1];
 		$controllerContext->module = ltrim($matches[2], '/') ?: 'profile';
-		$media = isset($matches[3]) ? $matches[3] : 'anime';
+		$media = isset($matches[4]) ? $matches[4] : 'anime';
 		switch ($media)
 		{
 			case 'anime':
