@@ -1,1 +1,8 @@
 This is user list
+<ul>
+<?php foreach ($viewContext->list as $row): ?>
+	<li>
+		<pre><?php var_dump($row) ?></pre>
+	</li>
+<?php endforeach ?>
+</ul>

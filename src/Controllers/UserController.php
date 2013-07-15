@@ -42,11 +42,34 @@ class UserController extends AbstractController
 		$viewContext->media = $controllerContext->media;
 		$viewContext->name = 'user-' . $controllerContext->module;
 
+		$pdo = Database::getPDO();
+		$stmt = $pdo->prepare('SELECT * FROM users WHERE LOWER(name) = LOWER(?)');
+		$stmt->Execute([$viewContext->userName]);
+		$result = $stmt->fetch();
+		if (empty($result))
+		{
+			#todo:
+			throw new Exception('user doesn\'t exist in db, but he just got enqueued');
+		}
+		$viewContext->userId = $result->user_id;
+
+
 		$queue = new Queue(Config::$userQueuePath);
 		$queue->enqueue($controllerContext->userName);
 
 		$methodName = 'action' . ucfirst($controllerContext->module);
 		self::$methodName($viewContext);
+	}
+
+	private static function getUserList($userId, $media)
+	{
+		$pdo = Database::getPDO();
+		$stmt = $pdo->prepare('SELECT * FROM user_media_list ' .
+			'INNER JOIN media ON user_media_list.mal_id = media.mal_id ' .
+			'AND user_media_list.media = media.media ' .
+			'WHERE user_id = ? AND user_media_list.media = ?');
+		$stmt->execute([$userId, $media]);
+		return $stmt->fetchAll();
 	}
 
 	public static function actionProfile(&$viewContext)
@@ -55,5 +78,7 @@ class UserController extends AbstractController
 
 	public static function actionList(&$viewContext)
 	{
+		$list = self::getUserList($viewContext->userId, $viewContext->media);
+		$viewContext->list = $list;
 	}
 }
