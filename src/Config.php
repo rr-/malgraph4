@@ -17,7 +17,7 @@ class Config extends Singleton
 		self::$cachePath = __DIR__ . '/../data/cache/';
 		self::$dbPath = __DIR__ . '/../data/db.sqlite';
 		self::$debugCron = true;
-		self::$mirrorEnabled = true;
+		self::$mirrorEnabled = false;
 		self::$cacheEnabled = true;
 		self::$cacheTimeToLive = 24 * 60 * 60;
 	}

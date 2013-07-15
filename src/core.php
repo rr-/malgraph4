@@ -21,3 +21,9 @@ function __autoload($className)
 }
 
 ErrorHandler::init();
+
+$localCore = __DIR__ . '/local.php';
+if (file_exists($localCore))
+{
+	include $localCore;
+}
