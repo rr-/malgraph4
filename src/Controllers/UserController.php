@@ -1,11 +1,6 @@
 <?php
-abstract class UserController extends AbstractController
+class UserController extends AbstractController
 {
-	public static function moduleMatch()
-	{
-		throw new UnimplementedException();
-	}
-
 	public static function parseRequest($url, &$controllerContext)
 	{
 		$userRegex = '[0-9a-zA-Z_-]{2,}';
@@ -13,9 +8,8 @@ abstract class UserController extends AbstractController
 		$regex =
 			'^/?' .
 			'(' . $userRegex . ')' .
-			'/?' .
 			'(' .
-				implode('|', (array) static::moduleMatch()) .
+				'|/profile|/list' .
 			')' .
 			'(,(anime|manga))?' .
 			'/?$';
@@ -26,6 +20,7 @@ abstract class UserController extends AbstractController
 		}
 
 		$controllerContext->userName = $matches[1];
+		$controllerContext->module = ltrim($matches[2], '/') ?: 'profile';
 		$media = isset($matches[3]) ? $matches[3] : 'anime';
 		switch ($media)
 		{
@@ -41,11 +36,20 @@ abstract class UserController extends AbstractController
 		return true;
 	}
 
-	public function work($controllerContext)
+	public function doWork($controllerContext, &$viewContext)
 	{
-		parent::work($controllerContext);
+		$viewContext->userName = $controllerContext->userName;
+		$viewContext->media = $controllerContext->media;
+		$viewContext->name = 'user-' . $controllerContext->module;
 
 		$queue = new Queue(Config::$userQueuePath);
 		$queue->enqueue($controllerContext->userName);
+
+		$methodName = 'action' . ucfirst($controllerContext->module);
+		$this->$methodName($viewContext);
+	}
+
+	public function actionProfile(&$viewContext)
+	{
 	}
 }

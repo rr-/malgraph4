@@ -27,12 +27,14 @@ try
 		}
 	}
 	$viewContext = new ViewContext();
-	View::render('error-404', $viewContext);
+	$viewContext->name = 'error-404';
+	View::render($viewContext);
 }
 catch (Exception $e)
 {
 	#log error information
 	$viewContext = new ViewContext();
+	$viewContext->name = 'error';
 	$viewContext->exception = $e;
-	View::render('error', $viewContext);
+	View::render($viewContext);
 }

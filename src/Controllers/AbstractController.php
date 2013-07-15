@@ -6,16 +6,11 @@ abstract class AbstractController
 		throw new UnimplementedException();
 	}
 
-	public static function getViewName()
-	{
-		throw new UnimplementedException();
-	}
-
 	public function work($controllerContext)
 	{
 		$viewContext = new ViewContext();
 		$this->doWork($controllerContext, $viewContext);
-		View::render($this->getViewName(), $viewContext);
+		View::render($viewContext);
 	}
 
 	public function doWork($controllerContext, &$viewContext)

@@ -1,16 +1,14 @@
 <?php
 class View
 {
-	protected static $viewName;
 	protected static $viewContext;
 
-	public static function render($viewName, $viewContext)
+	public static function render($viewContext)
 	{
 		ob_start();
 		$ret = null;
 		try
 		{
-			self::$viewName = $viewName;
 			self::$viewContext = $viewContext;
 			self::renderFile('layout', $viewContext);
 			$ret = ob_get_contents();
@@ -24,7 +22,7 @@ class View
 
 	public static function renderView()
 	{
-		self::renderFile(self::$viewName, self::$viewContext);
+		self::renderFile(self::$viewContext->name, self::$viewContext);
 	}
 
 	public static function renderFile($name, $viewContext)
