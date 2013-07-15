@@ -36,7 +36,7 @@ class UserController extends AbstractController
 		return true;
 	}
 
-	public function doWork($controllerContext, &$viewContext)
+	public static function work($controllerContext, &$viewContext)
 	{
 		$viewContext->userName = $controllerContext->userName;
 		$viewContext->media = $controllerContext->media;
@@ -46,10 +46,14 @@ class UserController extends AbstractController
 		$queue->enqueue($controllerContext->userName);
 
 		$methodName = 'action' . ucfirst($controllerContext->module);
-		$this->$methodName($viewContext);
+		self::$methodName($viewContext);
 	}
 
-	public function actionProfile(&$viewContext)
+	public static function actionProfile(&$viewContext)
+	{
+	}
+
+	public static function actionList(&$viewContext)
 	{
 	}
 }

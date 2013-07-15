@@ -6,7 +6,7 @@ class IndexController extends AbstractController
 		return $url == '/' or $url == '';
 	}
 
-	public function doWork($controllerContext, &$viewContext)
+	public static function work($controllerContext, &$viewContext)
 	{
 		$viewContext->name = 'index';
 		$viewContext->variable = mt_rand(0, 1);

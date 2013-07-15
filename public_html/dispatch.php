@@ -21,8 +21,9 @@ try
 	{
 		if ($className::parseRequest($url, $controllerContext))
 		{
-			$class = new $className();
-			$class->work($controllerContext);
+			$viewContext = new ViewContext();
+			$className::work($controllerContext, $viewContext);
+			View::render($viewContext);
 			exit(0);
 		}
 	}

@@ -6,14 +6,7 @@ abstract class AbstractController
 		throw new UnimplementedException();
 	}
 
-	public function work($controllerContext)
-	{
-		$viewContext = new ViewContext();
-		$this->doWork($controllerContext, $viewContext);
-		View::render($viewContext);
-	}
-
-	public function doWork($controllerContext, &$viewContext)
+	public static function work($controllerContext, &$viewContext)
 	{
 		throw new UnimplementedException();
 	}
