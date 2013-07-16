@@ -2,15 +2,10 @@
 chdir('..');
 require_once('src/core.php');
 
-foreach (glob('src/Controllers/*') as $fileName)
-{
-	include $fileName;
-}
-
-$classNames = array_filter(get_declared_classes(), function($className)
-{
-	$isAbstract = (new ReflectionClass($className))->isAbstract();
-	return !$isAbstract and preg_match('/Controller$/', $className);
+$dir = implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'src', 'Controllers']);
+$classNames = ReflectionHelper::loadClasses($dir);
+$classNames = array_filter($classNames, function($className) {
+	return substr_compare($className, 'Controller', -10, 10) === 0;
 });
 
 $controllerContext = new ControllerContext();
