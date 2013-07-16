@@ -1,0 +1,38 @@
+/* menu */
+#menu-wrapper { float: left; padding-bottom: 1em; width: 20%; }
+#menu { padding-right: 1em; }
+#menu ul { list-style-type: none; margin: 0; padding: 0; line-height: 1.5em; }
+#menu ul li { margin: 0; padding: 0; }
+#menu p { font-weight: bold; margin-bottom: 0; }
+#menu ul.action { margin-bottom: 1em; }
+#menu ul.action li { font-weight: normal; }
+#menu ul.action li a { display: block; color: black; padding: 4px 8px; text-decoration: none; }
+#menu ul.action li.active a { color: #f5f5f5; background: #1969CB; }
+#menu ul.action li:not(.active) a:hover { background: #eee; color: black; text-decoration: none; }
+#menu ul.action :focus { background: #f5f5f5; }
+#menu .share ul { margin: 0 auto; padding: 0; display: inline; vertical-align: middle; }
+#menu .share p { padding-right: 0.75em; font-weight: normal; display: inline; }
+#menu .share li { display: inline-block; padding: 0 0.15em; margin: 0; display: inline; }
+
+#menu .user-pics { margin-bottom: 1em; }
+#menu .user-pic { text-align: center; }
+#menu .user-pic a { font-size: 0; line-height: 0; margin: 0; padding: 0; }
+#menu .user-pic img { box-shadow: 0 0 2px rgba(96,96,96,0.5) inset; -webkit-box-shadow: 0 0 2px rgba(96,96,96,0.5) inset; border-radius: 4px; -webkit-border-radius: 4px; padding: 0; margin: 0 auto; background-color: rgba(255, 255, 255, 0.6); background-size: cover; background-repeat: no-repeat; background-position: top center; width: 120px; height: 160px; max-width: 100%; }
+#menu .user-pic img.unavailable { background-image: url('../img/anon.png'); }
+#menu .user-nick { margin: 0; font-weight: bold; text-align: center; }
+#menu .user-nick a { max-width: 100%; overflow: hidden; text-overflow: ellipsis; display: inline-block; }
+
+/* small screens */
+@media (max-width: 800px), (max-device-width: 800px) {
+	#menu-wrapper { float: none !important; width: 100% !important; max-width: 100% !important; }
+	#menu { margin: 0; }
+	#menu .user-pics { float: left; min-width: 10em; width: 14em; margin-right: 1em; }
+	#menu .actions { float: left; }
+	#menu .actions div { float: left; }
+	#menu .actions div:first-child { margin-right: 1em; }
+	#menu .share { clear: both; }
+}
+/* big screens */
+@media (min-width: 801px) {
+	#menu-wrapper .actions { font-size: 105%; }
+}

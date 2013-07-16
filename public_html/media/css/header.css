@@ -1,0 +1,44 @@
+#header {
+	padding: 0.5em 0;
+	margin: 0 0 1em 0;
+	border-bottom: 1px solid #ddd;
+	font-size: 115%;
+	background: #f5f5f5 url('../img/heading.png') repeat-x bottom;
+}
+#header form,
+#header form input,
+#header .input-append {
+	margin: 0;
+}
+#header ul {
+	float: left;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+#header ul li {
+	display: inline-block;
+	padding: 0 1em;
+	margin: 0;
+	text-align: middle;
+}
+#header ul li:first-child {
+	padding-left: 0;
+}
+#logo a {
+	display: inline-block;
+	vertical-align: middle;
+	background-image: url('../img/logo-header.png');
+	width: 170px;
+	height: 30px;
+	text-decoration: none;
+}
+#logo a span {
+	opacity: 0;
+}
+
+#header .search {
+	float: right;
+	text-align: middle;
+	line-height: 30px;
+}
