@@ -19,6 +19,8 @@
 	<meta property="og:url" content="<?php echo UrlHelper::absoluteUrl() ?>">
 	<meta property="og:site_name" content="MALgraph" />
 
+	<link rel="shortcut icon" href="<?php echo UrlHelper::absoluteUrl('/media/img/favicon.png') ?>" type="image/png">
+
 	<?php if (isset($viewContext->meta->styles)): ?>
 		<?php foreach ($viewContext->meta->styles as $style): ?>
 			<link rel="stylesheet" type="text/css" href="<?php echo UrlHelper::absoluteUrl($style) ?>">
