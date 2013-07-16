@@ -1,13 +1,202 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<title>Test</title>
 	<meta charset="utf-8"/>
+	<?php if (isset($viewContext->meta->keywords)): ?>
+		<meta name="keywords" content="<?php echo implode(',', $viewContext->meta->keywords) ?>">
+	<?php endif ?>
+	<?php if (isset($viewContext->meta->description)): ?>
+		<meta name="description" content="<?php echo $viewContext->meta->description ?>">
+	<?php endif ?>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+	<meta property="og:title" content="<?php echo isset($viewContext->meta->title) ? $viewContext->meta->title : 'MALgraph' ?>">
+	<?php if (isset($viewContext->meta->description)): ?>
+		<meta property="og:description" content="<?php echo $viewContext->meta->description ?>">
+	<?php endif ?>
+	<meta property="og:image" content="<?php echo UrlHelper::absoluteUrl('/media/img/logo3.png') ?>">
+	<meta property="og:url" content="<?php echo UrlHelper::absoluteUrl() ?>">
+	<meta property="og:site_name" content="MALgraph" />
+
+	<?php if (isset($viewContext->meta->styles)): ?>
+		<?php foreach ($viewContext->meta->styles as $style): ?>
+			<link rel="stylesheet" type="text/css" href="<?php echo UrlHelper::absoluteUrl($style) ?>">
+		<?php endforeach ?>
+	<?php endif ?>
+	<?php if (isset($viewContext->meta->scripts)): ?>
+		<?php foreach ($viewContext->meta->scripts as $script): ?>
+			<script language="javascript" type="text/javascript" src="<?php echo UrlHelper::absoluteUrl($script) ?>">
+			</script>
+		<?php endforeach ?>
+	<?php endif ?>
 </head>
+
 <body>
-	<div id="main">
-		main
-		<?php echo self::renderView() ?>
+	<div id="header">
+		<div class="main-wrapper">
+			<div id="no-script">
+				JavaScript is disabled. Consider enabling it to get positive user experience.
+			</div>
+			<script type="text/javascript">
+				$('#no-script').hide()
+			</script>
+			<ul id="top-nav">
+				<li id="logo">
+					<a href="<?php echo UrlHelper::absoluteUrl('/') ?>">
+						<span>MALgraph</span>
+					</a>
+				</li>
+				<li><a href="<?php echo UrlHelper::absoluteUrl('/s/about') ?>">About</a></li>
+				<li><a href="<?php echo UrlHelper::absoluteUrl('/s/privacy') ?>">Privacy</a></li>
+				<li><a href="<?php echo UrlHelper::absoluteUrl('/s/globals') ?>">Globals</a></li>
+			</ul>
+			<form class="waitable search" action="<?php echo UrlHelper::absoluteUrl('/s/search') ?>" method="post">
+				<?php if (isset($viewContext->module)): ?>
+					<input type="hidden" name="module" value="<?php echo $viewContext->module ?>">
+				<?php endif ?>
+				<?php if (isset($viewContext->media)): ?>
+					<input type="hidden" name="media" value="<?php echo $viewContext->media ?>">
+				<?php endif ?>
+				<div class="control-group input-append">
+					<input type="search" name="user-name">
+					<button data-tooltip="Search" name="submit" value="search" type="submit" class="btn"><i class="icon-search"></i></button>
+				</div>
+			</form>
+			<div class="clear"></div>
+		</div>
 	</div>
+
+	<?php if (Config::$googleAdsEnabled): ?>
+		<div id="google-ads">
+			<script type="text/javascript">
+				google_ad_client = "ca-pub-4861833348203348"; /* malgraph3-header */
+				google_ad_slot = "3987532635";
+				google_ad_width = 728;
+				google_ad_height = 90;
+			</script>
+			<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+		</div>
+	<?php endif ?>
+
+	<div class="main-wrapper">
+		<div id="menu-wrapper">
+			<div id="menu">
+				<?php if (isset($viewContext->userName)): ?>
+					<div class="user-pic-wrapper">
+						<div class="user-pic">
+							<a class="waitable" href="<?php echo UrlHelper::userModuleUrl($viewContext->userName, $viewContext->media, UserModule::Profile) ?>">
+							<?php if (empty($viewContext->userPictureUrl)): ?>
+								<img class="profile unavailable" alt="No profile picture" src="<?php echo UrlHelper::absoluteUrl('/media/img/pixel.gif') ?>">
+							<?php else: ?>
+								<img class="profile" alt="<?php echo $user->getPublicName() ?>&rsquo;s profile picture" src="<?php echo UrlHelper::absoluteUrl('/media/img/pixel.gif') ?>" style="background-image: url('<?php echo $viewContext->userPictureUrl ?>')">
+							<?php endif ?>
+							</a>
+						</div>
+						<p class="user-nick">
+							<a class="waitable" href="<?php echo UrlHelper::userModuleUrl($viewContext->userName, $viewContext->media, UserModule::Profile) ?>">
+								<?php echo $viewContext->userName ?>
+							</a>
+						</p>
+					</div>
+
+					<?php
+						$menu = [
+							['module' => UserModule::Lists, 'text' => 'List'],
+							['module' => UserModule::Ratings, 'text' => 'Ratings'],
+							['module' => UserModule::Activity, 'text' => 'Activity'],
+							['module' => UserModule::Favorites, 'text' => 'Favorites'],
+							['module' => UserModule::Suggestions, 'text' => 'Suggestions'],
+							['module' => UserModule::Achievements, 'text' => 'Achievements'],
+						];
+					?>
+					<div class="actions">
+						<?php foreach (Media::getConstList() as $media): ?>
+							<div>
+								<p><?php echo ucfirst(Media::toString($media)) ?></p>
+								<ul class="action">
+									<?php foreach ($menu as $item): ?>
+										<?php if ($viewContext->module == $item['module'] and $viewContext->media == $media): ?>
+											<li class="active">
+										<?php else: ?>
+											<li>
+										<?php endif ?>
+											<a class="waitable" href="<?php echo UrlHelper::userModuleUrl($viewContext->userName, $media, $item['module']) ?>">
+												<?php echo $item['text'] ?>
+											</a>
+										</li>
+									<?php endforeach ?>
+								</ul>
+							</div>
+						<?php endforeach ?>
+						<div class="clear"></div>
+					</div>
+
+					<div class="share">
+						<p>Share:</p>
+						<ul>
+							<li>
+								<a data-tooltip="Share on Twitter" href="https://twitter.com/intent/tweet?url=<?php echo rawurlencode(UrlHelper::absoluteUrl()) ?>">
+									<i class="icon-twitter"></i>
+								</a>
+							</li>
+							<li>
+								<a data-tooltip="Share on Facebook" href="http://www.facebook.com/sharer.php?u=<?php echo rawurlencode(UrlHelper::absoluteUrl()) ?>&amp;t=Share+MALgraph">
+									<i class="icon-facebook"></i>
+								</a>
+							</li>
+						</ul>
+					</div>
+
+				<?php elseif ($viewContext->viewName != 'index'): ?>
+					<ul class="action">
+						<li class="back">
+							<a href="javascript:history.go(-1)">
+								<i class="icon-go-back"></i>
+								Go back
+							</a>
+						</li>
+					</ul>
+				<?php endif ?>
+			</div>
+
+			<div class="clear"></div>
+		</div>
+
+		<div id="main">
+			<?php self::renderView() ?>
+		</div>
+
+		<div class="clear"></div>
+	</div>
+
+	<p class="load-time">
+		<?php printf('%.02f', microtime(true) - $viewContext->renderStart) ?>s
+		&nbsp;|&nbsp;
+		<?php echo date('M d Y, H:i:s') ?> UTC
+	</p>
+
+	<div id="glider">
+		<div>
+			<div class="target"></div>
+			<p>loading&hellip;</p>
+		</div>
+	</div>
+
+	<span id="preloader"></span>
+	<?php if (Config::$googleAnalyticsEnabled): ?>
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-37915710-1']);
+			_gaq.push(['_setDomainName', 'oko.im']);
+			_gaq.push(['_trackPageview']);
+
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
+	<?php endif ?>
 </body>
 </html>

@@ -7,6 +7,7 @@ function __autoload($className)
 		'',
 		'Processors' . DIRECTORY_SEPARATOR . 'SubProcessors',
 		'Processors',
+		'Helpers',
 		'Enums',
 		'Exceptions',
 		'Controllers',
