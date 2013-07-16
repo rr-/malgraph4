@@ -8,6 +8,6 @@ class IndexController extends AbstractController
 
 	public static function work($controllerContext, &$viewContext)
 	{
-		$viewContext->name = 'index';
+		$viewContext->viewName = 'index';
 	}
 }

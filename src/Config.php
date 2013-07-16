@@ -9,6 +9,9 @@ class Config extends Singleton
 	static $cacheTimeToLive;
 	static $dbPath;
 	static $debugCron;
+	static $baseUrl;
+	static $googleAdsEnabled;
+	static $googleAnalyticsEnabled;
 
 	public static function doInit()
 	{
@@ -21,6 +24,9 @@ class Config extends Singleton
 		self::$mirrorEnabled = false;
 		self::$cacheEnabled = true;
 		self::$cacheTimeToLive = 24 * 60 * 60;
+		self::$baseUrl = 'http://mal.oko.im/';
+		self::$googleAdsEnabled = true;
+		self::$googleAnalyticsEnabled = true;
 	}
 }
 

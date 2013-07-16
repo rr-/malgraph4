@@ -22,7 +22,7 @@ class View
 
 	public static function renderView()
 	{
-		self::renderFile(self::$viewContext->name, self::$viewContext);
+		self::renderFile(self::$viewContext->viewName, self::$viewContext);
 	}
 
 	public static function renderFile($name, $viewContext)

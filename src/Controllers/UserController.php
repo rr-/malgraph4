@@ -9,7 +9,7 @@ class UserController extends AbstractController
 			'^/?' .
 			'(' . $userRegex . ')' .
 			'(' .
-				'|/profile|/list' .
+				'|/profile|/list|/rati|/acti|/favs|/sug|/achi' .
 			')' .
 			'(,(anime|manga))?' .
 			'/?$';
@@ -20,27 +20,35 @@ class UserController extends AbstractController
 		}
 
 		$controllerContext->userName = $matches[1];
-		$controllerContext->module = ltrim($matches[2], '/') ?: 'profile';
 		$media = isset($matches[4]) ? $matches[4] : 'anime';
 		switch ($media)
 		{
-			case 'anime':
-				$controllerContext->media = Media::Anime;
-				break;
-			case 'manga':
-				$controllerContext->media = Media::Manga;
-				break;
-			default:
-				throw new BadMediaException();
+			case 'anime': $controllerContext->media = Media::Anime; break;
+			case 'manga': $controllerContext->media = Media::Manga; break;
+			default: throw new BadMediaException();
+		}
+		$module = ltrim($matches[2], '/') ?: 'profile';
+		$controllerContext->rawModule = $module;
+		switch ($module)
+		{
+			case 'profile':      $controllerContext->module = UserModule::Profile; break;
+			case 'list':         $controllerContext->module = UserModule::Lists; break;
+			case 'ratings':      $controllerContext->module = UserModule::Ratings; break;
+			case 'activity':     $controllerContext->module = UserModule::Activity; break;
+			case 'favorites':    $controllerContext->module = UserModule::Favorites; break;
+			case 'suggestions':  $controllerContext->module = UserModule::Suggestions; break;
+			case 'achievements': $controllerContext->module = UserModule::Achievements; break;
+			default: throw new BadUserModuleException();
 		}
 		return true;
 	}
 
 	public static function work($controllerContext, &$viewContext)
 	{
+		$viewContext->viewName = 'user-' . $controllerContext->rawModule;
+		$viewContext->module = $controllerContext->module;
 		$viewContext->userName = $controllerContext->userName;
 		$viewContext->media = $controllerContext->media;
-		$viewContext->name = 'user-' . $controllerContext->module;
 
 		$pdo = Database::getPDO();
 		$stmt = $pdo->prepare('SELECT * FROM users WHERE LOWER(name) = LOWER(?)');
@@ -57,7 +65,17 @@ class UserController extends AbstractController
 		$queue = new Queue(Config::$userQueuePath);
 		$queue->enqueue($controllerContext->userName);
 
-		$methodName = 'action' . ucfirst($controllerContext->module);
+		$methodNames =
+		[
+			UserModule::Profile => 'profile',
+			UserModule::Lists => 'lists',
+			UserModule::Ratings => 'ratings',
+			UserModule::Activity => 'activity',
+			UserModule::Favorites => 'favorites',
+			UserModule::Suggestions => 'suggestions',
+			UserModule::Achievements => 'achievements',
+		];
+		$methodName = 'action' . ucfirst($methodNames[$controllerContext->module]);
 		self::$methodName($viewContext);
 	}
 
@@ -72,11 +90,15 @@ class UserController extends AbstractController
 		return $stmt->fetchAll();
 	}
 
+
+
 	public static function actionProfile(&$viewContext)
 	{
 	}
 
-	public static function actionList(&$viewContext)
+
+
+	public static function actionLists(&$viewContext)
 	{
 		$list = self::getUserList($viewContext->userId, $viewContext->media);
 		$viewContext->list = $list;
