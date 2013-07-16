@@ -26,24 +26,4 @@ class UrlHelper
 		$absoluteUrl = preg_replace('/(?<!:)\/\//', '/', $absoluteUrl);
 		return $absoluteUrl;
 	}
-
-	public static function userModuleUrl($userName, $media, $module)
-	{
-		$url = '/';
-		$url .= $userName;
-		$url .= '/';
-		switch ($module)
-		{
-			case UserModule::Profile: return '/' . $userName;
-			case UserModule::Lists: $url .= 'list'; break;
-			case UserModule::Ratings: $url .= 'rati'; break;
-			case UserModule::Activity: $url .= 'acti'; break;
-			case UserModule::Favorites: $url .= 'favs'; break;
-			case UserModule::Suggestions: $url .= 'sug'; break;
-			case UserModule::Achievements: $url .= 'achi'; break;
-		}
-		$url .= ',';
-		$url .= Media::toString($media);
-		return self::absoluteUrl($url);
-	}
 }

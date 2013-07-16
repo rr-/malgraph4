@@ -85,7 +85,7 @@
 				<?php if (isset($viewContext->userName)): ?>
 					<div class="user-pic-wrapper">
 						<div class="user-pic">
-							<a class="waitable" href="<?php echo UrlHelper::userModuleUrl($viewContext->userName, $viewContext->media, UserModule::Profile) ?>">
+							<a class="waitable" href="<?php echo UserControllerProfileModule::url($viewContext->userName, $viewContext->media) ?>">
 							<?php if (empty($viewContext->userPictureUrl)): ?>
 								<img class="profile unavailable" alt="No profile picture" src="<?php echo UrlHelper::absoluteUrl('/media/img/pixel.gif') ?>">
 							<?php else: ?>
@@ -94,37 +94,29 @@
 							</a>
 						</div>
 						<p class="user-nick">
-							<a class="waitable" href="<?php echo UrlHelper::userModuleUrl($viewContext->userName, $viewContext->media, UserModule::Profile) ?>">
+							<a class="waitable" href="<?php echo UserControllerProfileModule::url($viewContext->userName, $viewContext->media) ?>">
 								<?php echo $viewContext->userName ?>
 							</a>
 						</p>
 					</div>
 
-					<?php
-						$menu = [
-							['module' => UserModule::Lists, 'text' => 'List'],
-							['module' => UserModule::Ratings, 'text' => 'Ratings'],
-							['module' => UserModule::Activity, 'text' => 'Activity'],
-							['module' => UserModule::Favorites, 'text' => 'Favorites'],
-							['module' => UserModule::Suggestions, 'text' => 'Suggestions'],
-							['module' => UserModule::Achievements, 'text' => 'Achievements'],
-						];
-					?>
 					<div class="actions">
 						<?php foreach (Media::getConstList() as $media): ?>
 							<div>
 								<p><?php echo ucfirst(Media::toString($media)) ?></p>
 								<ul class="action">
-									<?php foreach ($menu as $item): ?>
-										<?php if ($viewContext->module == $item['module'] and $viewContext->media == $media): ?>
-											<li class="active">
-										<?php else: ?>
-											<li>
+									<?php foreach (UserController::getAvailableModules() as $module): ?>
+										<?php if (in_array($media, $module::getMediaAvailability())): ?>
+											<?php if ($viewContext->module == $module and $viewContext->media == $media): ?>
+												<li class="active">
+											<?php else: ?>
+												<li>
+											<?php endif ?>
+												<a class="waitable" href="<?php echo $module::url($viewContext->userName, $media) ?>">
+													<?php echo $module::getText() ?>
+												</a>
+											</li>
 										<?php endif ?>
-											<a class="waitable" href="<?php echo UrlHelper::userModuleUrl($viewContext->userName, $media, $item['module']) ?>">
-												<?php echo $item['text'] ?>
-											</a>
-										</li>
 									<?php endforeach ?>
 								</ul>
 							</div>
@@ -171,7 +163,7 @@
 	</div>
 
 	<p class="load-time">
-		<?php printf('%.02f', microtime(true) - $viewContext->renderStart) ?>s
+		<?php printf('%.05f', microtime(true) - $viewContext->renderStart) ?>s
 		&nbsp;|&nbsp;
 		<?php echo date('M d Y, H:i:s') ?> UTC
 	</p>

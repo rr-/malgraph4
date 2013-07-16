@@ -1,17 +1,45 @@
 <?php
 class UserController extends AbstractController
 {
+	private static $modules = [];
+	public static function getAvailableModules()
+	{
+		if (!empty(self::$modules))
+		{
+			return self::$modules;
+		}
+		$dir = implode(DIRECTORY_SEPARATOR, ['src', 'Controllers', 'UserControllerModules']);
+		$classNames = ReflectionHelper::loadClasses($dir);
+		self::$modules = $classNames;
+		return $classNames;
+	}
+
 	public static function parseRequest($url, &$controllerContext)
 	{
 		$userRegex = '[0-9a-zA-Z_-]{2,}';
 
+		$urlParts = [];
+		foreach (self::getAvailableModules() as $className)
+		{
+			$urlParts = array_merge($urlParts, $className::getUrlParts());
+		}
+		$modulesRegex = implode('|', array_map(function($urlPart)
+		{
+			if (empty($urlPart))
+			{
+				return '';
+			}
+			return '/' . $urlPart;
+		}, $urlParts));
+
+		$mediaParts = array_map(['Media', 'toString'], Media::getConstList());
+		$mediaRegex = implode('|', $mediaParts);
+
 		$regex =
 			'^/?' .
 			'(' . $userRegex . ')' .
-			'(' .
-				'|/profile|/list|/rati|/acti|/favs|/sug|/achi' .
-			')' .
-			'(,(anime|manga))?' .
+			'(' . $modulesRegex . ')' .
+			'(,(' . $mediaRegex . '))?' .
 			'/?$';
 
 		if (!preg_match('#' . $regex . '#', $url, $matches))
@@ -20,26 +48,23 @@ class UserController extends AbstractController
 		}
 
 		$controllerContext->userName = $matches[1];
-		$media = isset($matches[4]) ? $matches[4] : 'anime';
+		$media = !empty($matches[4]) ? $matches[4] : 'anime';
 		switch ($media)
 		{
 			case 'anime': $controllerContext->media = Media::Anime; break;
 			case 'manga': $controllerContext->media = Media::Manga; break;
 			default: throw new BadMediaException();
 		}
-		$module = ltrim($matches[2], '/') ?: 'profile';
-		$controllerContext->rawModule = $module;
-		switch ($module)
+		$rawModule = ltrim($matches[2], '/') ?: 'profile';
+		$controllerContext->rawModule = $rawModule;
+		foreach (self::getAvailableModules() as $module)
 		{
-			case 'profile':      $controllerContext->module = UserModule::Profile; break;
-			case 'list':         $controllerContext->module = UserModule::Lists; break;
-			case 'ratings':      $controllerContext->module = UserModule::Ratings; break;
-			case 'activity':     $controllerContext->module = UserModule::Activity; break;
-			case 'favorites':    $controllerContext->module = UserModule::Favorites; break;
-			case 'suggestions':  $controllerContext->module = UserModule::Suggestions; break;
-			case 'achievements': $controllerContext->module = UserModule::Achievements; break;
-			default: throw new BadUserModuleException();
+			if (in_array($rawModule, $module::getUrlParts()))
+			{
+				$controllerContext->module = $module;
+			}
 		}
+		assert(!empty($controllerContext->module));
 		return true;
 	}
 
@@ -77,30 +102,5 @@ class UserController extends AbstractController
 		];
 		$methodName = 'action' . ucfirst($methodNames[$controllerContext->module]);
 		self::$methodName($viewContext);
-	}
-
-	private static function getUserList($userId, $media)
-	{
-		$pdo = Database::getPDO();
-		$stmt = $pdo->prepare('SELECT * FROM user_media_list ' .
-			'INNER JOIN media ON user_media_list.mal_id = media.mal_id ' .
-			'AND user_media_list.media = media.media ' .
-			'WHERE user_id = ? AND user_media_list.media = ?');
-		$stmt->execute([$userId, $media]);
-		return $stmt->fetchAll();
-	}
-
-
-
-	public static function actionProfile(&$viewContext)
-	{
-	}
-
-
-
-	public static function actionLists(&$viewContext)
-	{
-		$list = self::getUserList($viewContext->userId, $viewContext->media);
-		$viewContext->list = $list;
 	}
 }
