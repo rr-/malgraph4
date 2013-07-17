@@ -17,6 +17,7 @@ class Strings
 		$subject = str_replace(',', '', $subject);
 		$subject = str_replace('.', '', $subject);
 		$subject = str_replace(' ', '', $subject);
+		$subject = ltrim($subject, '#');
 		$subject = intval($subject);
 		return $subject;
 	}

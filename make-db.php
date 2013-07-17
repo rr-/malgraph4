@@ -17,6 +17,7 @@ try
 		location VARCHAR(100),
 		website VARCHAR(100),
 		gender VARCHAR(1),
+		processed TIMESTAMP,
 
 		anime_views INTEGER,
 		anime_days_spent FLOAT,
@@ -72,10 +73,15 @@ try
 		title VARCHAR(96),
 		sub_type INTEGER,
 		picture_url VARCHAR(256),
+		average_score FLOAT,
 		ranking INTEGER,
+		popularity INTEGER,
+		members INTEGER,
+		favorites INTEGER,
 		status VARCHAR(1),
 		published_from VARCHAR(10), --TIMESTAMP
 		published_to VARCHAR(10), --TIMESTAMP
+		processed TIMESTAMP,
 
 		duration INTEGER,
 		episodes INTEGER,

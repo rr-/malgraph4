@@ -20,7 +20,7 @@ class UserControllerListsModule extends AbstractUserControllerModule
 	{
 		$pdo = Database::getPDO();
 		$stmt = $pdo->prepare('SELECT * FROM user_media_list ' .
-			'INNER JOIN media ON user_media_list.mal_id = media.mal_id ' .
+			'LEFT JOIN media ON user_media_list.mal_id = media.mal_id ' .
 			'AND user_media_list.media = media.media ' .
 			'WHERE user_id = ? AND user_media_list.media = ?');
 		$stmt->execute([$userId, $media]);

@@ -47,8 +47,11 @@ class MediaSubProcessorBasic extends MediaSubProcessor
 		$pictureUrl = self::getNodeValue($xpath, '//td[@class = \'borderClass\']//img', null, 'src');
 
 		//rank
-		preg_match_all('/#([0-9]+)/', self::getNodeValue($xpath, '//h1/*'), $matches);
-		$ranking = Strings::makeInteger($matches[1][0]);
+		$averageScore = Strings::makeFloat(self::getNodeValue($xpath, '//span[starts-with(text(), \'Score\')]/following-sibling::node()[self::text()]'));
+		$ranking = Strings::makeInteger(self::getNodeValue($xpath, '//span[starts-with(text(), \'Ranked\')]/following-sibling::node()[self::text()]'));
+		$popularity = Strings::makeInteger(self::getNodeValue($xpath, '//span[starts-with(text(), \'Popularity\')]/following-sibling::node()[self::text()]'));
+		$memberCount = Strings::makeInteger(self::getNodeValue($xpath, '//span[starts-with(text(), \'Members\')]/following-sibling::node()[self::text()]'));
+		$favoriteCount = Strings::makeInteger(self::getNodeValue($xpath, '//span[starts-with(text(), \'Favorites\')]/following-sibling::node()[self::text()]'));
 
 		//status
 		$malStatus = strtolower(Strings::removeSpaces(self::getNodeValue($xpath, '//span[starts-with(text(), \'Status\')]/following-sibling::node()[self::text()]')));
@@ -86,10 +89,15 @@ class MediaSubProcessorBasic extends MediaSubProcessor
 			'title' => $title,
 			'sub_type' => $subType,
 			'picture_url' => $pictureUrl,
-			'ranking' => $ranking,
+			'average_score' => $averageScore,
 			'status' => $status,
+			'popularity' => $popularity,
+			'members' => $memberCount,
+			'favorites' => $favoriteCount,
+			'ranking' => $ranking,
 			'published_from' => $publishedFrom,
-			'published_to' => $publishedTo
+			'published_to' => $publishedTo,
+			'processed' => date('Y-m-d H:i:s'),
 		]);
 		$context->mediaId = $mediaId;
 	}

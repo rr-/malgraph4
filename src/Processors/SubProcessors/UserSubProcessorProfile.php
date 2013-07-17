@@ -44,6 +44,7 @@ class UserSubProcessorProfile extends UserSubProcessor
 			'gender' => $gender,
 			'anime_views' => $animeViewCount,
 			'manga_views' => $mangaViewCount,
+			'processed' => date('Y-m-d H:i:s'),
 		]);
 		$context->userId = $userId;
 	}
