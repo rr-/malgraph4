@@ -13,6 +13,10 @@ class IndexControllerSearchModule extends AbstractControllerModule
 
 	public static function work(&$viewContext)
 	{
-		$viewContext->viewName = 'index';
+		$viewContext->layoutName = null;
+		$userName = $_POST['user-name'];
+		$media = !empty($_POST['media']) ?: Media::Anime;
+		$url = UserControllerProfileModule::url($userName, $media);
+		header('Location: ' . $url);
 	}
 }

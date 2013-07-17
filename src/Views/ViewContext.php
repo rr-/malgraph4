@@ -5,6 +5,8 @@ class ViewContext
 
 	public function __construct()
 	{
+		$this->layoutName = 'layout';
+		$this->viewName = null;
 		$this->renderStart = microtime(true);
 		$this->meta = new StdClass;
 		$this->meta->styles = [

@@ -10,7 +10,7 @@ class View
 		try
 		{
 			self::$viewContext = $viewContext;
-			self::renderFile('layout', $viewContext);
+			self::renderFile($viewContext->layoutName, $viewContext);
 			$ret = ob_get_contents();
 		}
 		finally
@@ -22,11 +22,16 @@ class View
 
 	public static function renderView()
 	{
+		assert(!empty(self::$viewContext->viewName));
 		self::renderFile(self::$viewContext->viewName, self::$viewContext);
 	}
 
 	public static function renderFile($name, $viewContext)
 	{
+		if (empty($name))
+		{
+			return;
+		}
 		$path = __DIR__ . DIRECTORY_SEPARATOR . $name . '.phtml';
 		include $path;
 	}
