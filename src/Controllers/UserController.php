@@ -65,6 +65,7 @@ class UserController extends AbstractController
 			return;
 		}
 		$viewContext->userId = $result->user_id;
+		$viewContext->userPictureUrl = $result->picture_url;
 
 		$queue = new Queue(Config::$userQueuePath);
 		$queue->enqueue($controllerContext->userName);
