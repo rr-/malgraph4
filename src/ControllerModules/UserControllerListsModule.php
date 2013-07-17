@@ -29,7 +29,7 @@ class UserControllerListsModule extends AbstractUserControllerModule
 
 		$pdo = Database::getPDO();
 		$stmt = $pdo->prepare('SELECT ' .
-			'uml.score, uml.status, m.title, m.media, m.mal_id ' .
+			'uml.score, uml.status, m.title, uml.media, uml.mal_id ' .
 			'FROM user_media_list uml ' .
 			'LEFT JOIN media m ON uml.mal_id = m.mal_id ' .
 			'AND uml.media = m.media ' .

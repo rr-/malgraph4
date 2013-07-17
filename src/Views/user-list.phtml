@@ -44,9 +44,9 @@
 						<tr>
 							<td class="status status-<?php echo $row->status ?>"></td>
 
-							<td class="title" data-sorter="<?php echo $row->title ?>">
+							<td class="title" data-sorter="<?php echo TextHelper::getMediaTitle($row->title, $row->media, $row->mal_id) ?>">
 								<a target="_blank" href="http://myanimelist.net/<?php echo Media::toString($row->media) ?>/<?php echo $row->mal_id ?>">
-									<?php echo $row->title ?>
+									<?php echo TextHelper::getMediaTitle($row->title, $row->media, $row->mal_id) ?>
 								</a>
 							</td>
 
