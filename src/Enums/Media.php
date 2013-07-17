@@ -6,9 +6,14 @@ class Media extends Enum
 
 	public static function toString($media)
 	{
-		return Strings::makeEnum($media, [
-			self::Anime => 'anime',
-			self::Manga => 'manga',
-		], null);
+		switch ($media)
+		{
+			case self::Anime:
+				return 'anime';
+			case self::Manga:
+				return 'manga';
+			default:
+				return 'unknown';
+		}
 	}
 }
