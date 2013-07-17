@@ -29,14 +29,16 @@ try
 
 	$pdo->exec('CREATE TABLE IF NOT EXISTS user_friends (
 		user_id INTEGER,
-		name VARCHAR(32) UNIQUE,
+		name VARCHAR(32),
+		UNIQUE (user_id, name),
 		FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 	)');
 
 	$pdo->exec('CREATE TABLE IF NOT EXISTS user_clubs (
 		user_id INTEGER,
-		mal_id INTEGER UNIQUE,
+		mal_id INTEGER,
 		name VARCHAR(96),
+		UNIQUE (user_id, mal_id),
 		FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 	)');
 
