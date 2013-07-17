@@ -90,17 +90,8 @@ class UserController extends AbstractController
 		$queue = new Queue(Config::$userQueuePath);
 		$queue->enqueue($controllerContext->userName);
 
-		$methodNames =
-		[
-			UserModule::Profile => 'profile',
-			UserModule::Lists => 'lists',
-			UserModule::Ratings => 'ratings',
-			UserModule::Activity => 'activity',
-			UserModule::Favorites => 'favorites',
-			UserModule::Suggestions => 'suggestions',
-			UserModule::Achievements => 'achievements',
-		];
-		$methodName = 'action' . ucfirst($methodNames[$controllerContext->module]);
-		self::$methodName($viewContext);
+		assert(!empty($controllerContext->module));
+		$module = $controllerContext->module;
+		$module::work($viewContext);
 	}
 }
