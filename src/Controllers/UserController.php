@@ -47,6 +47,11 @@ class UserController extends AbstractController
 		$viewContext->userName = $controllerContext->userName;
 		$viewContext->media = $controllerContext->media;
 
+		if (BanHelper::isBanned($viewContext->userName))
+		{
+			throw new Exception('user is banned, can\'t show you anything');
+		}
+
 		$pdo = Database::getPDO();
 		$stmt = $pdo->prepare('SELECT * FROM users WHERE LOWER(name) = LOWER(?)');
 		$stmt->Execute([$viewContext->userName]);
