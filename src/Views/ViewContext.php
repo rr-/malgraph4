@@ -19,8 +19,8 @@ class ViewContext
 		];
 		$this->meta->scripts = [
 			'http://code.jquery.com/jquery-1.10.2.min.js',
-			'/media/js/glider.js',
 			'/media/js/misc.js',
+			'/media/js/glider.js',
 			'http://jscrollpane.kelvinluck.com/script/jquery.jscrollpane.min.js',
 		];
 		$this->meta->keywords = ['malgraph', 'anime', 'manga', 'statistics', 'stats'];
