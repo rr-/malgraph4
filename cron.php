@@ -7,6 +7,10 @@ try
 	$userName = Config::$debugCron
 		? $queue->peek()
 		: $queue->dequeue();
+	if (empty($userName))
+	{
+		return;
+	}
 
 	$processor = new UserProcessor();
 	$context = $processor->process($userName);
