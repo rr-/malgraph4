@@ -24,7 +24,7 @@ class Config extends Singleton
 		self::$dbPath = $rootDir . 'db.sqlite';
 		self::$banListPath = $rootDir . 'banned.lst';
 		self::$errorLogPath = $rootDir . 'errors.log';
-		self::$debugCron = true;
+		self::$debugCron = false;
 		self::$mirrorEnabled = false;
 		self::$cacheEnabled = true;
 		self::$cacheTimeToLive = 24 * 60 * 60;

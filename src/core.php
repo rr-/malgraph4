@@ -25,6 +25,7 @@ function __autoload($className)
 	}
 }
 
+date_default_timezone_set('UTC');
 ErrorHandler::init();
 
 $localCore = __DIR__ . DIRECTORY_SEPARATOR . 'local.php';

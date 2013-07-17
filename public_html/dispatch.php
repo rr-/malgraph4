@@ -29,6 +29,7 @@ try
 			exit(0);
 		}
 	}
+	$viewContext->meta->styles []= '/media/css/narrow.css';
 	$viewContext->viewName = 'error-404';
 	View::render($viewContext);
 }
