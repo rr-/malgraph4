@@ -66,7 +66,7 @@ try
 		chapters INTEGER,
 		volumes INTEGER,
 
-		UNIQUE (mal_id, media),
+		UNIQUE (user_id, mal_id, media),
 		FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 	)');
 
