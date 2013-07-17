@@ -18,18 +18,29 @@ class UserControllerListsModule extends AbstractUserControllerModule
 
 	private static function getUserList($userId, $media)
 	{
-		$pdo = Database::getPDO();
-		$stmt = $pdo->prepare('SELECT * FROM user_media_list ' .
-			'LEFT JOIN media ON user_media_list.mal_id = media.mal_id ' .
-			'AND user_media_list.media = media.media ' .
-			'WHERE user_id = ? AND user_media_list.media = ?');
-		$stmt->execute([$userId, $media]);
-		return $stmt->fetchAll();
 	}
 
 	public static function work(&$viewContext)
 	{
-		$list = self::getUserList($viewContext->userId, $viewContext->media);
-		$viewContext->list = $list;
+		$viewContext->viewName = 'user-list';
+		$viewContext->meta->styles []= '/media/css/user/list.css';
+		$viewContext->meta->scripts []= 'http://cdn.ucb.org.br/Scripts/tablesorter/jquery.tablesorter.min.js';
+		$viewContext->meta->scripts []= '/media/js/user/list.js';
+
+		$pdo = Database::getPDO();
+		$stmt = $pdo->prepare('SELECT ' .
+			'uml.score, uml.status, m.title, m.media, m.mal_id ' .
+			'FROM user_media_list uml ' .
+			'LEFT JOIN media m ON uml.mal_id = m.mal_id ' .
+			'AND uml.media = m.media ' .
+			'WHERE uml.user_id = ? AND uml.media = ?');
+		$stmt->execute([$viewContext->userId, $viewContext->media]);
+		$viewContext->list = $stmt->fetchAll();
+
+		$stmt = $pdo->prepare('SELECT ' .
+			Media::toString($viewContext->media) . '_private AS private ' .
+			'FROM users WHERE user_id = ?');
+		$stmt->execute([$viewContext->userId]);
+		$viewContext->private = $stmt->fetch()->private;
 	}
 }

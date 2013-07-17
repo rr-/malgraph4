@@ -1,0 +1,48 @@
+td.no-score {
+	color: #aaa;
+}
+
+th,
+td {
+	padding: 2px 2px;
+	text-align: center;
+}
+th.title,
+td.title {
+	width: 100%;
+	padding: 2px 8px;
+	text-align: left;
+}
+
+#filter-form {
+	white-space: nowrap;
+}
+
+#filter-form label,
+#filter-form input,
+#filter-form select {
+	vertical-align: middle;
+	margin: 0 0.33em;
+}
+
+#filter-form label {
+	display: inline;
+	padding-right: 1em;
+	line-height: 2em;
+}
+#filter-form #filter-title {
+	width: 40%;
+}
+#filter-form #filter-status {
+	width: 20%;
+}
+#filter-form {
+	text-align: center;
+}
+form {
+	margin: 0 0 1em 0;
+}
+
+.filter-hint {
+	display: none;
+}

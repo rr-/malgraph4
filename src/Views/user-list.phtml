@@ -1,8 +1,82 @@
-This is user list
-<ul>
-<?php foreach ($viewContext->list as $row): ?>
-	<li>
-		<pre><?php var_dump($row) ?></pre>
-	</li>
-<?php endforeach ?>
-</ul>
+<form id="filter-form">
+	<label for="filter-title">Filter:</label>
+	<input type="text" name="filter-title" id="filter-title" placeholder="Title&hellip;"/>
+	<select name="filter-status" id="filter-status">
+		<option value="">All</option>
+		<option value="<?php echo UserListStatus::Completing ?>"><?php echo $viewContext->media == Media::Anime ? 'Watching' : 'Reading' ?></option>
+		<option value="<?php echo UserListStatus::Finished ?>">Completed</option>
+		<option value="<?php echo UserListStatus::OnHold ?>">On-hold</option>
+		<option value="<?php echo UserListStatus::Dropped ?>">Dropped</option>
+		<option value="<?php echo UserListStatus::Planned ?>">Plan to <?php echo $viewContext->media == Media::Anime ? 'watch' : 'read' ?></option>
+	</select>
+	<input class="btn" type="reset" name="filter-clear" id="filter-clear">
+	<div class="clear"></div>
+</form>
+
+<div class="section">
+	<h2>
+		<a href="<?php echo UserControllerProfileModule::url($viewContext->userName, $viewContext->media) ?>">
+			<?php echo $viewContext->userName ?>&rsquo;s <?php echo Media::toString($viewContext->media) ?> list
+		</a>
+		<span class="filter-hint">&nbsp;(<span class="filter-hint-shown"></span> of <span class="filter-hint-total"></span>)</span>
+	</h2>
+	<div class="section-body">
+		<?php if (count($viewContext->list) == 0): ?>
+			<p>Sadly, <?php echo $viewContext->userName ?>&rsquo;s <?php echo Media::toString($viewContext->media) ?> list is empty.<br>
+			If this is your list, add (and rate) something and come back in 24 hours.</p>
+		<?php elseif ($viewContext->private): ?>
+			<p>Sadly, <?php echo Media::toString($viewContext->media) ?> list of this user is private.</p>
+			<p>If this is your list, you can <a target="_blank" href="http://myanimelist.net/editprofile.php?go=listpreferences">click here</a> and change your privacy settings to make it visible.</p>
+		<?php else: ?>
+
+			<table class="tablesorter">
+				<thead>
+					<tr>
+						<th class="status" data-tooltip="Status">S</th>
+						<th class="title">Title</th>
+						<th class="score" data-tooltip="Rating">R</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<?php $k = 1 ?>
+					<?php foreach ($viewContext->list as $row): ?>
+						<tr>
+							<td class="status status-<?php echo $row->status ?>"></td>
+
+							<td class="title" data-sorter="<?php echo $row->title ?>">
+								<a target="_blank" href="http://myanimelist.net/<?php echo Media::toString($row->media) ?>/<?php echo $row->mal_id ?>">
+									<?php echo $row->title ?>
+								</a>
+							</td>
+
+							<td class="score" data-sorter="<?php echo $row->score ?>">
+								<?php echo $row->score ?: '-' ?>
+							</td>
+						</tr>
+					<?php endforeach ?>
+				</tbody>
+			</table>
+		<?php endif ?>
+
+	</div>
+</div>
+
+
+
+<script type="text/javascript">
+	/* add some attributes to cells - we do it here to save output html size */
+	<?php $icons = [
+		UserListStatus::Planned => [4, 'schedule'],
+		UserListStatus::Dropped => [5, 'cross'],
+		UserListStatus::Completing => [1, 'eye'],
+		UserListStatus::OnHold => [3, 'hourglass'],
+		UserListStatus::Finished => [2, 'tick']];
+	?>
+	<?php foreach ($icons as $status => $info): ?>
+		$('.status-<?php echo $status ?>').attr({
+			'data-tooltip': '<?php echo UserListStatus::toString($status) ?>',
+			'data-sorter': <?php echo $info[0] ?>}
+		).append($('<i class="icon-<?php echo $info[1] ?>"/>'));
+	<?php endforeach ?>
+</script>
