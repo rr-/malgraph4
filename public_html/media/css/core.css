@@ -215,39 +215,56 @@ textarea {
 }
 
 textarea,
-input {
+input,
+select,
+.btn {
 	background-color: #fff;
 	border: 1px solid #ccc;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-	transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
-}
-select,
-textarea,
-input {
-	border-radius: 4px 4px 4px 4px;
-	color: #555555;
+	transition: all 0.1s ease;
+	border-radius: 4px;
+	color: #555;
 	display: inline-block;
 	font-size: 14px;
-	height: 20px;
-	line-height: 20px;
 	margin-bottom: 10px;
 	padding: 4px 6px;
 	vertical-align: middle;
 }
 
+input {
+	height: 20px;
+	line-height: 20px;
+}
+
+select,
 .btn {
-	background: #f5f5f5 linear-gradient(to bottom, #fff, #e6e6e6) repeat-x;
+	height: 30px;
+	line-height: 30px;
+}
+
+.btn {
+	background: #e6e6e6 linear-gradient(to bottom, #fff, #e6e6e6) repeat-x;
 	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
-	border: 1px solid #bbb;
-	border-color: #bbb #bbb #a2a2a2;
+	border: 1px solid #ccc;
+	border-bottom-color: #a2a2a2;
 	border-radius: 4px;
 	color: #333;
 	cursor: pointer;
 	font-size: 14px;
-	line-height: 20px;
 	padding: 4px 12px;
 	text-align: center;
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+}
+.btn:hover,
+.btn:focus {
+	background-position: 0 -1em;
+	box-shadow: 0 0 0.5em #eee;
+	border: 1px solid #aaa;
+}
+select:focus,
+input:focus {
+	box-shadow: 0 0 0.5em #d1d7e5;
+	border: 1px solid #2D7DE0;
 }
 
 .input-append input,
