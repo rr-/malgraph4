@@ -38,5 +38,7 @@ catch (Exception $e)
 	$viewContext->viewName = 'error';
 	$viewContext->meta->styles []= '/media/css/narrow.css';
 	$viewContext->exception = $e;
+	Logger::log(Config::$errorLogPath, $e);
 	View::render($viewContext);
 }
+exit(1);

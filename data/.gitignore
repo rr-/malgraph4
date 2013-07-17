@@ -1,4 +1,5 @@
 users.lst
 banned.lst
+errors.log
 db.sqlite
 db.sqlite-journal

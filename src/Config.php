@@ -13,6 +13,7 @@ class Config extends Singleton
 	static $googleAdsEnabled;
 	static $googleAnalyticsEnabled;
 	static $banListPath;
+	static $errorLogPath;
 
 	public static function doInit()
 	{
@@ -22,6 +23,7 @@ class Config extends Singleton
 		self::$cachePath = $rootDir . 'cache';
 		self::$dbPath = $rootDir . 'db.sqlite';
 		self::$banListPath = $rootDir . 'banned.lst';
+		self::$errorLogPath = $rootDir . 'errors.log';
 		self::$debugCron = true;
 		self::$mirrorEnabled = false;
 		self::$cacheEnabled = true;

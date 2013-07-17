@@ -28,7 +28,6 @@ try
 }
 catch (Exception $e)
 {
-	#todo:
-	#better error handling
+	Logger::log(Config::$errorLogPath, $e);
 	echo $e . PHP_EOL;
 }

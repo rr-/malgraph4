@@ -1,8 +1,6 @@
-<h1>Serious error</h1>
-<p>If you see this, please mail <a
-href="mailto:chrupky@gmail.com">chrupky@gmail.com</a> with information
-below. Also, please use "MALgraph" as the subject and include your MAL
-nickname. Thank you!</p>
+<h1>Unhandled exception</h1>
+<p>Basically, this means trouble. You shouldn't see this.</p>
+
 <hr>
 <p><?php echo $viewContext->exception->getMessage() ?> at <?php echo $viewContext->exception->getFile() ?>:<?php echo $viewContext->exception->getLine() ?></p>
 <?php $backtrace = $viewContext->exception->getTrace() ?>
