@@ -1,9 +1,14 @@
 <?php
 class UserController extends AbstractController
 {
+	public static function getUserRegex()
+	{
+		return '[0-9a-zA-Z_-]{2,}';
+	}
+
 	public static function parseRequest($url, &$controllerContext)
 	{
-		$userRegex = '[0-9a-zA-Z_-]{2,}';
+		$userRegex = self::getUserRegex();
 		$modulesRegex = self::getAvailableModulesRegex();
 		$mediaParts = array_map(['Media', 'toString'], Media::getConstList());
 		$mediaRegex = implode('|', $mediaParts);
