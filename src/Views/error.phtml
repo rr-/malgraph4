@@ -1,12 +1,13 @@
 <h1>Serious error</h1>
-<p>If you see this, please mail <a href="mailto:chrupky@gmail.com">chrupky@gmail.com</a> with information below.<br>
-Also, please use "MALgraph" as the subject and include your MAL nickname. Thank you!</p>
+<p>If you see this, please mail <a
+href="mailto:chrupky@gmail.com">chrupky@gmail.com</a> with information
+below. Also, please use "MALgraph" as the subject and include your MAL
+nickname. Thank you!</p>
 <hr>
 <p><?php echo $viewContext->exception->getMessage() ?> at <?php echo $viewContext->exception->getFile() ?>:<?php echo $viewContext->exception->getLine() ?></p>
 <?php $backtrace = $viewContext->exception->getTrace() ?>
 <ul>
-	<?php for ($k = 0, $i = 0; $i < count($backtrace); $i ++, $k ++): ?>
-		<?php $b = $backtrace[$i]; ?>
+	<?php foreach ($backtrace as $k => $b): ?>
 		<li><?php
 			printf
 			(
@@ -19,5 +20,5 @@ Also, please use "MALgraph" as the subject and include your MAL nickname. Thank 
 				isset($b['line']) ? $b['line'] : null
 			);
 		?></li>
-	<?php endfor ?>
+	<?php endforeach ?>
 </ul>

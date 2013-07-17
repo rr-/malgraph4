@@ -14,5 +14,7 @@ class IndexControllerAboutModule extends AbstractControllerModule
 	public static function work(&$viewContext)
 	{
 		$viewContext->viewName = 'about';
+		$viewContext->meta->title = 'MALgraph - about';
+		$viewContext->meta->styles []= '/media/css/narrow.css';
 	}
 }

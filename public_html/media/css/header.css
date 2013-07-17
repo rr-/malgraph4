@@ -32,7 +32,7 @@
 	display: inline-block;
 	vertical-align: middle;
 	background-image: url('../img/logo-header.png');
-	width: 170px;
+	width: 50px;
 	height: 30px;
 	text-decoration: none;
 }
@@ -42,7 +42,13 @@
 
 #header .search {
 	float: left;
-	margin-left: 1.5em;
+	margin-left: 1em;
 	vertical-align: middle;
 	line-height: 30px;
+}
+#header form {
+	width: 30%;
+}
+#header form input {
+	width: 100%;
 }
