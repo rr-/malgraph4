@@ -53,6 +53,9 @@ class UserController extends AbstractController
 			return;
 		}
 
+		$queue = new Queue(Config::$userQueuePath);
+		$queue->enqueue($controllerContext->userName);
+
 		$pdo = Database::getPDO();
 		$stmt = $pdo->prepare('SELECT * FROM users WHERE LOWER(name) = LOWER(?)');
 		$stmt->Execute([$viewContext->userName]);
@@ -65,9 +68,6 @@ class UserController extends AbstractController
 		}
 		$viewContext->userId = $result->user_id;
 		$viewContext->userPictureUrl = $result->picture_url;
-
-		$queue = new Queue(Config::$userQueuePath);
-		$queue->enqueue($controllerContext->userName);
 
 		assert(!empty($controllerContext->module));
 		$module = $controllerContext->module;
