@@ -1,28 +1,11 @@
 <?php
-abstract class AbstractUserControllerModule
+abstract class AbstractControllerModule
 {
 	/**
 	* This method contains all code that is executed whenver user visits
 	* specific module.
 	**/
 	public static function work(&$viewContext)
-	{
-		throw new UnimplementedException();
-	}
-
-	/**
-	* This method returns the text that is rendered in the menu in layout.
-	*/
-	public static function getText()
-	{
-		throw new UnimplementedException();
-	}
-
-	/**
-	* This method returns what sections of menu in layout should this module be
-	* rendered in.
-	*/
-	public static function getMediaAvailability()
 	{
 		throw new UnimplementedException();
 	}
@@ -52,18 +35,6 @@ abstract class AbstractUserControllerModule
 	*/
 	public static function url($userName, $media)
 	{
-		$urlParts = static::getUrlParts();
-		$bestPart = array_shift($urlParts);
-		while (empty($bestPart) and !empty($urlParts))
-		{
-			$bestPart = array_shift($urlParts);
-		}
-		$url = '/' . $userName;
-		$url .= '/' . $bestPart;
-		if (!empty(static::getMediaAvailability()))
-		{
-			$url .= ',' . Media::toString($media);
-		}
-		return UrlHelper::absoluteUrl($url);
+		throw new UnimplementedException();
 	}
 }

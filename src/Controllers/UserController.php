@@ -1,37 +1,10 @@
 <?php
 class UserController extends AbstractController
 {
-	private static $modules = [];
-	public static function getAvailableModules()
-	{
-		if (!empty(self::$modules))
-		{
-			return self::$modules;
-		}
-		$dir = implode(DIRECTORY_SEPARATOR, ['src', 'Controllers', 'UserControllerModules']);
-		$classNames = ReflectionHelper::loadClasses($dir);
-		self::$modules = $classNames;
-		return $classNames;
-	}
-
 	public static function parseRequest($url, &$controllerContext)
 	{
 		$userRegex = '[0-9a-zA-Z_-]{2,}';
-
-		$urlParts = [];
-		foreach (self::getAvailableModules() as $className)
-		{
-			$urlParts = array_merge($urlParts, $className::getUrlParts());
-		}
-		$modulesRegex = implode('|', array_map(function($urlPart)
-		{
-			if (empty($urlPart))
-			{
-				return '';
-			}
-			return '/' . $urlPart;
-		}, $urlParts));
-
+		$modulesRegex = self::getAvailableModulesRegex();
 		$mediaParts = array_map(['Media', 'toString'], Media::getConstList());
 		$mediaRegex = implode('|', $mediaParts);
 
@@ -57,13 +30,7 @@ class UserController extends AbstractController
 		}
 		$rawModule = ltrim($matches[2], '/') ?: 'profile';
 		$controllerContext->rawModule = $rawModule;
-		foreach (self::getAvailableModules() as $module)
-		{
-			if (in_array($rawModule, $module::getUrlParts()))
-			{
-				$controllerContext->module = $module;
-			}
-		}
+		$controllerContext->module = self::getModuleByUrlPart($rawModule);
 		assert(!empty($controllerContext->module));
 		return true;
 	}
@@ -85,7 +52,6 @@ class UserController extends AbstractController
 			throw new Exception('user doesn\'t exist in db, but he just got enqueued');
 		}
 		$viewContext->userId = $result->user_id;
-
 
 		$queue = new Queue(Config::$userQueuePath);
 		$queue->enqueue($controllerContext->userName);

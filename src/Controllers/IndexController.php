@@ -3,13 +3,23 @@ class IndexController extends AbstractController
 {
 	public static function parseRequest($url, &$controllerContext)
 	{
-		return $url == '/' or $url == '';
+		$modulesRegex = self::getAvailableModulesRegex();
+		$regex = '^/?(' . $modulesRegex . ')/?$';
+		if (!preg_match('#' . $regex . '#', $url, $matches))
+		{
+			return false;
+		}
+		$rawModule = trim($matches[1], '/');
+		$controllerContext->rawModule = $rawModule;
+		$controllerContext->module = self::getModuleByUrlPart($rawModule);
+		assert(!empty($controllerContext->module));
+		return true;
 	}
 
 	public static function work($controllerContext, &$viewContext)
 	{
-		$viewContext->viewName = 'index';
-		$viewContext->meta->styles []= '/media/css/index/index.css';
-		$viewContext->meta->scripts []= '/media/js/index/index.js';
+		assert(!empty($controllerContext->module));
+		$module = $controllerContext->module;
+		$module::work($viewContext);
 	}
 }

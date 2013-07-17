@@ -2,21 +2,22 @@
 function __autoload($className)
 {
 	$name = $className . '.php';
-	$dirs =
-	[
-		'',
-		'Processors' . DIRECTORY_SEPARATOR . 'SubProcessors',
-		'Processors',
-		'Helpers',
-		'Enums',
-		'Exceptions',
-		'Controllers',
-		'Controllers' . DIRECTORY_SEPARATOR . 'UserControllerModules',
-		'Views',
-	];
+
+	$directoryIterator = new RecursiveDirectoryIterator(__DIR__);
+	$iterator = new RecursiveIteratorIterator($directoryIterator);
+	$dirs = [];
+	foreach ($iterator as $file)
+	{
+		if ($file->isDir())
+		{
+			$dirs []= $file->getRealPath();
+		}
+	}
+	$dirs = array_unique($dirs);
+
 	foreach ($dirs as $dir)
 	{
-		$path = implode(DIRECTORY_SEPARATOR, [__DIR__, $dir, $name]);
+		$path = $dir . DIRECTORY_SEPARATOR . $name;
 		if (file_exists($path))
 		{
 			include $path;
