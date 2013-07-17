@@ -37,22 +37,17 @@
 <body>
 	<div id="header">
 		<div class="main-wrapper">
+			<div id="logo">
+				<a href="<?php echo IndexControllerIndexModule::url() ?>">
+					<span>MALgraph</span>
+				</a>
+			</div>
 			<div id="no-script">
 				JavaScript is disabled. Consider enabling it to get positive user experience.
 			</div>
 			<script type="text/javascript">
 				$('#no-script').hide()
 			</script>
-			<ul id="top-nav">
-				<li id="logo">
-					<a href="<?php echo IndexControllerIndexModule::url() ?>">
-						<span>MALgraph</span>
-					</a>
-				</li>
-				<li><a href="<?php echo IndexControllerAboutModule::url() ?>">About</a></li>
-				<li><a href="<?php echo IndexControllerPrivacyModule::url() ?>">Privacy</a></li>
-				<li><a href="<?php echo IndexControllerGlobalsModule::url() ?>">Globals</a></li>
-			</ul>
 			<form class="waitable search" action="<?php echo IndexControllerSearchModule::url() ?>" method="post">
 				<?php if (isset($viewContext->module)): ?>
 					<input type="hidden" name="module" value="<?php echo $viewContext->module ?>">
@@ -61,10 +56,15 @@
 					<input type="hidden" name="media" value="<?php echo $viewContext->media ?>">
 				<?php endif ?>
 				<div class="control-group input-append">
-					<input type="search" name="user-name">
+					<input type="search" name="user-name" placeholder="your MAL username">
 					<button data-tooltip="Search" name="submit" value="search" type="submit" class="btn"><i class="icon-search"></i></button>
 				</div>
 			</form>
+			<ul id="top-nav">
+				<li><a href="<?php echo IndexControllerAboutModule::url() ?>">About</a></li>
+				<li><a href="<?php echo IndexControllerPrivacyModule::url() ?>">Privacy</a></li>
+				<li><a href="<?php echo IndexControllerGlobalsModule::url() ?>">Globals</a></li>
+			</ul>
 			<div class="clear"></div>
 		</div>
 	</div>
@@ -82,80 +82,13 @@
 	<?php endif ?>
 
 	<div class="main-wrapper">
-		<div id="menu-wrapper">
-			<div id="menu">
-				<?php if (isset($viewContext->userName)): ?>
-					<div class="user-pic-wrapper">
-						<div class="user-pic">
-							<a class="waitable" href="<?php echo UserControllerProfileModule::url($viewContext->userName, $viewContext->media) ?>">
-							<?php if (empty($viewContext->userPictureUrl)): ?>
-								<img class="profile unavailable" alt="No profile picture" src="<?php echo UrlHelper::absoluteUrl('/media/img/pixel.gif') ?>">
-							<?php else: ?>
-								<img class="profile" alt="<?php echo $user->getPublicName() ?>&rsquo;s profile picture" src="<?php echo UrlHelper::absoluteUrl('/media/img/pixel.gif') ?>" style="background-image: url('<?php echo $viewContext->userPictureUrl ?>')">
-							<?php endif ?>
-							</a>
-						</div>
-						<p class="user-nick">
-							<a class="waitable" href="<?php echo UserControllerProfileModule::url($viewContext->userName, $viewContext->media) ?>">
-								<?php echo $viewContext->userName ?>
-							</a>
-						</p>
-					</div>
-
-					<div class="actions">
-						<?php foreach (Media::getConstList() as $media): ?>
-							<div>
-								<p><?php echo ucfirst(Media::toString($media)) ?></p>
-								<ul class="action">
-									<?php foreach (UserController::getAvailableModules() as $module): ?>
-										<?php if (in_array($media, $module::getMediaAvailability())): ?>
-											<?php if ($viewContext->module == $module and $viewContext->media == $media): ?>
-												<li class="active">
-											<?php else: ?>
-												<li>
-											<?php endif ?>
-												<a class="waitable" href="<?php echo $module::url($viewContext->userName, $media) ?>">
-													<?php echo $module::getText() ?>
-												</a>
-											</li>
-										<?php endif ?>
-									<?php endforeach ?>
-								</ul>
-							</div>
-						<?php endforeach ?>
-						<div class="clear"></div>
-					</div>
-
-					<div class="share">
-						<p>Share:</p>
-						<ul>
-							<li>
-								<a data-tooltip="Share on Twitter" href="https://twitter.com/intent/tweet?url=<?php echo rawurlencode(UrlHelper::currentUrl()) ?>">
-									<i class="icon-twitter"></i>
-								</a>
-							</li>
-							<li>
-								<a data-tooltip="Share on Facebook" href="http://www.facebook.com/sharer.php?u=<?php echo rawurlencode(UrlHelper::currentUrl()) ?>&amp;t=Share+MALgraph">
-									<i class="icon-facebook"></i>
-								</a>
-							</li>
-						</ul>
-					</div>
-
-				<?php elseif ($viewContext->viewName != 'index'): ?>
-					<ul class="action">
-						<li class="back">
-							<a href="javascript:history.go(-1)">
-								<i class="icon-go-back"></i>
-								Go back
-							</a>
-						</li>
-					</ul>
-				<?php endif ?>
+		<?php if (isset($viewContext->userMenu)): ?>
+			<div id="menu-wrapper">
+				<div id="menu">
+					<?php self::renderFile('user-menu', $viewContext) ?>
+				</div>
 			</div>
-
-			<div class="clear"></div>
-		</div>
+		<?php endif ?>
 
 		<div id="main">
 			<?php self::renderView() ?>

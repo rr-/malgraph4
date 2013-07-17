@@ -64,5 +64,6 @@ class UserController extends AbstractController
 		assert(!empty($controllerContext->module));
 		$module = $controllerContext->module;
 		$module::work($viewContext);
+		$viewContext->userMenu = true;
 	}
 }

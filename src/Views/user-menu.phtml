@@ -1,0 +1,56 @@
+<div class="user-pic-wrapper">
+	<div class="user-pic">
+		<a class="waitable" href="<?php echo UserControllerProfileModule::url($viewContext->userName, $viewContext->media) ?>">
+		<?php if (empty($viewContext->userPictureUrl)): ?>
+			<img class="profile unavailable" alt="No profile picture" src="<?php echo UrlHelper::absoluteUrl('/media/img/pixel.gif') ?>">
+		<?php else: ?>
+			<img class="profile" alt="<?php echo $user->getPublicName() ?>&rsquo;s profile picture" src="<?php echo UrlHelper::absoluteUrl('/media/img/pixel.gif') ?>" style="background-image: url('<?php echo $viewContext->userPictureUrl ?>')">
+		<?php endif ?>
+		</a>
+	</div>
+	<p class="user-nick">
+		<a class="waitable" href="<?php echo UserControllerProfileModule::url($viewContext->userName, $viewContext->media) ?>">
+			<?php echo $viewContext->userName ?>
+		</a>
+	</p>
+</div>
+
+<div class="actions">
+	<?php foreach (Media::getConstList() as $media): ?>
+		<div>
+			<p><?php echo ucfirst(Media::toString($media)) ?></p>
+			<ul class="action">
+				<?php foreach (UserController::getAvailableModules() as $module): ?>
+					<?php if (in_array($media, $module::getMediaAvailability())): ?>
+						<?php if ($viewContext->module == $module and $viewContext->media == $media): ?>
+							<li class="active">
+						<?php else: ?>
+							<li>
+						<?php endif ?>
+							<a class="waitable" href="<?php echo $module::url($viewContext->userName, $media) ?>">
+								<?php echo $module::getText() ?>
+							</a>
+						</li>
+					<?php endif ?>
+				<?php endforeach ?>
+			</ul>
+		</div>
+	<?php endforeach ?>
+	<div class="clear"></div>
+</div>
+
+<div class="share">
+	<p>Share:</p>
+	<ul>
+		<li>
+			<a data-tooltip="Share on Twitter" href="https://twitter.com/intent/tweet?url=<?php echo rawurlencode(UrlHelper::currentUrl()) ?>">
+				<i class="icon-twitter"></i>
+			</a>
+		</li>
+		<li>
+			<a data-tooltip="Share on Facebook" href="http://www.facebook.com/sharer.php?u=<?php echo rawurlencode(UrlHelper::currentUrl()) ?>&amp;t=Share+MALgraph">
+				<i class="icon-facebook"></i>
+			</a>
+		</li>
+	</ul>
+</div>

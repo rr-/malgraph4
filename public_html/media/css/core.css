@@ -80,8 +80,6 @@ img {
 
 /* layout */
 #main {
-	width: 80%;
-	float: right;
 	position: relative;
 }
 .main-wrapper {
