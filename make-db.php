@@ -21,8 +21,10 @@ try
 
 		anime_views INTEGER,
 		anime_days_spent FLOAT,
+		anime_private BOOLEAN,
 		manga_views INTEGER,
-		manga_days_spent FLOAT
+		manga_days_spent FLOAT,
+		manga_private BOOLEAN
 	)');
 
 	$pdo->exec('CREATE TABLE IF NOT EXISTS user_friends (

@@ -78,13 +78,16 @@ class UserSubProcessorLists extends UserSubProcessor
 					'episodes' => $finishedEpisodes,
 					'chapters' => $finishedChapters,
 					'volumes' => $finishedVolumes,
-					'status' => $status
+					'status' => $status,
 				];
 			}
 			$this->insert('user_media_list', $data);
 
 			$daysSpent = Strings::makeFloat(self::getNodeValue($xpath, '//user_days_spent_watching'));
-			$this->update('users', ['user_id' => $context->userId], [Media::toString($media) . '_days_spent' => $daysSpent]);
+			$this->update('users', ['user_id' => $context->userId], [
+				Media::toString($media) . '_days_spent' => $daysSpent,
+				Media::toString($media) . '_private' => $isPrivate,
+			]);
 		}
 	}
 }
