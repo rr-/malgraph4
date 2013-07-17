@@ -1,0 +1,61 @@
+#menu {
+	display: none;
+}
+#main {
+	font-size: 11pt;
+	width: 100%;
+}
+#logo {
+	opacity: .5;
+}
+
+.center {
+	text-align: center;
+	padding-top: 3em;
+}
+	.center form {
+		padding-top: 1.5em;
+	}
+	.center .links {
+		padding-top: 2.5em;
+	}
+
+div.about-mal {
+	display: none;
+	margin-top: 1em;
+}
+span.bull {
+	margin: 0 1em;
+	display: inline-block;
+}
+
+#main form p {
+	display: inline-block;
+	margin: 0 2em 0 0;
+	vertical-align: middle;
+}
+#main form div {
+	display: inline-block;
+	box-shadow: 0 0 4px rgba(25, 105, 203, 0.4);
+	margin: 0;
+	vertical-align: middle;
+	width: 226px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+#main form input,
+#main form button {
+	margin: 0;
+	border: 1px solid #1969cb;
+}
+
+p.sub {
+	position: relative;
+	text-align: left;
+	margin: 0 auto;
+	width: 420px;
+	top: -4.25em;
+	left: 22px;
+	font-size: 10pt;
+	color: gray;
+}

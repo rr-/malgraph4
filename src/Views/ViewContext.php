@@ -19,6 +19,7 @@ class ViewContext
 			'http://code.jquery.com/jquery-1.10.2.min.js',
 			'/media/js/glider.js',
 			'/media/js/misc.js',
+			'http://jscrollpane.kelvinluck.com/script/jquery.jscrollpane.min.js',
 		];
 	}
 }

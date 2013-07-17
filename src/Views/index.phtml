@@ -1,2 +1,30 @@
-This is index view
-<?php echo microtime(true) ?>
+<div class="center">
+	<a href="<?php echo UrlHelper::absoluteUrl('/') ?>">
+		<img alt="logo" src="<?php echo UrlHelper::absoluteUrl('/media/img/logo-huge.png') ?>">
+	</a>
+	<p class="sub">an extension of your <a target="_blank" href="http://myanimelist.net">MyAnimeList</a> profile</p>
+
+	<p>MALgraph displays more stats than you need&nbsp;&ndash;&nbsp;including rating distribution,<br>
+	your favorite studios and personalized anime and manga recommendations.</p>
+
+	<form class="waitable search" action="<?php echo UrlHelper::absoluteUrl('/s/search') ?>" method="post">
+		<p>Start here:</p>
+		<div class="control-group input-append">
+			<input type="search" name="user-name" placeholder="your MAL username">
+			<button data-tooltip="Search" name="submit" value="search" type="submit" class="btn"><i class="icon-search"></i></button>
+		</div>
+	</form>
+
+	<div class="links">
+		<a href="<?php echo UserControllerProfileModule::url(mt_rand() & 1 ? 'fri' : 'rr-', Media::Anime) ?>">Show me an example!</a>
+		<span class="bull">&bull;</span>
+		<a href="#" class="about-mal">What is MyAnimeList?</a>
+	</div>
+
+</div>
+
+<div class="about-mal">
+	<p><a target="_blank" href="http://myanimelist.net">MyAnimeList</a> (abbreviated as MAL) is a&nbsp;site for anime/manga fans, which allows them to make a&nbsp;list of titles they completed or plan to watch in the future. Its users can rate their anime and manga, write <em>sophisticated</em> recommendations and hang out on forums.</p>
+	<p>Some people like the social part of MAL, but don&rsquo;t worry&nbsp;&ndash;&nbsp;if you don&rsquo;t want anyone to know your real nickname, we&rsquo;ve got you covered.</p>
+	<p>If you don&rsquo;t have a&nbsp;MyAnimeList account yet, you can <a target="_blank" href="http://myanimelist.net/register.php">create one on this page</a>. Start cataloging your anime and manga, rate some series and visit us again!</p>
+</div>

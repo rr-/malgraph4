@@ -11,6 +11,7 @@ function __autoload($className)
 		'Enums',
 		'Exceptions',
 		'Controllers',
+		'Controllers' . DIRECTORY_SEPARATOR . 'UserControllerModules',
 		'Views',
 	];
 	foreach ($dirs as $dir)
