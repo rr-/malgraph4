@@ -67,12 +67,11 @@ dd a {
 	float: left;
 	width: 50%;
 }
-.friends ul i,
-.clubs ul i {
+
+#main ul i {
 	position: absolute;
 }
-.friends ul span,
-.clubs ul span {
+#main ul span {
 	display: inline-block;
 	margin-left: 21px;
 }

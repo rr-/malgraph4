@@ -1,4 +1,3 @@
-
 <?php
 abstract class AbstractUserControllerModule extends AbstractControllerModule
 {
