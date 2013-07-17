@@ -84,7 +84,7 @@ function attachGlider(elems, event)
 $(function()
 {
 	//fix some weird history issues on some browsers
-	$(window).load(function()
+	$(window).unload(function()
 	{
 		if (timeout)
 		{
