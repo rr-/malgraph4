@@ -18,12 +18,19 @@ try
 	];
 
 	$pdo = Database::getPDO();
+
 	$stmt = $pdo->prepare('SELECT mal_id, media FROM user_media_list WHERE user_id = ?');
 	$stmt->execute([$context->userId]);
+	$confirmStmt = $pdo->prepare('SELECT mal_id FROM media WHERE mal_id = ? AND media = ? AND processed >= DATETIME("now", "-21 days")');
 	foreach ($stmt->fetchAll() as $row)
 	{
-		echo sprintf('Processing %s #%d' . PHP_EOL, Media::toString($row->media), $row->mal_id);
-		$mediaProcessors[$row->media]->process($row->mal_id);
+		$confirmStmt->execute([$row->mal_id, $row->media]);
+		$doProcess = empty($confirmStmt->fetch());
+		if ($doProcess)
+		{
+			echo sprintf('Processing %s #%d' . PHP_EOL, Media::toString($row->media), $row->mal_id);
+			$mediaProcessors[$row->media]->process($row->mal_id);
+		}
 	}
 }
 catch (Exception $e)
