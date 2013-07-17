@@ -42,10 +42,9 @@ class UserController extends AbstractController
 
 	public static function work($controllerContext, &$viewContext)
 	{
-		$viewContext->viewName = 'user-' . $controllerContext->rawModule;
-		$viewContext->module = $controllerContext->module;
 		$viewContext->userName = $controllerContext->userName;
 		$viewContext->media = $controllerContext->media;
+		$viewContext->module = $controllerContext->module;
 
 		if (BanHelper::isBanned($viewContext->userName))
 		{

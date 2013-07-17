@@ -18,5 +18,6 @@ class UserControllerProfileModule extends AbstractUserControllerModule
 
 	public static function work(&$viewContext)
 	{
+		$viewContext->viewName = 'user-profile';
 	}
 }
