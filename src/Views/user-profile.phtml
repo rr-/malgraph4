@@ -1,1 +1,124 @@
-This is user profile
+<div class="section basic">
+	<h2>
+		<a href="<?php echo UserControllerProfileModule::url($viewContext->userName, $viewContext->media) ?>">
+			<?php echo $viewContext->userName ?>&rsquo;s profile
+		</a>
+		<span class="updated" data-tooltip="Time of last data update" data-date="<?php echo date('c', $viewContext->processed) ?>">
+			<?php echo date('M d, H:i', $viewContext->processed) ?> UTC
+		</span>
+		<span class="clear"></span><!-- fix for small pages -->
+	</h2>
+
+	<div class="section-body">
+		<dl>
+			<dt>Gender</dt>
+			<dd><?php echo ucfirst(UserGender::toString($viewContext->userGender)) ?></dd>
+
+			<dt>List views</dt>
+			<dd class="list-views">
+				<?php echo $viewContext->animeViewCount + $viewContext->mangaViewCount ?>&nbsp;
+				<span class="suffix">
+					(<span data-tooltip="Anime list view count"><?php echo $viewContext->animeViewCount ?></span>
+					+
+					<span data-tooltip="Manga list view count"><?php echo $viewContext->mangaViewCount ?></span>)
+				</span>
+			</dd>
+
+			<dt>Time on MAL</dt>
+			<?php if (intval($viewContext->joinDate)): ?>
+				<?php
+					list ($year, $month, $day) = explode ('-', $viewContext->joinDate);
+					$time = mktime(0, 0, 0, $month, $day, $year);
+					$diff = time() - $time;
+					$diff /= 3600 * 24;
+				?>
+				<dd><?php printf('%.1f', $diff / 361.25) ?> years</dd>
+			<?php else: ?>
+				<dd>Unknown</dd>
+			<?php endif ?>
+
+		</dl>
+
+		<ul class="mal-links">
+			<li>
+				<a target="_blank" href="http://myanimelist.net/profile/<?php echo $viewContext->userName ?>">
+					<i class="icon-pop-out"></i>
+					MAL profile
+				</a>
+			</li>
+			<li>
+				<a target="_blank" href="http://myanimelist.net/animelist/<?php echo $viewContext->userName ?><?php if (Config::$sendReferrer) echo '&amp;sclick=1'; ?>">
+					<i class="icon-pop-out"></i>
+					MAL anime list
+				</a>
+			</li>
+			<li>
+				<a target="_blank" href="http://myanimelist.net/mangalist/<?php echo $viewContext->userName ?><?php if (Config::$sendReferrer) echo '&amp;sclick=1'; ?>">
+					<i class="icon-pop-out"></i>
+					MAL manga list
+				</a>
+			</li>
+		</ul>
+
+		<div class="clear"></div>
+	</div>
+</div>
+
+
+
+<div class="section friends">
+	<h2>
+		<a href="<?php echo UserControllerProfileModule::url($viewContext->userName, $viewContext->media) ?>">
+			<?php echo $viewContext->userName ?>&rsquo;s friends (<?php echo count($viewContext->friends) < 100 ? count($viewContext->friends) : '100+' ?>)
+		</a>
+	</h2>
+	<div class="section-body">
+		<?php if (count($viewContext->friends) == 0): ?>
+			<p>This user has no friends on MAL. :(</p>
+		<?php else: ?>
+			<ul>
+				<?php foreach ($viewContext->friends as $friend): ?>
+					<li>
+						<a class="mg waitable" href="<?php echo UserControllerProfileModule::url($friend->name, $viewContext->name) ?>">
+							<i class="icon-mg"></i>
+							<span><?php echo $friend->name ?></span>
+						</a>
+					</li>
+				<?php endforeach ?>
+			</ul>
+			<div class="clear"></div>
+		<?php endif ?>
+	</div>
+</div>
+
+
+
+<div class="section clubs">
+	<h2>
+		<a href="<?php echo UserControllerProfileModule::url($viewContext->userName, $viewContext->media) ?>">
+			<?php echo $viewContext->userName ?>&rsquo;s clubs (<?php echo count($viewContext->clubs) ?>)
+		</a>
+	</h2>
+	<div class="section-body">
+		<?php if (count($viewContext->clubs) == 0): ?>
+			<p>This user doesn&rsquo;t belong to any clubs.</p>
+		<?php else: ?>
+			<ul>
+				<?php foreach ($viewContext->clubs as $club): ?>
+					<li>
+						<a target="_blank" href="http://myanimelist.net/clubs.php?cid=<?php echo $club->mal_id ?>">
+							<i class="icon-club"></i>
+							<span><?php echo $club->name ?></span>
+						</a>
+					</li>
+				<?php endforeach ?>
+			</ul>
+			<div class="clear"></div>
+		<?php endif ?>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$('.clubs li').width(Math.floor($('.clubs').width() / 2 - 20));
+	$('.friends li').width(Math.floor($('.friends').width() / 3 - 20));
+</script>

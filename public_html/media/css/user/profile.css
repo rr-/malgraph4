@@ -1,0 +1,78 @@
+dl {
+	display: inline-block;
+	margin: 0;
+}
+dt {
+	clear: left;
+	font-weight: bold;
+	width: 8em;
+	float: left;
+	margin-left: 0.5em;
+}
+dt:after {
+	content: ': ';
+}
+dd {
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+dd a {
+	margin-left: 0.5em;
+}
+
+.updated {
+	float: right;
+	font-size: 65%;
+	padding-top: 0.25em;
+	opacity: .25;
+}
+.list-views .suffix {
+	margin-left: 0.67em;
+	color: gray;
+}
+
+.basic dl {
+	margin-bottom: 1em;
+	width: 60%;
+	float: left;
+}
+.basic .mal-links {
+	float: left;
+}
+
+.friends ul,
+.clubs ul,
+.basic ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	line-height: 1.5em;
+}
+.friends a,
+.clubs a {
+	position: relative;
+}
+.friends ul li,
+.clubs ul li {
+	overflow: hidden;
+	display: block;
+	text-overflow: ellipsis;
+}
+.friends ul li {
+	float: left;
+	width: 33%;
+}
+.clubs ul li {
+	float: left;
+	width: 50%;
+}
+.friends ul i,
+.clubs ul i {
+	position: absolute;
+}
+.friends ul span,
+.clubs ul span {
+	display: inline-block;
+	margin-left: 21px;
+}

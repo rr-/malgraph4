@@ -14,6 +14,7 @@ class Config extends Singleton
 	static $googleAnalyticsEnabled;
 	static $banListPath;
 	static $errorLogPath;
+	static $sendReferrer;
 
 	public static function doInit()
 	{
@@ -31,6 +32,7 @@ class Config extends Singleton
 		self::$baseUrl = 'http://mal.oko.im/';
 		self::$googleAdsEnabled = true;
 		self::$googleAnalyticsEnabled = true;
+		self::$sendReferrer = true;
 	}
 }
 
