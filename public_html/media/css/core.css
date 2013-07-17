@@ -67,9 +67,13 @@ a {
 	}
 
 /* weird fix for chrome yellow border */
-:not(input)[tabindex] {
+[tabindex] {
 	border: 0;
 	outline: 0;
+}
+/* weird fix for firefox' dotted border */
+::-moz-focus-inner {
+	border: 0;
 }
 /* ie image border */
 img {
@@ -133,8 +137,10 @@ h3 .icon-tooltip {
 	height: 25px;
 }
 .search input, .search button {
-	/* fix round corners on chrome */ -webkit-appearance: none;
-	/* fix height-padding problem */ box-sizing: content-box;
+	/* fix round corners on chrome */
+	-webkit-appearance: none;
+	/* fix height-padding problem */
+	box-sizing: content-box;
 	-moz-box-sizing: content-box;
 	-webkit-box-sizing: content-box;
 }
@@ -254,6 +260,7 @@ select,
 	padding: 4px 12px;
 	text-align: center;
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+	outline: none;
 }
 .btn:hover,
 .btn:focus {
