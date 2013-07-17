@@ -49,7 +49,9 @@ class UserController extends AbstractController
 
 		if (BanHelper::isBanned($viewContext->userName))
 		{
-			throw new Exception('user is banned, can\'t show you anything');
+			$viewContext->meta->styles []= '/media/css/narrow.css';
+			$viewContext->viewName = 'error-user-blocked';
+			return;
 		}
 
 		$pdo = Database::getPDO();
@@ -58,8 +60,9 @@ class UserController extends AbstractController
 		$result = $stmt->fetch();
 		if (empty($result))
 		{
-			#todo:
-			throw new Exception('user doesn\'t exist in db, but he just got enqueued');
+			$viewContext->meta->styles []= '/media/css/narrow.css';
+			$viewContext->viewName = 'error-user-enqueued';
+			return;
 		}
 		$viewContext->userId = $result->user_id;
 
