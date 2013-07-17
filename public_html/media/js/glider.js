@@ -1,22 +1,27 @@
 //animate glider - change background position every x ms
-function animateGlider() {
+function animateGlider()
+{
 	var pos = $('#glider .target').css('background-position');
 	var matches = pos.match(/(-?\d+)/g);
 	var left = matches[0];
 	var top = matches[1];
 	left -= 96;
-	if (left <= 96 * -4) {
+	if (left <= 96 * -4)
+	{
 		left = 0;
 	}
 	$('#glider .target').css('background-position', left + 'px ' + top + 'px');
 
 	var diff = (new Date() - $('#glider').data('start')) / 1000;
-	for (var i in messages) {
+	for (var i in messages)
+	{
 		var subMessages = messages[i];
 		var message = subMessages[Math.floor(Math.random() * subMessages.length)];
-		if (diff >= i) {
+		if (diff >= i)
+		{
 			delete messages[i];
-			$('#glider p').fadeOut(function() {
+			$('#glider p').fadeOut(function()
+			{
 				$(this).html(message).fadeIn();
 			});
 			break;
@@ -24,7 +29,8 @@ function animateGlider() {
 	}
 }
 
-var messages = {
+var messages =
+{
 	5: [ 'downloading your data&hellip;', 'performing magic tricks&hellip;', 'reticulating splines&hellip;', 'making you read this text&hellip;', 'preparing the awesome&hellip;', 'cropping avatars&hellip;' ],
 	10: [ 'applying final touches&hellip;', 'antialiasing buttons&hellip;', 'rendering gradients&hellip;', 'please wait&hellip;', 'connecting the dots&hellip;' ],
 	15: [ '[your ad here]', 'proving P=NP&hellip;', 'warming up the server&hellip;', 'breaking fourth wall&hellip;', 'signing the contract&hellip;' ],
@@ -39,24 +45,35 @@ var messages = {
 };
 
 //show glider
-function showGlider() {
+function showGlider()
+{
 	$('#glider').fadeIn('slow');
 	window.setInterval(animateGlider, 550);
 }
 
 //show glider with short delay
 var timeout;
-function showGliderDelayed() {
+function showGliderDelayed()
+{
 	$('#glider').data('start', new Date());
 	timeout = window.setTimeout(showGlider, 550);
 }
 
 //attach glider showing to an event to an element
-function attachGlider(elems, event) {
-	elems.each(function() {
+function attachGlider(elems, event)
+{
+	elems.each(function()
+	{
 		var target = $(this);
-		target.bind(event, function(e, data) {
-			if (!(e.type == 'click' && e.which == 2)) { //supress showing glider on middle mouse button click
+		target.bind(event, function(e, data)
+		{
+			if (e.isPropagationStopped())
+			{
+				return true;
+			}
+			//supress showing glider on middle mouse button click
+			if (!(e.type == 'click' && e.which == 2))
+			{
 				showGliderDelayed();
 			}
 			return true;
@@ -64,10 +81,13 @@ function attachGlider(elems, event) {
 	});
 }
 
-$(function() {
+$(function()
+{
 	//fix some weird history issues on some browsers
-	$(window).load(function() {
-		if (timeout) {
+	$(window).load(function()
+	{
+		if (timeout)
+		{
 			window.clearTimeout(timeout);
 		}
 	});
