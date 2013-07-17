@@ -26,4 +26,9 @@ class UrlHelper
 		$absoluteUrl = preg_replace('/(?<!:)\/\//', '/', $absoluteUrl);
 		return $absoluteUrl;
 	}
+
+	public static function currentUrl()
+	{
+		return self::absoluteUrl(null);
+	}
 }

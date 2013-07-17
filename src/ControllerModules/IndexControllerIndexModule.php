@@ -6,6 +6,11 @@ class IndexControllerIndexModule extends AbstractControllerModule
 		return ['', 'index'];
 	}
 
+	public static function url()
+	{
+		return '/';
+	}
+
 	public static function work(&$viewContext)
 	{
 		$viewContext->viewName = 'index';

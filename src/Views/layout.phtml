@@ -16,7 +16,7 @@
 		<meta property="og:description" content="<?php echo $viewContext->meta->description ?>">
 	<?php endif ?>
 	<meta property="og:image" content="<?php echo UrlHelper::absoluteUrl('/media/img/logo-fb.png') ?>">
-	<meta property="og:url" content="<?php echo UrlHelper::absoluteUrl() ?>">
+	<meta property="og:url" content="<?php echo UrlHelper::currentUrl() ?>">
 	<meta property="og:site_name" content="MALgraph" />
 
 	<link rel="shortcut icon" href="<?php echo UrlHelper::absoluteUrl('/media/img/favicon.png') ?>" type="image/png">
@@ -45,15 +45,15 @@
 			</script>
 			<ul id="top-nav">
 				<li id="logo">
-					<a href="<?php echo UrlHelper::absoluteUrl('/') ?>">
+					<a href="<?php echo IndexControllerIndexModule::url() ?>">
 						<span>MALgraph</span>
 					</a>
 				</li>
-				<li><a href="<?php echo UrlHelper::absoluteUrl('/s/about') ?>">About</a></li>
-				<li><a href="<?php echo UrlHelper::absoluteUrl('/s/privacy') ?>">Privacy</a></li>
-				<li><a href="<?php echo UrlHelper::absoluteUrl('/s/globals') ?>">Globals</a></li>
+				<li><a href="<?php echo IndexControllerAboutModule::url() ?>">About</a></li>
+				<li><a href="<?php echo IndexControllerPrivacyModule::url() ?>">Privacy</a></li>
+				<li><a href="<?php echo IndexControllerGlobalsModule::url() ?>">Globals</a></li>
 			</ul>
-			<form class="waitable search" action="<?php echo UrlHelper::absoluteUrl('/s/search') ?>" method="post">
+			<form class="waitable search" action="<?php echo IndexControllerSearchModule::url() ?>" method="post">
 				<?php if (isset($viewContext->module)): ?>
 					<input type="hidden" name="module" value="<?php echo $viewContext->module ?>">
 				<?php endif ?>
@@ -130,12 +130,12 @@
 						<p>Share:</p>
 						<ul>
 							<li>
-								<a data-tooltip="Share on Twitter" href="https://twitter.com/intent/tweet?url=<?php echo rawurlencode(UrlHelper::absoluteUrl()) ?>">
+								<a data-tooltip="Share on Twitter" href="https://twitter.com/intent/tweet?url=<?php echo rawurlencode(UrlHelper::currentUrl()) ?>">
 									<i class="icon-twitter"></i>
 								</a>
 							</li>
 							<li>
-								<a data-tooltip="Share on Facebook" href="http://www.facebook.com/sharer.php?u=<?php echo rawurlencode(UrlHelper::absoluteUrl()) ?>&amp;t=Share+MALgraph">
+								<a data-tooltip="Share on Facebook" href="http://www.facebook.com/sharer.php?u=<?php echo rawurlencode(UrlHelper::currentUrl()) ?>&amp;t=Share+MALgraph">
 									<i class="icon-facebook"></i>
 								</a>
 							</li>

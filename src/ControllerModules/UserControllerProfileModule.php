@@ -1,11 +1,6 @@
 <?php
 class UserControllerProfileModule extends AbstractUserControllerModule
 {
-	public static function getViewName()
-	{
-		return 'user-profile';
-	}
-
 	public static function getText()
 	{
 		return 'Profile';

@@ -1,11 +1,6 @@
 <?php
 class UserControllerListsModule extends AbstractUserControllerModule
 {
-	public static function getViewName()
-	{
-		return 'user-lists';
-	}
-
 	public static function getText()
 	{
 		return 'List';

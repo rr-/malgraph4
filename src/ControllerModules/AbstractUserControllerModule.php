@@ -23,8 +23,12 @@ abstract class AbstractUserControllerModule extends AbstractControllerModule
 	* This method constructs the URL that is going to be used in layouts,
 	* views, etc.
 	*/
-	public static function url($userName, $media)
+	public static function url()
 	{
+		$args = func_get_args();
+		$userName = array_shift($args);
+		$media = array_shift($args);
+
 		$urlParts = static::getUrlParts();
 		$bestPart = array_shift($urlParts);
 		while (empty($bestPart) and !empty($urlParts))

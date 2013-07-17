@@ -1,5 +1,5 @@
 <div class="center">
-	<a href="<?php echo UrlHelper::absoluteUrl('/') ?>">
+	<a href="<?php echo IndexControllerIndexModule::url() ?>">
 		<img alt="logo" src="<?php echo UrlHelper::absoluteUrl('/media/img/logo-huge.png') ?>">
 	</a>
 	<p class="sub">an extension of your <a target="_blank" href="http://myanimelist.net">MyAnimeList</a> profile</p>
@@ -7,7 +7,7 @@
 	<p>MALgraph displays more stats than you need&nbsp;&ndash;&nbsp;including rating distribution,<br>
 	your favorite studios and personalized anime and manga recommendations.</p>
 
-	<form class="waitable search" action="<?php echo UrlHelper::absoluteUrl('/s/search') ?>" method="post">
+	<form class="waitable search" action="<?php echo IndexControllerSearchModule::url() ?>" method="post">
 		<p>Start here:</p>
 		<div class="control-group input-append">
 			<input type="search" name="user-name" placeholder="your MAL username">
