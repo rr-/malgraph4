@@ -1,0 +1,25 @@
+div.user h2 {
+	margin-bottom: 0.7em;
+	padding-left: 0.3em;
+}
+
+.wrapper-more {
+	display: none;
+}
+.wrapper-more ul {
+	margin: 0;
+	padding: 0 0 0 auto;
+}
+.wrapper-more .close {
+	float: right;
+	cursor: pointer;
+	padding: 0.5em 0 0.5em 0.5em;
+}
+.wrapper-more span.details {
+	color: silver;
+	margin-left: 0.5em;
+	font-size: 92.5%;
+}
+.wrapper-more p {
+	margin: 0.5em 0 0.5em 0.5em;
+}

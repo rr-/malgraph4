@@ -11,7 +11,6 @@ class ViewContext
 		$this->meta = new StdClass;
 		$this->meta->styles = [
 			'/media/css/core.css',
-			'/media/css/menu.css',
 			'/media/css/header.css',
 			'/media/css/glider.css',
 			'/media/css/icons.css',

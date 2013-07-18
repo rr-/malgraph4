@@ -24,6 +24,7 @@ class UserControllerRatingsModule extends AbstractUserControllerModule
 		$viewContext->meta->scripts []= 'http://code.highcharts.com/highcharts.js';
 		$viewContext->meta->scripts []= '/media/js/highcharts-mg.js';
 		$viewContext->meta->scripts []= '/media/js/user/ratings.js';
+		$viewContext->meta->scripts []= '/media/js/user/wrappers.js';
 		$list = Retriever::getUserMediaList($viewContext->userId, $viewContext->media);
 		$list = array_filter($list, function($entry) {
 			return $entry->status != UserListStatus::Planned;

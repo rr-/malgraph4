@@ -38,8 +38,7 @@ class MediaLengthDistribution extends AbstractDistribution
 		throw new BadMediaException();
 	}
 
-
-	public function addEntry($entry)
+	public static function getGroup($entry)
 	{
 		$thresholds = self::getThresholds($entry->media);
 		$thresholds = array_reverse($thresholds);
@@ -49,7 +48,7 @@ class MediaLengthDistribution extends AbstractDistribution
 		{
 			case Media::Anime: $length = $entry->episodes; break;
 			case Media::Manga: $length = $entry->chapters; break;
-			default: return;
+			default: throw new BadMediaException();
 		}
 		$group = '?';
 		if ($length > 0)
@@ -79,7 +78,12 @@ class MediaLengthDistribution extends AbstractDistribution
 				}
 			}
 		}
+		return $group;
+	}
 
+	public function addEntry($entry)
+	{
+		$group = self::getGroup($entry);
 		$this->addToGroup((string)$group, $entry);
 	}
 }

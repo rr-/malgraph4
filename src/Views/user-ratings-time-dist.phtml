@@ -61,7 +61,7 @@
 					series: [ {
 						data: <?php echo json_encode(array_map(function($x) { return $x / 60.; }, array_values($viewContext->ratingTimeDistribution->getGroupsSizes()))) ?>,
 						point: { events: { click: function(e) {
-							toggleMoreWrappers($('.score-time-dist .wrapper-more'), {'sender': 'score-time', 'score': this.category});
+							toggleMoreWrappers($('.score-time-dist .wrapper-more'), {'sender': 'ratings', 'filter-param': this.category});
 						} } }
 					} ]
 				});

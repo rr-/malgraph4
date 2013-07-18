@@ -18,7 +18,7 @@ class UserController extends AbstractController
 			'(' . $userRegex . ')' .
 			'(' . $modulesRegex . ')' .
 			'(,(' . $mediaRegex . '))?' .
-			'/?$';
+			'/?($|\?)';
 
 		if (!preg_match('#' . $regex . '#', $url, $matches))
 		{
@@ -45,6 +45,8 @@ class UserController extends AbstractController
 		$viewContext->userName = $controllerContext->userName;
 		$viewContext->media = $controllerContext->media;
 		$viewContext->module = $controllerContext->module;
+		$viewContext->meta->styles []= '/media/css/menu.css';
+		$viewContext->meta->styles []= '/media/css/user/general.css';
 
 		if (BanHelper::isBanned($viewContext->userName))
 		{

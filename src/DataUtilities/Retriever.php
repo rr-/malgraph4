@@ -48,7 +48,7 @@ class Retriever
 		return $stmt->fetch()->private;
 	}
 
-	public static function malLinkText($row)
+	public static function getMalLinkText($row)
 	{
 		return 'http://myanimelist.net/' . Media::toString($row->media) . '/' . $row->mal_id;
 	}

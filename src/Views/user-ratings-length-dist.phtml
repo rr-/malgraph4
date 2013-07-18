@@ -74,7 +74,7 @@
 					series: [ {
 						data: <?php echo json_encode(array_values($scores)) ?>,
 						point: { events: { click: function(e) {
-							toggleMoreWrappers($('.score-length-dist .wrapper-more'), {'sender': 'score-length', 'length': this.category});
+							toggleMoreWrappers($('.score-length-dist .wrapper-more'), {'sender': 'length', 'filter-param': this.category});
 						} } }
 					} ]
 				});
