@@ -90,7 +90,7 @@ class MediaSubProcessorBasic extends MediaSubProcessor
 			'sub_type' => $subType,
 			'picture_url' => $pictureUrl,
 			'average_score' => $averageScore,
-			'status' => $status,
+			'publishing_status' => $status,
 			'popularity' => $popularity,
 			'members' => $memberCount,
 			'favorites' => $favoriteCount,

@@ -82,7 +82,7 @@ try
 		popularity INTEGER,
 		members INTEGER,
 		favorites INTEGER,
-		status VARCHAR(1),
+		publishing_status VARCHAR(1),
 		published_from VARCHAR(10), --TIMESTAMP
 		published_to VARCHAR(10), --TIMESTAMP
 		processed TIMESTAMP,
