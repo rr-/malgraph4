@@ -1,4 +1,4 @@
-function toggleMoreWrappers(target, data, ajax)
+function toggleEntries(target, data, ajax)
 {
 	var resetHeight = function()
 	{
@@ -46,12 +46,12 @@ function toggleMoreWrappers(target, data, ajax)
 
 $(function()
 {
-	$('.wrapper-more').on('click', '.close', function(event)
+	$('.entries-wrapper').on('click', '.close', function(event)
 	{
-		var target = $(this).parents('.wrapper-more');
+		var target = $(this).parents('.entries-wrapper');
 		if ($(target).hasClass('singular'))
 		{
-			target = $(this).parents('.wrapper-more');
+			target = $(this).parents('.entries-wrapper');
 		}
 		target.stop(true, true).slideUp('fast');
 		event.preventDefault();

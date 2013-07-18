@@ -3,23 +3,23 @@ div.user h2 {
 	padding-left: 0.3em;
 }
 
-.wrapper-more {
+.entries-wrapper {
 	display: none;
 }
-.wrapper-more ul {
+.entries-wrapper ul {
 	margin: 0;
 	padding: 0 0 0 auto;
 }
-.wrapper-more .close {
+.entries-wrapper .close {
 	float: right;
 	cursor: pointer;
 	padding: 0.5em 0 0.5em 0.5em;
 }
-.wrapper-more span.details {
+.entries-wrapper span.details {
 	color: silver;
 	margin-left: 0.5em;
 	font-size: 92.5%;
 }
-.wrapper-more p {
+.entries-wrapper p {
 	margin: 0.5em 0 0.5em 0.5em;
 }

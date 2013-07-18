@@ -41,12 +41,12 @@
 				</li>
 			</ul>
 
-			<div class="wrapper-target">
+			<div class="target-wrapper">
 				<div class="target"></div>
 				<div class="clear"></div>
 			</div>
 
-			<div class="wrapper-more">
+			<div class="entries-wrapper">
 			</div>
 
 			<script type="text/javascript">
@@ -74,7 +74,7 @@
 					series: [ {
 						data: <?php echo json_encode(array_values($scores)) ?>,
 						point: { events: { click: function(e) {
-							toggleMoreWrappers($('.score-length-dist .wrapper-more'), {'sender': 'length', 'filter-param': this.category});
+							toggleEntries($('.score-length-dist .entries-wrapper'), {'sender': 'length', 'filter-param': this.category});
 						} } }
 					} ]
 				});

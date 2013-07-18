@@ -29,12 +29,12 @@
 				</li>
 			</ul>
 
-			<div class="wrapper-target">
+			<div class="target-wrapper">
 				<div class="target"></div>
 				<div class="clear"></div>
 			</div>
 
-			<div class="wrapper-more">
+			<div class="entries-wrapper">
 			</div>
 
 			<script type="text/javascript">
@@ -56,7 +56,7 @@
 					series: [ {
 						data: <?php echo json_encode(array_values($viewContext->ratingDistribution->getGroupsSizes())) ?>,
 						point: { events: { click: function(e) {
-							toggleMoreWrappers($('.rating-dist .wrapper-more'), {'sender': 'ratings', 'filter-param': this.category});
+							toggleEntries($('.rating-dist .entries-wrapper'), {'sender': 'ratings', 'filter-param': this.category});
 						} } }
 					} ]
 				});

@@ -34,12 +34,12 @@
 				</li>
 			</ul>
 
-			<div class="wrapper-target">
+			<div class="target-wrapper">
 				<div class="target"></div>
 				<div class="clear"></div>
 			</div>
 
-			<div class="wrapper-more">
+			<div class="entries-wrapper">
 			</div>
 
 			<script type="text/javascript">
@@ -61,7 +61,7 @@
 					series: [ {
 						data: <?php echo json_encode(array_map(function($x) { return $x / 60.; }, array_values($viewContext->ratingTimeDistribution->getGroupsSizes()))) ?>,
 						point: { events: { click: function(e) {
-							toggleMoreWrappers($('.score-time-dist .wrapper-more'), {'sender': 'ratings', 'filter-param': this.category});
+							toggleEntries($('.score-time-dist .wrapper-more'), {'sender': 'ratings', 'filter-param': this.category});
 						} } }
 					} ]
 				});
