@@ -1,9 +1,9 @@
 <?php
 class UserControllerListsModule extends AbstractUserControllerModule
 {
-	public static function getText()
+	public static function getText($media)
 	{
-		return 'List';
+		return ucfirst(Media::toString($media) . ' list');
 	}
 
 	public static function getUrlParts()

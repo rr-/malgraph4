@@ -10,55 +10,64 @@
 	</h2>
 
 	<div class="section-body">
-		<dl>
-			<dt>Gender</dt>
-			<dd><?php echo ucfirst(UserGender::toString($viewContext->userGender)) ?></dd>
-
-			<dt>List views</dt>
-			<dd class="list-views">
-				<?php echo $viewContext->animeViewCount + $viewContext->mangaViewCount ?>&nbsp;
-				<span class="suffix">
-					(<span data-tooltip="Anime list view count"><?php echo $viewContext->animeViewCount ?></span>
-					+
-					<span data-tooltip="Manga list view count"><?php echo $viewContext->mangaViewCount ?></span>)
-				</span>
-			</dd>
-
-			<dt>Time on MAL</dt>
-			<?php if (intval($viewContext->joinDate)): ?>
-				<?php
-					list ($year, $month, $day) = explode ('-', $viewContext->joinDate);
-					$time = mktime(0, 0, 0, $month, $day, $year);
-					$diff = time() - $time;
-					$diff /= 3600 * 24;
-				?>
-				<dd><?php printf('%.1f', $diff / 361.25) ?> years</dd>
+		<div class="user-pic">
+			<a class="waitable" href="<?php echo UserControllerProfileModule::url($viewContext->userName, $viewContext->media) ?>">
+			<?php if (empty($viewContext->userPictureUrl)): ?>
+				<img class="profile unavailable" alt="No profile picture" src="<?php echo UrlHelper::absoluteUrl('/media/img/pixel.gif') ?>">
 			<?php else: ?>
-				<dd>Unknown</dd>
+				<img class="profile" alt="<?php echo $viewContext->userName ?>&rsquo;s profile picture" src="<?php echo UrlHelper::absoluteUrl('/media/img/pixel.gif') ?>" style="background-image: url('<?php echo $viewContext->userPictureUrl ?>')">
 			<?php endif ?>
+			</a>
+		</div>
 
-		</dl>
+		<div class="left">
+			<div class="list-views">
+				<p class="number">
+					List views:
+					<span><?php echo $viewContext->animeViewCount + $viewContext->mangaViewCount ?></span>
+				</p>
 
-		<ul class="mal-links">
-			<li>
+				<div class="bar">
+					<div class="filled" style="width: <?php echo $viewContext->animeViewCount * 100.0 / max(1, $viewContext->animeViewCount + $viewContext->mangaViewCount) ?>%"></div>
+				</div>
+
+				<p class="small-number">
+					<span class="anime">
+						<?php echo $viewContext->animeViewCount ?> anime
+					</span>,&nbsp;
+					<span class="manga">
+						<?php echo $viewContext->mangaViewCount ?> manga
+					</span>
+				</p>
+			</div>
+
+			<div class="years">
+				<p class="number">
+					Years on MAL:
+					<span>
+						<?php if ($viewContext->yearsOnMal): ?>
+							<?php printf('%.1f', $viewContext->yearsOnMal) ?>
+						<?php else: ?>
+							unknown
+						<?php endif ?>
+					</span>
+				</p>
+			</div>
+
+			<div class="mal-links">
 				<a target="_blank" href="http://myanimelist.net/profile/<?php echo $viewContext->userName ?>">
-					<i class="icon-pop-out"></i>
-					<span>MAL profile</span>
+					Visit MAL profile
 				</a>
-			</li>
-			<li>
+				<br>
 				<a target="_blank" href="http://myanimelist.net/animelist/<?php echo $viewContext->userName ?><?php if (Config::$sendReferrer) echo '&amp;sclick=1'; ?>">
-					<i class="icon-pop-out"></i>
-					<span>MAL anime list</span>
+					Anime list on MAL
 				</a>
-			</li>
-			<li>
+				<br>
 				<a target="_blank" href="http://myanimelist.net/mangalist/<?php echo $viewContext->userName ?><?php if (Config::$sendReferrer) echo '&amp;sclick=1'; ?>">
-					<i class="icon-pop-out"></i>
-					<span>MAL manga list</span>
+					Manga list on MAL
 				</a>
-			</li>
-		</ul>
+			</div>
+		</div>
 
 		<div class="clear"></div>
 	</div>
@@ -78,7 +87,6 @@
 				<?php foreach ($viewContext->friends as $friend): ?>
 					<li>
 						<a class="mg waitable" href="<?php echo UserControllerProfileModule::url($friend->name, $viewContext->name) ?>">
-							<i class="icon-mg"></i>
 							<span><?php echo $friend->name ?></span>
 						</a>
 					</li>
@@ -103,7 +111,6 @@
 				<?php foreach ($viewContext->clubs as $club): ?>
 					<li>
 						<a target="_blank" href="http://myanimelist.net/clubs.php?cid=<?php echo $club->mal_id ?>">
-							<i class="icon-club"></i>
 							<span><?php echo $club->name ?></span>
 						</a>
 					</li>
@@ -116,5 +123,5 @@
 
 <script type="text/javascript">
 	$('.clubs li').width(Math.floor($('.clubs').width() / 2 - 20));
-	$('.friends li').width(Math.floor($('.friends').width() / 3 - 20));
+	$('.friends li').width(Math.floor($('.friends').width() / 2 - 20));
 </script>

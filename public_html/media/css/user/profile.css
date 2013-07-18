@@ -1,28 +1,6 @@
-dl {
-	display: inline-block;
-	margin: 0;
-}
-dt {
-	clear: left;
-	font-weight: bold;
-	width: 8em;
-	float: left;
-	margin-left: 0.5em;
-}
-dt:after {
-	content: ': ';
-}
-dd {
-	float: left;
-	margin: 0;
-	padding: 0;
-}
-dd a {
-	margin-left: 0.5em;
-}
-
 .updated {
-	float: right;
+	position: absolute;
+	right: 0;
 	font-size: 65%;
 	padding-top: 0.25em;
 	opacity: .25;
@@ -37,9 +15,6 @@ dd a {
 	width: 60%;
 	float: left;
 }
-.basic .mal-links {
-	float: left;
-}
 
 .friends ul,
 .clubs ul,
@@ -47,24 +22,20 @@ dd a {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
-	line-height: 1.5em;
 }
 .friends a,
 .clubs a {
 	position: relative;
+	font-size: 120%;
+	line-height: 1.75em;
 }
 .friends ul li,
 .clubs ul li {
 	overflow: hidden;
 	display: block;
 	text-overflow: ellipsis;
-}
-.friends ul li {
 	float: left;
-	width: 33%;
-}
-.clubs ul li {
-	float: left;
+	text-align: center;
 	width: 50%;
 }
 
@@ -74,4 +45,65 @@ dd a {
 #main ul span {
 	display: inline-block;
 	margin-left: 21px;
+}
+
+.user-pic a {
+	float: right;
+	font-size: 0;
+	line-height: 0;
+	margin: 0;
+	padding: 0;
+}
+.user-pic img {
+	box-shadow: 0 0 2px rgba(96,96,96,0.5) inset;
+	border-radius: 4px;
+	padding: 0;
+	margin: 0 auto;
+	background-color: rgba(255, 255, 255, 0.6);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: top center;
+	height: 200px;
+}
+.user-pic img.unavailable {
+	background-image: url('../img/anon.png');
+}
+
+.left {
+	width: 50%;
+	text-align: center;
+}
+
+p.number {
+	font-size: 110%;
+	vertical-align: middle;
+}
+p.number span {
+	font-size: 150%;
+	padding-left: 1em;
+	display: inline-block;
+	vertical-align: middle;
+}
+.bar {
+	background: #eee;
+	height: 3px;
+	width: 12em;
+	margin: 0 auto;
+}
+.bar .filled {
+	background: #1969CB;
+	height: 3px;
+}
+
+.list-views {
+	margin-bottom: 3em;
+}
+.list-views .bar {
+	background: #FF8000;
+}
+.list-views .anime {
+	color: #1969CB;
+}
+.list-views .manga {
+	color: #FF8000;
 }

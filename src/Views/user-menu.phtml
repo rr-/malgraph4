@@ -1,24 +1,20 @@
-<div class="user-pic-wrapper">
-	<div class="user-pic">
-		<a class="waitable" href="<?php echo UserControllerProfileModule::url($viewContext->userName, $viewContext->media) ?>">
-		<?php if (empty($viewContext->userPictureUrl)): ?>
-			<img class="profile unavailable" alt="No profile picture" src="<?php echo UrlHelper::absoluteUrl('/media/img/pixel.gif') ?>">
-		<?php else: ?>
-			<img class="profile" alt="<?php echo $viewContext->userName ?>&rsquo;s profile picture" src="<?php echo UrlHelper::absoluteUrl('/media/img/pixel.gif') ?>" style="background-image: url('<?php echo $viewContext->userPictureUrl ?>')">
-		<?php endif ?>
-		</a>
-	</div>
-	<p class="user-nick">
-		<a class="waitable" href="<?php echo UserControllerProfileModule::url($viewContext->userName, $viewContext->media) ?>">
-			<?php echo $viewContext->userName ?>
-		</a>
-	</p>
-</div>
-
 <div class="actions">
+	<div>
+		<ul class="action">
+			<?php if ($viewContext->module == 'UserControllerProfileModule'): ?>
+				<li class="active">
+			<?php else: ?>
+				<li>
+			<?php endif ?>
+				<a class="waitable" href="<?php echo UserControllerProfileModule::url($viewContext->userName) ?>">
+					<?php echo UserControllerProfileModule::getText(null) ?>
+				</a>
+			</li>
+		</ul>
+	</div>
 	<?php foreach (Media::getConstList() as $media): ?>
+		<hr>
 		<div>
-			<p><?php echo ucfirst(Media::toString($media)) ?></p>
 			<ul class="action">
 				<?php foreach (UserController::getAvailableModules() as $module): ?>
 					<?php if (in_array($media, $module::getMediaAvailability())): ?>
@@ -28,7 +24,7 @@
 							<li>
 						<?php endif ?>
 							<a class="waitable" href="<?php echo $module::url($viewContext->userName, $media) ?>">
-								<?php echo $module::getText() ?>
+								<?php echo $module::getText($media) ?>
 							</a>
 						</li>
 					<?php endif ?>
@@ -39,6 +35,7 @@
 	<div class="clear"></div>
 </div>
 
+<!--
 <div class="share">
 	<p>Share:</p>
 	<ul>
@@ -54,6 +51,7 @@
 		</li>
 	</ul>
 </div>
+-->
 
 <input type="hidden" id="user-id" value="<?php echo $viewContext->userId ?>">
 <input type="hidden" id="user-name" value="<?php echo $viewContext->userName ?>">

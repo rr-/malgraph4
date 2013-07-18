@@ -1,7 +1,7 @@
 <?php
 class UserControllerRatingsModule extends AbstractUserControllerModule
 {
-	public static function getText()
+	public static function getText($media)
 	{
 		return 'Ratings';
 	}
