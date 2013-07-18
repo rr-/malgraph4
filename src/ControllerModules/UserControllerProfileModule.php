@@ -22,10 +22,7 @@ class UserControllerProfileModule extends AbstractUserControllerModule
 		$viewContext->meta->styles []= '/media/css/user/profile.css';
 		$viewContext->meta->scripts []= '/media/js/user/profile.js';
 
-		$pdo = Database::getPDO();
-		$stmt = $pdo->prepare('SELECT * FROM users WHERE user_id = ?');
-		$stmt->execute([$viewContext->userId]);
-		$result = $stmt->fetch();
+		$result = Retriever::getUser($viewContext->userId);
 
 		$viewContext->processed = strtotime($result->processed);
 		$viewContext->userGender = strtotime($result->gender);

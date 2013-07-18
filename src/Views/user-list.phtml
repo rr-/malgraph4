@@ -42,9 +42,9 @@
 						<tr>
 							<td class="status status-<?php echo $row->status ?>"></td>
 
-							<td class="title" data-sorter="<?php echo Retriever::getMediaTitle($row) ?>">
+							<td class="title" data-sorter="<?php echo Retriever::getMediaTitleText($row) ?>">
 								<a target="_blank" href="http://myanimelist.net/<?php echo Media::toString($row->media) ?>/<?php echo $row->mal_id ?>">
-									<?php echo Retriever::getMediaTitle($row) ?>
+									<?php echo Retriever::getMediaTitleText($row) ?>
 								</a>
 							</td>
 

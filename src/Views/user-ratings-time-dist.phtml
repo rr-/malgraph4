@@ -1,0 +1,71 @@
+<div class="section score-time-dist">
+	<h2>
+		<i data-tooltip="Do you waste your time on crap?|Check your time spent on 10/10 titles|(planned titles are not counted)." class="icon-tooltip"></i>
+		Ratings vs. time spent
+	</h2>
+	<div class="section-body">
+		<?php if ($viewContext->ratingDistribution->getLargestGroupSize() == 0): ?>
+			<p>There is no information about any titles for this user.</p>
+			<p>Add a few titles and come back in 24 hours.<br>We'll be waiting for you.</p>
+		<?php else: ?>
+			<ul class="infobox">
+				<li>
+					<div>
+						<span class="prefix">Total time</span>
+						<span class="subject"><?php printf('%.02f', $viewContext->ratingTimeDistribution->getTotalTime() / 1440.) ?></span>
+						<span class="suffix">days</span>
+					</div>
+				</li>
+				<!--<li>
+					<div>
+						<span class="prefix">Mean score</span>
+						<span class="subject"><?php printf('%.02f', $viewContext->ratingTimeDistribution->getMeanScore()) ?></span>
+						<span class="suffix">(weighted)</span>
+					</div>
+				</li>-->
+				<li>
+					<div>
+						<div data-tooltip="Earliest time user started or finished|<?php echo $viewContext->media == Media::Manga ? 'reading' : 'watching' ?> something, or joined MAL,|was on <?php echo date('Y-m-d', $viewContext->earliestTimeKnown) ?>.">
+							<span class="prefix">Average time</span>
+								<span class="subject"><?php printf('%.02f', $viewContext->meanTime) ?></span>
+							<span class="suffix">min/day</span>
+						</div>
+					</div>
+				</li>
+			</ul>
+
+			<div class="wrapper-target">
+				<div class="target"></div>
+				<div class="clear"></div>
+			</div>
+
+			<div class="wrapper-more">
+			</div>
+
+			<script type="text/javascript">
+				var chart = new Highcharts.Chart({
+					chart: { renderTo: $('.score-time-dist .target')[0], type: 'bar', marginRight: 15 },
+					xAxis: { categories: <?php echo json_encode(array_map(function($x) { return $x == 0 ? '-' : $x; }, $viewContext->ratingDistribution->getGroupsKeys())) ?>, title: { text: 'Rating' } },
+					yAxis: { title: {text: 'Hours spent', margin: 15 } },
+					tooltip: { formatter: function() {
+						var text;
+						if (this.x == '-') {
+							text = 'Hours spent on unrated titles: ' + Math.round(this.y * 100) / 100.0;
+						} else {
+							text = 'Hours spent on titles rated with ' + this.x + ': ' + Math.round(this.y * 100) / 100.0;
+						}
+						var percent = this.y * 100.0 / <?php echo max(1, $viewContext->ratingTimeDistribution->getTotalSize() / 60.) ?>;
+						text = text + ' (' + (Math.round(percent * 100.0) / 100.0) + '%)';
+						return text;
+					} },
+					series: [ {
+						data: <?php echo json_encode(array_map(function($x) { return $x / 60.; }, array_values($viewContext->ratingTimeDistribution->getGroupsSizes()))) ?>,
+						point: { events: { click: function(e) {
+							toggleMoreWrappers($('.score-time-dist .wrapper-more'), {'sender': 'score-time', 'score': this.category});
+						} } }
+					} ]
+				});
+			</script>
+		<?php endif ?>
+	</div>
+</div>

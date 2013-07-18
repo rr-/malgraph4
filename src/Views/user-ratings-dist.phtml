@@ -1,0 +1,70 @@
+<div class="section rating-dist">
+	<h2>
+		<i data-tooltip="Count of all entries with given|rating, in a bar chart form.|Planned titles are not counted." class="icon-tooltip"></i>
+		Rating distribution
+	</h2>
+	<div class="section-body">
+		<?php if ($viewContext->ratingDistribution->getLargestGroupSize() == 0): ?>
+			<p>There is no information about any titles for this user.</p>
+			<p>Add a few titles and come back in 24 hours.<br>We'll be waiting for you.</p>
+		<?php else: ?>
+			<ul class="infobox">
+				<li>
+					<div>
+						<span class="prefix">Total rated</span>
+						<span class="subject"><?php printf('%d', $viewContext->ratingDistribution->getRatedCount()) ?></span>
+					</div>
+				</li>
+				<li>
+					<div>
+						<span class="prefix">Mean score</span>
+						<span class="subject"><?php printf('%.02f', $viewContext->ratingDistribution->getMeanScore()) ?></span>
+					</div>
+				</li>
+				<li>
+					<div>
+						<span class="prefix">Std dev.</span>
+						<span class="subject"><?php printf('%.02f', $viewContext->ratingDistribution->getStandardDeviation()) ?></span>
+					</div>
+				</li>
+			</ul>
+
+			<div class="wrapper-target">
+				<div class="target"></div>
+				<div class="clear"></div>
+			</div>
+
+			<div class="wrapper-more">
+			</div>
+
+			<script type="text/javascript">
+				$(function()
+				{
+					console.log('yo');
+					var chart = new Highcharts.Chart({
+						chart: { renderTo: $('.rating-dist .target')[0], type: 'bar', marginRight: 35 },
+						xAxis: { categories: <?php echo json_encode(array_map(function($x) { return $x == 0 ? '-' : $x; }, $viewContext->ratingDistribution->getGroupsKeys())) ?>, title: { text: 'Rating' } },
+						yAxis: { title: { text: 'Count', margin: 15 } },
+						tooltip: { formatter: function() {
+							var text;
+							if (this.x == '-') {
+								text = 'Unrated titles: ' + this.y;
+							} else {
+								text = 'Titles rated with ' + this.x + ': ' + this.y;
+							}
+							var percent = this.y * 100.0 / <?php echo max(1, $viewContext->ratingDistribution->getTotalSize()) ?>;
+							text = text + ' (' + (Math.round(percent * 100.0) / 100.0) + '%)';
+							return text;
+						} },
+						series: [ {
+							data: <?php echo json_encode(array_values($viewContext->ratingDistribution->getGroupsSizes())) ?>,
+							point: { events: { click: function(e) {
+								/*toggleMoreWrappers($('.rating-dist .wrapper-more'), {'sender': 'score', 'score': this.category});*/
+							} } }
+						} ]
+					});
+				});
+			</script>
+		<?php endif ?>
+	</div>
+</div>
