@@ -6,7 +6,7 @@ $.fn.hasAttr = function(name)
 $(function()
 {
 	// scroll scrollable elements
-	$('.scrollable').jScrollPane({horizontalDragMaxWidth: 0, autoReinitialise: true});
+	//$('.scrollable').jScrollPane({horizontalDragMaxWidth: 0, autoReinitialise: true});
 	// focus user search field
 	if ($('input:focus').length == 0)
 	{

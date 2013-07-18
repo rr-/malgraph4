@@ -22,7 +22,7 @@ class ViewContext
 			'/media/js/misc.js',
 			'/media/js/tooltips.js',
 			'/media/js/glider.js',
-			'http://jscrollpane.kelvinluck.com/script/jquery.jscrollpane.min.js',
+			//'http://jscrollpane.kelvinluck.com/script/jquery.jscrollpane.min.js',
 		];
 		$this->meta->keywords = ['malgraph', 'anime', 'manga', 'statistics', 'stats'];
 		$this->meta->description = 'MALgraph - an extension of your MyAnimeList profile. Check your rating distribution, get anime or manga recommendations, and compare numerous stats with other kawaii Japanese otaku.';
