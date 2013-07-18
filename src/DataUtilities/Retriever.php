@@ -48,6 +48,11 @@ class Retriever
 		return $stmt->fetch()->private;
 	}
 
+	public static function malLinkText($row)
+	{
+		return 'http://myanimelist.net/' . Media::toString($row->media) . '/' . $row->mal_id;
+	}
+
 	private static function getNumberText($number, $short, $fmt, $shortForm, $longForm)
 	{
 		$txt = $short ? $shortForm : $longForm;
