@@ -24,10 +24,15 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 		switch ($sender)
 		{
 			case 'ratings':
-				$cb = function($row) use ($filterParam) { return intval($row->score) == intval($filterParam) and $row->status != UserListStatus::Planned; };
+				$cb = function($row) use ($filterParam) {
+					return intval($row->score) == intval($filterParam)
+					and $row->status != UserListStatus::Planned; };
 				break;
 			case 'length':
-				$cb = function($row) use ($filterParam) { return MediaLengthDistribution::getGroup($row) == $filterParam and $row->status != UserListStatus::Planned; };
+				$cb = function($row) use ($filterParam) {
+					return MediaLengthDistribution::getGroup($row) == $filterParam
+					and $row->status != UserListStatus::Planned
+					and !($row->sub_type == AnimeMediaType::Movie and $row->media == Media::Anime); };
 				$computeMeanScore = true;
 				break;
 			default:

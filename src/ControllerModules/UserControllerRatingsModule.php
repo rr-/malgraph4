@@ -31,7 +31,10 @@ class UserControllerRatingsModule extends AbstractUserControllerModule
 		});
 		$viewContext->ratingDistribution = new RatingDistribution($list);
 		$viewContext->ratingTimeDistribution = new RatingTimeDistribution($list);
-		$viewContext->lengthDistribution = new MediaLengthDistribution($list);
+		$listNoMovies = array_filter($list, function($entry) {
+			return !($entry->sub_type == AnimeMediaType::Movie and $entry->media == Media::Anime);
+		});
+		$viewContext->lengthDistribution = new MediaLengthDistribution($listNoMovies);
 
 		$result = Retriever::getUser($viewContext->userId);
 
