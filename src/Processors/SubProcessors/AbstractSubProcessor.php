@@ -82,7 +82,7 @@ abstract class AbstractSubProcessor
 			join(', ', $single1),
 			join(' AND ', $single2)
 		);
-		$flattened = array_merge(array_values($conditions), array_values($newData));
+		$flattened = array_merge(array_values($newData), array_values($conditions));
 
 		$pdo = Database::getPDO();
 		$stmt = $pdo->prepare($sql);
