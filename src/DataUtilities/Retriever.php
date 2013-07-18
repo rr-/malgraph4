@@ -22,6 +22,22 @@ class Retriever
 		return $stmt->fetch();
 	}
 
+	public static function getUserClubs($userId)
+	{
+		$pdo = Database::getPDO();
+		$stmt = $pdo->prepare('SELECT * FROM user_clubs WHERE user_id = ?');
+		$stmt->execute([$userId]);
+		return $stmt->fetchAll();
+	}
+
+	public static function getUserFriends($userId)
+	{
+		$pdo = Database::getPDO();
+		$stmt = $pdo->prepare('SELECT * FROM user_friends WHERE user_id = ?');
+		$stmt->execute([$userId]);
+		return $stmt->fetchAll();
+	}
+
 	public static function isUserMediaListPrivate($userId, $media)
 	{
 		$pdo = Database::getPDO();
