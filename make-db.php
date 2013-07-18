@@ -62,9 +62,9 @@ try
 		end_date VARCHAR(10), --TIMESTAMP
 		status VARCHAR(1),
 
-		episodes INTEGER,
-		chapters INTEGER,
-		volumes INTEGER,
+		finished_episodes INTEGER,
+		finished_chapters INTEGER,
+		finished_volumes INTEGER,
 
 		UNIQUE (user_id, mal_id, media),
 		FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE

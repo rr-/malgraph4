@@ -75,9 +75,9 @@ class UserSubProcessorLists extends UserSubProcessor
 					'score' => $score,
 					'start_date' => $startDate,
 					'end_date' => $finishDate,
-					'episodes' => $finishedEpisodes,
-					'chapters' => $finishedChapters,
-					'volumes' => $finishedVolumes,
+					'finished_episodes' => $finishedEpisodes,
+					'finished_chapters' => $finishedChapters,
+					'finished_volumes' => $finishedVolumes,
 					'status' => $status,
 				];
 			}
