@@ -1,8 +1,6 @@
 <div class="section basic">
 	<h2>
-		<a href="<?php echo UserControllerProfileModule::url($viewContext->userName, $viewContext->media) ?>">
-			<?php echo $viewContext->userName ?>&rsquo;s profile
-		</a>
+		<?php echo $viewContext->userName ?>&rsquo;s profile
 		<span class="updated" data-tooltip="Time of last data update" data-date="<?php echo date('c', $viewContext->processed) ?>">
 			<?php echo date('M d, H:i', $viewContext->processed) ?> UTC
 		</span>
@@ -68,9 +66,7 @@
 
 <div class="section friends">
 	<h2>
-		<a href="<?php echo UserControllerProfileModule::url($viewContext->userName, $viewContext->media) ?>">
-			<?php echo $viewContext->userName ?>&rsquo;s friends (<?php echo count($viewContext->friends) < 100 ? count($viewContext->friends) : '100+' ?>)
-		</a>
+		Friends (<?php echo count($viewContext->friends) < 100 ? count($viewContext->friends) : '100+' ?>)
 	</h2>
 	<div class="section-body">
 		<?php if (count($viewContext->friends) == 0): ?>
@@ -95,9 +91,7 @@
 
 <div class="section clubs">
 	<h2>
-		<a href="<?php echo UserControllerProfileModule::url($viewContext->userName, $viewContext->media) ?>">
-			<?php echo $viewContext->userName ?>&rsquo;s clubs (<?php echo count($viewContext->clubs) ?>)
-		</a>
+		Clubs (<?php echo count($viewContext->clubs) ?>)
 	</h2>
 	<div class="section-body">
 		<?php if (count($viewContext->clubs) == 0): ?>

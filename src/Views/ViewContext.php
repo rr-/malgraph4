@@ -18,8 +18,10 @@ class ViewContext
 			'http://fonts.googleapis.com/css?family=Open+Sans|Ubuntu',
 		];
 		$this->meta->scripts = [
-			'http://code.jquery.com/jquery-1.10.2.min.js',
+			'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js',
+			'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/ui/jquery.ui.position.min.js',
 			'/media/js/misc.js',
+			'/media/js/tooltips.js',
 			'/media/js/glider.js',
 			'http://jscrollpane.kelvinluck.com/script/jquery.jscrollpane.min.js',
 		];

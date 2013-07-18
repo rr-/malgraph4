@@ -15,9 +15,7 @@
 
 <div class="section">
 	<h2>
-		<a href="<?php echo UserControllerProfileModule::url($viewContext->userName, $viewContext->media) ?>">
-			<?php echo $viewContext->userName ?>&rsquo;s <?php echo Media::toString($viewContext->media) ?> list
-		</a>
+		<?php echo ucfirst(Media::toString($viewContext->media)) ?> list
 		<span class="filter-hint">&nbsp;(<span class="filter-hint-shown"></span> of <span class="filter-hint-total"></span>)</span>
 	</h2>
 	<div class="section-body">
@@ -44,9 +42,9 @@
 						<tr>
 							<td class="status status-<?php echo $row->status ?>"></td>
 
-							<td class="title" data-sorter="<?php echo TextHelper::getMediaTitle($row->title, $row->media, $row->mal_id) ?>">
+							<td class="title" data-sorter="<?php echo Retriever::getMediaTitle($row) ?>">
 								<a target="_blank" href="http://myanimelist.net/<?php echo Media::toString($row->media) ?>/<?php echo $row->mal_id ?>">
-									<?php echo TextHelper::getMediaTitle($row->title, $row->media, $row->mal_id) ?>
+									<?php echo Retriever::getMediaTitle($row) ?>
 								</a>
 							</td>
 
@@ -75,7 +73,7 @@
 	?>
 	<?php foreach ($icons as $status => $info): ?>
 		$('.status-<?php echo $status ?>').attr({
-			'data-tooltip': '<?php echo UserListStatus::toString($status) ?>',
+			'data-tooltip': '<?php echo ucfirst(UserListStatus::toString($status)) ?>',
 			'data-sorter': <?php echo $info[0] ?>}
 		).append($('<i class="icon-<?php echo $info[1] ?>"/>'));
 	<?php endforeach ?>
