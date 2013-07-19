@@ -50,6 +50,7 @@ class UserController extends AbstractController
 		if (BanHelper::isBanned($controllerContext->userName))
 		{
 			$viewContext->meta->styles []= '/media/css/narrow.css';
+			$viewContext->userName = $controllerContext->userName;
 			$viewContext->viewName = 'error-user-blocked';
 			return;
 		}
