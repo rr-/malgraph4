@@ -39,9 +39,9 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 				throw new Exception('Unknown sender');
 		}
 
-		$list = Retriever::getUserMediaList($viewContext->userId, $viewContext->media);
+		$list = $viewContext->user->getMixedUserMedia($viewContext->media);
 		$list = array_filter($list, $cb);
-		$isPrivate = Retriever::isUserMediaListPrivate($viewContext->userId, $viewContext->media);
+		$isPrivate = $viewContext->user->isUserMediaPrivate($viewContext->media);
 
 		if ($computeMeanScore)
 		{

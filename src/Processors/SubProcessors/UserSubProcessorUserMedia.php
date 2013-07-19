@@ -1,5 +1,5 @@
 <?php
-class UserSubProcessorLists extends UserSubProcessor
+class UserSubProcessorUserMedia extends UserSubProcessor
 {
 	const URL_ANIMELIST = 0;
 	const URL_MANGALIST = 1;
@@ -19,6 +19,8 @@ class UserSubProcessorLists extends UserSubProcessor
 
 	public function process(array $documents, &$context)
 	{
+		$this->delete('usermedia', ['user_id' => $context->userId]);
+
 		foreach (Media::getConstList() as $media)
 		{
 			$key = $media == Media::Anime
@@ -81,13 +83,11 @@ class UserSubProcessorLists extends UserSubProcessor
 					'status' => $status,
 				];
 			}
-			$this->insert('user_media_list', $data);
+			$this->insert('usermedia', $data);
 
 			$daysSpent = Strings::makeFloat(self::getNodeValue($xpath, '//user_days_spent_watching'));
-			$this->update('users', ['user_id' => $context->userId], [
-				Media::toString($media) . '_days_spent' => $daysSpent,
-				Media::toString($media) . '_private' => $isPrivate,
-			]);
+			$context->user->{Media::toString($media) . '_days_spent'} = $daysSpent;
+			$context->user->{Media::toString($media) . '_private'} = $isPrivate;
 		}
 	}
 }

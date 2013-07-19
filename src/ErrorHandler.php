@@ -13,6 +13,7 @@ class ErrorHandler extends Singleton
 
 	public static function doInit()
 	{
+		error_reporting(E_ALL);
 		set_error_handler([__CLASS__, 'handler']);
 	}
 

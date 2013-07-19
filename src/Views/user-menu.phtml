@@ -6,7 +6,7 @@
 			<?php else: ?>
 				<li>
 			<?php endif ?>
-				<a class="waitable" href="<?php echo UserControllerProfileModule::url($viewContext->userName) ?>">
+				<a class="waitable" href="<?php echo UserControllerProfileModule::url($viewContext->user->name) ?>">
 					<?php echo UserControllerProfileModule::getText(null) ?>
 				</a>
 			</li>
@@ -23,7 +23,7 @@
 						<?php else: ?>
 							<li>
 						<?php endif ?>
-							<a class="waitable" href="<?php echo $module::url($viewContext->userName, $media) ?>">
+							<a class="waitable" href="<?php echo $module::url($viewContext->user->name, $media) ?>">
 								<?php echo $module::getText($media) ?>
 							</a>
 						</li>
@@ -53,6 +53,6 @@
 </div>
 -->
 
-<input type="hidden" id="user-id" value="<?php echo $viewContext->userId ?>">
-<input type="hidden" id="user-name" value="<?php echo $viewContext->userName ?>">
+<input type="hidden" id="user-id" value="<?php echo $viewContext->user->id ?>">
+<input type="hidden" id="user-name" value="<?php echo $viewContext->user->name ?>">
 <input type="hidden" id="media" value="<?php echo Media::toString($viewContext->media) ?>">

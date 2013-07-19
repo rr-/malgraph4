@@ -24,8 +24,8 @@
 	<ul>
 		<?php foreach ($viewContext->entries as $entry): ?>
 			<li>
-				<a target="_blank" href="<?php echo Retriever::getMalLinkText($entry) ?>">
-					<?php echo Retriever::getMediaTitleText($entry) ?>
+				<a target="_blank" href="<?php echo $entry->mal_link ?>">
+					<?php echo $entry->title ?>
 				</a>
 				<span class="details">&nbsp;(<?php echo $entry->score ? 'rated with ' . $entry->score : 'unrated' ?>)</span>
 			</li>

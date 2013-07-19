@@ -30,22 +30,20 @@ class UserSubProcessorProfile extends UserSubProcessor
 		$website        = Strings::removeSpaces(self::getNodeValue($xpath, '//td[text() = \'Website\']/following-sibling::td'));
 		$gender         = Strings::makeEnum(self::getNodeValue($xpath, '//td[text() = \'Gender\']/following-sibling::td'), ['Female' => UserGender::Female, 'Male' => UserGender::Male], UserGender::Unknown);
 
-		$this->delete('users', ['LOWER(name)' => strtolower($userName)]);
-		$userId = $this->insert('users', [
-			'name' => $userName,
-			'picture_url' => $pictureUrl,
-			'join_date' => $joinDate,
-			'mal_id' => $malId,
-			'comments' => $commentCount,
-			'posts' => $postCount,
-			'birthday' => $birthday,
-			'location' => $location,
-			'website' => $website,
-			'gender' => $gender,
-			'anime_views' => $animeViewCount,
-			'manga_views' => $mangaViewCount,
-			'processed' => date('Y-m-d H:i:s'),
-		]);
-		$context->userId = $userId;
+		$user = &$context->user;
+		$user->name = $userName;
+		$user->picture_url = $pictureUrl;
+		$user->join_date = $joinDate;
+		$user->mal_id = $malId;
+		$user->comments = $commentCount;
+		$user->posts = $postCount;
+		$user->birthday = $birthday;
+		$user->location = $location;
+		$user->website = $website;
+		$user->gender = $gender;
+		$user->anime_views = $animeViewCount;
+		$user->manga_views = $mangaViewCount;
+		$user->processed = date('Y-m-d H:i:s');
+		$context->userId = R::store($user);
 	}
 }

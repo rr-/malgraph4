@@ -3,7 +3,7 @@ class RatingTimeDistribution extends RatingDistribution
 {
 	public function addEntry($entry)
 	{
-		$this->addToGroup($entry->score, $entry, Retriever::getCompletedDuration($entry));
+		$this->addToGroup($entry->score, $entry, $entry->completed_duration);
 	}
 
 	public function getTotalTime()

@@ -11,6 +11,7 @@ class MangaSubProcessorAuthors extends MediaSubProcessor
 		$doc = self::getDOM($documents[self::URL_MEDIA]);
 		$xpath = new DOMXPath($doc);
 
+		$this->delete('mangaauthor', ['media_id' => $context->mediaId]);
 		$data = [];
 		foreach ($xpath->query('//span[starts-with(text(), \'Authors\')]/../a') as $node)
 		{
@@ -22,6 +23,6 @@ class MangaSubProcessorAuthors extends MediaSubProcessor
 				'name' => $authorName
 			];
 		}
-		$this->insert('manga_authors', $data);
+		$this->insert('mangaauthor', $data);
 	}
 }

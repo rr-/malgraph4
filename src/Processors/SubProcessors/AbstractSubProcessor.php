@@ -47,6 +47,7 @@ abstract class AbstractSubProcessor
 			$allRows = [$allRows];
 		}
 
+		$lastInsertId = null;
 		foreach (array_chunk($allRows, 50) as $rows)
 		{
 			$columns = array_keys(reset($rows));
@@ -58,35 +59,9 @@ abstract class AbstractSubProcessor
 			);
 			$flattened = call_user_func_array('array_merge', array_map('array_values', $rows));
 
-			$pdo = Database::getPDO();
-			$stmt = $pdo->prepare($sql);
-			$stmt->execute($flattened);
+			$lastInsertId = R::exec($sql, $flattened);
 		}
-		return $pdo->lastInsertId();
-	}
-
-	public function update($tableName, $conditions, $newData)
-	{
-		$single1 = [];
-		foreach ($newData as $key => $val)
-		{
-			$single1 []= $key . ' = ?';
-		}
-		$single2 = [];
-		foreach ($conditions as $key => $val)
-		{
-			$single2 []= $key . ' = ?';
-		}
-		$sql = sprintf('UPDATE %s SET %s WHERE %s',
-			$tableName,
-			join(', ', $single1),
-			join(' AND ', $single2)
-		);
-		$flattened = array_merge(array_values($newData), array_values($conditions));
-
-		$pdo = Database::getPDO();
-		$stmt = $pdo->prepare($sql);
-		$stmt->execute($flattened);
+		return $lastInsertId;
 	}
 
 	public function delete($tableName, $conditions)
@@ -100,9 +75,7 @@ abstract class AbstractSubProcessor
 			$tableName,
 			join(' AND ', $single));
 
-		$pdo = Database::getPDO();
-		$stmt = $pdo->prepare($sql);
-		$stmt->execute(array_values($conditions));
+		R::exec($sql, array_values($conditions));
 	}
 
 	public abstract function process(array $documents, &$context);

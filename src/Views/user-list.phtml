@@ -20,7 +20,7 @@
 	</h2>
 	<div class="section-body">
 		<?php if (count($viewContext->list) == 0): ?>
-			<p>Sadly, <?php echo $viewContext->userName ?>&rsquo;s <?php echo Media::toString($viewContext->media) ?> list is empty.<br>
+			<p>Sadly, <?php echo $viewContext->user->name ?>&rsquo;s <?php echo Media::toString($viewContext->media) ?> list is empty.<br>
 			If this is your list, add (and rate) something and come back in 24 hours.</p>
 		<?php elseif ($viewContext->private): ?>
 			<p>Sadly, <?php echo Media::toString($viewContext->media) ?> list of this user is private.</p>
@@ -38,18 +38,18 @@
 
 				<tbody>
 					<?php $k = 1 ?>
-					<?php foreach ($viewContext->list as $row): ?>
+					<?php foreach ($viewContext->list as $mixedUserMedia): ?>
 						<tr>
-							<td class="status status-<?php echo $row->status ?>"></td>
+							<td class="status status-<?php echo $mixedUserMedia->status ?>"></td>
 
-							<td class="title" data-sorter="<?php echo Retriever::getMediaTitleText($row) ?>">
-								<a target="_blank" href="<?php echo Retriever::getMalLinkText($row) ?>">
-									<?php echo Retriever::getMediaTitleText($row) ?>
+							<td class="title" data-sorter="<?php echo $mixedUserMedia->title ?>">
+								<a target="_blank" href="<?php echo $mixedUserMedia->mal_link ?>">
+									<?php echo $mixedUserMedia->title ?>
 								</a>
 							</td>
 
-							<td class="score" data-sorter="<?php echo $row->score ?>">
-								<?php echo $row->score ?: '-' ?>
+							<td class="score" data-sorter="<?php echo $mixedUserMedia->score ?>">
+								<?php echo $mixedUserMedia->score ?: '-' ?>
 							</td>
 						</tr>
 					<?php endforeach ?>

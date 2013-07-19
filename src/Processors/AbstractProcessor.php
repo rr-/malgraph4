@@ -3,21 +3,12 @@ abstract class AbstractProcessor
 {
 	public abstract function getSubProcessors();
 
-	public function beforeProcessing($context)
+	public function beforeProcessing(&$context)
 	{
-		$pdo = Database::getPDO();
-		$pdo->exec('BEGIN TRANSACTION');
 	}
 
-	public function afterProcessing($context)
+	public function afterProcessing(&$context)
 	{
-		$pdo = Database::getPDO();
-		if (!empty($context->exception))
-		{
-			$pdo->exec('ROLLBACK TRANSACTION');
-			return;
-		}
-		$pdo->exec('COMMIT TRANSACTION');
 	}
 
 	public function process($key)
@@ -27,7 +18,9 @@ abstract class AbstractProcessor
 			return;
 		}
 
+		R::begin();
 		$context = new ProcessingContext();
+		$context->key = $key;
 		$this->beforeProcessing($context);
 
 		$subProcessors = $this->getSubProcessors();
@@ -63,16 +56,12 @@ abstract class AbstractProcessor
 				}
 				$subProcessor->process($subDocuments, $context);
 			}
+			$this->afterProcessing($context);
+			R::commit();
 		}
 		catch (Exception $e)
 		{
-			$context->exception = $e;
-		}
-
-		$this->afterProcessing($context);
-
-		if (!empty($context->exception))
-		{
+			R::rollback();
 			throw $e;
 		}
 

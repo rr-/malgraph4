@@ -1,58 +1,6 @@
 <?php
 class Retriever
 {
-	public static function getUserMediaList($userId, $media)
-	{
-		$pdo = Database::getPDO();
-		$stmt = $pdo->prepare('SELECT ' .
-			'm.*, uml.* ' .
-			'FROM user_media_list uml ' .
-			'LEFT JOIN media m ON uml.mal_id = m.mal_id ' .
-			'AND uml.media = m.media ' .
-			'WHERE uml.user_id = ? AND uml.media = ?');
-		$stmt->execute([$userId, $media]);
-		return $stmt->fetchAll();
-	}
-
-	public static function getUser($userId)
-	{
-		$pdo = Database::getPDO();
-		$stmt = $pdo->prepare('SELECT * FROM users WHERE user_id = ?');
-		$stmt->execute([$userId]);
-		return $stmt->fetch();
-	}
-
-	public static function getUserClubs($userId)
-	{
-		$pdo = Database::getPDO();
-		$stmt = $pdo->prepare('SELECT * FROM user_clubs WHERE user_id = ?');
-		$stmt->execute([$userId]);
-		return $stmt->fetchAll();
-	}
-
-	public static function getUserFriends($userId)
-	{
-		$pdo = Database::getPDO();
-		$stmt = $pdo->prepare('SELECT * FROM user_friends WHERE user_id = ?');
-		$stmt->execute([$userId]);
-		return $stmt->fetchAll();
-	}
-
-	public static function isUserMediaListPrivate($userId, $media)
-	{
-		$pdo = Database::getPDO();
-		$stmt = $pdo->prepare('SELECT ' .
-			Media::toString($media) . '_private AS private ' .
-			'FROM users WHERE user_id = ?');
-		$stmt->execute([$userId]);
-		return $stmt->fetch()->private;
-	}
-
-	public static function getMalLinkText($row)
-	{
-		return 'http://myanimelist.net/' . Media::toString($row->media) . '/' . $row->mal_id;
-	}
-
 	private static function getNumberText($number, $short, $fmt, $shortForm, $longForm)
 	{
 		$txt = $short ? $shortForm : $longForm;
@@ -83,15 +31,6 @@ class Retriever
 		return self::getNumberText($number, $short, $fmt, 'ep', 'episode');
 	}
 
-	public static function getMediaTitleText($row)
-	{
-		if (!empty($row->title))
-		{
-			return $row->title;
-		}
-		return 'Unknown ' . Media::toString($row->media) . ' entry #' . $row->mal_id;
-	}
-
 	public static function getMeanScore(array $rows)
 	{
 		$sum = 0;
@@ -105,30 +44,6 @@ class Retriever
 			}
 		}
 		return $sum / max(1, $count);
-	}
-
-	public static function getTotalDuration($row)
-	{
-		if ($row->media == Media::Anime)
-		{
-			return $row->episodes * $row->duration;
-		}
-		elseif ($row->media == Media::Manga)
-		{
-			return $row->chapters * 10;
-		}
-	}
-
-	public static function getCompletedDuration($row)
-	{
-		if ($row->media == Media::Anime)
-		{
-			return $row->finished_episodes * $row->duration;
-		}
-		elseif ($row->media == Media::Manga)
-		{
-			return $row->finished_chapters * 10;
-		}
 	}
 
 	public static function getTimeSpent(array $rows)

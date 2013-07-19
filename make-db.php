@@ -3,10 +3,10 @@ require_once 'src/core.php';
 
 try
 {
-	Database::nuke();
-	$pdo = Database::getPDO();
-	$pdo->exec('CREATE TABLE IF NOT EXISTS users (
-		user_id INTEGER PRIMARY KEY,
+	R::freeze(false);
+	R::nuke();
+	R::exec('CREATE TABLE IF NOT EXISTS user (
+		id INTEGER PRIMARY KEY,
 		name VARCHAR(32) UNIQUE,
 		picture_url VARCHAR(256),
 		join_date VARCHAR(10), --TIMESTAMP
@@ -27,33 +27,35 @@ try
 		manga_private BOOLEAN
 	)');
 
-	$pdo->exec('CREATE TABLE IF NOT EXISTS user_friends (
+	R::exec('CREATE TABLE IF NOT EXISTS userfriend (
+		id INTEGER PRIMARY KEY,
 		user_id INTEGER,
 		name VARCHAR(32),
 		UNIQUE (user_id, name),
-		FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
+		FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE CASCADE
 	)');
 
-	$pdo->exec('CREATE TABLE IF NOT EXISTS user_clubs (
+	R::exec('CREATE TABLE IF NOT EXISTS userclub (
+		id INTEGER PRIMARY KEY,
 		user_id INTEGER,
 		mal_id INTEGER,
 		name VARCHAR(96),
 		UNIQUE (user_id, mal_id),
-		FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
+		FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE CASCADE
 	)');
 
-	$pdo->exec('CREATE TABLE IF NOT EXISTS user_history (
-		user_history_id INTEGER PRIMARY KEY,
+	R::exec('CREATE TABLE IF NOT EXISTS userhistory (
+		id INTEGER PRIMARY KEY,
 		user_id INTEGER,
 		mal_id INTEGER,
 		media VARCHAR(1),
 		progress INTEGER,
 		timestamp TIMESTAMP,
-		FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
+		FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE CASCADE
 	)');
 
-	$pdo->exec('CREATE TABLE IF NOT EXISTS user_media_list (
-		user_media_id INTEGER PRIMARY KEY,
+	R::exec('CREATE TABLE IF NOT EXISTS usermedia (
+		id INTEGER PRIMARY KEY,
 		user_id INTEGER,
 		mal_id INTEGER,
 		media VARCHAR(1),
@@ -67,11 +69,11 @@ try
 		finished_volumes INTEGER,
 
 		UNIQUE (user_id, mal_id, media),
-		FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
+		FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE CASCADE
 	)');
 
-	$pdo->exec('CREATE TABLE IF NOT EXISTS media (
-		media_id INTEGER PRIMARY KEY,
+	R::exec('CREATE TABLE IF NOT EXISTS media (
+		id INTEGER PRIMARY KEY,
 		mal_id INTEGER,
 		media VARCHAR(1),
 		title VARCHAR(96),
@@ -97,40 +99,45 @@ try
 		UNIQUE (mal_id, media)
 	)');
 
-	$pdo->exec('CREATE TABLE IF NOT EXISTS media_genres (
+	R::exec('CREATE TABLE IF NOT EXISTS mediagenre (
+		id INTEGER PRIMARY KEY,
 		media_id INTEGER,
 		mal_id INTEGER,
 		name VARCHAR(30),
-		FOREIGN KEY(media_id) REFERENCES media(media_id) ON DELETE CASCADE
+		FOREIGN KEY(media_id) REFERENCES media(id) ON DELETE CASCADE
 	)');
 
-	$pdo->exec('CREATE TABLE IF NOT EXISTS media_tags (
+	R::exec('CREATE TABLE IF NOT EXISTS mediatag (
+		id INTEGER PRIMARY KEY,
 		media_id INTEGER,
 		name INTEGER,
 		count VARCHAR(30),
-		FOREIGN KEY(media_id) REFERENCES media(media_id) ON DELETE CASCADE
+		FOREIGN KEY(media_id) REFERENCES media(id) ON DELETE CASCADE
 	)');
 
-	$pdo->exec('CREATE TABLE IF NOT EXISTS media_relations (
+	R::exec('CREATE TABLE IF NOT EXISTS mediarelation (
+		id INTEGER PRIMARY KEY,
 		media_id INTEGER,
 		mal_id INTEGER,
 		media VARCHAR(1),
 		type INTEGER,
-		FOREIGN KEY(media_id) REFERENCES media(media_id) ON DELETE CASCADE
+		FOREIGN KEY(media_id) REFERENCES media(id) ON DELETE CASCADE
 	)');
 
-	$pdo->exec('CREATE TABLE IF NOT EXISTS anime_producers (
+	R::exec('CREATE TABLE IF NOT EXISTS animeproducer (
+		id INTEGER PRIMARY KEY,
 		media_id INTEGER,
 		mal_id INTEGER,
 		name VARCHAR(32),
-		FOREIGN KEY(media_id) REFERENCES media(media_id) ON DELETE CASCADE
+		FOREIGN KEY(media_id) REFERENCES media(id) ON DELETE CASCADE
 	)');
 
-	$pdo->exec('CREATE TABLE IF NOT EXISTS manga_authors (
+	R::exec('CREATE TABLE IF NOT EXISTS mangaauthor (
+		id INTEGER PRIMARY KEY,
 		media_id INTEGER,
 		mal_id INTEGER,
 		name VARCHAR(32),
-		FOREIGN KEY(media_id) REFERENCES media(media_id) ON DELETE CASCADE
+		FOREIGN KEY(media_id) REFERENCES media(id) ON DELETE CASCADE
 	)');
 }
 catch (Exception $e)

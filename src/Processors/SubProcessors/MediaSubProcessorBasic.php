@@ -82,23 +82,21 @@ class MediaSubProcessorBasic extends MediaSubProcessor
 			$publishedTo = Strings::makeDate($publishedString);
 		}
 
-		$this->delete('media', ['mal_id' => $malId, 'media' => $this->media]);
-		$mediaId = $this->insert('media', [
-			'mal_id' => $malId,
-			'media' => $this->media,
-			'title' => $title,
-			'sub_type' => $subType,
-			'picture_url' => $pictureUrl,
-			'average_score' => $averageScore,
-			'publishing_status' => $status,
-			'popularity' => $popularity,
-			'members' => $memberCount,
-			'favorites' => $favoriteCount,
-			'ranking' => $ranking,
-			'published_from' => $publishedFrom,
-			'published_to' => $publishedTo,
-			'processed' => date('Y-m-d H:i:s'),
-		]);
-		$context->mediaId = $mediaId;
+		$media = &$context->media;
+		$media->mal_id = $malId;
+		$media->media = $this->media;
+		$media->title = $title;
+		$media->sub_type = $subType;
+		$media->picture_url = $pictureUrl;
+		$media->average_score = $averageScore;
+		$media->publishing_status = $status;
+		$media->popularity = $popularity;
+		$media->members = $memberCount;
+		$media->favorites = $favoriteCount;
+		$media->ranking = $ranking;
+		$media->published_from = $publishedFrom;
+		$media->published_to = $publishedTo;
+		$media->processed = date('Y-m-d H:i:s');
+		$context->mediaId = R::store($media);
 	}
 }

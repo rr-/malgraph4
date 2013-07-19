@@ -22,7 +22,7 @@ class UserControllerListsModule extends AbstractUserControllerModule
 		$viewContext->meta->styles []= '/media/css/user/list.css';
 		$viewContext->meta->scripts []= 'http://cdn.ucb.org.br/Scripts/tablesorter/jquery.tablesorter.min.js';
 		$viewContext->meta->scripts []= '/media/js/user/list.js';
-		$viewContext->list = Retriever::getUserMediaList($viewContext->userId, $viewContext->media);
-		$viewContext->private = Retriever::isUserMediaListPrivate($viewContext->userId, $viewContext->media);
+		$viewContext->list = $viewContext->user->getMixedUserMedia($viewContext->media);
+		$viewContext->private = $viewContext->user->isUserMediaPrivate($viewContext->media);
 	}
 }

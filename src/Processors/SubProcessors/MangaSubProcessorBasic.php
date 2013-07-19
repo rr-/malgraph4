@@ -31,14 +31,9 @@ class MangaSubProcessorBasic extends MediaSubProcessor
 			$serializationName = Strings::removeSpaces($q->item(0)->nodeValue);
 		}
 
-		$this->update('media', [
-			'media_id' => $context->mediaId,
-			'media' => $this->media
-			], [
-			'chapters' => $chapterCount,
-			'volumes' => $volumeCount,
-			'serialization_id' => $serializationMalId,
-			'serialization_name' => $serializationName,
-		]);
+		$context->media->chapters = $chapterCount;
+		$context->media->volumes = $volumeCount;
+		$context->media->serialization_id = $serializationMalId;
+		$context->media->serialization_name = $serializationName;
 	}
 }

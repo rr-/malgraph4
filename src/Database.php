@@ -1,28 +1,15 @@
 <?php
 class Database extends Singleton
 {
-	private static $pdo;
-
 	public static function doInit()
 	{
-		self::$pdo = new PDO('sqlite:' . Config::$dbPath);
-		self::$pdo->setAttribute(PDO::ATTR_PERSISTENT, true);
-		self::$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
-		self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		include implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'lib', 'redbean', 'RedBean', 'redbean.inc.php']);
 
-		$stmt = self::$pdo->prepare('PRAGMA foreign_keys = ON');
-		$stmt->execute();
-	}
+		R::setup('sqlite:' . Config::$dbPath);
+		R::freeze(true);
+		R::exec('PRAGMA foreign_keys=ON');
 
-	public static function getPDO()
-	{
-		return self::$pdo;
-	}
-
-	public static function nuke()
-	{
-		unlink(Config::$dbPath);
-		self::doInit();
+		ReflectionHelper::loadClasses(__DIR__ . DIRECTORY_SEPARATOR . 'Models');
 	}
 }
 

@@ -6,6 +6,7 @@ class MediaSubProcessorGenres extends MediaSubProcessor
 		$doc = self::getDOM($documents[self::URL_MEDIA]);
 		$xpath = new DOMXPath($doc);
 
+		$this->delete('mediagenre', ['media_id' => $context->mediaId]);
 		$data = [];
 		foreach ($xpath->query('//span[starts-with(text(), \'Genres\')]/../a') as $node)
 		{
@@ -18,6 +19,6 @@ class MediaSubProcessorGenres extends MediaSubProcessor
 				'name' => $genreName
 			];
 		}
-		$this->insert('media_genres', $data);
+		$this->insert('mediagenre', $data);
 	}
 }

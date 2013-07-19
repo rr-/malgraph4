@@ -11,6 +11,7 @@ class AnimeSubProcessorProducers extends MediaSubProcessor
 		$doc = self::getDOM($documents[self::URL_MEDIA]);
 		$xpath = new DOMXPath($doc);
 
+		$this->delete('animeproducer', ['media_id' => $context->mediaId]);
 		$data = [];
 		foreach ($xpath->query('//span[starts-with(text(), \'Producers\')]/../a') as $node)
 		{
@@ -25,6 +26,6 @@ class AnimeSubProcessorProducers extends MediaSubProcessor
 				'name' => $producerName,
 			];
 		}
-		$this->insert('anime_producers', $data);
+		$this->insert('animeproducer', $data);
 	}
 }

@@ -42,13 +42,12 @@ class UserController extends AbstractController
 
 	public static function work($controllerContext, &$viewContext)
 	{
-		$viewContext->userName = $controllerContext->userName;
 		$viewContext->media = $controllerContext->media;
 		$viewContext->module = $controllerContext->module;
 		$viewContext->meta->styles []= '/media/css/menu.css';
 		$viewContext->meta->styles []= '/media/css/user/general.css';
 
-		if (BanHelper::isBanned($viewContext->userName))
+		if (BanHelper::isBanned($controllerContext->userName))
 		{
 			$viewContext->meta->styles []= '/media/css/narrow.css';
 			$viewContext->viewName = 'error-user-blocked';
@@ -58,18 +57,14 @@ class UserController extends AbstractController
 		$queue = new Queue(Config::$userQueuePath);
 		$queue->enqueue($controllerContext->userName);
 
-		$pdo = Database::getPDO();
-		$stmt = $pdo->prepare('SELECT * FROM users WHERE LOWER(name) = LOWER(?)');
-		$stmt->Execute([$viewContext->userName]);
-		$result = $stmt->fetch();
-		if (empty($result))
+		$user = R::findOne('user', 'LOWER(name) = LOWER(?)', [$controllerContext->userName]);
+		if (empty($user))
 		{
 			$viewContext->meta->styles []= '/media/css/narrow.css';
 			$viewContext->viewName = 'error-user-enqueued';
 			return;
 		}
-		$viewContext->userId = $result->user_id;
-		$viewContext->userPictureUrl = $result->picture_url;
+		$viewContext->user = $user;
 
 		assert(!empty($controllerContext->module));
 		$module = $controllerContext->module;
