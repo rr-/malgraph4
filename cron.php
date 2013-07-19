@@ -40,13 +40,10 @@ foreach ($userNames as $userName)
 	{
 		printf('Processing user %s' . PHP_EOL, $userName);
 		$context = $userProcessor->process($userName);
-		foreach (R::findAll('usermedia', 'user_id = ?', [$context->userId]) as $userMedia)
+		foreach (R::getAll('SELECT um.mal_id, um.media FROM usermedia um LEFT OUTER JOIN media m ON um.mal_id = m.mal_id AND um.media = m.media WHERE um.user_id = ? AND (m.id IS NULL OR m.processed <= DATETIME("now", "-21 days"))', [$context->user->id]) as $row)
 		{
-			if (!R::findOne('media', 'mal_id = ? AND media = ? AND processed >= DATETIME("now", "-21 days")', [$userMedia->mal_id, $userMedia->media]))
-			{
-				printf('Processing %s #%d' . PHP_EOL, Media::toString($userMedia->media), $userMedia->mal_id);
-				$mediaProcessors[$userMedia->media]->process($userMedia->mal_id);
-			}
+			printf('Processing %s #%d' . PHP_EOL, Media::toString($row['media']), $row['mal_id']);
+			$mediaProcessors[$row['media']]->process($row['mal_id']);
 		}
 	}
 	catch (Exception $e)
