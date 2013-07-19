@@ -3,16 +3,15 @@ class MangaProcessor extends AbstractProcessor
 {
 	public function beforeProcessing(&$context)
 	{
-		$context->media = R::findOrDispense('media', 'mal_id = ? AND media = ?', [$context->key, Media::Manga]);
-		if (is_array($context->media))
+		$media = R::findOne('media', 'mal_id = ? AND media = ?', [$context->key, Media::Manga]);
+		if (empty($media))
 		{
-			$context->media = reset($context->media);
+			$media = R::dispense('media');
+			$media->mal_id = $context->key;
+			$media->media = Media::Manga;
+			R::store($media);
 		}
-	}
-
-	public function afterProcessing(&$context)
-	{
-		R::store($context->media);
+		$context->media = $media;
 	}
 
 	public function getSubProcessors()

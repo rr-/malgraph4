@@ -19,7 +19,7 @@ class UserSubProcessorUserMedia extends UserSubProcessor
 
 	public function process(array $documents, &$context)
 	{
-		$this->delete('usermedia', ['user_id' => $context->userId]);
+		$this->delete('usermedia', ['user_id' => $context->user->id]);
 
 		foreach (Media::getConstList() as $media)
 		{
@@ -71,7 +71,7 @@ class UserSubProcessorUserMedia extends UserSubProcessor
 				}
 
 				$data [] = [
-					'user_id' => $context->userId,
+					'user_id' => $context->user->id,
 					'mal_id' => $mediaMalId,
 					'media' => $media,
 					'score' => $score,
@@ -86,8 +86,10 @@ class UserSubProcessorUserMedia extends UserSubProcessor
 			$this->insert('usermedia', $data);
 
 			$daysSpent = Strings::makeFloat(self::getNodeValue($xpath, '//user_days_spent_watching'));
-			$context->user->{Media::toString($media) . '_days_spent'} = $daysSpent;
-			$context->user->{Media::toString($media) . '_private'} = $isPrivate;
+			$user = &$context->user;
+			$user->{Media::toString($media) . '_days_spent'} = $daysSpent;
+			$user->{Media::toString($media) . '_private'} = $isPrivate;
+			R::store($user);
 		}
 	}
 }

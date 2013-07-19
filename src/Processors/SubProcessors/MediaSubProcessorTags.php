@@ -6,14 +6,14 @@ class MediaSubProcessorTags extends MediaSubProcessor
 		$doc = self::getDOM($documents[self::URL_MEDIA]);
 		$xpath = new DOMXPath($doc);
 
-		$this->delete('mediatag', ['media_id' => $context->mediaId]);
+		$this->delete('mediatag', ['media_id' => $context->media->id]);
 		$data = [];
 		foreach ($xpath->query('//h2[starts-with(text(), \'Popular Tags\')]/following-sibling::*/a') as $node)
 		{
 			$tagName = Strings::removeSpaces($node->textContent);
 			$tagCount = Strings::makeInteger($node->getAttribute('title'));
 			$data []= [
-				'media_id' => $context->mediaId,
+				'media_id' => $context->media->id,
 				'name' => $tagName,
 				'count' => $tagCount
 			];

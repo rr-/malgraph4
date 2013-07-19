@@ -44,6 +44,6 @@ class UserSubProcessorProfile extends UserSubProcessor
 		$user->anime_views = $animeViewCount;
 		$user->manga_views = $mangaViewCount;
 		$user->processed = date('Y-m-d H:i:s');
-		$context->userId = R::store($user);
+		R::store($user);
 	}
 }

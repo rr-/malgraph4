@@ -3,16 +3,14 @@ class UserProcessor extends AbstractProcessor
 {
 	public function beforeProcessing(&$context)
 	{
-		$context->user = R::findOrDispense('user', 'LOWER(name) = LOWER(?)', [$context->key]);
-		if (is_array($context->user))
+		$user = R::findOne('user', 'LOWER(name) = LOWER(?)', [$context->key]);
+		if (empty($user))
 		{
-			$context->user = reset($context->user);
+			$user = R::dispense('user');
+			$user->name = $context->key;
+			R::store($user);
 		}
-	}
-
-	public function afterProcessing(&$context)
-	{
-		R::store($context->user);
+		$context->user = $user;
 	}
 
 	public function getSubProcessors()

@@ -97,6 +97,6 @@ class MediaSubProcessorBasic extends MediaSubProcessor
 		$media->published_from = $publishedFrom;
 		$media->published_to = $publishedTo;
 		$media->processed = date('Y-m-d H:i:s');
-		$context->mediaId = R::store($media);
+		R::store($media);
 	}
 }

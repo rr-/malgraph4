@@ -25,7 +25,9 @@ class AnimeSubProcessorBasic extends MediaSubProcessor
 		preg_match_all('/([0-9]+|Unknown)/', self::getNodeValue($xpath, '//span[starts-with(text(), \'Episodes\')]/following-sibling::node()[self::text()]'), $matches);
 		$episodeCount = Strings::makeInteger($matches[0][0]);
 
-		$context->media->duration = $duration;
-		$context->media->episodes = $episodeCount;
+		$media = &$context->media;
+		$media->duration = $duration;
+		$media->episodes = $episodeCount;
+		R::store($media);
 	}
 }

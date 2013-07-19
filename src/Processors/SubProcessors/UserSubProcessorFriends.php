@@ -16,13 +16,13 @@ class UserSubProcessorFriends extends UserSubProcessor
 		$doc = self::getDOM($documents[self::URL_FRIENDS]);
 		$xpath = new DOMXPath($doc);
 
-		$this->delete('userfriend', ['user_id' => $context->userId]);
+		$this->delete('userfriend', ['user_id' => $context->user->id]);
 		$data = [];
 		foreach ($xpath->query('//a[contains(@href, \'profile\')]/strong') as $node)
 		{
 			$friendName = Strings::removeSpaces($node->nodeValue);
 			$data []= [
-				'user_id' => $context->userId,
+				'user_id' => $context->user->id,
 				'name' => $friendName
 			];
 		}
