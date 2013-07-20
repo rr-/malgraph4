@@ -15,7 +15,7 @@
 			<ul class="infobox">
 				<li>
 					<div>
-						<?php $scores = array_map(function($entries) { return Retriever::getMeanScore($entries); }, $viewContext->lengthDistribution->getGroupsEntries()) ?>
+						<?php $scores = array_map(function($entries) { return RatingDistribution::fromEntries($entries)->getMeanScore(); }, $viewContext->lengthDistribution->getGroupsEntries()) ?>
 						<?php $key = array_search(max($scores), $scores) ?>
 						<?php if ($viewContext->media == Media::Anime): ?>
 							<?php list($num, $txt) = explode(' ', Retriever::getEpisodesText(str_replace('-', '&nbsp;to&nbsp;', $key))) ?>

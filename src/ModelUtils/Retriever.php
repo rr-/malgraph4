@@ -31,21 +31,6 @@ class Retriever
 		return self::getNumberText($number, $short, $fmt, 'ep', 'episode');
 	}
 
-	public static function getMeanScore(array $rows)
-	{
-		$sum = 0;
-		$count = 0;
-		foreach ($rows as $row)
-		{
-			if ($row->score)
-			{
-				$sum += $row->score;
-				$count ++;
-			}
-		}
-		return $sum / max(1, $count);
-	}
-
 	public static function getTimeSpent(array $rows)
 	{
 		$sum = 0;
