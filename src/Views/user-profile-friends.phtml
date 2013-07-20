@@ -1,0 +1,25 @@
+<div class="section friends">
+	<h2>
+		Friends (<?php echo count($viewContext->friends) < 100 ? count($viewContext->friends) : '100+' ?>)
+	</h2>
+	<div class="section-body">
+		<?php if (count($viewContext->friends) == 0): ?>
+			<p>This user has no friends on MAL. :(</p>
+		<?php else: ?>
+			<ul>
+				<?php foreach ($viewContext->friends as $friend): ?>
+					<li>
+						<a class="mg waitable" href="<?php echo UserControllerProfileModule::url($friend->name, $viewContext->name) ?>">
+							<span><?php echo $friend->name ?></span>
+						</a>
+					</li>
+				<?php endforeach ?>
+			</ul>
+			<div class="clear"></div>
+		<?php endif ?>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$('.friends li').width(Math.floor($('.friends').width() / 2 - 20));
+</script>

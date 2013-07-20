@@ -1,0 +1,25 @@
+<div class="section clubs">
+	<h2>
+		Clubs (<?php echo count($viewContext->clubs) ?>)
+	</h2>
+	<div class="section-body">
+		<?php if (count($viewContext->clubs) == 0): ?>
+			<p>This user doesn&rsquo;t belong to any clubs.</p>
+		<?php else: ?>
+			<ul>
+				<?php foreach ($viewContext->clubs as $club): ?>
+					<li>
+						<a target="_blank" href="http://myanimelist.net/clubs.php?cid=<?php echo $club->mal_id ?>">
+							<span><?php echo $club->name ?></span>
+						</a>
+					</li>
+				<?php endforeach ?>
+			</ul>
+			<div class="clear"></div>
+		<?php endif ?>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$('.clubs li').width(Math.floor($('.clubs').width() / 2 - 20));
+</script>
