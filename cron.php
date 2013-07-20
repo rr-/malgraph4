@@ -1,7 +1,7 @@
 <?php
 require_once 'src/core.php';
 
-if (isset($argv))
+if (count($argv) > 1)
 {
 	$userNames = array_slice($argv, 1);
 }
