@@ -19,6 +19,10 @@ function toggleEntries(target, data, ajax)
 		}
 		else
 		{
+			target.show();
+			target.css('height', 'auto');
+			target.css('height', target.height());
+			target.hide();
 			target.stop(true, true).slideDown();
 		}
 		return;
@@ -34,11 +38,19 @@ function toggleEntries(target, data, ajax)
 			$.get(url, data, function(response)
 			{
 				target.html(response);
+				target.show();
+				target.css('height', 'auto');
+				target.css('height', target.height());
+				target.hide();
 				target.stop(true, true).slideDown('medium', resetHeight);
 			});
 		}
 		else
 		{
+			target.show();
+			target.css('height', 'auto');
+			target.css('height', target.height());
+			target.hide();
 			target.stop(true, true).slideDown('medium', resetHeight);
 		}
 	});
