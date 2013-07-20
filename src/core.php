@@ -26,6 +26,7 @@ function __autoload($className)
 }
 
 date_default_timezone_set('UTC');
+ini_set('memory_limit', '128M');
 ErrorHandler::init();
 Database::init();
 
