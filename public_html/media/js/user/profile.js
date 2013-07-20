@@ -24,7 +24,10 @@ $(function()
 			//text = (diff / 86400).toFixed(1) + ' days ago';
 			text = 'update in progress';
 		}
-		text += ' (' + $(this).text() + ')';
+		if ($(this).text() != '')
+		{
+			text += ' (' + $(this).text() + ')';
+		}
 		$(this).text(text);
 	});
 });
