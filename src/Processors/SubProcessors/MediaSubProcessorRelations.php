@@ -11,7 +11,7 @@ class MediaSubProcessorRelations extends MediaSubProcessor
 		$lastType = '';
 		foreach ($xpath->query('//h2[starts-with(text(), \'Related\')]/../*') as $node)
 		{
-			if ($node->nodeName == 'h2' and strpos($node->textContent, 'Related') === false)
+			if ($node->nodeName == 'h2' and (strpos($node->textContent, 'Related') === false or $node->textContent == 'Related Clubs'))
 			{
 				break;
 			}
