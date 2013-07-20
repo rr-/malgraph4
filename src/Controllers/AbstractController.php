@@ -59,6 +59,13 @@ abstract class AbstractController
 			}
 			self::$modules[$controllerClassName] []= $className;
 		}
+		foreach (self::$modules as $controllerClassName => &$classNames)
+		{
+			uasort($classNames, function($a, $b)
+			{
+				return $a::getOrder() - $b::getOrder();
+			});
+		}
 	}
 
 	/**

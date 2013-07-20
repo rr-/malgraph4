@@ -16,6 +16,11 @@ class UserControllerRatingsModule extends AbstractUserControllerModule
 		return [Media::Anime, Media::Manga];
 	}
 
+	public static function getOrder()
+	{
+		return 2;
+	}
+
 	public static function work(&$viewContext)
 	{
 		$viewContext->viewName = 'user-ratings';

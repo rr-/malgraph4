@@ -16,6 +16,11 @@ class UserControllerListsModule extends AbstractUserControllerModule
 		return [Media::Anime, Media::Manga];
 	}
 
+	public static function getOrder()
+	{
+		return 1;
+	}
+
 	public static function work(&$viewContext)
 	{
 		$viewContext->viewName = 'user-list';

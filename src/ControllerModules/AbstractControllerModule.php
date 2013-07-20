@@ -29,4 +29,14 @@ abstract class AbstractControllerModule
 	{
 		throw new UnimplementedException();
 	}
+
+	/**
+	* This method returns the position of given controller module in the list
+	* of available modules.
+	*/
+	public static function getOrder()
+	{
+		return - 1;
+	}
+
 }
