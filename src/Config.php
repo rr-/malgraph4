@@ -15,6 +15,7 @@ class Config extends Singleton
 	static $banListPath;
 	static $errorLogPath;
 	static $sendReferrer;
+	static $maxDbBindings;
 
 	public static function doInit()
 	{
@@ -33,6 +34,7 @@ class Config extends Singleton
 		self::$googleAdsEnabled = true;
 		self::$googleAnalyticsEnabled = true;
 		self::$sendReferrer = true;
+		self::$maxDbBindings = 100;
 	}
 }
 
