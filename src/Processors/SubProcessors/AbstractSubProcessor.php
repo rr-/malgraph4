@@ -48,7 +48,7 @@ abstract class AbstractSubProcessor
 		}
 
 		$lastInsertId = null;
-		foreach (array_chunk($allRows, 50) as $rows)
+		foreach (array_chunk($allRows, Config::$maxDbBindings) as $rows)
 		{
 			$columns = array_keys(reset($rows));
 			$single = '(' . join(', ', array_fill(0, count($columns), '?')) . ')';
