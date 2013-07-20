@@ -39,14 +39,6 @@
 	width: 50%;
 }
 
-#main ul i {
-	position: absolute;
-}
-#main ul span {
-	display: inline-block;
-	margin-left: 21px;
-}
-
 .user-pic a {
 	float: right;
 	font-size: 0;
@@ -72,6 +64,12 @@
 .left {
 	width: 50%;
 	text-align: center;
+	float: left;
+}
+.right {
+	width: 50%;
+	text-align: center;
+	float: right;
 }
 
 p.number {
@@ -88,15 +86,23 @@ p.number span {
 	background: #eee;
 	height: 3px;
 	width: 12em;
-	margin: 0 auto;
+	margin: 0.5em auto;
+	position: relative;
 }
 .bar .filled {
 	background: #5B94DA;
 	height: 3px;
 }
+.bar .tick {
+	position: absolute;
+	width: 1px;
+	height: 9px;
+	top: -3px;
+	background: black;
+}
 
-.list-views {
-	margin-bottom: 3em;
+.mini-section {
+	margin-bottom: 2.5em;
 }
 .list-views .bar {
 	background: #EBA478;
@@ -106,4 +112,8 @@ p.number span {
 }
 .list-views .manga {
 	color: #EBA478;
+}
+
+ol li {
+	margin-bottom: 1em;
 }

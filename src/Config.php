@@ -34,7 +34,7 @@ class Config extends Singleton
 		self::$googleAdsEnabled = true;
 		self::$googleAnalyticsEnabled = true;
 		self::$sendReferrer = true;
-		self::$maxDbBindings = 100;
+		self::$maxDbBindings = 50;
 	}
 }
 

@@ -10,7 +10,7 @@
 	</h2>
 
 	<div class="section-body">
-		<div class="user-pic">
+		<div class="right user-pic">
 			<a class="waitable" href="<?php echo UserControllerProfileModule::url($viewContext->user->name, $viewContext->media) ?>">
 			<?php if (empty($viewContext->user->picture_url)): ?>
 				<img class="profile unavailable" alt="No profile picture" src="<?php echo UrlHelper::absoluteUrl('/media/img/pixel.gif') ?>">
@@ -21,7 +21,7 @@
 		</div>
 
 		<div class="left">
-			<div class="list-views">
+			<div class="mini-section list-views">
 				<p class="number">
 					List views:
 					<span><?php echo $viewContext->user->anime_views + $viewContext->user->manga_views ?></span>
@@ -41,31 +41,33 @@
 				</p>
 			</div>
 
-			<div class="years">
-				<p class="number">
-					Years on MAL:
-					<span>
-						<?php if ($viewContext->yearsOnMal): ?>
-							<?php printf('%.1f', $viewContext->yearsOnMal) ?>
-						<?php else: ?>
-							unknown
-						<?php endif ?>
-					</span>
-				</p>
-			</div>
+			<div class="mini-section">
+				<div class="years">
+					<p class="number">
+						Years on MAL:
+						<span>
+							<?php if ($viewContext->yearsOnMal): ?>
+								<?php printf('%.1f', $viewContext->yearsOnMal) ?>
+							<?php else: ?>
+								unknown
+							<?php endif ?>
+						</span>
+					</p>
+				</div>
 
-			<div class="mal-links">
-				<a target="_blank" href="http://myanimelist.net/profile/<?php echo $viewContext->user->name ?>">
-					Visit MAL profile
-				</a>
-				<br>
-				<a target="_blank" href="http://myanimelist.net/animelist/<?php echo $viewContext->user->name ?><?php if (Config::$sendReferrer) echo '&amp;sclick=1'; ?>">
-					Anime list on MAL
-				</a>
-				<br>
-				<a target="_blank" href="http://myanimelist.net/mangalist/<?php echo $viewContext->user->name ?><?php if (Config::$sendReferrer) echo '&amp;sclick=1'; ?>">
-					Manga list on MAL
-				</a>
+				<div class="mal-links">
+					<a target="_blank" href="http://myanimelist.net/profile/<?php echo $viewContext->user->name ?>">
+						Visit MAL profile
+					</a>
+					<br>
+					<a target="_blank" href="http://myanimelist.net/animelist/<?php echo $viewContext->user->name ?><?php if (Config::$sendReferrer) echo '&amp;sclick=1'; ?>">
+						Anime list on MAL
+					</a>
+					<br>
+					<a target="_blank" href="http://myanimelist.net/mangalist/<?php echo $viewContext->user->name ?><?php if (Config::$sendReferrer) echo '&amp;sclick=1'; ?>">
+						Manga list on MAL
+					</a>
+				</div>
 			</div>
 		</div>
 

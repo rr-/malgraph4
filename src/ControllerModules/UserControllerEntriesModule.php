@@ -14,7 +14,11 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 	public static function work(&$viewContext)
 	{
 		$sender = $_GET['sender'];
-		$filterParam = $_GET['filter-param'];
+		$filterParam = isset($_GET['filter-param']) ? $_GET['filter-param'] : null;
+		if (isset($_GET['media']) and in_array($_GET['media'], Media::getConstList()))
+		{
+			$viewContext->media = $_GET['media'];
+		}
 
 		$viewContext->viewName = 'user-entries-' . $sender;
 		$viewContext->layoutName = 'layout-ajax';
@@ -35,19 +39,42 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 					and !($row->sub_type == AnimeMediaType::Movie and $row->media == Media::Anime); };
 				$computeMeanScore = true;
 				break;
+			case 'franchises':
+				$cb = function($row) {
+					return $row->status != UserListStatus::Planned; };
+				break;
+			case 'mismatches':
+				$cb = function($row) { return true; };
+				break;
 			default:
-				throw new Exception('Unknown sender');
+				throw new Exception('Unknown sender (' . $sender . ')');
 		}
 
 		$list = $viewContext->user->getMixedUserMedia($viewContext->media);
 		$list = array_filter($list, $cb);
 		$isPrivate = $viewContext->user->isUserMediaPrivate($viewContext->media);
 
-		if ($computeMeanScore)
+		if (!$isPrivate)
 		{
-			$viewContext->meanScore = Retriever::getMeanScore($list);
+			if ($computeMeanScore)
+			{
+				$viewContext->meanScore = Retriever::getMeanScore($list);
+			}
+			if ($sender == 'franchises')
+			{
+				$franchises = $viewContext->user->getFranchisesFromUserMedia($list);
+				$viewContext->franchises = array_filter($franchises, function($franchise) { return count($franchise->ownEntries) > 1; });
+			}
+			elseif ($sender == 'mismatches')
+			{
+				$viewContext->entries = $viewContext->user->getMismatchedUserMedia($list);
+			}
+			else
+			{
+				$viewContext->entries = $list;
+			}
 		}
-		$viewContext->entries = $list;
+
 		$viewContext->isPrivate = $isPrivate;
 	}
 }

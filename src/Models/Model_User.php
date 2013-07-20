@@ -26,6 +26,27 @@ class Model_User extends RedBean_SimpleModel
 		return R::getAll('SELECT COUNT(*) AS count FROM user')[0]['count'];
 	}
 
+	public function getMismatchedUserMedia(array $entries)
+	{
+		$entriesMismatched = [];
+		foreach ($entries as $entry)
+		{
+			if ($entry->media == Media::Anime)
+			{
+				$a = $entry->finished_episodes;
+				$b = $entry->episodes;
+			} else {
+				$a = $entry->finished_chapters;
+				$b = $entry->chapters;
+			}
+			if ($a != $b and ($b > 0 or $entry->publishing_status == MediaStatus::Publishing) and $entry->status == UserListStatus::Finished)
+			{
+				$entriesMismatched []= $entry;
+			}
+		}
+		return $entriesMismatched;
+	}
+
 	private static $visited;
 	private function dfs($start, $incidenceList, &$cluster)
 	{

@@ -1,0 +1,45 @@
+<p>
+	<a class="close"><i class="icon-close"></i></a>
+	<?php if ($viewContext->media == Media::Anime): ?>
+		Titles that have mismatching episode count
+	<?php elseif ($viewContext->media == Media::Manga): ?>
+		Titles that have mismatching chapter count
+	<?php endif ?>:
+
+	<?php if (!empty($viewContext->entries)): ?>
+		&nbsp;(<?php echo count($viewContext->entries) ?>)
+	<?php endif ?>
+</p>
+
+<?php if (empty($viewContext->entries)): ?>
+	<p>None!</p>
+<?php elseif ($viewContext->isPrivate): ?>
+	<p>Can&rsquo;t show you titles from a private list.</p>
+<?php else: ?>
+	<ul>
+		<?php foreach ($viewContext->entries as $entry): ?>
+			<li>
+				<a target="_blank" href="<?php echo $entry->mal_link ?>">
+					<?php echo $entry->title ?>
+				</a>
+				<span class="details">&nbsp;
+					(<?php if ($entry->media == Media::Anime): ?>
+						on your list: <?php echo $entry->finished_episodes ?>,&nbsp;
+						<?php if ($entry->publishing_status == MediaStatus::Publishing): ?>
+							but it&rsquo;s still airing
+						<?php else: ?>
+							should be  <?php echo Retriever::getEpisodesText($entry->episodes) ?>
+						<?php endif ?>
+					<?php elseif ($entry->media == Media::Manga): ?>
+						on your list: <?php echo $entry->finished_chapters ?>,&nbsp;
+						<?php if ($entry->publishing_status == MediaStatus::Publishing): ?>
+							but it&rsquo;s still publishing
+						<?php else: ?>
+							should be <?php echo Retriever::getChaptersText($entry->chapters) ?>
+						<?php endif ?>
+					<?php endif ?>)
+				</span>
+			</li>
+		<?php endforeach ?>
+	</ul>
+<?php endif ?>
