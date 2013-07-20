@@ -46,6 +46,9 @@
 	vertical-align: middle;
 	line-height: 30px;
 }
+#header .search i {
+	float: left;
+}
 #header form {
 	width: 30%;
 }

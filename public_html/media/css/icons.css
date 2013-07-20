@@ -5,43 +5,24 @@
 	line-height: 16px;
 	width: 16px;
 	height: 16px;
+	margin: 0;
 	background-repeat: no-repeat;
 	background-image: url('../img/icons.png');
 }
-a:hover .icon-mg        { background-position: 0px -16px; }
-a:hover .icon-club      { background-position: -16px -16px; }
-a:hover .icon-pop-out   { background-position: -32px -16px; }
-a:hover .icon-search    { background-position: -48px -16px; }
-a:hover .icon-dot       { background-position: -80px -16px; }
-a:hover .icon-plus      { background-position: -96px -16px; }
-a:hover .icon-minus     { background-position: -112px -16px; }
-a:hover .icon-tick      { background-position: -128px -16px; }
-a:hover .icon-cross     { background-position: -144px -16px; }
-a:hover .icon-eye       { background-position: -160px -16px; }
-a:hover .icon-hourglass { background-position: -176px -16px; }
-a:hover .icon-schedule  { background-position: -192px -16px; }
-a:hover .icon-switch    { background-position: -208px -16px; }
-a:hover .icon-anonymize { background-position: -224px -16px; }
-a:hover .icon-facebook  { background-position: -240px -16px; }
-a:hover .icon-twitter   { background-position: -256px -16px; }
 
-.icon-mg        { background-position: 0 0; }
-.icon-club      { background-position: -16px 0; }
-.icon-pop-out   { background-position: -32px 0; }
-.icon-search    { background-position: -48px 0; }
-.icon-dot       { background-position: -80px 0; }
-.icon-plus      { background-position: -96px 0; }
-.icon-minus     { background-position: -112px 0; }
-.icon-tick      { background-position: -128px 0; }
-.icon-cross     { background-position: -144px 0; }
-.icon-eye       { background-position: -160px 0; }
-.icon-hourglass { background-position: -176px 0; }
-.icon-schedule  { background-position: -192px 0; }
-.icon-switch    { background-position: -208px 0; }
-.icon-anonymize { background-position: -224px 0; }
-.icon-facebook  { background-position: -240px 0; }
-.icon-twitter   { background-position: -256px 0; }
+.icon-tick         { background-position: 0 0; }
+.icon-cross        { background-position: -17px 0; }
+.icon-eye          { background-position: -34px 0; }
+.icon-hourglass    { background-position: -51px 0; }
+.icon-schedule     { background-position: -68px 0; }
+.icon-search       { background-position: -85px 0; }
+.icon-profile      { background-position: -102px 0; width: 20px; height: 20px; }
+.icon-list         { background-position: -123px 0; width: 20px; height: 20px; }
+.icon-ratings      { background-position: -144px 0; width: 20px; height: 20px; }
+.icon-history      { background-position: -165px 0; width: 20px; height: 20px; }
+.icon-favorites    { background-position: -186px 0; width: 20px; height: 20px; }
+.icon-suggestions  { background-position: -207px 0; width: 20px; height: 20px; }
+.icon-achievements { background-position: -228px 0; width: 20px; height: 20px; }
 
-.icon-tooltip { background-position: -296px 0; width: 24px; height: 24px; margin: 0; }
-.icon-go-back { background-position: -272px 0; width: 24px; height: 24px; margin: 0; float: left; }
-.icon-close { background-position: -320px 0; width: 24px; height: 24px; margin: 0; }
+.icon-tooltip { background-position: -249px 0; width: 24px; height: 24px; margin: 0; }
+.icon-close { background-position: -274px 0; width: 24px; height: 24px; margin: 0; }

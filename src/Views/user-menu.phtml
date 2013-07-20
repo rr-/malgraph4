@@ -1,6 +1,6 @@
 <div class="actions">
 	<div>
-		<ul class="action">
+		<ul>
 			<?php if ($viewContext->module == 'UserControllerProfileModule'): ?>
 				<li class="active">
 			<?php else: ?>
@@ -8,14 +8,16 @@
 			<?php endif ?>
 				<a class="waitable" href="<?php echo UserControllerProfileModule::url($viewContext->user->name) ?>">
 					<?php echo UserControllerProfileModule::getText(null) ?>
+					<i class="icon-profile"></i>
 				</a>
 			</li>
 		</ul>
 	</div>
+
 	<?php foreach (Media::getConstList() as $media): ?>
 		<hr>
-		<div>
-			<ul class="action">
+		<div class="<?php echo Media::toString($media) ?>">
+			<ul>
 				<?php foreach (UserController::getAvailableModules() as $module): ?>
 					<?php if (in_array($media, $module::getMediaAvailability())): ?>
 						<?php if ($viewContext->module == $module and $viewContext->media == $media): ?>
@@ -25,6 +27,7 @@
 						<?php endif ?>
 							<a class="waitable" href="<?php echo $module::url($viewContext->user->name, $media) ?>">
 								<?php echo $module::getText($media) ?>
+								<i class="icon-<?php $x = explode(' ', strtolower($module::getText($media))); echo end($x) ?>"></i>
 							</a>
 						</li>
 					<?php endif ?>

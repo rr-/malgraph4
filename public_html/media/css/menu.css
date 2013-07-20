@@ -1,6 +1,6 @@
 #menu-wrapper {
 	float: left;
-	width: 20%;
+	width: 25%;
 	font-size: 110%;
 }
 
@@ -45,7 +45,7 @@
 }
 
 #menu-wrapper+#main {
-	width: 80%;
+	width: 75%;
 	float: right;
 }
 
@@ -53,60 +53,54 @@
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
-	line-height: 1.5em;
+	line-height: 2em;
 }
 #menu ul li {
 	margin: 0;
 	padding: 0;
-}
-#menu p {
-	font-weight: bold;
-	margin-bottom: 0;
-}
-
-#menu ul.action {
-	margin-bottom: 1em;
-}
-#menu ul.action li {
-	text-align: right;
 	font-weight: normal;
 	white-space: nowrap;
 	overflow: hidden;
+	position: relative;
 }
-#menu ul.action li a {
+#menu ul li a {
 	display: block;
-	color: black;
-	padding: 4px 16px;
+	color: dimgray;
+	padding: 4px 13px 4px 4px;
+	text-align: right;
 	text-decoration: none;
+	transition: color 0.2s ease, border-color: 0.2s ease;
+	border-right: 3px solid transparent;
 }
-#menu ul.action li.active a {
+#menu ul li.active a {
 	background: white;
 	border-left: 3px solid #1969CB;
 	border-top: 1px solid #ddd;
 	border-bottom: 1px solid #ddd;
 	border-radius: 2px 0 0 2px;
+	color: black;
 }
-#menu ul.action li:not(.active) a:focus,
-#menu ul.action li:not(.active) a:hover {
-	border-right: 3px solid #ddd;
-	padding-right: 13px;
+#menu ul li:not(.active) a:focus,
+#menu ul li:not(.active) a:hover {
+	border-right-color: #ddd;
 	color: black;
 	text-decoration: none;
 }
-#menu .share ul {
-	margin: 0 auto;
-	padding: 0;
-	display: inline;
-	vertical-align: middle;
+
+#menu ul li.active i,
+#menu ul li a:focus i,
+#menu ul li a:hover i {
+	opacity: 1;
 }
-#menu .share p {
-	padding-right: 0.75em;
-	font-weight: normal;
-	display: inline;
+#menu i {
+	transition: opacity 0.2s ease;
+	background-color: #888;
+	margin-left: 16px;
+	opacity: .75;
 }
-#menu .share li {
-	display: inline-block;
-	padding: 0 0.15em;
-	margin: 0;
-	display: inline;
+#menu .anime i {
+	background-color: #5B94DA;
+}
+#menu .manga i {
+	background-color: #EBA478;
 }

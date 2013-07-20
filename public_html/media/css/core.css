@@ -71,7 +71,6 @@ a {
 	a:focus {
 		opacity: .8;
 		outline: 0;
-		background-color: #E1E7F5;
 	}
 	a:hover, a:hover span {
 		color: #2D7DE0;

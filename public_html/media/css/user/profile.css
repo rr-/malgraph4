@@ -91,7 +91,7 @@ p.number span {
 	margin: 0 auto;
 }
 .bar .filled {
-	background: #1969CB;
+	background: #5B94DA;
 	height: 3px;
 }
 
@@ -99,11 +99,11 @@ p.number span {
 	margin-bottom: 3em;
 }
 .list-views .bar {
-	background: #FF8000;
+	background: #EBA478;
 }
 .list-views .anime {
-	color: #1969CB;
+	color: #5B94DA;
 }
 .list-views .manga {
-	color: #FF8000;
+	color: #EBA478;
 }
