@@ -6,18 +6,31 @@ abstract class AbstractDistribution
 
 	protected $groups = [];
 	protected $entries = [];
-	protected $keys = [];
 
-	public function __construct(array $entries = [])
+	protected function __construct()
 	{
-		if (!empty($entries))
+	}
+
+	public static function fromArray(array $arrayDist)
+	{
+		$dist = new static();
+		foreach ($arrayDist as $key => $count)
 		{
-			foreach ($entries as $entry)
-			{
-				$this->addEntry($entry);
-			}
-			$this->finalize();
+			$dist->groups[$key] = intval($count);
 		}
+		$dist->finalize();
+		return $dist;
+	}
+
+	public static function fromEntries(array $entries = [])
+	{
+		$dist = new static();
+		foreach ($entries as $entry)
+		{
+			$dist->addEntry($entry);
+		}
+		$dist->finalize();
+		return $dist;
 	}
 
 	public abstract function addEntry($entry);
@@ -43,6 +56,7 @@ abstract class AbstractDistribution
 		$this->sortGroups();
 	}
 
+
 	public function getNullGroupKey()
 	{
 		return null;
@@ -50,47 +64,46 @@ abstract class AbstractDistribution
 
 	protected function addGroup($key)
 	{
-		if (!isset($this->keys[(string)$key]))
+		if (!isset($this->groups[$key]))
 		{
-			$this->keys[(string)$key] = $key;
-			$this->groups[(string)$key] = 0;
-			$this->entries[(string)$key] = [];
+			$this->groups[$key] = 0;
+			$this->entries[$key] = [];
 		}
 	}
 
 	public function addToGroup($key, $entry, $weight = 1)
 	{
 		$this->addGroup($key);
-		$this->groups[(string)$key] += $weight;
-		$this->entries[(string)$key] []= $entry;
+		$this->groups[$key] += $weight;
+		$this->entries[$key] []= $entry;
 	}
 
 	public function getGroupEntries($key)
 	{
-		if (!isset($this->entries[(string)$key]))
+		if (!isset($this->entries[$key]))
 		{
 			return null;
 		}
-		return $this->entries[(string)$key];
+		return $this->entries[$key];
 	}
 
 	public function getGroupSize($key)
 	{
-		if (!isset($this->groups[(string)$key]))
+		if (!isset($this->groups[$key]))
 		{
 			return null;
 		}
-		return $this->groups[(string)$key];
+		return $this->groups[$key];
 	}
 
 
 
 	public function getGroupsKeys($flags = 0)
 	{
-		$x = $this->keys;
+		$x = array_combine(array_keys($this->groups), array_keys($this->groups));
 		if ($flags & self::IGNORE_NULL_KEY)
 		{
-			unset($x[(string)$this->getNullGroupKey()]);
+			unset($x[$this->getNullGroupKey()]);
 		}
 		if ($flags & self::IGNORE_EMPTY_GROUPS)
 		{
@@ -107,7 +120,7 @@ abstract class AbstractDistribution
 		$x = [];
 		foreach ($keys as $key)
 		{
-			$x[(string) $key] = $this->getGroupEntries($key);
+			$x[$key] = $this->getGroupEntries($key);
 		}
 		return $x;
 	}
@@ -136,7 +149,7 @@ abstract class AbstractDistribution
 		$x = [];
 		foreach ($keys as $key)
 		{
-			$x[(string) $key] = $this->getGroupSize($key);
+			$x[$key] = $this->getGroupSize($key);
 		}
 		$x = array_values($x);
 		return $x;

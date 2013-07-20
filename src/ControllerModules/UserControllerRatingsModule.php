@@ -29,16 +29,17 @@ class UserControllerRatingsModule extends AbstractUserControllerModule
 		$viewContext->meta->scripts []= 'http://code.highcharts.com/highcharts.js';
 		$viewContext->meta->scripts []= '/media/js/highcharts-mg.js';
 		$viewContext->meta->scripts []= '/media/js/user/entries.js';
+
 		$list = $viewContext->user->getMixedUserMedia($viewContext->media);
 		$list = array_filter($list, function($mixedUserMedia) {
 			return $mixedUserMedia->status != UserListStatus::Planned;
 		});
-		$viewContext->ratingDistribution = new RatingDistribution($list);
-		$viewContext->ratingTimeDistribution = new RatingTimeDistribution($list);
+		$viewContext->ratingDistribution = RatingDistribution::fromEntries($list);
+		$viewContext->ratingTimeDistribution = RatingTimeDistribution::fromEntries($list);
 		$listNoMovies = array_filter($list, function($mixedUserMedia) {
 			return !($mixedUserMedia->sub_type == AnimeMediaType::Movie and $mixedUserMedia->media == Media::Anime);
 		});
-		$viewContext->lengthDistribution = new MediaLengthDistribution($listNoMovies);
+		$viewContext->lengthDistribution = MediaLengthDistribution::fromEntries($listNoMovies);
 
 		list($year, $month, $day) = explode('-', $viewContext->user->join_date);
 		$earliest = mktime(0, 0, 0, $month, $day, $year);

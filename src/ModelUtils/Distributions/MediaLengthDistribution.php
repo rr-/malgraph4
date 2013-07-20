@@ -18,7 +18,6 @@ class MediaLengthDistribution extends AbstractDistribution
 				return intval($a) - intval($b);
 			}
 		};
-		uksort($this->keys, $f);
 		uksort($this->groups, $f);
 		uksort($this->entries, $f);
 	}
@@ -84,6 +83,6 @@ class MediaLengthDistribution extends AbstractDistribution
 	public function addEntry($entry)
 	{
 		$group = self::getGroup($entry);
-		$this->addToGroup((string)$group, $entry);
+		$this->addToGroup($group, $entry);
 	}
 }

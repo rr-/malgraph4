@@ -20,4 +20,9 @@ class Model_User extends RedBean_SimpleModel
 	{
 		return $this->{Media::toString($media) . '_private'};
 	}
+
+	public static function getCount()
+	{
+		return R::getAll('SELECT COUNT(*) AS count FROM user')[0]['count'];
+	}
 }

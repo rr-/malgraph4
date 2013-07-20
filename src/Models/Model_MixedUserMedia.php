@@ -25,4 +25,16 @@ class Model_MixedUserMedia
 
 		$this->mal_link = 'http://myanimelist.net/' . Media::toString($this->media) . '/' . $this->mal_id;
 	}
+
+	public static function getRatingDistribution($media)
+	{
+		$dist = [];
+		$result = R::getAll('SELECT COUNT(*) as count FROM usermedia WHERE media = ? GROUP BY score', [$media]);
+		foreach ($result as $score => $columns)
+		{
+			$count = $columns['count'];
+			$dist[$score] = $count;
+		}
+		return RatingDistribution::fromArray($dist);
+	}
 }

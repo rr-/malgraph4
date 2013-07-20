@@ -1,13 +1,12 @@
 <?php
 class RatingDistribution extends AbstractDistribution
 {
-	public function __construct(array $entries = [])
+	protected function __construct()
 	{
 		foreach (range(10, 0) as $x)
 		{
 			$this->addGroup($x);
 		}
-		parent::__construct($entries);
 	}
 
 	public function getNullGroupKey()
@@ -22,7 +21,6 @@ class RatingDistribution extends AbstractDistribution
 
 	protected function sortGroups()
 	{
-		krsort($this->keys, SORT_NUMERIC);
 		krsort($this->groups, SORT_NUMERIC);
 		krsort($this->entries, SORT_NUMERIC);
 	}

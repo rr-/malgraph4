@@ -1,1 +1,62 @@
-Here go globals
+<h1>Global statistics</h1>
+
+<p>These graphs are based on all MALgraph users&rsquo; data. Here you can see some basic average user&rsquo;s stats: how many anime or manga they completed or how skewed their ratings are.</p>
+<p>As of <?php echo date('M d Y, H:i') ?> UTC we have <?php echo $viewContext->userCount ?> users, <?php echo $viewContext->mediaCount[Media::Anime] ?> anime and <?php echo $viewContext->mediaCount[Media::Manga] ?> manga entries in the database.</p>
+
+<?php foreach (Media::getconstList() as $media): ?>
+	<div class="section <?php echo Media::toString($media) ?>-rating-dist">
+		<h2><?php echo ucfirst(Media::toString($media)) ?> rating distribution</h2>
+		<?php $ratingDistribution = $viewContext->ratingDistribution[$media] ?>
+		<div class="section-body">
+			<ul class="infobox">
+				<li>
+					<div>
+						<div data-tooltip="Average count of rated titles per user">
+							<span class="prefix">Rated per user</span>
+							<span class="subject"><?php printf('%d', floor($ratingDistribution->getRatedCount() / max(1, $viewContext->userCount))) ?></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div>
+						<span class="prefix">Total unrated</span>
+						<span class="subject"><?php printf('%.02f', $ratingDistribution->getUnratedCount() * 100.0 / max(1, $ratingDistribution->getRatedCount() + $ratingDistribution->getUnratedCount())) ?>%</span>
+					</div>
+				</li>
+				<li>
+					<div>
+						<span class="prefix">Mean rating</span>
+						<span class="subject"><?php printf('%.02f', $ratingDistribution->getMeanScore()) ?></span>
+					</div>
+				</li>
+			</ul>
+
+			<div class="target-wrapper">
+				<div class="target"></div>
+				<div class="clear"></div>
+			</div>
+
+			<script type="text/javascript">
+				var chart = new Highcharts.Chart({
+					chart: { renderTo: $('.<?php echo Media::toString($media) ?>-rating-dist .target')[0], type: 'bar', marginRight: 35 },
+					xAxis: { categories: <?php echo json_encode(array_values($ratingDistribution->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY))) ?>, title: { text: 'Rating' } },
+					yAxis: { title: { text: 'Count', margin: 15 } },
+					tooltip: { formatter: function() {
+						var text;
+						if (this.x == '-') {
+							text = 'Unrated titles: ';
+						} else {
+							text = 'Titles rated with ' + this.x + ': ' + this.y;
+						}
+						var percent = this.y * 100.0 / <?php echo max(1, $ratingDistribution->getRatedCount()) ?>;
+						text += ' (' + (Math.round(percent * 100.0) / 100.0) + '%)';
+						return text;
+					} },
+					series: [ {
+						data: <?php echo json_encode(array_values($ratingDistribution->getGroupsSizes(AbstractDistribution::IGNORE_NULL_KEY))) ?>,
+					} ]
+				});
+			</script>
+		</div>
+	</div>
+<?php endforeach ?>
