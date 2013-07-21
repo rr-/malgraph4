@@ -10,19 +10,21 @@
 	background-image: url('../img/icons.png');
 }
 
-.icon-tick         { background-position: 0 0; }
-.icon-cross        { background-position: -17px 0; }
-.icon-eye          { background-position: -34px 0; }
-.icon-hourglass    { background-position: -51px 0; }
-.icon-schedule     { background-position: -68px 0; }
-.icon-search       { background-position: -85px 0; }
-.icon-profile      { background-position: -102px 0; width: 20px; height: 20px; }
-.icon-list         { background-position: -123px 0; width: 20px; height: 20px; }
-.icon-ratings      { background-position: -144px 0; width: 20px; height: 20px; }
-.icon-history      { background-position: -165px 0; width: 20px; height: 20px; }
-.icon-favorites    { background-position: -186px 0; width: 20px; height: 20px; }
-.icon-suggestions  { background-position: -207px 0; width: 20px; height: 20px; }
-.icon-achievements { background-position: -228px 0; width: 20px; height: 20px; }
+.icon-empty          { background: none; }
+.icon-tick           { background-position: 0 0; }
+.icon-cross          { background-position: -17px 0; }
+.icon-eye            { background-position: -34px 0; }
+.icon-hourglass      { background-position: -51px 0; }
+.icon-schedule       { background-position: -68px 0; }
+.icon-search         { background-position: -85px 0; }
+.icon-cross-schedule { background-position: 0 -17px; }
+.icon-profile        { background-position: -102px 0; width: 20px; height: 20px; }
+.icon-list           { background-position: -123px 0; width: 20px; height: 20px; }
+.icon-ratings        { background-position: -144px 0; width: 20px; height: 20px; }
+.icon-history        { background-position: -165px 0; width: 20px; height: 20px; }
+.icon-favorites      { background-position: -102px -21px; width: 20px; height: 20px; }
+.icon-suggestions    { background-position: -123px -21px; width: 20px; height: 20px; }
+.icon-achievements   { background-position: -144px -21px; width: 20px; height: 20px; }
 
 .icon-tooltip { background-position: -249px 0; width: 24px; height: 24px; margin: 0; }
 .icon-close { background-position: -274px 0; width: 24px; height: 24px; margin: 0; }

@@ -25,6 +25,7 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 	{
 		$viewContext->viewName = 'user-suggestions';
 		$viewContext->meta->styles []= '/media/css/user/suggestions.css';
+		$viewContext->meta->scripts []= '/media/js/user/suggestions.js';
 
 		$list = $viewContext->user->getMixedUserMedia($viewContext->media);
 		$dontRecommend = [];

@@ -24,7 +24,18 @@
 								<ul>
 									<?php foreach ($franchise->ownEntries as $entry): ?>
 										<li>
-											<a target="_blank" href="<?php echo $entry->mal_link ?>">
+											<a target="_blank" href="<?php echo $entry->mal_link ?>" title="<?php echo $entry->title ?>">
+												<?php if ($entry->publishing_status == MediaStatus::NotYetPublished): ?>
+													<?php if ($entry->status == UserListStatus::Planned): ?>
+														<i class="icon-cross-schedule"></i>
+													<?php else: ?>
+														<i class="icon-cross"></i>
+													<?php endif ?>
+												<?php elseif ($entry->status == UserListStatus::Planned): ?>
+													<i class="icon-schedule"></i>
+												<?php else: ?>
+													<i class="icon-empty"></i>
+												<?php endif ?>
 												<?php echo $entry->title ?>
 											</a>
 										</li>
@@ -35,7 +46,12 @@
 								<ul>
 									<?php foreach ($franchise->allEntries as $entry): ?>
 										<li>
-											<a target="_blank" href="<?php echo $entry->mal_link ?>">
+											<a target="_blank" href="<?php echo $entry->mal_link ?>" title="<?php echo $entry->title ?>">
+												<?php if ($entry->publishing_status == MediaStatus::NotYetPublished): ?>
+													<i class="icon-cross"></i>
+												<?php else: ?>
+													<i class="icon-empty"></i>
+												<?php endif ?>
 												<?php echo $entry->title ?>
 											</a>
 										</li>
