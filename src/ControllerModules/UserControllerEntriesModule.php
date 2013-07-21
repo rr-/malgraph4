@@ -58,7 +58,8 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 		{
 			if ($computeMeanScore)
 			{
-				$viewContext->meanScore = Retriever::getMeanScore($list);
+				$dist = RatingDistribution::fromEntries($list);
+				$viewContext->meanScore = $dist->getMeanScore();
 			}
 			if ($sender == 'franchises')
 			{
