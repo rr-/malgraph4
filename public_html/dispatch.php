@@ -29,7 +29,6 @@ try
 			exit(0);
 		}
 	}
-	$viewContext->meta->styles []= '/media/css/narrow.css';
 	$viewContext->viewName = 'error-404';
 	View::render($viewContext);
 }
@@ -37,7 +36,6 @@ catch (Exception $e)
 {
 	#log error information
 	$viewContext->viewName = 'error';
-	$viewContext->meta->styles []= '/media/css/narrow.css';
 	$viewContext->exception = $e;
 	Logger::log(Config::$errorLogPath, $e);
 	View::render($viewContext);

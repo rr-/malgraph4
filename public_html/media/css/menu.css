@@ -1,12 +1,16 @@
 #menu-wrapper {
-	float: left;
-	width: 25%;
+	position: absolute;
+	right: 100%;
 	font-size: 110%;
+}
+
+.main-wrapper
+{
+	margin-left: -200px;
 }
 
 #menu {
 	padding: 30px 0 16px 0;
-	margin-right: 1em;
 	position: relative;
 	background: top right repeat-y linear-gradient(to left, #f6f6f6 0, #fff 8px);
 	background-size: 8px 100%;
@@ -44,11 +48,6 @@
 	content: '';
 }
 
-#menu-wrapper+#main {
-	width: 75%;
-	float: right;
-}
-
 #menu ul {
 	list-style-type: none;
 	margin: 0;
@@ -66,7 +65,7 @@
 #menu ul li a {
 	display: block;
 	color: dimgray;
-	padding: 4px 13px 4px 4px;
+	padding: 4px 9px 4px 16px;
 	text-align: right;
 	text-decoration: none;
 	transition: color 0.2s ease, border-color: 0.2s ease;
@@ -97,7 +96,7 @@
 #menu i {
 	transition: opacity 0.2s ease;
 	background-color: #888;
-	margin-left: 16px;
+	margin-left: 12px;
 	opacity: .75;
 }
 #menu .anime i {

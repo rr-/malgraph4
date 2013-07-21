@@ -27,7 +27,6 @@ class IndexControllerSearchModule extends AbstractControllerModule
 
 		if (!preg_match('#^' . UserController::getUserRegex() . '$#', $userName))
 		{
-			$viewContext->meta->styles []= '/media/css/narrow.css';
 			$viewContext->viewName = 'error-user-invalid';
 			return;
 		}

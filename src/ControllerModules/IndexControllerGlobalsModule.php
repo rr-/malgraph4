@@ -15,7 +15,6 @@ class IndexControllerGlobalsModule extends AbstractControllerModule
 	{
 		$viewContext->viewName = 'globals';
 		$viewContext->meta->title = 'MALgraph - global statistics';
-		$viewContext->meta->styles []= '/media/css/narrow.css';
 		$viewContext->meta->styles []= '/media/css/infobox.css';
 		$viewContext->meta->styles []= '/media/css/index/globals.css';
 		$viewContext->meta->scripts []= 'http://code.highcharts.com/highcharts.js';

@@ -3,7 +3,7 @@ class UserControllerProfileModule extends AbstractUserControllerModule
 {
 	public static function getText(ViewContext $viewContext, $media)
 	{
-		return 'Profile';
+		return $viewContext->user->name;
 	}
 
 	public static function getUrlParts()
