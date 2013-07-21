@@ -1,4 +1,4 @@
-<div class="section score-length-dist">
+<div class="section rating-length-dist">
 	<h2>
 		<?php if ($viewContext->media == Media::Anime): ?>
 			<i data-tooltip="Do you prefer longer or shorter|series? (Movies are not counted.)" class="icon-tooltip"></i>
@@ -51,7 +51,7 @@
 
 			<script type="text/javascript">
 				var chart = new Highcharts.Chart({
-					chart: { renderTo: $('.score-length-dist .target')[0], type: 'line', marginTop: 15, marginRight: 15 },
+					chart: { renderTo: $('.rating-length-dist .target')[0], type: 'line', marginTop: 15, marginRight: 15 },
 					xAxis: {
 						categories: <?php echo json_encode($viewContext->lengthDistribution->getGroupsKeys()) ?>,
 						labels: { rotation: -45, align: 'right' },
@@ -74,7 +74,7 @@
 					series: [ {
 						data: <?php echo json_encode(array_values($scores)) ?>,
 						point: { events: { click: function(e) {
-							toggleEntries($('.score-length-dist .entries-wrapper'), {'sender': 'length', 'filter-param': this.category});
+							toggleEntries($('.rating-length-dist .entries-wrapper'), {'sender': 'length', 'filter-param': this.category});
 						} } }
 					} ]
 				});

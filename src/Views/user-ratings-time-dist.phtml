@@ -1,4 +1,4 @@
-<div class="section score-time-dist">
+<div class="section rating-time-dist">
 	<h2>
 		<i data-tooltip="Do you waste your time on crap?|Check your time spent on 10/10 titles|(planned titles are not counted)." class="icon-tooltip"></i>
 		Ratings vs. time spent
@@ -44,7 +44,7 @@
 
 			<script type="text/javascript">
 				var chart = new Highcharts.Chart({
-					chart: { renderTo: $('.score-time-dist .target')[0], type: 'bar', marginRight: 15 },
+					chart: { renderTo: $('.rating-time-dist .target')[0], type: 'bar', marginRight: 15 },
 					xAxis: { categories: <?php echo json_encode(array_map(function($x) { return $x == 0 ? '-' : $x; }, $viewContext->ratingDistribution->getGroupsKeys())) ?>, title: { text: 'Rating' } },
 					yAxis: { title: {text: 'Hours spent', margin: 15 } },
 					tooltip: { formatter: function() {
@@ -61,7 +61,7 @@
 					series: [ {
 						data: <?php echo json_encode(array_map(function($x) { return $x / 60.; }, array_values($viewContext->ratingTimeDistribution->getGroupsSizes()))) ?>,
 						point: { events: { click: function(e) {
-							toggleEntries($('.score-time-dist .entries-wrapper'), {'sender': 'ratings', 'filter-param': this.category});
+							toggleEntries($('.rating-time-dist .entries-wrapper'), {'sender': 'ratings', 'filter-param': this.category});
 						} } }
 					} ]
 				});
