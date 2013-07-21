@@ -1,7 +1,7 @@
 <?php
 class UserControllerRatingsModule extends AbstractUserControllerModule
 {
-	public static function getText(ViewContext $viewContext)
+	public static function getText(ViewContext $viewContext, $media)
 	{
 		return 'Ratings';
 	}

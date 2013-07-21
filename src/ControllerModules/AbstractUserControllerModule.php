@@ -4,7 +4,7 @@ abstract class AbstractUserControllerModule extends AbstractControllerModule
 	/**
 	* This method returns the text that is rendered in the menu in layout.
 	*/
-	public static function getText(ViewContext $viewContext)
+	public static function getText(ViewContext $viewContext, $media)
 	{
 		throw new UnimplementedException();
 	}
