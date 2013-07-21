@@ -13,6 +13,14 @@ class MediaSubProcessorFranchises extends MediaSubProcessor
 		$franchiseIds []= self::mediaToKey($context->media);
 		foreach ($context->relationData as $relation)
 		{
+			if ($relation['media'] != $context->media->media)
+			{
+				continue;
+			}
+			if (in_array($relation['type'], [MediaRelation::Other, MediaRelation::Character/*, MediaRelation::SpinOff, MediaRelation::AlternativeSetting*/]))
+			{
+				continue;
+			}
 			$franchiseIds []= self::mediaToKey($relation);
 		}
 		foreach (R::findAll('media', 'media||mal_id IN (' . R::genSlots($franchiseIds) . ')', $franchiseIds) as $relatedMedia)
