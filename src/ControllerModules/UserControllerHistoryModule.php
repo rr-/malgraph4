@@ -1,7 +1,7 @@
 <?php
 class UserControllerHistoryModule extends AbstractUserControllerModule
 {
-	public static function getText($media)
+	public static function getText(ViewContext $viewContext)
 	{
 		return 'History';
 	}
