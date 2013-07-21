@@ -71,12 +71,14 @@
 	text-decoration: none;
 	transition: color 0.2s ease, border-color: 0.2s ease;
 	border-right: 3px solid transparent;
+	margin: 1px 0;
 }
 #menu ul li.active a {
 	background: white;
 	border-left: 3px solid #1969CB;
 	border-top: 1px solid #ddd;
 	border-bottom: 1px solid #ddd;
+	margin: 0;
 	border-radius: 2px 0 0 2px;
 	color: black;
 }
