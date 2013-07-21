@@ -63,6 +63,13 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 			if ($sender == 'franchises')
 			{
 				$franchises = $viewContext->user->getFranchisesFromUserMedia($list);
+				foreach ($franchises as &$franchise)
+				{
+					$dist = RatingDistribution::fromEntries($franchise->ownEntries);
+					$franchise->meanScore = $dist->getMeanScore();
+				}
+				unset($franchise);
+				usort($franchises, function($f1, $f2) { return $f2->meanScore > $f1->meanScore ? 1 : -1; });
 				$viewContext->franchises = array_filter($franchises, function($franchise) { return count($franchise->ownEntries) > 1; });
 			}
 			elseif ($sender == 'mismatches')

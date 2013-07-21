@@ -29,9 +29,8 @@
 					</span><br>
 				<?php endforeach ?>
 				<span class="details">(<?php echo count($franchise->ownEntries) ?> titles,&nbsp;
-					<?php $meanScore = RatingDistribution::fromEntries($franchise->ownEntries)->getMeanScore(); ?>
-					<?php if ($meanScore): ?>
-						mean score: <?php printf('%.02f', $meanScore) ?>
+					<?php if ($franchise->meanScore): ?>
+						mean score: <?php printf('%.02f', $franchise->meanScore) ?>
 					<?php else: ?>
 						none rated
 					<?php endif ?>

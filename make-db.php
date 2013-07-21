@@ -88,6 +88,7 @@ try
 		published_from VARCHAR(10), --TIMESTAMP
 		published_to VARCHAR(10), --TIMESTAMP
 		processed TIMESTAMP,
+		franchise VARCHAR(10),
 
 		duration INTEGER,
 		episodes INTEGER,

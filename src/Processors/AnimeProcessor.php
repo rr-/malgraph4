@@ -21,6 +21,7 @@ class AnimeProcessor extends AbstractProcessor
 		$subProcessors []= new MediaSubProcessorGenres(Media::Anime);
 		$subProcessors []= new MediaSubProcessorTags(Media::Anime);
 		$subProcessors []= new MediaSubProcessorRelations(Media::Anime);
+		$subProcessors []= new MediaSubProcessorFranchises(Media::Anime);
 		$subProcessors []= new AnimeSubProcessorBasic();
 		$subProcessors []= new AnimeSubProcessorProducers();
 		return $subProcessors;

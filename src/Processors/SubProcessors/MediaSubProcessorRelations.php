@@ -80,5 +80,6 @@ class MediaSubProcessorRelations extends MediaSubProcessor
 			];
 		}
 		$this->insert('mediarelation', $data);
+		$context->relationData = $data;
 	}
 }
