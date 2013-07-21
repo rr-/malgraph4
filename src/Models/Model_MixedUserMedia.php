@@ -37,26 +37,4 @@ class Model_MixedUserMedia
 		}
 		return RatingDistribution::fromArray($dist);
 	}
-
-	public function getFranchise()
-	{
-		$keysToFetch = [$this->media . $this->mal_id];
-		$keysVisited = [$this->media . $this->mal_id];
-		while (!empty($keysToFetch))
-		{
-			$sql = 'SELECT (mr.media || mr.mal_id) AS key FROM media m INNER JOIN mediarelation mr ON mr.media_id = m.id WHERE (m.media || m.mal_id) IN (' . R::genSlots($keysToFetch) . ')';
-			$rows = R::getAll($sql, $keysToFetch);
-			$keysFetched = array_map(function($row) { return $row['key']; }, $rows);
-			$keysToFetch = [];
-			foreach ($keysFetched as $key)
-			{
-				if (!in_array($key, $keysVisited))
-				{
-					$keysVisited []= $key;
-					$keysToFetch []= $key;
-				}
-			}
-		}
-		return R::findAll('media', '(media||mal_id) IN (' . R::genSlots($keysVisited) . ')', $keysVisited);
-	}
 }

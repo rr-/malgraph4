@@ -47,7 +47,10 @@ class Model_User extends RedBean_SimpleModel
 		return $entriesMismatched;
 	}
 
-	public function getFranchisesFromUserMedia(array $entries)
+	/**
+	* Map entries to dictionary of franchise->entries
+	*/
+	private static function clusterize($entries)
 	{
 		$clusters = [];
 		foreach ($entries as $entry)
@@ -58,13 +61,37 @@ class Model_User extends RedBean_SimpleModel
 			}
 			$clusters[$entry->franchise] []= $entry;
 		}
+		return $clusters;
+	}
+
+	public function getFranchisesFromUserMedia(array $ownEntries, $loadEverything = false)
+	{
+		$ownClusters = self::clusterize($ownEntries);
+
+		if ($loadEverything)
+		{
+			R::begin();
+			R::exec('CREATE TEMPORARY TABLE hurr (franchise VARCHAR(10))');
+			foreach (array_chunk(array_keys($ownClusters), Config::$maxDbBindings) as $chunk)
+			{
+				R::exec('INSERT INTO hurr VALUES ' . join(',',array_fill(0, count($chunk), '(?)')), $chunk);
+			}
+			$allEntries = R::getAll('SELECT * FROM media INNER JOIN hurr ON media.franchise = hurr.franchise');
+			$allEntries = array_map(function($entry) { return new Model_MixedUserMedia($entry); }, $allEntries);
+			R::rollback();
+
+			$allClusters = self::clusterize($allEntries);
+		}
 
 		$franchises = [];
-		foreach ($clusters as $cluster)
+		foreach ($ownClusters as $key => $ownCluster)
 		{
 			$franchise = new StdClass;
-			#$franchise->allEntries = [];
-			$franchise->ownEntries = array_values($cluster);
+			$franchise->allEntries =
+				!empty($allClusters[$key])
+				? $allClusters[$key]
+				: [];
+			$franchise->ownEntries = array_values($ownCluster);
 			$franchises []= $franchise;
 		}
 		return $franchises;
