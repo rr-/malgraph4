@@ -16,6 +16,36 @@ class Model_User extends RedBean_SimpleModel
 		return $result;
 	}
 
+	public function getFriends()
+	{
+		$result = [];
+		foreach (R::getAll('SELECT * FROM userfriend WHERE user_id = ?', [$this->id]) as $row)
+		{
+			$x = new StdClass;
+			foreach ($row as $key=>$val)
+			{
+				$x->$key = $val;
+			}
+			$result []= $x;
+		}
+		return $result;
+	}
+
+	public function getClubs()
+	{
+		$result = [];
+		foreach (R::getAll('SELECT * FROM userclub WHERE user_id = ?', [$this->id]) as $row)
+		{
+			$x = new StdClass;
+			foreach ($row as $key=>$val)
+			{
+				$x->$key = $val;
+			}
+			$result []= $x;
+		}
+		return $result;
+	}
+
 	public function isUserMediaPrivate($media)
 	{
 		return $this->{Media::toString($media) . '_private'};

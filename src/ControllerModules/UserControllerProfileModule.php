@@ -33,12 +33,12 @@ class UserControllerProfileModule extends AbstractUserControllerModule
 			$viewContext->yearsOnMal = $diff / 361.25;
 		}
 
-		$viewContext->friends = $viewContext->user->ownUserfriend;
+		$viewContext->friends = $viewContext->user->getFriends();
 		usort($viewContext->friends, function($a, $b) {
 			return strcasecmp($a->name, $b->name);
 		});
 
-		$viewContext->clubs = $viewContext->user->ownUserclub;
+		$viewContext->clubs = $viewContext->user->getClubs();
 		usort($viewContext->clubs, function($a, $b) {
 			return strcasecmp($a->name, $b->name);
 		});
