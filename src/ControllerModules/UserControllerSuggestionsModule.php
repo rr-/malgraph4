@@ -34,9 +34,9 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 			$dontRecommend[$entry->media . $entry->mal_id] = true;
 		}
 
-		$franchises = $viewContext->user->getFranchisesFromUserMedia($list, true);
-		$viewContext->franchises = [];
-		foreach ($franchises as &$franchise)
+		$allFranchises = $viewContext->user->getFranchisesFromUserMedia($list, true);
+		$franchises = [];
+		foreach ($allFranchises as &$franchise)
 		{
 			$franchise->allEntries = array_filter($franchise->allEntries,
 				function ($entry) use ($viewContext, $dontRecommend)
@@ -51,11 +51,21 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 					}
 					return true;
 				});
-			if (!empty($franchise->allEntries))
+			if (empty($franchise->allEntries))
 			{
-				$viewContext->franchises []= $franchise;
+				continue;
 			}
+
+			usort($franchise->allEntries, function($a, $b) {
+				return strcmp($a->media . $a->mal_id, $b->media . $b->mal_id);
+			});
+			$dist = RatingDistribution::fromEntries($franchise->ownEntries);
+			$franchise->meanScore = $dist->getMeanScore();
+			$franchises []= $franchise;
 		}
+		usort($franchises, function($f1, $f2) { return $f2->meanScore > $f1->meanScore ? 1 : -1; });
+
+		$viewContext->franchises = $franchises;
 		$viewContext->private = $viewContext->user->isUserMediaPrivate($viewContext->media);
 	}
 }
