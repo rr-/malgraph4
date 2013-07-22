@@ -76,10 +76,12 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 			elseif ($sender == 'mismatches')
 			{
 				$viewContext->entries = $viewContext->user->getMismatchedUserMedia($list);
+				usort($viewContext->entries, function($a, $b) { return strcmp($a->title, $b->title); });
 			}
 			else
 			{
 				$viewContext->entries = $list;
+				usort($viewContext->entries, function($a, $b) { return strcmp($a->title, $b->title); });
 			}
 		}
 
