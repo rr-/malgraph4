@@ -33,25 +33,25 @@ function toggleEntries(target, data, ajax)
 	target.data('unique-id', uniqueId);
 	target.slideUp('fast', function()
 	{
-		if (ajax)
-		{
-			$.get(url, data, function(response)
-			{
-				target.html(response);
-				target.show();
-				target.css('height', 'auto');
-				target.css('height', target.height());
-				target.hide();
-				target.stop(true, true).slideDown('medium', resetHeight);
-			});
-		}
-		else
+		var afterShow = function()
 		{
 			target.show();
 			target.css('height', 'auto');
 			target.css('height', target.height());
 			target.hide();
 			target.stop(true, true).slideDown('medium', resetHeight);
+		}
+		if (ajax)
+		{
+			$.get(url, data, function(response)
+			{
+				target.html(response);
+				afterShow();
+			});
+		}
+		else
+		{
+			afterShow();
 		}
 	});
 }
