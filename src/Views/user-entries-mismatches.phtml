@@ -28,14 +28,14 @@
 						<?php if ($entry->publishing_status == MediaStatus::Publishing): ?>
 							but it&rsquo;s still airing
 						<?php else: ?>
-							should be  <?php echo Retriever::getEpisodesText($entry->episodes) ?>
+							should be  <?php echo TextHelper::getEpisodesText($entry->episodes) ?>
 						<?php endif ?>
 					<?php elseif ($entry->media == Media::Manga): ?>
 						on your list: <?php echo $entry->finished_chapters ?>,&nbsp;
 						<?php if ($entry->publishing_status == MediaStatus::Publishing): ?>
 							but it&rsquo;s still publishing
 						<?php else: ?>
-							should be <?php echo Retriever::getChaptersText($entry->chapters) ?>
+							should be <?php echo TextHelper::getChaptersText($entry->chapters) ?>
 						<?php endif ?>
 					<?php endif ?>)
 				</span>

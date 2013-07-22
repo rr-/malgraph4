@@ -21,9 +21,9 @@
 					</a>
 					<span class="details">&nbsp;
 						(<?php if ($viewContext->media == Media::Anime): ?>
-							<?php echo Retriever::getEpisodesText($entry->episodes ?: $entry->finished_episodes . '+', true) ?>
+							<?php echo TextHelper::getEpisodesText($entry->episodes ?: $entry->finished_episodes . '+', true) ?>
 						<?php elseif ($viewContext->media == Media::Manga): ?>
-							<?php echo Retriever::getChaptersText($entry->chapters ?: $entry->finished_chapters . '+', true) ?>
+							<?php echo TextHelper::getChaptersText($entry->chapters ?: $entry->finished_chapters . '+', true) ?>
 						<?php endif ?>,&nbsp;
 						<?php echo $entry->score ? 'rated with ' . $entry->score : 'unrated' ?>)
 					</span><br>
