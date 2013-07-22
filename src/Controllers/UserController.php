@@ -44,8 +44,6 @@ class UserController extends AbstractController
 	{
 		$viewContext->media = $controllerContext->media;
 		$viewContext->module = $controllerContext->module;
-		$viewContext->meta->styles []= '/media/css/menu.css';
-		$viewContext->meta->styles []= '/media/css/user/general.css';
 
 		if (BanHelper::isBanned($controllerContext->userName))
 		{
@@ -56,16 +54,20 @@ class UserController extends AbstractController
 		}
 
 		$queue = new Queue(Config::$userQueuePath);
-		$queue->enqueue($controllerContext->userName);
+		$queuePosition = $queue->enqueue($controllerContext->userName);
 
 		$user = R::findOne('user', 'LOWER(name) = LOWER(?)', [$controllerContext->userName]);
 		if (empty($user))
 		{
+			$viewContext->queuePosition = $queuePosition;
+			$viewContext->userName = $controllerContext->userName;
 			$viewContext->viewName = 'error-user-enqueued';
 			$viewContext->meta->title = 'MALgraph - user enqueued';
 			return;
 		}
 		$viewContext->user = $user;
+		$viewContext->meta->styles []= '/media/css/menu.css';
+		$viewContext->meta->styles []= '/media/css/user/general.css';
 
 		assert(!empty($controllerContext->module));
 		$module = $controllerContext->module;

@@ -1,2 +1,16 @@
-<h1>User enqueued</h1>
-<p>Please visit again in a while. This message is shown only once for each user.</p>
+<h2>Okay!</h2>
+<div style="text-align: center">
+<p>Successfully added <?php echo $viewContext->userName ?> to queue at position <?php echo $viewContext->queuePosition ?>.</p>
+
+<?php $min = ceil($viewContext->queuePosition / Config::$usersPerCronRun) ?>
+<p>Since MALgraph processes about <?php echo Config::$usersPerCronRun ?>  users per minute,<br>
+this shouldn&rsquo;t take more than <?php printf('%d %s', $min, $min > 1 ? 'minutes' : 'minute') ?>.</p>
+<p>This page will refresh automatically once your stats are ready.</p>
+</div>
+
+<script type="text/javascript">
+window.setTimeout(<?php echo $min ?> * 1000, function()
+{
+	window.location.reload();
+});
+</script>
