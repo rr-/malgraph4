@@ -8,7 +8,7 @@ class MediaSubProcessorBasic extends MediaSubProcessor
 
 		if ($xpath->query('//div[@class = \'badresult\']')->length >= 1)
 		{
-			throw new BadDocumentNodeException($documents[self::URL_MEDIA], 'badresult', '');
+			throw new BadProcessorKeyException($context->key);
 		}
 
 		$title = Strings::removeSpaces(self::getNodeValue($xpath, '//h1/*/following-sibling::node()[1][self::text()]'));

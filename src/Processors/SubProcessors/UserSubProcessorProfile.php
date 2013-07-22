@@ -16,6 +16,11 @@ class UserSubProcessorProfile extends UserSubProcessor
 		$doc = self::getDOM($documents[self::URL_PROFILE]);
 		$xpath = new DOMXPath($doc);
 
+		if ($xpath->query('//title[text() = \'Invalid User\']')->length >= 1)
+		{
+			throw new BadProcessorKeyException($context->key);
+		}
+
 		$userName       = Strings::removeSpaces(self::getNodeValue($xpath, '//title'));
 		$userName       = substr($userName, 0, strpos($userName, '\'s Profile'));
 		$pictureUrl     = self::getNodeValue($xpath, '//td[@class = \'profile_leftcell\']//img', null, 'src');
