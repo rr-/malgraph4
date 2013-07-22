@@ -5,6 +5,7 @@ div.user h2 {
 
 .entries-wrapper {
 	display: none;
+	font-size: 90%;
 }
 .entries-wrapper ul {
 	margin: 0;
