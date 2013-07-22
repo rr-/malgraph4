@@ -1,0 +1,50 @@
+img.achi {
+	float: right;
+	position: relative;
+	z-index: 3;
+	padding: 0 0 0 0.5em;
+}
+img.achi.more-trigger {
+	cursor: pointer;
+}
+img.achi.more-trigger:hover {
+	opacity: 0.85;
+}
+
+p.level {
+	float: right;
+	margin: 0.3em 0 0 0;
+	font-size: 8pt;
+	color: gray;
+}
+p.desc {
+	margin: 0;
+	padding: 0.5em 0;
+}
+
+.progress-wrapper {
+	position: relative;
+	overflow: hidden;
+	padding: 0.5em 0;
+	opacity: 0.5;
+}
+	.progress-wrapper:hover {
+		opacity: 1;
+	}
+	.progress {
+		background: #ddd;
+	}
+	.progress .bar {
+		background: #2D7DE0;
+		height: 3px;
+	}
+
+h3 {
+	text-align: left;
+	margin-bottom: 0;
+	position: relative;
+	z-index: 1;
+}
+.achi-entry {
+	margin-bottom: 3em;
+}
