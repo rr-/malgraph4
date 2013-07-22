@@ -6,7 +6,7 @@ body {
 	text-align: center;
 	background-color: white;
 	font-family: 'Open Sans', 'Verdana', 'Dejavu sans', sans-serif;
-	font-size: 10pt;
+	font-size: 11pt;
 }
 
 h1, h2, h3 {
@@ -96,16 +96,6 @@ img {
 	margin-left: -300px;
 	width: 600px;
 	padding: 0 1em;
-}
-
-/* small screens */
-@media (max-width: 800px), (max-device-width: 800px) {
-	#main {
-		width: 100%;
-	}
-	.main-wrapper {
-		width: 96%;
-	}
 }
 
 /* miscellaneous */
