@@ -1,24 +1,17 @@
 <?php
 require_once 'src/core.php';
 
-if (count($argv) > 1)
+$userNames = [];
+$queue = new Queue(Config::$userQueuePath);
+if (Config::$debugCron)
 {
-	$userNames = array_slice($argv, 1);
+	$userNames []= $queue->peek();
 }
 else
 {
-	$userNames = [];
-	$queue = new Queue(Config::$userQueuePath);
-	if (Config::$debugCron)
+	for ($i = 0; $i < 5; $i ++)
 	{
-		$userNames []= $queue->peek();
-	}
-	else
-	{
-		for ($i = 0; $i < 5; $i ++)
-		{
-			$userNames []= $queue->dequeue();
-		}
+		$userNames []= $queue->dequeue();
 	}
 }
 $userNames = array_filter($userNames);
