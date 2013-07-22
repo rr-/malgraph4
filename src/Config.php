@@ -8,7 +8,6 @@ class Config extends Singleton
 	static $cacheEnabled;
 	static $cacheTimeToLive;
 	static $dbPath;
-	static $debugCron;
 	static $baseUrl;
 	static $googleAdsEnabled;
 	static $googleAnalyticsEnabled;
@@ -16,6 +15,7 @@ class Config extends Singleton
 	static $errorLogPath;
 	static $sendReferrer;
 	static $maxDbBindings;
+	static $usersPerCronRun;
 
 	public static function doInit()
 	{
@@ -26,7 +26,6 @@ class Config extends Singleton
 		self::$dbPath = $rootDir . 'db.sqlite';
 		self::$banListPath = $rootDir . 'banned.lst';
 		self::$errorLogPath = $rootDir . 'errors.log';
-		self::$debugCron = false;
 		self::$mirrorEnabled = false;
 		self::$cacheEnabled = true;
 		self::$cacheTimeToLive = 24 * 60 * 60;
@@ -35,6 +34,7 @@ class Config extends Singleton
 		self::$googleAnalyticsEnabled = true;
 		self::$sendReferrer = true;
 		self::$maxDbBindings = 50;
+		self::$usersPerCronRun = 5;
 	}
 }
 
