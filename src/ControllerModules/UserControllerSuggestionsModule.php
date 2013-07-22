@@ -24,6 +24,9 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 	public static function work(&$viewContext)
 	{
 		$viewContext->viewName = 'user-suggestions';
+		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . ' - suggestions (' . Media::toString($viewContext->media) . ')';
+		$viewContext->meta->description = $viewContext->user->name . '&rsquo;s ' . Media::toString($viewContext->media) . ' suggestions on MALgraph, an online tool that extends your MyAnimeList profile.';
+		$viewContext->meta->keywords = array_merge($viewContext->meta->keywords, ['profile', 'list', 'achievements', 'ratings', 'activity', 'favorites', 'suggestions', 'recommendations']);
 		$viewContext->meta->styles []= '/media/css/user/suggestions.css';
 		$viewContext->meta->scripts []= '/media/js/user/suggestions.js';
 

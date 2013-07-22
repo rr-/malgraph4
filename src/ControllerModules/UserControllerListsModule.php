@@ -24,6 +24,9 @@ class UserControllerListsModule extends AbstractUserControllerModule
 	public static function work(&$viewContext)
 	{
 		$viewContext->viewName = 'user-list';
+		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . ' - list (' . Media::toString($viewContext->media) . ')';
+		$viewContext->meta->description = $viewContext->user->name . '&rsquo;s ' . Media::toString($viewContext->media) . ' list on MALgraph, an online tool that extends your MyAnimeList profile.';
+		$viewContext->meta->keywords = array_merge($viewContext->meta->keywords, ['profile', 'list', 'achievements', 'ratings', 'activity', 'favorites', 'suggestions', 'recommendations']);
 		$viewContext->meta->styles []= '/media/css/user/list.css';
 		$viewContext->meta->scripts []= 'http://cdn.ucb.org.br/Scripts/tablesorter/jquery.tablesorter.min.js';
 		$viewContext->meta->scripts []= '/media/js/user/list.js';

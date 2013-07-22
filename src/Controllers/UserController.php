@@ -49,9 +49,9 @@ class UserController extends AbstractController
 
 		if (BanHelper::isBanned($controllerContext->userName))
 		{
-			$viewContext->meta->styles []= '/media/css/narrow.css';
 			$viewContext->userName = $controllerContext->userName;
 			$viewContext->viewName = 'error-user-blocked';
+			$viewContext->meta->title = 'MALgraph - user blocked';
 			return;
 		}
 
@@ -61,8 +61,8 @@ class UserController extends AbstractController
 		$user = R::findOne('user', 'LOWER(name) = LOWER(?)', [$controllerContext->userName]);
 		if (empty($user))
 		{
-			$viewContext->meta->styles []= '/media/css/narrow.css';
 			$viewContext->viewName = 'error-user-enqueued';
+			$viewContext->meta->title = 'MALgraph - user enqueued';
 			return;
 		}
 		$viewContext->user = $user;
