@@ -1,7 +1,5 @@
 img.achi {
 	float: right;
-	position: relative;
-	z-index: 3;
 	padding: 0 0 0 0.5em;
 }
 img.achi.more-trigger {
@@ -24,6 +22,7 @@ p.desc {
 
 .progress-wrapper {
 	position: relative;
+	margin-top: -2px;
 	overflow: hidden;
 	padding: 0.5em 0;
 	opacity: 0.5;
@@ -42,8 +41,13 @@ p.desc {
 h3 {
 	text-align: left;
 	margin-bottom: 0;
-	position: relative;
-	z-index: 1;
+}
+.achi-entry h3,
+.achi-entry h3:after,
+.achi-entry h3:before {
+	box-shadow: 0;
+	border: 0;
+	background: 0;
 }
 .achi-entry {
 	margin-bottom: 3em;
