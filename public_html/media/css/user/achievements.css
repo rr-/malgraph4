@@ -1,6 +1,8 @@
 img.achi {
 	float: right;
 	padding: 0 0 0 0.5em;
+	position: relative;
+	z-index: 3;
 }
 img.achi.more-trigger {
 	cursor: pointer;
@@ -22,7 +24,6 @@ p.desc {
 
 .progress-wrapper {
 	position: relative;
-	margin-top: -2px;
 	overflow: hidden;
 	padding: 0.5em 0;
 	opacity: 0.5;
@@ -51,4 +52,7 @@ h3 {
 }
 .achi-entry {
 	margin-bottom: 3em;
+}
+.achi-entry.hidden {
+	display: none;
 }

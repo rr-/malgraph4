@@ -111,6 +111,7 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 		];
 
 		$achievements = [];
+		$anyHidden = 0;
 		foreach ($achList->{Media::toString($viewContext->media)} as $group => $groupData)
 		{
 			//get subject and entries basing on requirement type
@@ -122,15 +123,44 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 				continue;
 			}
 
+			$prevAch = null;
+			foreach ($groupData->achievements as &$ach)
+			{
+				$ach->next = null;
+			}
+			foreach ($groupData->achievements as &$ach)
+			{
+				if ($prevAch !== null)
+				{
+					$prevAch->next = $ach;
+				}
+				$ach->prev = $prevAch;
+				$prevAch = &$ach;
+			}
+			unset($ach);
+			unset($prevAch);
+			$groupData->achievements = array_reverse($groupData->achievements);
+
 			//give first achievement for which the subject fits into its threshold
-			$nextAch = null;
-			foreach (array_reverse($groupData->achievements) as $ach)
+			$localAchievements = [];
+			foreach ($groupData->achievements as &$ach)
 			{
 				list($a, $b) = self::getThreshold($ach);
 				$ach->thresholdLeft = $a;
 				$ach->thresholdRight = $b;
+				$ach->earned = ((($subject >= $a) or ($a === null)) and (($subject <= $b) or ($b === null)));
+				if ($ach->next and $ach->next->earned)
+				{
+					$ach->earned = true;
+					$ach->hidden = true;
+					$anyHidden = true;
+				}
+				else
+				{
+					$ach->hidden = false;
+				}
 
-				if ((($subject >= $a) or ($a === null)) and (($subject <= $b) or ($b === null)))
+				if ($ach->earned)
 				{
 					//put additional info
 					if (!empty($entriesOwned))
@@ -147,18 +177,18 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 					}
 					$ach->progress = 100;
 					$ach->subject = round($subject, 2);
-					if ($nextAch !== null)
+					if ($ach->next)
 					{
-						$ach->progress = ($subject - $a) * 100.0 / ($nextAch->thresholdLeft - $a);
-						$ach->next = $nextAch;
+						$ach->progress = ($subject - $a) * 100.0 / ($ach->next->thresholdLeft - $a);
 					}
-					$achievements []= $ach;
-					break;
+					$localAchievements []= $ach;
 				}
-				$nextAch = $ach;
 			}
+
+			$achievements = array_merge($achievements, array_reverse($localAchievements));
 		}
 		$viewContext->achievements = $achievements;
 		$viewContext->private = $viewContext->user->isUserMediaPrivate($viewContext->media);
+		$viewContext->anyHidden = $anyHidden;
 	}
 }
