@@ -46,3 +46,10 @@ form {
 .filter-hint {
 	display: none;
 }
+
+.higher {
+	color: #007e00;
+}
+.lower {
+	color: #b60000;
+}
