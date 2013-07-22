@@ -62,11 +62,11 @@ class UserControllerProfileModule extends AbstractUserControllerModule
 			$viewContext->meanGlobalScore[$media] = Model_MixedUserMedia::getRatingDistribution($media)->getMeanScore();
 			if ($media == Media::Anime)
 			{
-				$viewContext->episodes = array_sum(array_map(function($mixedMediaEntry) { return $mixedMediaEntry->finished_episodes; }, $listFinished));
+				$viewContext->episodes = array_sum(array_map(function($mixedMediaEntry) { return $mixedMediaEntry->finished_episodes; }, $list));
 			}
 			else
 			{
-				$viewContext->chapters = array_sum(array_map(function($mixedMediaEntry) { return $mixedMediaEntry->finished_chapters; }, $listFinished));
+				$viewContext->chapters = array_sum(array_map(function($mixedMediaEntry) { return $mixedMediaEntry->finished_chapters; }, $list));
 			}
 			$franchises = $viewContext->user->getFranchisesFromUserMedia($listNonPlanned);
 			$viewContext->franchiseCount[$media] = count(array_filter($franchises, function($franchise) { return count($franchise->ownEntries) > 1; }));
