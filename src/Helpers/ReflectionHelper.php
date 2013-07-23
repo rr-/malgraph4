@@ -28,4 +28,14 @@ class ReflectionHelper
 	{
 		return !self::isAbstract($className);
 	}
+
+	public static function arrayToClass(array $array)
+	{
+		$x = new StdClass;
+		foreach ($array as $key => $val)
+		{
+			$x->$key = $val;
+		}
+		return $x;
+	}
 }

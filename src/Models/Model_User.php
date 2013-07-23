@@ -21,12 +21,7 @@ class Model_User extends RedBean_SimpleModel
 		$result = [];
 		foreach (R::getAll('SELECT * FROM userfriend WHERE user_id = ?', [$this->id]) as $row)
 		{
-			$x = new StdClass;
-			foreach ($row as $key=>$val)
-			{
-				$x->$key = $val;
-			}
-			$result []= $x;
+			$result []= ReflectionHelper::arrayToClass($row);
 		}
 		return $result;
 	}
@@ -36,12 +31,7 @@ class Model_User extends RedBean_SimpleModel
 		$result = [];
 		foreach (R::getAll('SELECT * FROM userclub WHERE user_id = ?', [$this->id]) as $row)
 		{
-			$x = new StdClass;
-			foreach ($row as $key=>$val)
-			{
-				$x->$key = $val;
-			}
-			$result []= $x;
+			$result []= ReflectionHelper::arrayToClass($row);
 		}
 		return $result;
 	}
@@ -104,7 +94,7 @@ class Model_User extends RedBean_SimpleModel
 			R::exec('CREATE TEMPORARY TABLE hurr (franchise VARCHAR(10))');
 			foreach (array_chunk(array_keys($ownClusters), Config::$maxDbBindings) as $chunk)
 			{
-				R::exec('INSERT INTO hurr VALUES ' . join(',',array_fill(0, count($chunk), '(?)')), $chunk);
+				R::exec('INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)')), $chunk);
 			}
 			$allEntries = R::getAll('SELECT * FROM media INNER JOIN hurr ON media.franchise = hurr.franchise');
 			$allEntries = array_map(function($entry) { return new Model_MixedUserMedia($entry); }, $allEntries);
