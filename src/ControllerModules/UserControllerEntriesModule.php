@@ -28,23 +28,48 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 		switch ($sender)
 		{
 			case 'ratings':
-				$cb = function($row) use ($filterParam) {
+				$cb = function($row) use ($filterParam)
+				{
 					return intval($row->score) == intval($filterParam)
-					and $row->status != UserListStatus::Planned; };
+						and $row->status != UserListStatus::Planned;
+				};
 				break;
 			case 'length':
-				$cb = function($row) use ($filterParam) {
+				$cb = function($row) use ($filterParam)
+				{
 					return MediaLengthDistribution::getGroup($row) == $filterParam
-					and $row->status != UserListStatus::Planned
-					and !($row->sub_type == AnimeMediaType::Movie and $row->media == Media::Anime); };
+						and $row->status != UserListStatus::Planned
+						and !($row->sub_type == AnimeMediaType::Movie and $row->media == Media::Anime);
+				};
+				$computeMeanScore = true;
+				break;
+			case 'year':
+				$cb = function($row) use ($filterParam)
+				{
+					return $row->status != UserListStatus::Planned
+						and MediaYearDistribution::getPublishedYear($row) == $filterParam;
+				};
+				$computeMeanScore = true;
+				break;
+			case 'decade':
+				$cb = function($row) use ($filterParam)
+				{
+					return $row->status != UserListStatus::Planned
+						and MediaDecadeDistribution::getPublishedDecade($row) == $filterParam;
+				};
 				$computeMeanScore = true;
 				break;
 			case 'franchises':
-				$cb = function($row) {
-					return $row->status != UserListStatus::Planned; };
+				$cb = function($row)
+				{
+					return $row->status != UserListStatus::Planned;
+				};
 				break;
 			case 'mismatches':
-				$cb = function($row) { return true; };
+				$cb = function($row)
+				{
+					return true;
+				};
 				break;
 			default:
 				throw new Exception('Unknown sender (' . $sender . ')');
