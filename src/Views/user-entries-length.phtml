@@ -4,6 +4,9 @@
 		Titles with unknown length
 	<?php else: ?>
 		Titles of length <?php echo $viewContext->filterParam ?>
+		<?php if ($viewContext->media == Media::Anime and $viewContext->filterParam == 1): ?>
+			&nbsp;(w/o movies)
+		<?php endif ?>
 	<?php endif ?>:
 
 	<?php if (!empty($viewContext->entries)): ?>
