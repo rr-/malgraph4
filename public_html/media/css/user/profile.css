@@ -10,12 +10,6 @@
 	color: gray;
 }
 
-.basic dl {
-	margin-bottom: 1em;
-	width: 60%;
-	float: left;
-}
-
 .friends ul,
 .clubs ul,
 .basic ul {
@@ -101,6 +95,8 @@ p.number span {
 	background: black;
 }
 
+.friends,
+.clubs,
 .mini-section {
 	margin-bottom: 2.5em;
 }
