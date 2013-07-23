@@ -63,7 +63,8 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 			case 'genre':
 				R::begin();
 				R::exec('CREATE TEMPORARY TABLE hurr (media_id INTEGER)');
-				foreach (array_chunk(array_keys($list), Config::$maxDbBindings) as $chunk)
+				$listNonPlanned = array_filter($list, function($a) { return $a->status != UserListStatus::Planned; });
+				foreach (array_chunk(array_map(function($entry) { return $entry->media_id; }, $listNonPlanned), Config::$maxDbBindings) as $chunk)
 				{
 					R::exec('INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)')), $chunk);
 				}
@@ -72,11 +73,9 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 				$viewContext->genreName = count($data) ? $data[0]['name'] : null;
 				$data = array_map(function($x) { return $x['media_id']; }, $data);
 				$data = array_flip($data);
-				var_dump($data);
 				$cb = function($row) use ($data)
 				{
-					return $row->status != UserListStatus::Planned
-						and isset($data[$row->media_id]);
+					return isset($data[$row->media_id]);
 				};
 				$computeMeanScore = true;
 				break;

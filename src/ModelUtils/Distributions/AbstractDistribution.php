@@ -22,8 +22,8 @@ abstract class AbstractDistribution
 		foreach ($arrayDist as $key => $count)
 		{
 			$dist->groups[$key] = intval($count);
-			$this->entries[$key] = [];
-			$this->keys[$key] = $key;
+			$dist->entries[$key] = [];
+			$dist->keys[$key] = $key;
 		}
 		$dist->finalize();
 		return $dist;

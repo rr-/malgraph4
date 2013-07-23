@@ -24,7 +24,7 @@ class MediaGenreDistribution extends AbstractDistribution
 		$dist = new self();
 		R::begin();
 		R::exec('CREATE TEMPORARY TABLE hurr (media_id INTEGER)');
-		foreach (array_chunk(array_keys($entries), Config::$maxDbBindings) as $chunk)
+		foreach (array_chunk(array_map(function($entry) { return $entry->media_id; }, $entries), Config::$maxDbBindings) as $chunk)
 		{
 			R::exec('INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)')), $chunk);
 		}
