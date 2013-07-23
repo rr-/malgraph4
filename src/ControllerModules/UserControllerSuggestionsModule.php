@@ -59,14 +59,12 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 				continue;
 			}
 
-			usort($franchise->allEntries, function($a, $b) {
-				return strcmp($a->media . $a->mal_id, $b->media . $b->mal_id);
-			});
+			DataSorter::sort($franchise->allEntries, DataSorter::MediaMalId);
 			$dist = RatingDistribution::fromEntries($franchise->ownEntries);
 			$franchise->meanScore = $dist->getMeanScore();
 			$franchises []= $franchise;
 		}
-		usort($franchises, function($f1, $f2) { return $f2->meanScore > $f1->meanScore ? 1 : -1; });
+		DataSorter::sort($franchises, DataSorter::MeanScore);
 
 		$viewContext->franchises = $franchises;
 		$viewContext->private = $viewContext->user->isUserMediaPrivate($viewContext->media);

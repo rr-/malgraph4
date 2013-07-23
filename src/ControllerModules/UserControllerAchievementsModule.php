@@ -165,7 +165,7 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 					//put additional info
 					if (!empty($entriesOwned))
 					{
-						uasort($entriesOwned, function($a, $b) { return strcmp($a->title, $b->title); });
+						DataSorter::sort($entriesOwned, DataSorter::Title);
 						$ach->entries = $entriesOwned;
 					}
 					foreach ($imgFiles as $f)

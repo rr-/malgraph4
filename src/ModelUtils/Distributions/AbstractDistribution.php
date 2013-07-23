@@ -50,10 +50,7 @@ abstract class AbstractDistribution
 	{
 		foreach ($this->entries as $group => $entries)
 		{
-			uasort($entries, function($a, $b)
-			{
-				return strcmp($a->title, $b->title);
-			});
+			DataSorter::sort($entries, DataSorter::Title);
 		}
 	}
 

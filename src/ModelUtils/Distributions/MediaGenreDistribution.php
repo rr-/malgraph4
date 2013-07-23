@@ -5,7 +5,7 @@ class MediaGenreDistribution extends AbstractDistribution
 	{
 		foreach ($this->entries as $group => $entries)
 		{
-			uasort($entries, function($a, $b) { return $a->score > $b->score; });
+			DataSorter::sort($entries, DataSorter::Score);
 		}
 	}
 

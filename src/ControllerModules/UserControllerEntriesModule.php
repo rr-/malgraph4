@@ -114,18 +114,19 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 					$franchise->meanScore = $dist->getMeanScore();
 				}
 				unset($franchise);
-				usort($franchises, function($f1, $f2) { return $f2->meanScore > $f1->meanScore ? 1 : -1; });
+				DataSorter::sort($entries, DataSorter::MeanScore);
 				$viewContext->franchises = array_filter($franchises, function($franchise) { return count($franchise->ownEntries) > 1; });
 			}
 			elseif ($sender == 'mismatches')
 			{
-				$viewContext->entries = $viewContext->user->getMismatchedUserMedia($list);
-				usort($viewContext->entries, function($a, $b) { return strcmp($a->title, $b->title); });
+				$entries = $viewContext->user->getMismatchedUserMedia($list);
+				DataSorter::sort($entries, DataSorter::Title);
+				$viewContext->entries = $entries;
 			}
 			else
 			{
+				DataSorter::sort($list, DataSorter::Title);
 				$viewContext->entries = $list;
-				usort($viewContext->entries, function($a, $b) { return strcmp($a->title, $b->title); });
 			}
 		}
 

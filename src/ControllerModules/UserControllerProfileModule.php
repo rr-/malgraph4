@@ -37,14 +37,7 @@ class UserControllerProfileModule extends AbstractUserControllerModule
 		}
 
 		$viewContext->friends = $viewContext->user->getFriends();
-		usort($viewContext->friends, function($a, $b) {
-			return strcasecmp($a->name, $b->name);
-		});
-
 		$viewContext->clubs = $viewContext->user->getClubs();
-		usort($viewContext->clubs, function($a, $b) {
-			return strcasecmp($a->name, $b->name);
-		});
 
 		$viewContext->completed = [];
 		$viewContext->meanUserScore = [];

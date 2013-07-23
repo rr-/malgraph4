@@ -19,7 +19,7 @@ class Model_User extends RedBean_SimpleModel
 	public function getFriends()
 	{
 		$result = [];
-		foreach (R::getAll('SELECT * FROM userfriend WHERE user_id = ?', [$this->id]) as $row)
+		foreach (R::getAll('SELECT * FROM userfriend WHERE user_id = ? ORDER BY name COLLATE NOCASE ASC', [$this->id]) as $row)
 		{
 			$result []= ReflectionHelper::arrayToClass($row);
 		}
@@ -29,7 +29,7 @@ class Model_User extends RedBean_SimpleModel
 	public function getClubs()
 	{
 		$result = [];
-		foreach (R::getAll('SELECT * FROM userclub WHERE user_id = ?', [$this->id]) as $row)
+		foreach (R::getAll('SELECT * FROM userclub WHERE user_id = ? ORDER BY name COLLATE NOCASE ASC', [$this->id]) as $row)
 		{
 			$result []= ReflectionHelper::arrayToClass($row);
 		}
