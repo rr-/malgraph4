@@ -29,73 +29,52 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 		switch ($sender)
 		{
 			case 'ratings':
-				$cb = function($row) use ($filterParam)
-				{
-					return intval($row->score) == intval($filterParam)
-						and $row->status != UserListStatus::Planned;
-				};
+				$filter = UserMediaFilter::combine(
+					UserMediaFilter::nonPlanned(),
+					UserMediaFilter::score($filterParam)
+				);
 				break;
 			case 'length':
-				$cb = function($row) use ($filterParam)
-				{
-					return MediaLengthDistribution::getGroup($row) == $filterParam
-						and $row->status != UserListStatus::Planned
-						and !($row->sub_type == AnimeMediaType::Movie and $row->media == Media::Anime);
-				};
+				$filter = UserMediaFilter::combine(
+					UserMediaFilter::nonPlanned(),
+					UserMediaFilter::nonMovie(),
+					UserMediaFilter::lengthGroup($filterParam)
+				);
 				$computeMeanScore = true;
 				break;
 			case 'year':
-				$cb = function($row) use ($filterParam)
-				{
-					return $row->status != UserListStatus::Planned
-						and MediaYearDistribution::getPublishedYear($row) == $filterParam;
-				};
+				$filter = UserMediaFilter::combine(
+					UserMediaFilter::nonPlanned(),
+					UserMediaFilter::publishedYear($filterParam)
+				);
 				$computeMeanScore = true;
 				break;
 			case 'decade':
-				$cb = function($row) use ($filterParam)
-				{
-					return $row->status != UserListStatus::Planned
-						and MediaDecadeDistribution::getPublishedDecade($row) == $filterParam;
-				};
+				$filter = UserMediaFilter::combine(
+					UserMediaFilter::nonPlanned(),
+					UserMediaFilter::publishedDecade($filterParam)
+				);
 				$computeMeanScore = true;
 				break;
 			case 'genre':
-				R::begin();
-				R::exec('CREATE TEMPORARY TABLE hurr (media_id INTEGER)');
-				$listNonPlanned = array_filter($list, function($a) { return $a->status != UserListStatus::Planned; });
-				foreach (array_chunk(array_map(function($entry) { return $entry->media_id; }, $listNonPlanned), Config::$maxDbBindings) as $chunk)
-				{
-					R::exec('INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)')), $chunk);
-				}
-				$data = R::getAll('SELECT * FROM mediagenre mg INNER JOIN hurr ON mg.media_id = hurr.media_id WHERE mg.mal_id = ?', [$viewContext->filterParam]);
-				R::rollback();
-				$viewContext->genreName = count($data) ? $data[0]['name'] : null;
-				$data = array_map(function($x) { return $x['media_id']; }, $data);
-				$data = array_flip($data);
-				$cb = function($row) use ($data)
-				{
-					return isset($data[$row->media_id]);
-				};
+				$filter = UserMediaFilter::combine(
+					UserMediaFilter::nonPlanned(),
+					UserMediaFilter::genre($filterParam, $list)
+				);
+				$viewContext->genreName = R::getAll('SELECT * FROM mediagenre WHERE mal_id = ?', [$filterParam])[0]['name'];
 				$computeMeanScore = true;
 				break;
 			case 'franchises':
-				$cb = function($row)
-				{
-					return $row->status != UserListStatus::Planned;
-				};
+				$filter = UserMediaFilter::nonPlanned();
 				break;
 			case 'mismatches':
-				$cb = function($row)
-				{
-					return true;
-				};
+				$filter = null;
 				break;
 			default:
 				throw new Exception('Unknown sender (' . $sender . ')');
 		}
 
-		$list = array_filter($list, $cb);
+		$list = UserMediaFilter::doFilter($list, $filter);
 		$isPrivate = $viewContext->user->isUserMediaPrivate($viewContext->media);
 
 		if (!$isPrivate)

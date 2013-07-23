@@ -47,10 +47,10 @@ class UserControllerProfileModule extends AbstractUserControllerModule
 		foreach (Media::getConstList() as $media)
 		{
 			$list = $viewContext->user->getMixedUserMedia($media);
-			$listFinished = array_filter($list, function($mixedMediaEntry) { return $mixedMediaEntry->status == UserListStatus::Finished; });
-			$listNonPlanned = array_filter($list, function($mixedMediaEntry) { return $mixedMediaEntry->status != UserListStatus::Planned; });
+			$listCompleted = UserMediaFilter::doFilter($list, UserMediaFilter::completed);
+			$listNonPlanned = UserMediaFilter::doFilter($list, UserMediaFilter::nonPlanned());
 
-			$viewContext->completed[$media] = count($listFinished);
+			$viewContext->completed[$media] = count($listCompleted);
 			$viewContext->meanUserScore[$media] = RatingDistribution::fromEntries($listNonPlanned)->getMeanScore();
 			$viewContext->meanGlobalScore[$media] = Model_MixedUserMedia::getRatingDistribution($media)->getMeanScore();
 			if ($media == Media::Anime)

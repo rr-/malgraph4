@@ -70,7 +70,7 @@ class UserControllerFavoritesModule extends AbstractUserControllerModule
 		$viewContext->meta->scripts []= '/media/js/user/favorites.js';
 
 		$list = $viewContext->user->getMixedUserMedia($viewContext->media);
-		$listNonPlanned = array_filter($list, function($a) { return $a->status != UserListStatus::Planned; });
+		$listNonPlanned = UserMediaFilter::doFilter($list, UserMediaFilter::nonPlanned());
 
 		$favCreators = MediaCreatorDistribution::fromEntries($listNonPlanned);
 		$favGenres = MediaGenreDistribution::fromEntries($listNonPlanned);

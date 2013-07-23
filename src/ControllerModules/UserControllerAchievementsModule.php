@@ -50,53 +50,30 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 		$imgFiles = scandir(Config::$achievementsImageDir);
 
 		$list = $viewContext->user->getMixedUserMedia($viewContext->media);
-		$listCompleted = array_filter($list, function($mixedUserMedia)
-		{
-			return $mixedUserMedia->status == UserListStatus::Finished;
-		});
-		$listNonPlanned = array_filter($list, function($mixedUserMedia)
-		{
-			return $mixedUserMedia->status != UserListStatus::Planned;
-		});
+		$listFinished = UserMediaFilter::doFilter($list, UserMediaFilter::finished());
+		$listNonPlanned = UserMediaFilter::doFilter($list, UserMediaFilter::nonPlanned());
 
 		$evaluators =
 		[
-			'given-titles' => function($groupData) use ($listCompleted)
+			'given-titles' => function($groupData) use ($listFinished)
 			{
-				$entriesOwned = array_filter($listCompleted, function($mixedUserMedia) use ($groupData)
-				{
-					return in_array($mixedUserMedia->mal_id, $groupData->requirement->titles);
-				});
+				$entriesOwned = UserMediaFilter::doFilter($listFinished, UserMediaFilter::givenMedia($groupData->requirement->titles));
 				return [count($entriesOwned), $entriesOwned];
 			},
 
-			'genre-titles' => function($groupData) use ($viewContext, $listCompleted)
+			'genre-titles' => function($groupData) use ($viewContext, $listFinished)
 			{
-				$matchingMedia = R::getAll('SELECT DISTINCT(media_id) FROM mediagenre WHERE mal_id = ?', [$groupData->requirement->genre]);
-				$matchingMedia = array_map(function($e) { return $e['media_id']; }, $matchingMedia);
-				$matchingMedia = array_flip($matchingMedia);
-				$filterBase = function($e) use ($groupData, $matchingMedia)
-				{
-					return isset($matchingMedia[$e->media_id]);
-				};
-				if (!empty($groupData->requirement->titles))
-				{
-					$filter = function($e) use ($groupData, $filterBase)
-					{
-						return $filterBase($e) or in_array($e->mal_id, $groupData->requirement->titles);
-					};
-				}
-				else
-				{
-					$filter = $filterBase;
-				}
-				$entriesOwned = array_filter($listCompleted, $filter);
+				$entriesOwned1 = UserMediaFilter::doFilter($listFinished, UserMediaFilter::genre($groupData->requirement->genre, $listFinished));
+				$entriesOwned2 = UserMediaFilter::doFilter($listFinished, UserMediaFilter::givenMedia($groupData->requirement->titles));
+				$entriesOwned = array_merge($entriesOwned1, $entriesOwned2);
+				#array unique w/ callback
+				$entriesOwned = array_intersect_key($entriesOwned, array_unique(array_map(function($e) { return $e->media . $e->mal_id; }, $entriesOwned)));
 				return [count($entriesOwned), $entriesOwned];
 			},
 
-			'completed-titles' => function($groupData) use ($listCompleted)
+			'finished-titles' => function($groupData) use ($listFinished)
 			{
-				return [count($listCompleted), null];
+				return [count($listFinished), null];
 			},
 
 			'mean-score' => function($groupData) use ($listNonPlanned)
