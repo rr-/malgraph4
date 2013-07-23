@@ -39,7 +39,7 @@ class UserControllerProfileModule extends AbstractUserControllerModule
 		$viewContext->friends = $viewContext->user->getFriends();
 		$viewContext->clubs = $viewContext->user->getClubs();
 
-		$viewContext->completed = [];
+		$viewContext->finished = [];
 		$viewContext->meanUserScore = [];
 		$viewContext->meanGlobalScore = [];
 		$viewContext->franchiseCount = [];
@@ -47,10 +47,10 @@ class UserControllerProfileModule extends AbstractUserControllerModule
 		foreach (Media::getConstList() as $media)
 		{
 			$list = $viewContext->user->getMixedUserMedia($media);
-			$listCompleted = UserMediaFilter::doFilter($list, UserMediaFilter::completed);
+			$listFinished = UserMediaFilter::doFilter($list, UserMediaFilter::finished());
 			$listNonPlanned = UserMediaFilter::doFilter($list, UserMediaFilter::nonPlanned());
 
-			$viewContext->completed[$media] = count($listCompleted);
+			$viewContext->finished[$media] = count($listFinished);
 			$viewContext->meanUserScore[$media] = RatingDistribution::fromEntries($listNonPlanned)->getMeanScore();
 			$viewContext->meanGlobalScore[$media] = Model_MixedUserMedia::getRatingDistribution($media)->getMeanScore();
 			if ($media == Media::Anime)

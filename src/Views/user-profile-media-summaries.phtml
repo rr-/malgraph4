@@ -7,14 +7,14 @@
 		<div class="left mini-section">
 			<p class="number">
 				Completed:
-				<span><?php echo $viewContext->completed[$media] ?></span>
+				<span><?php echo $viewContext->finished[$media] ?></span>
 			</p>
 
 			<div class="bar">
-				<div class="filled" style="width: <?php echo $viewContext->completed[$media] * 100.0 / Model_Media::getCount($media) ?>%"></div>
+				<div class="filled" style="width: <?php echo $viewContext->finished[$media] * 100.0 / Model_Media::getCount($media) ?>%"></div>
 			</div>
 
-			<?php printf('%.02f', $viewContext->completed[$media] * 100.0 / Model_Media::getCount($media)) ?>% of all <?php echo Media::toString($media) ?>
+			<?php printf('%.02f', $viewContext->finished[$media] * 100.0 / Model_Media::getCount($media)) ?>% of all <?php echo Media::toString($media) ?>
 		</div>
 
 		<div class="right mini-section">

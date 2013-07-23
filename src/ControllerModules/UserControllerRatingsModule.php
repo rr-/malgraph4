@@ -34,10 +34,10 @@ class UserControllerRatingsModule extends AbstractUserControllerModule
 		$viewContext->meta->scripts []= '/media/js/user/entries.js';
 
 		$list = $viewContext->user->getMixedUserMedia($viewContext->media);
-		$list = UserListFilter::doFilter($list, UserMediaFilter::nonPlanned());
+		$list = UserMediaFilter::doFilter($list, UserMediaFilter::nonPlanned());
 		$viewContext->ratingDistribution = RatingDistribution::fromEntries($list);
 		$viewContext->ratingTimeDistribution = RatingTimeDistribution::fromEntries($list);
-		$listNoMovies = UserListFilter::doFilter($list, UserMediaFilter::nonMovie());
+		$listNoMovies = UserMediaFilter::doFilter($list, UserMediaFilter::nonMovie());
 		$viewContext->lengthDistribution = MediaLengthDistribution::fromEntries($listNoMovies);
 
 		list($year, $month, $day) = explode('-', $viewContext->user->join_date);
