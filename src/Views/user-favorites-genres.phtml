@@ -26,10 +26,6 @@
 						<tr>
 							<td class="ord"><?php echo $i ++ ?></td>
 							<td class="title">
-								<a target="_blank" href="http://myanimelist.net/<?php echo Media::toString($viewContext->media) ?>.php?genre%5b%5d=<?php echo $genre->mal_id ?>">
-									<i class="icon-pop-out"></i>
-								</a>
-								&nbsp;
 								<a class="entries-trigger" data-id="<?php echo $genre->mal_id ?>" href="#">
 									<?php echo htmlspecialchars(ucfirst($genre->name)) ?>
 								</a>
