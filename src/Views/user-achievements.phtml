@@ -18,10 +18,11 @@
 					<h3>
 						<?php echo $ach->title ?>
 					</h3>
-
 					<?php if (isset($ach->progress)): ?>
 						<?php if (isset($ach->tooltip)): ?>
-							<div class="progress-wrapper" data-tooltip="<?php echo ChibiRegistry::getHelper('mg')->replaceTokens($ach->tooltip, $ach) ?>">
+							<div class="progress-wrapper" data-tooltip="<?php echo TextHelper::replaceTokens($ach->tooltip, (array) $ach) ?>">
+						<?php elseif ($ach->hidden and $ach->level): ?>
+							<div class="progress-wrapper" data-tooltip="Previous level">
 						<?php elseif (!empty($ach->next->thresholdLeft)): ?>
 							<div class="progress-wrapper" data-tooltip="Got <?php echo $ach->subject ?>, next level at <?php echo $ach->next->thresholdLeft ?>">
 						<?php else: ?>

@@ -37,4 +37,19 @@ class TextHelper
 	{
 		return self::getNumberText($number, $short, $fmt, 'ep', 'episode');
 	}
+
+	public static function replaceTokens($input, array $tokens)
+	{
+		$output = $input;
+		foreach ($tokens as $key => $val)
+		{
+			if (is_object($val) or is_array($val))
+			{
+				continue;
+			}
+			$output = str_replace('{' . $key . '}', $val, $output);
+		}
+		return $output;
+	}
+
 }
