@@ -27,6 +27,34 @@ class UserControllerFavoritesModule extends AbstractUserControllerModule
 		return $tmpDist->getMeanScore();
 	}
 
+	private static function getTimeSpent($entries)
+	{
+		$sum = 0;
+		foreach ($entries as $entry)
+		{
+			$sum += $entry->completed_duration;
+		}
+		return $sum;
+	}
+
+	private static function evaluateDistribution(AbstractDistribution $dist)
+	{
+		$values = [];
+		$allEntries = $dist->getAllEntries();
+		$meanScore = self::getMeanScore($allEntries);
+		foreach ($dist->getGroupsKeys() as $key) {
+			$entry = [];
+			$ratingDist = RatingDistribution::fromEntries($dist->getGroupEntries($key));
+			$localMeanScore = $ratingDist->getRatedCount() * $ratingDist->getMeanScore() + $ratingDist->getUnratedCount() * $meanScore;
+			$localMeanScore /= (float)max(1, $dist->getGroupSize($key));
+			$weight = $dist->getGroupSize($key) / max(1, $dist->getLargestGroupSize());
+			$weight = 1 - pow(1 - pow($weight, 8. / 9.), 2);
+			$value = $meanScore + ($localMeanScore - $meanScore) * $weight;
+			$values[$key->id] = $value;
+		}
+		return $values;
+	}
+
 	public static function work(&$viewContext)
 	{
 		$viewContext->viewName = 'user-favorites';
@@ -39,15 +67,17 @@ class UserControllerFavoritesModule extends AbstractUserControllerModule
 		$viewContext->meta->scripts []= 'http://code.highcharts.com/highcharts.js';
 		$viewContext->meta->scripts []= '/media/js/highcharts-mg.js';
 		$viewContext->meta->scripts []= '/media/js/user/entries.js';
+		$viewContext->meta->scripts []= '/media/js/user/favorites.js';
 
 		$list = $viewContext->user->getMixedUserMedia($viewContext->media);
 		$listNonPlanned = array_filter($list, function($a) { return $a->status != UserListStatus::Planned; });
 
+		$favCreators = MediaCreatorDistribution::fromEntries($listNonPlanned);
+		$favGenres = MediaGenreDistribution::fromEntries($listNonPlanned);
 		$favYears = MediaYearDistribution::fromEntries($listNonPlanned);
 		$favDecades = MediaDecadeDistribution::fromEntries($listNonPlanned);
-		$favDecades->addEmptyDecades();
-		$favYears->finalize();
-		$favDecades->finalize();
+		$viewContext->favCreators = $favCreators;
+		$viewContext->favGenres = $favGenres;
 		$viewContext->favYears = $favYears;
 		$viewContext->favDecades = $favDecades;
 
@@ -64,5 +94,27 @@ class UserControllerFavoritesModule extends AbstractUserControllerModule
 			$subEntries = $favDecades->getGroupEntries($key);
 			$viewContext->decadeScores[$key] = self::getMeanScore($subEntries);
 		}
+
+		$viewContext->creatorScores = [];
+		$viewContext->creatorValues = [];
+		$viewContext->creatorTimeSpent = [];
+		foreach ($favCreators->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY) as $key)
+		{
+			$subEntries = $favCreators->getGroupEntries($key);
+			$viewContext->creatorScores[$key->mal_id] = self::getMeanScore($subEntries);
+			$viewContext->creatorTimeSpent[$key] = self::getTimeSpent($subEntries);
+		}
+		$viewContext->creatorValues = self::evaluateDistribution($favCreators);
+
+		$viewContext->genreScores = [];
+		$viewContext->genreValues = [];
+		$viewContext->genreTimeSpent = [];
+		foreach ($favGenres->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY) as $key)
+		{
+			$subEntries = $favGenres->getGroupEntries($key);
+			$viewContext->genreScores[$key->id] = self::getMeanScore($subEntries);
+			$viewContext->genreTimeSpent[$key->id] = self::getTimeSpent($subEntries);
+		}
+		$viewContext->genreValues = self::evaluateDistribution($favGenres);
 	}
 }

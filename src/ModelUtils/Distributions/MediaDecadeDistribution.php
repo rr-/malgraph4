@@ -1,13 +1,7 @@
 <?php
 class MediaDecadeDistribution extends AbstractDistribution
 {
-	protected function sortGroups()
-	{
-		krsort($this->groups, SORT_NUMERIC);
-		krsort($this->entries, SORT_NUMERIC);
-	}
-
-	public function addEmptyDecades()
+	protected function finalize()
 	{
 		if (!empty($this->keys))
 		{
@@ -28,6 +22,9 @@ class MediaDecadeDistribution extends AbstractDistribution
 				$this->addGroup($i);
 			}
 		}
+
+		krsort($this->groups, SORT_NUMERIC);
+		krsort($this->entries, SORT_NUMERIC);
 	}
 
 	public function getNullGroupKey()
@@ -42,7 +39,7 @@ class MediaDecadeDistribution extends AbstractDistribution
 		return $decade;
 	}
 
-	public function addEntry($entry)
+	protected function addEntry($entry)
 	{
 		$this->addToGroup(self::getPublishedDecade($entry), $entry);
 	}

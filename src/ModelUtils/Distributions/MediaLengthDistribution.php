@@ -1,7 +1,7 @@
 <?php
 class MediaLengthDistribution extends AbstractDistribution
 {
-	protected function sortGroups()
+	protected function finalize()
 	{
 		$f = function($a, $b)
 		{

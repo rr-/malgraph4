@@ -1,15 +1,9 @@
 <?php
 class MediaYearDistribution extends AbstractDistribution
 {
-	protected function sortGroups()
+	protected function finalize()
 	{
-		krsort($this->groups, SORT_NUMERIC);
-		krsort($this->entries, SORT_NUMERIC);
-	}
-
-	public function addEmptyYears()
-	{
-		if (!empty($this->keys))
+		/*if (!empty($this->keys))
 		{
 			$min = $max = reset($this->keys);
 			while (list($i,) = each($this->keys))
@@ -27,7 +21,10 @@ class MediaYearDistribution extends AbstractDistribution
 			{
 				$this->addGroup($i);
 			}
-		}
+		}*/
+
+		krsort($this->groups, SORT_NUMERIC);
+		krsort($this->entries, SORT_NUMERIC);
 	}
 
 	public function getNullGroupKey()

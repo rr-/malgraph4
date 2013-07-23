@@ -63,7 +63,7 @@
 								return [$year, $viewContext->yearScores[$year]];
 							}, $viewContext->favYears->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY)))) ?>,
 							point: { events: { click: function(e) {
-								toggleEntries($('.decades .entries-wrapper'), {'sender': 'year', 'year': this.category});
+								toggleEntries($('.decades .entries-wrapper'), {'sender': 'year', 'filter-param': this.category});
 							} } }
 						}, {
 							name: 'decades',
@@ -71,7 +71,7 @@
 								return [$decade + 4.5, $viewContext->decadeScores[$decade]]; },
 							$viewContext->favDecades->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY | AbstractDistribution::IGNORE_EMPTY_GROUPS)))) ?>,
 							point: { events: { click: function(e) {
-								toggleEntries($('.decades .entries-wrapper'), {'sender': 'decade', 'decade': Math.floor(this.category / 10) * 10});
+								toggleEntries($('.decades .entries-wrapper'), {'sender': 'decade', 'filter-param': Math.floor(this.category / 10) * 10});
 							} } }
 						} ],
 						plotOptions: { column: { pointWidth: 17 } }

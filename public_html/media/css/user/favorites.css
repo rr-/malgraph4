@@ -6,6 +6,9 @@
 	width: 100%;
 }
 
+table {
+	font-size: 90%;
+}
 table .title {
 	width: 100%;
 }

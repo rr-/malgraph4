@@ -23,6 +23,7 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 		$viewContext->viewName = 'user-entries-' . $sender;
 		$viewContext->layoutName = 'layout-ajax';
 		$viewContext->filterParam = $filterParam;
+		$list = $viewContext->user->getMixedUserMedia($viewContext->media);
 
 		$computeMeanScore = null;
 		switch ($sender)
@@ -59,6 +60,26 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 				};
 				$computeMeanScore = true;
 				break;
+			case 'genre':
+				R::begin();
+				R::exec('CREATE TEMPORARY TABLE hurr (media_id INTEGER)');
+				foreach (array_chunk(array_keys($list), Config::$maxDbBindings) as $chunk)
+				{
+					R::exec('INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)')), $chunk);
+				}
+				$data = R::getAll('SELECT * FROM mediagenre mg INNER JOIN hurr ON mg.media_id = hurr.media_id WHERE mg.mal_id = ?', [$viewContext->filterParam]);
+				R::rollback();
+				$viewContext->genreName = count($data) ? $data[0]['name'] : null;
+				$data = array_map(function($x) { return $x['media_id']; }, $data);
+				$data = array_flip($data);
+				var_dump($data);
+				$cb = function($row) use ($data)
+				{
+					return $row->status != UserListStatus::Planned
+						and isset($data[$row->media_id]);
+				};
+				$computeMeanScore = true;
+				break;
 			case 'franchises':
 				$cb = function($row)
 				{
@@ -75,7 +96,6 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 				throw new Exception('Unknown sender (' . $sender . ')');
 		}
 
-		$list = $viewContext->user->getMixedUserMedia($viewContext->media);
 		$list = array_filter($list, $cb);
 		$isPrivate = $viewContext->user->isUserMediaPrivate($viewContext->media);
 

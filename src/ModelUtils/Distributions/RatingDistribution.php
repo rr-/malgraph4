@@ -1,28 +1,25 @@
 <?php
 class RatingDistribution extends AbstractDistribution
 {
-	protected function __construct()
+	protected function finalize()
 	{
 		foreach (range(10, 0) as $x)
 		{
 			$this->addGroup($x);
 		}
+
+		krsort($this->groups, SORT_NUMERIC);
+		krsort($this->entries, SORT_NUMERIC);
+	}
+
+	protected function addEntry($entry)
+	{
+		$this->addToGroup($entry->score, $entry);
 	}
 
 	public function getNullGroupKey()
 	{
 		return 0;
-	}
-
-	public function addEntry($entry)
-	{
-		$this->addToGroup($entry->score, $entry);
-	}
-
-	protected function sortGroups()
-	{
-		krsort($this->groups, SORT_NUMERIC);
-		krsort($this->entries, SORT_NUMERIC);
 	}
 
 	public function getRatedCount()

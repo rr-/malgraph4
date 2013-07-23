@@ -6,6 +6,11 @@ abstract class AbstractDistribution
 
 	protected $groups = [];
 	protected $entries = [];
+	protected $keys = [];
+
+	/**
+	* Public constructors
+	*/
 
 	protected function __construct()
 	{
@@ -17,6 +22,8 @@ abstract class AbstractDistribution
 		foreach ($arrayDist as $key => $count)
 		{
 			$dist->groups[$key] = intval($count);
+			$this->entries[$key] = [];
+			$this->keys[$key] = $key;
 		}
 		$dist->finalize();
 		return $dist;
@@ -33,9 +40,13 @@ abstract class AbstractDistribution
 		return $dist;
 	}
 
-	public abstract function addEntry($entry);
+	protected abstract function addEntry($entry);
 
-	protected function sortEntries()
+	/**
+	* AbstractDistribution construction
+	*/
+
+	protected function finalize()
 	{
 		foreach ($this->entries as $group => $entries)
 		{
@@ -46,61 +57,65 @@ abstract class AbstractDistribution
 		}
 	}
 
-	protected function sortGroups()
+	private static function serializeKey($key)
 	{
-	}
-
-	public function finalize()
-	{
-		$this->sortEntries();
-		$this->sortGroups();
-	}
-
-
-	public function getNullGroupKey()
-	{
-		return null;
+		if (is_object($key))
+		{
+			if (!empty($key->mal_id))
+				return $key->mal_id;
+			return serialize($key);
+		}
+		return (string) $key;
 	}
 
 	protected function addGroup($key)
 	{
-		if (!isset($this->groups[$key]))
+		$safeKey = self::serializeKey($key);
+		if (!isset($this->keys[$safeKey]))
 		{
-			$this->groups[$key] = 0;
-			$this->entries[$key] = [];
+			$this->groups[$safeKey] = 0;
+			$this->entries[$safeKey] = [];
+			$this->keys[$safeKey] = $key;
 		}
 	}
 
 	public function addToGroup($key, $entry, $weight = 1)
 	{
 		$this->addGroup($key);
-		$this->groups[$key] += $weight;
-		$this->entries[$key] []= $entry;
+		$safeKey = self::serializeKey($key);
+		$this->groups[$safeKey] += $weight;
+		$this->entries[$safeKey] []= $entry;
 	}
 
 	public function getGroupEntries($key)
 	{
-		if (!isset($this->entries[$key]))
+		$safeKey = self::serializeKey($key);
+		if (!isset($this->entries[$safeKey]))
 		{
 			return null;
 		}
-		return $this->entries[$key];
+		return $this->entries[$safeKey];
 	}
 
 	public function getGroupSize($key)
 	{
-		if (!isset($this->groups[$key]))
+		$safeKey = self::serializeKey($key);
+		if (!isset($this->groups[$safeKey]))
 		{
 			return null;
 		}
-		return $this->groups[$key];
+		return $this->groups[$safeKey];
 	}
 
 
 
 	public function getGroupsKeys($flags = 0)
 	{
-		$x = array_combine(array_keys($this->groups), array_keys($this->groups));
+		$x = [];
+		foreach (array_keys($this->groups) as $k)
+		{
+			$x[$k] = $this->keys[$k];
+		}
 		if ($flags & self::IGNORE_NULL_KEY)
 		{
 			unset($x[$this->getNullGroupKey()]);
@@ -108,7 +123,9 @@ abstract class AbstractDistribution
 		if ($flags & self::IGNORE_EMPTY_GROUPS)
 		{
 			$x = array_filter($x, function($key)
-					{ return $this->getGroupSize($key) > 0; });
+			{
+				return $this->getGroupSize($key) > 0;
+			});
 		}
 		$x = array_values($x);
 		return $x;
@@ -120,7 +137,8 @@ abstract class AbstractDistribution
 		$x = [];
 		foreach ($keys as $key)
 		{
-			$x[$key] = $this->getGroupEntries($key);
+			$safeKey = self::serializeKey($key);
+			$x[$safeKey] = $this->getGroupEntries($key);
 		}
 		return $x;
 	}
@@ -137,7 +155,7 @@ abstract class AbstractDistribution
 		{
 			foreach ($entries as $entry)
 			{
-				$x[$entry->getID()] = $entry;
+				$x[$entry->id] = $entry;
 			}
 		}
 		return $x;
@@ -149,7 +167,8 @@ abstract class AbstractDistribution
 		$x = [];
 		foreach ($keys as $key)
 		{
-			$x[$key] = $this->getGroupSize($key);
+			$safeKey = self::serializeKey($key);
+			$x[$safeKey] = $this->getGroupSize($key);
 		}
 		$x = array_values($x);
 		return $x;
@@ -167,7 +186,7 @@ abstract class AbstractDistribution
 
 	public function getLargestGroupKey($flags = 0)
 	{
-		return array_search($this->getLargestGroupSize($flags), $this->groups);
+		return $this->keys[array_search($this->getLargestGroupSize($flags), $this->groups)];
 	}
 
 	public function getSmallestGroupSize($flags = 0)
@@ -178,7 +197,7 @@ abstract class AbstractDistribution
 
 	public function getSmallestGroupKey($flags = 0)
 	{
-		return array_search($this->getSmallestGroupSize($flags), $this->groups);
+		return $this->keys[array_search($this->getSmallestGroupSize($flags), $this->groups)];
 	}
 
 	public function getTotalSize($flags = 0)
