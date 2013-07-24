@@ -5,7 +5,7 @@ class UserMediaFilter
 	{
 		if (empty($filters))
 		{
-			return;
+			return $entries;
 		}
 		foreach ((array) $filters as $filter)
 		{
