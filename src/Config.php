@@ -11,7 +11,8 @@ class Config extends Singleton
 	static $baseUrl;
 	static $googleAdsEnabled;
 	static $googleAnalyticsEnabled;
-	static $banListPath;
+	static $bannedUsersListPath;
+	static $bannedGenresListPath;
 	static $errorLogPath;
 	static $achievementsDefinitionPath;
 	static $achievementsImageDir;
@@ -26,7 +27,8 @@ class Config extends Singleton
 		self::$mirrorPath = $rootDir . 'mirror';
 		self::$cachePath = $rootDir . 'cache';
 		self::$dbPath = $rootDir . 'db.sqlite';
-		self::$banListPath = $rootDir . 'banned.lst';
+		self::$bannedUsersListPath = $rootDir . 'banned-users.lst';
+		self::$bannedGenresListPath = $rootDir . 'banned-genres.lst';
 		self::$errorLogPath = $rootDir . 'errors.log';
 		self::$achievementsDefinitionPath = $rootDir . 'achievements.json';
 		self::$achievementsImageDir = join(DIRECTORY_SEPARATOR, [$rootDir, '..', 'public_html', 'media', 'img', 'ach']);

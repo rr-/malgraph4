@@ -45,7 +45,7 @@ class UserController extends AbstractController
 		$viewContext->media = $controllerContext->media;
 		$viewContext->module = $controllerContext->module;
 
-		if (BanHelper::isBanned($controllerContext->userName))
+		if (BanHelper::isUserBanned($controllerContext->userName))
 		{
 			$viewContext->userName = $controllerContext->userName;
 			$viewContext->viewName = 'error-user-blocked';

@@ -8,6 +8,16 @@ class TextHelper
 		return json_decode($contents);
 	}
 
+	public static function loadSimpleList($path)
+	{
+		$contents = file_get_contents($path);
+		$contents = preg_replace('/#(.*)$/m', '', $contents);
+		$lines = explode("\n", $contents);
+		$lines = array_map('trim', $lines);
+		$lines = array_filter($lines);
+		return $lines;
+	}
+
 	private static function getNumberText($number, $short, $fmt, $shortForm, $longForm)
 	{
 		$txt = $short ? $shortForm : $longForm;

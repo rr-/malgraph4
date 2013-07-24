@@ -1,10 +1,16 @@
 <?php
 class BanHelper
 {
-	public static function isBanned($userName)
+	public static function isUserBanned($userName)
 	{
-		$x = strtolower(file_get_contents(Config::$banListPath));
-		$lines = explode("\n", str_replace("\r", '', $x));
+		$lines = TextHelper::loadSimpleList(Config::$bannedUsersListPath);
+		$lines = array_map('strtolower', $lines);
 		return in_array(strtolower($userName), $lines);
+	}
+
+	public static function isGenreBanned($media, $genreId)
+	{
+		$lines = TextHelper::loadSimpleList(Config::$bannedGenresListPath);
+		return in_array($media . $genreId, $lines);
 	}
 }

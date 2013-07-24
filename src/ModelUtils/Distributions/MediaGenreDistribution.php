@@ -14,11 +14,6 @@ class MediaGenreDistribution extends AbstractDistribution
 		return 0;
 	}
 
-	private static function isGenreForbidden($genre)
-	{
-		return false;
-	}
-
 	public static function fromEntries(array $entries = [])
 	{
 		$dist = new self();
@@ -41,15 +36,16 @@ class MediaGenreDistribution extends AbstractDistribution
 		foreach ($data as $row)
 		{
 			$row = ReflectionHelper::arrayToClass($row);
-			if (self::isGenreForbidden($row))
+			if (!isset($map[$row->media_id]))
 			{
 				continue;
 			}
-			if (isset($map[$row->media_id]))
+			if (BanHelper::isGenreBanned($map[$row->media_id]->media, $row->mal_id))
 			{
-				$row->mal_link = 'http://myanimelist.net/' . $map[$row->media_id]->media . '.php?genre%5b%5d=' . $row->mal_id;
-				$map[$row->media_id]->genres []= $row;
+				continue;
 			}
+			$row->mal_link = 'http://myanimelist.net/' . $map[$row->media_id]->media . '.php?genre%5b%5d=' . $row->mal_id;
+			$map[$row->media_id]->genres []= $row;
 		}
 		foreach ($map as $entry)
 		{
