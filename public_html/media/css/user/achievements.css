@@ -4,10 +4,10 @@ img.achi {
 	position: relative;
 	z-index: 3;
 }
-img.achi.more-trigger {
+img.achi.entries-trigger {
 	cursor: pointer;
 }
-img.achi.more-trigger:hover {
+img.achi.entries-trigger:hover {
 	opacity: 0.85;
 }
 
@@ -55,4 +55,9 @@ h3 {
 }
 .achi-entry.hidden {
 	display: none;
+}
+
+.previous-msg {
+	text-align: center;
+	padding-bottom: 0.5em;
 }

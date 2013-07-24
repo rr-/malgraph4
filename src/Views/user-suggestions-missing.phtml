@@ -2,7 +2,7 @@
 	<h2>
 		Missing titles
 	</h2>
-	<p class="undelete">There are <strong>0</strong> hidden suggestions. <a href="#">Show them</a></p>
+	<p class="undelete-msg">There are <strong>0</strong> hidden suggestions. <a href="#" class="undelete-trigger">Show them</a></p>
 	<div class="section-body">
 		<?php if (empty($viewContext->franchises)): ?>
 			<p>Yay! No missing relations!</p>
@@ -42,7 +42,7 @@
 								<ul>
 									<?php foreach ($franchise->allEntries as $entry): ?>
 										<li id="<?php printf('mis-%s-%s%d', strtolower($viewContext->user->name), $entry->media, $entry->mal_id) ?>">
-											<a href="#" class="delete">
+											<a href="#" class="delete-trigger">
 												<i data-tooltip="Hide this suggestion" class="right icon-small-close"></i>
 											</a>
 											<a target="_blank" href="<?php echo $entry->mal_link ?>" title="<?php echo $entry->title ?>">

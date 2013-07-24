@@ -1,12 +1,12 @@
 $(function()
 {
-	$('.more-trigger').click(function(e)
+	$('.entries-trigger').click(function(e)
 	{
 		var target = $(this).parents('.achi-entry').find('.entries-wrapper');
 		toggleEntries(target, [], false);
 		e.preventDefault();
 	});
-	$('.toggle-hidden').click(function(e)
+	$('.previous-msg a').click(function(e)
 	{
 		var targets = $(this).parents('.section').find('.achi-entry.hidden');
 		targets.each(function()
@@ -24,7 +24,10 @@ $(function()
 				target.slideUp();
 			}
 		});
-		$(this).text($(this).text() == 'show' ? 'hide' : 'show');
+		$(this).fadeOut('fast', function()
+		{
+			$(this).text($(this).text() == 'Show them' ? 'Hide them' : 'Show them').fadeIn('fast');
+		});
 		e.preventDefault();
 	});
 });

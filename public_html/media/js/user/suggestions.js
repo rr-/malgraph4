@@ -41,7 +41,7 @@ $(function()
 
 
 
-	$('.missing .delete').click(function(e)
+	$('.missing .delete-trigger').click(function(e)
 	{
 		var key = $(this).parents('li').attr('id');
 		if (typeof(Storage) === 'undefined')
@@ -68,13 +68,13 @@ $(function()
 					p.parents('tr').find('td').slideUp('fast');
 				}
 			});
-			$('.missing .undelete strong').text(hidden.length);
-			$('.missing .undelete').slideDown();
+			$('.missing .undelete-msg strong').text(hidden.length);
+			$('.missing .undelete-msg').slideDown();
 		}
 		e.preventDefault();
 	});
 
-	$('.missing .undelete a').click(function(e)
+	$('.missing .undelete-trigger').click(function(e)
 	{
 		if (typeof(Storage) === 'undefined')
 		{
@@ -83,7 +83,7 @@ $(function()
 		else
 		{
 			localStorage.removeItem('hidden');
-			$('.missing .undelete').slideUp(function()
+			$('.missing .undelete-msg').slideUp(function()
 			{
 				$('.missing td:not(:visible), .missing li:not(:visible)').slideDown();
 			});
@@ -106,8 +106,8 @@ $(function()
 					p.parents('tr').hide();
 				}
 			}
-			$('.missing .undelete strong').text(hidden.length);
-			$('.missing .undelete').show();
+			$('.missing .undelete-msg strong').text(hidden.length);
+			$('.missing .undelete-msg').show();
 		}
 	}
 });

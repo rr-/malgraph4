@@ -2,6 +2,9 @@
 	<h2>
 		Achievements
 	</h2>
+	<?php if ($viewContext->hiddenCount > 0): ?>
+		<p class="previous-msg">There are <strong><?php echo $viewContext->hiddenCount ?></strong> achievements from previous levels. <a href="#">Show them</a></p>
+	<?php endif ?>
 	<div class="section-body">
 		<?php if (empty($viewContext->achievements)): ?>
 			<p>No achievements yet! Better get to <?php echo $viewContext->media == Media::Manga ? 'reading' : 'watching' ?>.</p>
@@ -9,7 +12,7 @@
 			<?php foreach ($viewContext->achievements as $ach): ?>
 				<div class="achi-entry<?php if ($ach->hidden) echo ' hidden' ?>">
 					<?php if (!empty($ach->path)): ?>
-						<img class="achi<?php if (!empty($ach->entries)): ?> more-trigger<?php endif ?>" alt="<?php echo $ach->title ?>" src="<?php echo UrlHelper::absoluteUrl('/media/img/ach/' . $ach->path) ?>">
+						<img class="achi<?php if (!empty($ach->entries)): ?> entries-trigger<?php endif ?>" alt="<?php echo $ach->title ?>" src="<?php echo UrlHelper::absoluteUrl('/media/img/ach/' . $ach->path) ?>">
 					<?php endif ?>
 					<?php if (!empty($ach->level)): ?>
 						<p class="level"><?php echo $ach->level ?></p>
@@ -70,9 +73,4 @@
 			<?php endforeach ?>
 		<?php endif ?>
 	</div>
-	<?php if ($viewContext->anyHidden): ?>
-		<div>
-			<p>You can also <a href="#" class="toggle-hidden">show</a> achievements from previously earned levels.</p>
-		</div>
-	<?php endif ?>
 </div>
