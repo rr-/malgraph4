@@ -14,6 +14,7 @@ $(function()
 			var target = $(this);
 			if (target.is(':hidden'))
 			{
+				target.find('.entries-wrapper').hide();
 				target.show();
 				target.css('height', $(this).height());
 				target.hide();
