@@ -1,10 +1,28 @@
+var resetHeight = function()
+{
+	$('body').css('min-height', '');
+}
+
+var slideUp = function(target, cb)
+{
+	if (typeof(cb) === 'undefined')
+	{
+		cb = resetHeight;
+	}
+	target.stop(true, true).slideUp('fast', cb);
+}
+
+var slideDown = function(target)
+{
+	target.show();
+	target.css('height', 'auto');
+	target.css('height', target.height());
+	target.hide();
+	target.stop(true, true).slideDown('medium', resetHeight);
+}
+
 function toggleEntries(target, data, ajax)
 {
-	var resetHeight = function()
-	{
-		$('body').css('min-height', 'auto');
-	}
-
 	if (typeof ajax == 'undefined')
 	{
 		ajax = true;
@@ -15,15 +33,11 @@ function toggleEntries(target, data, ajax)
 	{
 		if (target.is(':visible'))
 		{
-			target.stop(true, true).slideUp('fast', resetHeight);
+			slideUp(target);
 		}
 		else
 		{
-			target.show();
-			target.css('height', 'auto');
-			target.css('height', target.height());
-			target.hide();
-			target.stop(true, true).slideDown();
+			slideDown(target);
 		}
 		return;
 	}
@@ -31,27 +45,19 @@ function toggleEntries(target, data, ajax)
 	$('body').css('min-height', $('body').height() + 'px');
 
 	target.data('unique-id', uniqueId);
-	target.slideUp('fast', function()
+	slideUp(target, function()
 	{
-		var afterShow = function()
-		{
-			target.show();
-			target.css('height', 'auto');
-			target.css('height', target.height());
-			target.hide();
-			target.stop(true, true).slideDown('medium', resetHeight);
-		}
 		if (ajax)
 		{
 			$.get(url, data, function(response)
 			{
 				target.html(response);
-				afterShow();
+				slideDown(target);
 			});
 		}
 		else
 		{
-			afterShow();
+			slideDown(target);
 		}
 	});
 }
@@ -65,7 +71,7 @@ $(function()
 		{
 			target = $(this).parents('.entries-wrapper');
 		}
-		target.stop(true, true).slideUp('fast');
+		slideUp(target);
 		event.preventDefault();
 	});
 });
