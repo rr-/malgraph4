@@ -17,7 +17,10 @@ $(function()
 				target.show();
 				target.css('height', $(this).height());
 				target.hide();
-				target.slideDown();
+				target.slideDown(function()
+				{
+					target.css('height', '');
+				});
 			}
 			else
 			{
