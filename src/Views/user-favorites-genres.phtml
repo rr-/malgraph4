@@ -42,13 +42,18 @@
 							<td class="time"><?php printf('%.02f', $viewContext->genreTimeSpent[$genre->id] / 60.0) ?>h</td>
 						</tr>
 					<?php endforeach ?>
+					<tr class="entries-wrapper-row">
+						<td colspan="6">
+							<div class="entries-wrapper">
+							</div>
+						</td>
+					</tr>
+					</tbody>
 				</table>
 
 				<div class="clear"></div>
 			</div>
 
-			<div class="entries-wrapper">
-			</div>
 		<?php endif ?>
 	</div>
 </div>

@@ -3,7 +3,15 @@ $(function()
 	$('.genres .entries-trigger').click(function(e)
 	{
 		e.preventDefault();
-		toggleEntries($('.genres .entries-wrapper'), {'sender': 'genre', 'filter-param': $(this).attr('data-id')});
+		var target = $(this);
+		toggleEntries($('.genres .entries-wrapper'),
+			{'sender': 'genre', 'filter-param': target.attr('data-id')},
+			true,
+			function()
+			{
+				$('.entries-wrapper-row').insertAfter(target.parents('tr'));
+			}
+		);
 	});
 
 	$.tablesorter.addWidget(
@@ -13,7 +21,7 @@ $(function()
 		{
 			for (var i = 0; i < table.tBodies[0].rows.length; i ++)
 			{
-				$('tbody tr:eq(' + i + ') td:first', table).text(i + 1);
+				$('tbody tr:eq(' + i + ') td.ord', table).text(i + 1);
 			}
 		}
 	});

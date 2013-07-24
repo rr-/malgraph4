@@ -21,9 +21,13 @@ var slideDown = function(target)
 	target.stop(true, true).slideDown('medium', resetHeight);
 }
 
-function toggleEntries(target, data, ajax)
+function toggleEntries(target, data, ajax, cb)
 {
-	if (typeof ajax == 'undefined')
+	if (typeof(cb) === 'undefined')
+	{
+		cb = function() { }
+	}
+	if (typeof(ajax) === 'undefined')
 	{
 		ajax = true;
 	}
@@ -37,6 +41,7 @@ function toggleEntries(target, data, ajax)
 		}
 		else
 		{
+			cb();
 			slideDown(target);
 		}
 		return;
@@ -52,11 +57,13 @@ function toggleEntries(target, data, ajax)
 			$.get(url, data, function(response)
 			{
 				target.html(response);
+				cb();
 				slideDown(target);
 			});
 		}
 		else
 		{
+			cb();
 			slideDown(target);
 		}
 	});

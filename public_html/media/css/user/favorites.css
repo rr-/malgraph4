@@ -27,3 +27,7 @@ span.info {
 	font-size: 7pt;
 	color: gray;
 }
+
+tr.entries-wrapper-row td {
+	background: none !important;
+}
