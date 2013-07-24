@@ -83,11 +83,11 @@
 <script type="text/javascript">
 	/* add some attributes to cells - we do it here to save output html size */
 	<?php $icons = [
-		UserListStatus::Planned => [4, 'schedule'],
-		UserListStatus::Dropped => [5, 'cross'],
-		UserListStatus::Completing => [1, 'eye'],
-		UserListStatus::OnHold => [3, 'hourglass'],
-		UserListStatus::Finished => [2, 'tick']];
+		UserListStatus::Planned => [4, 'status-planned'],
+		UserListStatus::Dropped => [5, 'status-dropped'],
+		UserListStatus::Completing => [1, 'status-completing'],
+		UserListStatus::OnHold => [3, 'status-onhold'],
+		UserListStatus::Finished => [2, 'status-finished']];
 	?>
 	<?php foreach ($icons as $status => $info): ?>
 		$('.status-<?php echo $status ?>').attr({

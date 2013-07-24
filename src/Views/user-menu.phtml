@@ -8,7 +8,7 @@
 			<?php endif ?>
 				<a class="waitable" href="<?php echo UserControllerProfileModule::url($viewContext->user->name) ?>">
 					<?php echo UserControllerProfileModule::getText($viewContext, null) ?>
-					<i class="icon-profile"></i>
+					<i class="icon-menu-profile"></i>
 				</a>
 			</li>
 		</ul>
@@ -27,7 +27,7 @@
 						<?php endif ?>
 							<a class="waitable" href="<?php echo $module::url($viewContext->user->name, $media) ?>">
 								<?php echo $module::getText($viewContext, $media) ?>
-								<i class="icon-<?php $x = explode(' ', strtolower($module::getText($viewContext, $media))); echo end($x) ?>"></i>
+								<i class="icon-menu-<?php $x = explode(' ', strtolower($module::getText($viewContext, $media))); echo end($x) ?>"></i>
 							</a>
 						</li>
 					<?php endif ?>

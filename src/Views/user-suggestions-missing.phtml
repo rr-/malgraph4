@@ -24,16 +24,12 @@
 									<?php foreach ($franchise->ownEntries as $entry): ?>
 										<li>
 											<a target="_blank" href="<?php echo $entry->mal_link ?>" title="<?php echo $entry->title ?>">
-												<?php if ($entry->publishing_status == MediaStatus::NotYetPublished): ?>
-													<?php if ($entry->status == UserListStatus::Planned): ?>
-														<i class="icon-cross-schedule"></i>
-													<?php else: ?>
-														<i class="icon-cross"></i>
-													<?php endif ?>
-												<?php elseif ($entry->status == UserListStatus::Planned): ?>
-													<i class="icon-schedule"></i>
+												<?php if ($entry->status == UserListStatus::Planned): ?>
+													<i class="left icon-status-planned"></i>
+												<?php elseif ($entry->publishing_status == MediaStatus::NotYetPublished): ?>
+													<i class="left icon-not-yet-aired"></i>
 												<?php else: ?>
-													<i class="icon-empty"></i>
+													<i class="left icon-empty"></i>
 												<?php endif ?>
 												<?php echo $entry->title ?>
 											</a>
@@ -44,12 +40,15 @@
 							<td class="proposed">
 								<ul>
 									<?php foreach ($franchise->allEntries as $entry): ?>
-										<li>
+										<li id="mis-<?php echo $entry->media . $entry->mal_id ?>">
+											<a href="#" class="delete">
+												<i data-tooltip="Hide this suggestion" class="right icon-small-close"></i>
+											</a>
 											<a target="_blank" href="<?php echo $entry->mal_link ?>" title="<?php echo $entry->title ?>">
 												<?php if ($entry->publishing_status == MediaStatus::NotYetPublished): ?>
-													<i class="icon-cross"></i>
+													<i class="left icon-not-yet-aired"></i>
 												<?php else: ?>
-													<i class="icon-empty"></i>
+													<i class="left icon-empty"></i>
 												<?php endif ?>
 												<?php echo $entry->title ?>
 											</a>
