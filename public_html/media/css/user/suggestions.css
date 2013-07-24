@@ -1,3 +1,7 @@
+.missing p {
+	text-align: center;
+	display: none;
+}
 .missing table {
 	font-size: 90%;
 	table-layout: fixed;

@@ -2,6 +2,7 @@
 	<h2>
 		Missing titles
 	</h2>
+	<p class="undelete">There are <strong>0</strong> hidden suggestions. <a href="#">Show them</a></p>
 	<div class="section-body">
 		<?php if (empty($viewContext->franchises)): ?>
 			<p>Yay! No missing relations!</p>
@@ -40,7 +41,7 @@
 							<td class="proposed">
 								<ul>
 									<?php foreach ($franchise->allEntries as $entry): ?>
-										<li id="mis-<?php echo $entry->media . $entry->mal_id ?>">
+										<li id="mis-<?php echo base64_encode($viewContext->user->name) . $entry->media . $entry->mal_id ?>">
 											<a href="#" class="delete">
 												<i data-tooltip="Hide this suggestion" class="right icon-small-close"></i>
 											</a>
