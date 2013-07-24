@@ -48,10 +48,6 @@ abstract class AbstractDistribution
 
 	protected function finalize()
 	{
-		foreach ($this->entries as $group => $entries)
-		{
-			DataSorter::sort($entries, DataSorter::Title);
-		}
 	}
 
 	private static function serializeKey($key)

@@ -1,14 +1,6 @@
 <?php
 class MediaGenreDistribution extends AbstractDistribution
 {
-	protected function finalize()
-	{
-		foreach ($this->entries as $group => $entries)
-		{
-			DataSorter::sort($entries, DataSorter::Score);
-		}
-	}
-
 	public function getNullGroupKey()
 	{
 		return 0;
@@ -51,6 +43,7 @@ class MediaGenreDistribution extends AbstractDistribution
 		{
 			$dist->addEntry($entry);
 		}
+		$dist->finalize();
 		return $dist;
 	}
 
