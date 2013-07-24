@@ -26,9 +26,9 @@
 										<li>
 											<a target="_blank" href="<?php echo $entry->mal_link ?>" title="<?php echo $entry->title ?>">
 												<?php if ($entry->status == UserListStatus::Planned): ?>
-													<i class="left icon-status-planned"></i>
+													<i data-tooltip="Planned" class="left icon-status-planned"></i>
 												<?php elseif ($entry->publishing_status == MediaStatus::NotYetPublished): ?>
-													<i class="left icon-not-yet-aired"></i>
+													<i data-tooltip="Not yet <?php echo $viewContext->media == Media::Anime ? 'aired' : 'published' ?>" class="left icon-not-yet-aired"></i>
 												<?php else: ?>
 													<i class="left icon-empty"></i>
 												<?php endif ?>
@@ -47,7 +47,7 @@
 											</a>
 											<a target="_blank" href="<?php echo $entry->mal_link ?>" title="<?php echo $entry->title ?>">
 												<?php if ($entry->publishing_status == MediaStatus::NotYetPublished): ?>
-													<i class="left icon-not-yet-aired"></i>
+													<i data-tooltip="Not yet <?php echo $viewContext->media == Media::Anime ? 'aired' : 'published' ?>" class="left icon-not-yet-aired"></i>
 												<?php else: ?>
 													<i class="left icon-empty"></i>
 												<?php endif ?>
