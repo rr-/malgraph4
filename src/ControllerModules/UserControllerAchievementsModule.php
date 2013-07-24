@@ -64,7 +64,9 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 			'genre-titles' => function($groupData) use ($viewContext, $listFinished)
 			{
 				$entriesOwned1 = UserMediaFilter::doFilter($listFinished, UserMediaFilter::genre($groupData->requirement->genre, $listFinished));
-				$entriesOwned2 = UserMediaFilter::doFilter($listFinished, UserMediaFilter::givenMedia($groupData->requirement->titles));
+				$entriesOwned2 = !empty($groupData->requirement->titles)
+					? UserMediaFilter::doFilter($listFinished, UserMediaFilter::givenMedia($groupData->requirement->titles))
+					: [];
 				$entriesOwned = array_merge($entriesOwned1, $entriesOwned2);
 				#array unique w/ callback
 				$entriesOwned = array_intersect_key($entriesOwned, array_unique(array_map(function($e) { return $e->media . $e->mal_id; }, $entriesOwned)));
@@ -88,7 +90,7 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 		];
 
 		$achievements = [];
-		$anyHidden = 0;
+		$hiddenCount = 0;
 		foreach ($achList->{Media::toString($viewContext->media)} as $group => $groupData)
 		{
 			//get subject and entries basing on requirement type
@@ -130,7 +132,7 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 				{
 					$ach->earned = true;
 					$ach->hidden = true;
-					$anyHidden = true;
+					$hiddenCount ++;
 				}
 				else
 				{
@@ -166,6 +168,6 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 		}
 		$viewContext->achievements = $achievements;
 		$viewContext->private = $viewContext->user->isUserMediaPrivate($viewContext->media);
-		$viewContext->anyHidden = $anyHidden;
+		$viewContext->hiddenCount = $hiddenCount;
 	}
 }
