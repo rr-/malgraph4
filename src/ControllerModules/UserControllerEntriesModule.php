@@ -93,7 +93,7 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 					$franchise->meanScore = $dist->getMeanScore();
 				}
 				unset($franchise);
-				DataSorter::sort($entries, DataSorter::MeanScore);
+				DataSorter::sort($franchises, DataSorter::MeanScore);
 				$viewContext->franchises = array_filter($franchises, function($franchise) { return count($franchise->ownEntries) > 1; });
 			}
 			elseif ($sender == 'mismatches')
