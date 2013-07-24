@@ -19,13 +19,13 @@ class DataSorter
 			case self::Score:
 				$cb = function($a, $b)
 				{
-					return $a->score > $b->score ? 1 : -1;
+					return $a->score < $b->score ? 1 : -1;
 				};
 				break;
 			case self::MeanScore:
 				$cb = function($a, $b)
 				{
-					return $a->meanScore > $b->meanScore ? 1 : -1;
+					return $a->meanScore < $b->meanScore ? 1 : -1;
 				};
 				break;
 			case self::MediaMalId:
