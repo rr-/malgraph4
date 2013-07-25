@@ -20,34 +20,34 @@
 						</tr>
 					</thead>
 					<tbody>
-					<?php $i = 1 ?>
-					<?php foreach ($viewContext->favGenres->getGroupsKeys() as $genre): ?>
-						<?php $entries = $viewContext->favGenres->getGroupEntries($genre) ?>
-						<tr>
-							<td class="ord"><?php echo $i ++ ?></td>
-							<td class="title">
-								<a class="entries-trigger" data-id="<?php echo $genre->mal_id ?>" href="#">
-									<?php echo htmlspecialchars(ucfirst($genre->name)) ?>
-								</a>
+						<?php $i = 1 ?>
+						<?php foreach ($viewContext->favGenres->getGroupsKeys() as $genre): ?>
+							<?php $entries = $viewContext->favGenres->getGroupEntries($genre) ?>
+							<tr>
+								<td class="ord"><?php echo $i ++ ?></td>
+								<td class="title">
+									<a class="entries-trigger" data-sender="genre" data-id="<?php echo $genre->mal_id ?>" href="#">
+										<?php echo htmlspecialchars(ucfirst($genre->name)) ?>
+									</a>
+								</td>
+								<td class="count"><?php printf('%d', count($entries)) ?></td>
+								<td class="mean">
+									<?php if ($viewContext->genreScores[$genre->id] == 0): ?>
+										-
+									<?php else: ?>
+										<?php printf('%.02f', $viewContext->genreScores[$genre->id]) ?>
+									<?php endif ?>
+								</td>
+								<td class="value"><?php printf('%.02f', $viewContext->genreValues[$genre->id]) ?></td>
+								<td class="time"><?php printf('%.02f', $viewContext->genreTimeSpent[$genre->id] / 60.0) ?>h</td>
+							</tr>
+						<?php endforeach ?>
+						<tr class="entries-wrapper-row">
+							<td colspan="6">
+								<div class="entries-wrapper">
+								</div>
 							</td>
-							<td class="count"><?php printf('%d', count($entries)) ?></td>
-							<td class="mean">
-								<?php if ($viewContext->genreScores[$genre->id] == 0): ?>
-									-
-								<?php else: ?>
-									<?php printf('%.02f', $viewContext->genreScores[$genre->id]) ?>
-								<?php endif ?>
-							</td>
-							<td class="value"><?php printf('%.02f', $viewContext->genreValues[$genre->id]) ?></td>
-							<td class="time"><?php printf('%.02f', $viewContext->genreTimeSpent[$genre->id] / 60.0) ?>h</td>
 						</tr>
-					<?php endforeach ?>
-					<tr class="entries-wrapper-row">
-						<td colspan="6">
-							<div class="entries-wrapper">
-							</div>
-						</td>
-					</tr>
 					</tbody>
 				</table>
 

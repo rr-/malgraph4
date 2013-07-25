@@ -101,8 +101,8 @@ class UserControllerFavoritesModule extends AbstractUserControllerModule
 		foreach ($favCreators->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY) as $key)
 		{
 			$subEntries = $favCreators->getGroupEntries($key);
-			$viewContext->creatorScores[$key->mal_id] = self::getMeanScore($subEntries);
-			$viewContext->creatorTimeSpent[$key] = self::getTimeSpent($subEntries);
+			$viewContext->creatorScores[$key->id] = self::getMeanScore($subEntries);
+			$viewContext->creatorTimeSpent[$key->id] = self::getTimeSpent($subEntries);
 		}
 		$viewContext->creatorValues = self::evaluateDistribution($favCreators);
 

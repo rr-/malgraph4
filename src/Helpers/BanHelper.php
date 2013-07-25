@@ -13,4 +13,10 @@ class BanHelper
 		$lines = TextHelper::loadSimpleList(Config::$bannedGenresListPath);
 		return in_array($media . $genreId, $lines);
 	}
+
+	public static function isCreatorBanned($media, $creatorId)
+	{
+		$lines = TextHelper::loadSimpleList(Config::$bannedCreatorsListPath);
+		return in_array($media . $creatorId, $lines);
+	}
 }

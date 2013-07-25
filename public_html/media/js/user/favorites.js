@@ -1,17 +1,21 @@
 $(function()
 {
-	$('.genres .entries-trigger').click(function(e)
+	$('.genres, .creators').each(function()
 	{
-		e.preventDefault();
-		var target = $(this);
-		toggleEntries($('.genres .entries-wrapper'),
-			{'sender': 'genre', 'filter-param': target.attr('data-id')},
-			true,
-			function()
-			{
-				$('.entries-wrapper-row').insertAfter(target.parents('tr'));
-			}
-		);
+		var section = $(this);
+		section.find('.entries-trigger').click(function(e)
+		{
+			e.preventDefault();
+			var target = $(this);
+			toggleEntries(section.find('.entries-wrapper'),
+				{'sender': target.attr('data-sender'), 'filter-param': target.attr('data-id')},
+				true,
+				function()
+				{
+					section.find('.entries-wrapper-row').insertAfter(target.parents('tr'));
+				}
+			);
+		});
 	});
 
 	$.tablesorter.addWidget(

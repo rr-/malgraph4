@@ -13,6 +13,7 @@ class Config extends Singleton
 	static $googleAnalyticsEnabled;
 	static $bannedUsersListPath;
 	static $bannedGenresListPath;
+	static $bannedCreatorsListPath;
 	static $errorLogPath;
 	static $achievementsDefinitionPath;
 	static $achievementsImageDir;
@@ -29,6 +30,7 @@ class Config extends Singleton
 		self::$dbPath = $rootDir . 'db.sqlite';
 		self::$bannedUsersListPath = $rootDir . 'banned-users.lst';
 		self::$bannedGenresListPath = $rootDir . 'banned-genres.lst';
+		self::$bannedCreatorsListPath = $rootDir . 'banned-creators.lst';
 		self::$errorLogPath = $rootDir . 'errors.log';
 		self::$achievementsDefinitionPath = $rootDir . 'achievements.json';
 		self::$achievementsImageDir = join(DIRECTORY_SEPARATOR, [$rootDir, '..', 'public_html', 'media', 'img', 'ach']);

@@ -76,6 +76,42 @@ class UserMediaFilter
 		};
 	}
 
+	public static function creator($genreId, $list)
+	{
+		if (empty($list))
+		{
+			return [];
+		}
+		$media = reset($list)->media;
+		R::begin();
+		R::exec('CREATE TEMPORARY TABLE hurr (media_id INTEGER)');
+		foreach (array_chunk(array_map(function($entry) { return $entry->media_id; }, $list), Config::$maxDbBindings) as $chunk)
+		{
+			R::exec('INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)')), $chunk);
+		}
+		switch ($media)
+		{
+			case Media::Anime:
+				$table = 'animeproducer';
+				break;
+			case Media::Manga:
+				$table = 'mangaauthor';
+				break;
+			default:
+				throw new BadMediaException();
+		}
+		$data = R::getAll('SELECT * FROM ' . $table . ' mc INNER JOIN hurr ON mc.media_id = hurr.media_id WHERE mc.mal_id = ?', [$genreId]);
+		R::rollback();
+
+		$data = array_map(function($x) { return $x['media_id']; }, $data);
+		$data = array_flip($data);
+		return function($row) use ($data)
+		{
+			return isset($data[$row->media_id]);
+		};
+	}
+
+
 	public static function genre($genreId, $list)
 	{
 		R::begin();

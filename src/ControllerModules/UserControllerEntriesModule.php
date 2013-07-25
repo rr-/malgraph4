@@ -56,6 +56,25 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 				);
 				$computeMeanScore = true;
 				break;
+			case 'creator':
+				$filter = UserMediaFilter::combine(
+					UserMediaFilter::nonPlanned(),
+					UserMediaFilter::creator($filterParam, $list)
+				);
+				switch ($viewContext->media)
+				{
+					case Media::Anime:
+						$table = 'animeproducer';
+						break;
+					case Media::Manga:
+						$table = 'mangaauthor';
+						break;
+					default:
+						throw new BadMediaException();
+				}
+				$viewContext->genreName = R::getAll('SELECT * FROM ' . $table . ' WHERE mal_id = ?', [$filterParam])[0]['name'];
+				$computeMeanScore = true;
+				break;
 			case 'genre':
 				$filter = UserMediaFilter::combine(
 					UserMediaFilter::nonPlanned(),

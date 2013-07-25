@@ -26,51 +26,40 @@
 						</tr>
 					</thead>
 					<tbody>
-					<?php $i = 1 ?>
-					<?php foreach ($viewContext->favCreators->getGroupsKeys() as $creator): ?>
-						<?php $entries = $viewContext->favCreators->getGroupEntries($creator) ?>
-						<tr>
-							<td class="ord"><?php echo $i ++ ?></td>
-							<td class="title">
-								<a target="_blank"
-									<?php if ($viewContext->media == Media::Manga): ?>
-										href="http://myanimelist.net/people/<?php echo $creator->getID() ?>/"
+						<?php $i = 1 ?>
+						<?php foreach ($viewContext->favCreators->getGroupsKeys() as $creator): ?>
+							<?php $entries = $viewContext->favCreators->getGroupEntries($creator) ?>
+							<tr>
+								<td class="ord"><?php echo $i ++ ?></td>
+								<td class="title">
+									<a class="entries-trigger" data-sender="creator" data-id="<?php echo $creator->mal_id ?>" href="#">
+										<?php echo htmlspecialchars($creator->name) ?>
+									</a>
+								</td>
+								<td class="count"><?php printf('%d', count($entries)) ?></td>
+								<td class="mean">
+									<?php if ($viewContext->creatorScores[$creator->id] == 0): ?>
+										-
 									<?php else: ?>
-										href="http://myanimelist.net/anime.php?p=<?php echo $creator->getID() ?>"
+										<?php printf('%.02f', $viewContext->creatorScores[$creator->id]) ?>
 									<?php endif ?>
-								>
-									<i class="icon-pop-out"></i>
-								</a>
-								&nbsp;
-								<a class="more-trigger" data-id="<?php echo $creator->getID() ?>" href="#">
-									<?php echo htmlspecialchars($creator->getName()) ?>
-								</a>
+								</td>
+								<td class="value"><?php printf('%.02f', $viewContext->creatorValues[$creator->id]) ?></td>
+								<td class="time"><?php printf('%.02f', $viewContext->creatorTimeSpent[$creator->id] / 60.0) ?>h</td>
+							</tr>
+						<?php endforeach ?>
+						<tr class="entries-wrapper-row">
+							<td colspan="6">
+								<div class="entries-wrapper">
+								</div>
 							</td>
-							<td class="count"><?php printf('%d', count($entries)) ?></td>
-							<td class="mean">
-								<?php if ($viewContext->creatorScores[$creator->getID()] == 0): ?>
-									-
-								<?php else: ?>
-									<?php printf('%.02f', $viewContext->creatorScores[$creator->getID()]) ?>
-								<?php endif ?>
-							</td>
-							<td class="value"><?php printf('%.02f', $viewContext->creatorValues[(string) $creator]) ?></td>
-							<td class="time"><?php printf('%.02f', $viewContext->creatorTimeSpent[$creator->getID()] / 60.0) ?>h</td>
 						</tr>
-					<?php endforeach ?>
+					</tbody>
 				</table>
+
 				<div class="clear"></div>
 			</div>
 
-			<div class="entries-wrapper">
-			</div>
 		<?php endif ?>
 	</div>
 </div>
-
-<script type="text/javascript">
-	$('.creators .more-trigger').click(function(e) {
-		e.preventDefault();
-		toggleEntries($('.creators .entries-wrapper'), {'sender': 'creator', 'creator': $(this).attr('data-id')});
-	});
-</script>
