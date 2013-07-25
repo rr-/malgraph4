@@ -68,14 +68,18 @@ $(function()
 					doExpand = true;
 				}
 			});
+			if (tr.find('.proposed li:not(.hidden)').length == 0)
+			{
+				doExpand = false;
+			}
 
 			if (doExpand)
 			{
-				tr.next().find('td').show();
+				tr.next().find('td').slideDown();
 			}
 			else
 			{
-				tr.next().find('td').hide();
+				tr.next().find('td').slideUp();
 			}
 		});
 		$('.missing tbody.tainted').removeClass('tainted');
