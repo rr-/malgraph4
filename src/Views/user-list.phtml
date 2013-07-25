@@ -43,9 +43,9 @@
 						<tr>
 							<td class="status status-<?php echo $mixedUserMedia->status ?>"></td>
 
-							<td class="title" data-sorter="<?php echo $mixedUserMedia->title ?>">
+							<td class="title" data-sorter="<?php echo htmlspecialchars($mixedUserMedia->title) ?>">
 								<a target="_blank" href="<?php echo $mixedUserMedia->mal_link ?>">
-									<?php echo $mixedUserMedia->title ?>
+									<?php echo htmlspecialchars($mixedUserMedia->title) ?>
 								</a>
 							</td>
 

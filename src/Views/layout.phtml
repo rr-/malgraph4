@@ -28,7 +28,7 @@
 	<?php endif ?>
 	<?php if (isset($viewContext->meta->scripts)): ?>
 		<?php foreach ($viewContext->meta->scripts as $script): ?>
-			<script language="javascript" type="text/javascript" src="<?php echo UrlHelper::absoluteUrl($script) ?>">
+			<script type="text/javascript" src="<?php echo UrlHelper::absoluteUrl($script) ?>">
 			</script>
 		<?php endforeach ?>
 	<?php endif ?>

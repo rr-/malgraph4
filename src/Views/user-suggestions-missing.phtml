@@ -24,7 +24,7 @@
 								<ul>
 									<?php foreach ($franchise->ownEntries as $entry): ?>
 										<li>
-											<a target="_blank" href="<?php echo $entry->mal_link ?>" title="<?php echo $entry->title ?>">
+											<a target="_blank" href="<?php echo $entry->mal_link ?>" title="<?php echo htmlspecialchars($entry->title) ?>">
 												<?php if ($entry->status == UserListStatus::Planned): ?>
 													<i data-tooltip="Planned" class="left icon-status-planned"></i>
 												<?php elseif ($entry->publishing_status == MediaStatus::NotYetPublished): ?>
@@ -32,7 +32,7 @@
 												<?php else: ?>
 													<i class="left icon-empty"></i>
 												<?php endif ?>
-												<?php echo $entry->title ?>
+												<?php echo htmlspecialchars($entry->title) ?>
 											</a>
 										</li>
 									<?php endforeach ?>
@@ -45,13 +45,13 @@
 											<a href="#" class="delete-trigger">
 												<i data-tooltip="Hide this suggestion" class="right icon-small-close"></i>
 											</a>
-											<a target="_blank" href="<?php echo $entry->mal_link ?>" title="<?php echo $entry->title ?>">
+											<a target="_blank" href="<?php echo $entry->mal_link ?>" title="<?php echo htmlspecialchars($entry->title) ?>">
 												<?php if ($entry->publishing_status == MediaStatus::NotYetPublished): ?>
 													<i data-tooltip="Not yet <?php echo $viewContext->media == Media::Anime ? 'aired' : 'published' ?>" class="left icon-not-yet-aired"></i>
 												<?php else: ?>
 													<i class="left icon-empty"></i>
 												<?php endif ?>
-												<?php echo $entry->title ?>
+												<?php echo htmlspecialchars($entry->title) ?>
 											</a>
 										</li>
 									<?php endforeach ?>

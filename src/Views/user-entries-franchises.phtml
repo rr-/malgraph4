@@ -17,7 +17,7 @@
 			<li>
 				<?php foreach ($franchise->ownEntries as $entry): ?>
 					<a target="_blank" href="<?php echo $entry->mal_link ?>">
-						<?php echo $entry->title ?>
+						<?php echo htmlspecialchars($entry->title) ?>
 					</a>
 					<span class="details">&nbsp;
 						(<?php if ($viewContext->media == Media::Anime): ?>

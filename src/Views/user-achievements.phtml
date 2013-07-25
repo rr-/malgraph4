@@ -59,7 +59,7 @@
 									<?php foreach ($ach->entries as $e): ?>
 										<li>
 											<a target="_blank" href="<?php echo $e->mal_link ?>">
-												<?php echo $e->title ?>
+												<?php echo htmlspecialchars($e->title) ?>
 											</a>
 										</li>
 									<?php endforeach ?>
