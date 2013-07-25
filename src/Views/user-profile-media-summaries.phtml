@@ -11,10 +11,10 @@
 			</p>
 
 			<div class="bar">
-				<div class="filled" style="width: <?php echo $viewContext->finished[$media] * 100.0 / Model_Media::getCount($media) ?>%"></div>
+				<div class="filled" style="width: <?php echo $viewContext->finished[$media] * 100.0 / max(1, Model_Media::getCount($media)) ?>%"></div>
 			</div>
 
-			<?php printf('%.02f', $viewContext->finished[$media] * 100.0 / Model_Media::getCount($media)) ?>% of all <?php echo Media::toString($media) ?>
+			<?php printf('%.02f', $viewContext->finished[$media] * 100.0 / max(1, Model_Media::getCount($media))) ?>% of all <?php echo Media::toString($media) ?>
 		</div>
 
 		<div class="right mini-section">
