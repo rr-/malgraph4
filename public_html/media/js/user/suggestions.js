@@ -29,38 +29,48 @@ $(function()
 		{
 			$(this).remove();
 		});
-		$('.missing tbody.tainted td').each(function()
+		$('.missing tbody.tainted tr').each(function()
 		{
-			var td = $(this);
-			var tr = td.parents('tr');
-			var ul1 = td.find('ul:first');
-			var ul2 = td.find('ul.expand');
-
-			var all = td.find('li:not(.hidden)').length < num1;
-			var index = 0;
-			td.find('li').each(function()
+			var tr = $(this);
+			var doExpand = false;
+			var all = Math.max.apply(Math, tr.find('td').map(function()
 			{
-				var li = $(this);
-				if (index < num2 || all)
+				return $(this).find('li:not(.hidden)').length;
+			})) < num1;
+			$(this).find('td').each(function()
+			{
+				var td = $(this);
+				var ul1 = td.find('ul:first');
+				var ul2 = td.find('ul.expand');
+
+				var index = 0;
+				td.find('li').each(function()
 				{
-					var justAppeared = li.parents('ul').hasClass('expand') && li.is(':not(:visible)');
-					ul1.append(li);
-					if (justAppeared)
-						li.hide().slideDown();
-				}
-				else
+					var li = $(this);
+					if (index < num2 || all)
+					{
+						var justAppeared = li.parents('ul').hasClass('expand') && li.is(':not(:visible)');
+						ul1.append(li);
+						if (justAppeared)
+							li.hide().slideDown();
+					}
+					else
+					{
+						ul2.append(li);
+					}
+					if (!li.hasClass('hidden'))
+					{
+						index ++;
+					}
+				});
+				if (ul2.find('li').length > 0)
 				{
-					ul2.append(li);
-				}
-				if (!li.hasClass('hidden'))
-				{
-					index ++;
+					doExpand = true;
 				}
 			});
 
-			if (ul2.find('li').length > 0)
+			if (doExpand)
 			{
-				console.log(ul2.find('li').length);
 				tr.next().find('td').show();
 			}
 			else
