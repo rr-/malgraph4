@@ -1,45 +1,108 @@
 $(function()
 {
+	var num1 = 8;
+	var num2 = 5;
+
 	$('.missing tbody tr').each(function()
 	{
-		var num1 = 8;
-		var num2 = 5;
-
 		var tr = $(this);
 		var ul = tr.find('ul');
-		var doCollapse = Math.max.apply(Math, tr.find('ul').map(function()
+		ul.each(function()
 		{
-			return $(this).find('li').length;
-		})) > num1;
-
-		if (doCollapse)
+			$('<ul class="expand"/>').hide().insertAfter($(this));
+		});
+		var newTr = $('<tr><td colspan="2"/></tr>');
+		var link = $('<a class="more" href="#">(more)</a>').click(function(e)
 		{
-			ul.each(function()
+			e.preventDefault();
+			tr.find('.expand').slideDown(function()
 			{
-				var ul2 = $('<ul class="expand"/>');
-				$(this).find('li').each(function(i)
-				{
-					if (i > num2)
-					{
-						ul2.append($(this));
-					}
-				});
-				ul2.insertAfter($(this)).hide();
+				link.slideUp();
 			});
-			var newTr = $('<tr><td colspan="2"/></tr>');
-			var link = $('<a class="more" href="#">(more)</a>').click(function(e)
-			{
-				e.preventDefault();
-				tr.find('.expand').slideDown(function()
-				{
-					link.slideUp();
-				});
-			});
-			newTr.insertAfter(tr).find('td').append(link);
-		}
+		});
+		newTr.insertAfter(tr).find('td').append(link).hide();
 	});
 
+	collapseUls = function()
+	{
+		$('.tooltip').fadeOut(function()
+		{
+			$(this).remove();
+		});
+		$('.missing tbody.tainted td').each(function()
+		{
+			var td = $(this);
+			var tr = td.parents('tr');
+			var ul1 = td.find('ul:first');
+			var ul2 = td.find('ul.expand');
 
+			var all = td.find('li:not(.hidden)').length < num1;
+			var index = 0;
+			td.find('li').each(function()
+			{
+				var li = $(this);
+				if (index < num2 || all)
+				{
+					var justAppeared = li.parents('ul').hasClass('expand') && li.is(':not(:visible)');
+					ul1.append(li);
+					if (justAppeared)
+						li.hide().slideDown();
+				}
+				else
+				{
+					ul2.append(li);
+				}
+				if (!li.hasClass('hidden'))
+				{
+					index ++;
+				}
+			});
+
+			if (ul2.find('li').length > 0)
+			{
+				console.log(ul2.find('li').length);
+				tr.next().find('td').show();
+			}
+			else
+			{
+				tr.next().find('td').hide();
+			}
+		});
+		$('.missing tbody.tainted').removeClass('tainted');
+	}
+	$('.missing tbody').addClass('tainted');
+	collapseUls();
+
+
+
+	var hide = function(target, fast)
+	{
+		var prevState = $.fx.off;
+		if (fast)
+		{
+			$.fx.off = true;
+		}
+		target.addClass('hidden');
+		target.slideUp(function()
+		{
+			var tr = target.parents('tr');
+			var td = target.parents('td');
+			var ul = target.parents('ul');
+			target.hide();
+			if (ul.find('li:not(.hidden)').length == 0)
+			{
+				tr.find('td').slideUp('fast');
+			}
+			tr.parents('tbody').addClass('tainted');
+			collapseUls();
+		});
+		hidden = typeof(localStorage.hidden) !== 'undefined'
+			? JSON.parse(localStorage.hidden)
+			: [];
+		$('.missing .undelete-msg strong').text(hidden.length);
+		$('.missing .undelete-msg').slideDown();
+		$.fx.off = prevState;
+	}
 
 	$('.missing .delete-trigger').click(function(e)
 	{
@@ -59,17 +122,7 @@ $(function()
 				return index == arr.indexOf(el);
 			});
 			localStorage.hidden = JSON.stringify(hidden);
-			$(this).parents('li').fadeOut(function()
-			{
-				var p = $(this).parents('td');
-				$(this).hide();
-				if (p.find('li:visible').length == 0)
-				{
-					p.parents('tr').find('td').slideUp('fast');
-				}
-			});
-			$('.missing .undelete-msg strong').text(hidden.length);
-			$('.missing .undelete-msg').slideDown();
+			hide($(this).parents('li'), false);
 		}
 		e.preventDefault();
 	});
@@ -85,7 +138,14 @@ $(function()
 			localStorage.removeItem('hidden');
 			$('.missing .undelete-msg').slideUp(function()
 			{
-				$('.missing td:not(:visible), .missing li:not(:visible)').slideDown();
+				$('.missing li.hidden').each(function()
+				{
+					$(this).parents('tbody').addClass('tainted');
+					$(this).parents('td').slideDown();
+					$(this).slideDown();
+				});
+				$('.missing li.hidden').removeClass('hidden');
+				collapseUls();
 			});
 		}
 		e.preventDefault();
@@ -99,15 +159,9 @@ $(function()
 			for (var i in hidden)
 			{
 				var key = hidden[i];
-				var p = $('#' + key).parents('td');
-				$('#' + key).hide();
-				if (p.find('li:visible').length == 0)
-				{
-					p.parents('tr').hide();
-				}
+				var target = $('#' + key);
+				hide(target, true);
 			}
-			$('.missing .undelete-msg strong').text(hidden.length);
-			$('.missing .undelete-msg').show();
 		}
 	}
 });
