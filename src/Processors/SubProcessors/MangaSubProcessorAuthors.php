@@ -19,6 +19,7 @@ class MangaSubProcessorAuthors extends MediaSubProcessor
 			$authorMalId = Strings::makeInteger($matches[1]);
 			$authorName = Strings::removeSpaces($node->nodeValue);
 			$data []= [
+				'media_id' => $context->media->id,
 				'mal_id' => $authorMalId,
 				'name' => $authorName
 			];

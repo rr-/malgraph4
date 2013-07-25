@@ -22,6 +22,7 @@ class AnimeSubProcessorProducers extends MediaSubProcessor
 			$producerMalId = Strings::makeInteger($matches[1]);
 			$producerName = Strings::removeSpaces($node->textContent);
 			$data []= [
+				'media_id' => $context->media->id,
 				'mal_id' => $producerMalId,
 				'name' => $producerName,
 			];
