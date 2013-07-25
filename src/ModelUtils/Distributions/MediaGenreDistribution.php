@@ -36,9 +36,9 @@ class MediaGenreDistribution extends AbstractDistribution
 			{
 				continue;
 			}
-			$row->mal_link = 'http://myanimelist.net/' . $map[$row->media_id]->media . '.php?genre%5b%5d=' . $row->mal_id;
 			$map[$row->media_id]->genres []= $row;
 		}
+
 		foreach ($map as $entry)
 		{
 			$dist->addEntry($entry);
