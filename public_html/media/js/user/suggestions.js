@@ -151,7 +151,7 @@ $(function()
 				$('.missing li.hidden').each(function()
 				{
 					$(this).parents('tbody').addClass('tainted');
-					$(this).parents('td').slideDown();
+					$(this).parents('tr').find('td').slideDown();
 					$(this).slideDown();
 				});
 				$('.missing li.hidden').removeClass('hidden');
