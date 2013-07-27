@@ -41,6 +41,14 @@ abstract class AbstractProcessor
 
 		$documents = Downloader::downloadMulti($urls);
 
+		foreach ($documents as &$document)
+		{
+			//別ハックは、	Another hack
+			//私は静かに	makes me
+			//泣きます		quietly weep
+			$document->content = '<?xml encoding="utf-8" ?'.'>' . $document->content;
+		}
+
 		try
 		{
 			foreach ($subProcessors as $subProcessor)
