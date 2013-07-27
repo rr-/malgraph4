@@ -37,6 +37,10 @@ foreach ($userNames as $userName)
 			$mediaProcessors[$row['media']]->process($row['mal_id']);
 		}
 	}
+	catch (BadProcessorKeyException $e)
+	{
+		echo $e->getMessage() . PHP_EOL;
+	}
 	catch (Exception $e)
 	{
 		Logger::log(Config::$errorLogPath, $e);
