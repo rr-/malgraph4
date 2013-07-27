@@ -1,0 +1,20 @@
+<div class="section acti-line-monthly">
+	<h2>
+		Monthly activity
+	</h2>
+	<div class="section-body">
+		<?php if (empty($viewContext->monthPeriods)): ?>
+			<p>No <?php echo Media::toString($viewContext->media) ?> you've completed has its completion date specified.<br>
+			This graph won&rsquo;t work without this data.</p>
+		<?php else: ?>
+			<div class="target-wrapper">
+				<div style="width: <?php echo count($viewContext->monthPeriods) * 30 + 100 ?>px" class="target"></div>
+				<div class="clear"></div>
+			</div>
+
+			<div class="entries-wrapper">
+			</div>
+		<?php endif ?>
+
+	</div>
+</div>

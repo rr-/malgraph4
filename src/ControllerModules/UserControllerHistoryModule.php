@@ -27,6 +27,37 @@ class UserControllerHistoryModule extends AbstractUserControllerModule
 		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . ' - activity (' . Media::toString($viewContext->media) . ')';
 		$viewContext->meta->description = $viewContext->user->name . '&rsquo;s ' . Media::toString($viewContext->media) . ' activity on MALgraph, an online tool that extends your MyAnimeList profile.';
 		$viewContext->meta->keywords = array_merge($viewContext->meta->keywords, ['profile', 'list', 'achievements', 'ratings', 'activity', 'favorites', 'suggestions', 'recommendations']);
+		WebMediaHelper::addHighcharts($viewContext);
+		WebMediaHelper::addInfobox($viewContext);
+		WebMediaHelper::addEntries($viewContext);
 		WebMediaHelper::addCustom($viewContext);
+
+		$dailyHistory = $viewContext->user->getHistory($viewContext->media);
+		$dailyHistoryGroups = [];
+		$dailyTitles = [];
+		foreach ($dailyHistory as $historyEntry)
+		{
+			$key = date('Y-m-d', strtotime($historyEntry->timestamp));
+			if (!isset($dailyHistoryGroups[$key]))
+			{
+				$dailyHistoryGroups[$key] = [];
+			}
+			$dailyHistoryGroups[$key] []= $historyEntry;
+			$dailyTitles[$historyEntry->media . $historyEntry->mal_id] = $historyEntry;
+		}
+		krsort($dailyHistoryGroups);
+
+		$days = 21;
+		$dayPeriods = [];
+		for ($i = - $days; $i < 0; $i ++)
+		{
+			$date = date('Y-m-d', mktime(24 * $i));
+			$dayPeriods[-$i] = isset($dailyHistoryGroups[$date])
+				? $dailyHistoryGroups[$key]
+				: [];
+		}
+
+		$viewContext->dayPeriods = $dayPeriods;
+		$viewContext->dailyTitles = $dailyTitles;
 	}
 }

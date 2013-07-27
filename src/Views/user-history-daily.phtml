@@ -1,0 +1,94 @@
+<div class="section acti-line-daily">
+	<h2>
+		Daily activity
+	</h2>
+	<div class="section-body">
+		<ul class="infobox">
+			<li>
+				<div>
+					<?php $eps = array_sum(array_map(function($p) { return count($p); }, array_values($viewContext->dayPeriods))) ?>
+					<span class="prefix">Last 3 weeks</span>
+					<span class="subject"><?php echo $eps ?></span>
+					<span class="suffix">
+						<?php if ($viewContext->media == Media::Anime): ?>
+							<?php echo TextHelper::getEpisodesText($eps, false, '%2$s') ?>
+						<?php else: ?>
+							<?php echo TextHelper::getChaptersText($eps, false, '%2$s') ?>
+						<?php endif ?>
+					</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<span class="prefix">Different titles</span>
+					<span class="subject"><?php echo count($viewContext->dailyTitles) ?></span>
+				</div>
+			</li>
+		</ul>
+
+		<div class="target-wrapper">
+			<div class="target"></div>
+			<div class="clear"></div>
+		</div>
+
+		<div class="entries-wrapper">
+			<?php foreach ($viewContext->dayPeriods as $daysAgo => $entries): ?>
+				<div class="entries-sub-wrapper" id="days-ago-<?php echo $daysAgo ?>">
+					<p>
+						<a class="close"><i class="icon-close"></i></a>
+						<?php echo $viewContext->media == Media::Manga ? 'Episodes' : 'Chapters' ?> from <?php echo $daysAgo ?> days ago: <?php echo count($entries) ?>
+					</p>
+					<ul>
+						<?php foreach ($entries as $entry): ?>
+							<li>
+								<a target="_blank" href="<?php echo $entry->mal_link ?>">
+									<?php echo htmlspecialchars($entry->title) ?>
+								</a>
+								<span class="details">
+									&nbsp;(<?php echo $entry->progress ?>
+									&nbsp;&ndash; <?php echo date('M jS, H:i', strtotime($entry->timestamp)) ?>)
+								</span>
+							</li>
+						<?php endforeach ?>
+					</ul>
+				</div>
+			<?php endforeach ?>
+		</div>
+
+		<script type="text/javascript">
+			var chart = new Highcharts.Chart({
+				chart: { renderTo: $('.acti-line-daily .target')[0], type: 'column', marginTop: 8 },
+				xAxis: {
+					categories: <?php echo json_encode(array_map(function($x) { return $x % 1 == 0 ? $x : ''; }, array_keys($viewContext->dayPeriods))) ?>, title: { text: 'Days ago', margin: 15 },
+					labels: { style: { fontSize: '10px !important' } },
+					plotBands: { 'from': 6.5, 'to': 6.5 + 7, 'zIndex': 3, 'color': 'rgba(200, 230, 255, 0.2)'}
+				},
+				yAxis: { title: { text: '<?php echo $viewContext->media == Media::Manga ? 'Chapter' : 'Episode' ?> count' }, min: 0 },
+
+				tooltip: { formatter: function() {
+					var text = '<?php echo $viewContext->media == Media::Manga ? 'Chapters' : 'Episodes' ?> completed ';
+					if (this.x == 0) {
+						text += 'today';
+					} else if (this.x == 1) {
+						text += 'yesterday';
+					} else {
+						text += this.x + ' days ago';
+					}
+					text += ': ' + this.y;
+					return text; } },
+				series: [ {
+					data: <?php echo json_encode(array_map(function($p) { return count($p); }, array_values($viewContext->dayPeriods))) ?>,
+					point: { events: { click: function(e) {
+						var category = this.category;
+						toggleEntries($('.acti-line-daily .entries-wrapper'), {'sender': 'daily-history', 'filter-param': this.category}, false, function()
+						{
+							$('.acti-line-daily .entries-wrapper .entries-sub-wrapper').hide();
+							$('.acti-line-daily .entries-wrapper #days-ago-' + category).show();
+						});
+					} } }
+				} ],
+				plotOptions: { column: { pointWidth: 17 } }
+			});
+		</script>
+	</div>
+</div>
