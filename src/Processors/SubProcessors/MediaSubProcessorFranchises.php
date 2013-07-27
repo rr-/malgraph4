@@ -34,7 +34,7 @@ class MediaSubProcessorFranchises extends MediaSubProcessor
 		$media->franchise = $franchiseId;
 		R::store($media);
 
-		$sql = 'UPDATE media SET franchise = ? WHERE franchise IN (' . R::genSlots($franchiseIds) . ')';
-		R::exec($sql, array_merge([$franchiseId], $franchiseIds));
+		$query = 'UPDATE media SET franchise = ? WHERE franchise IN (' . R::genSlots($franchiseIds) . ')';
+		R::exec($query, array_merge([$franchiseId], $franchiseIds));
 	}
 }

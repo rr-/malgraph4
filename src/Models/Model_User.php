@@ -10,7 +10,9 @@ class Model_User extends RedBean_SimpleModel
 {
 	public function getMixedUserMedia($media)
 	{
-		$query = 'SELECT m.*, um.*, m.id AS media_id FROM usermedia um LEFT JOIN media m ON m.media = um.media AND m.mal_id = um.mal_id WHERE um.user_id = ? AND um.media = ?';
+		$query = 'SELECT m.*, um.*, m.id AS media_id FROM usermedia um' .
+			' LEFT JOIN media m ON m.media = um.media AND m.mal_id = um.mal_id' .
+			' WHERE um.user_id = ? AND um.media = ?';
 		$rows = R::getAll($query, [$this->id, $media]);
 		$result = array_map(function($row) { return new Model_MixedUserMedia($row); }, $rows);
 		return $result;
@@ -18,21 +20,33 @@ class Model_User extends RedBean_SimpleModel
 
 	public function getFriends()
 	{
-		$result = [];
-		foreach (R::getAll('SELECT * FROM userfriend WHERE user_id = ? ORDER BY name COLLATE NOCASE ASC', [$this->id]) as $row)
-		{
-			$result []= ReflectionHelper::arrayToClass($row);
-		}
+		$query = 'SELECT * FROM userfriend' .
+			' WHERE user_id = ?' .
+			' ORDER BY name COLLATE NOCASE ASC';
+		$rows = R::getAll($query, [$this->id]);
+		$result = array_map(function($row) { return ReflectionHelper::arrayToClass($row); }, $rows);
 		return $result;
 	}
 
 	public function getClubs()
 	{
+		$query = 'SELECT * FROM userclub' .
+			' WHERE user_id = ?' .
+			' ORDER BY name COLLATE NOCASE ASC';
+		$rows = R::getAll($query, [$this->id]);
+		$result = array_map(function($row) { return ReflectionHelper::arrayToClass($row); }, $rows);
+		return $result;
+	}
+
+	public function getHistory($media)
+	{
 		$result = [];
-		foreach (R::getAll('SELECT * FROM userclub WHERE user_id = ? ORDER BY name COLLATE NOCASE ASC', [$this->id]) as $row)
-		{
-			$result []= ReflectionHelper::arrayToClass($row);
-		}
+		$query = 'SELECT m.*, uh.*, m.id AS media_id FROM userhistory uh' .
+			' LEFT JOIN media m ON m.media = uh.media AND m.mal_id = uh.mal_id' .
+			' WHERE uh.user_id = ? AND uh.media = ?' .
+			' ORDER BY timestamp DESC';
+		$rows = R::getAll($query, [$this->id, $media]);
+		$result = array_map(function($row) { return new Model_MixedUserMedia($row); }, $rows);
 		return $result;
 	}
 
@@ -43,7 +57,8 @@ class Model_User extends RedBean_SimpleModel
 
 	public static function getCount()
 	{
-		return R::getAll('SELECT COUNT(*) AS count FROM user')[0]['count'];
+		$query = 'SELECT COUNT(*) AS count FROM user';
+		return R::getAll($query)[0]['count'];
 	}
 
 	public function getMismatchedUserMedia(array $entries)
@@ -91,12 +106,15 @@ class Model_User extends RedBean_SimpleModel
 		if ($loadEverything)
 		{
 			R::begin();
-			R::exec('CREATE TEMPORARY TABLE hurr (franchise VARCHAR(10))');
+			$query = 'CREATE TEMPORARY TABLE hurr (franchise VARCHAR(10))';
+			R::exec();
 			foreach (array_chunk(array_keys($ownClusters), Config::$maxDbBindings) as $chunk)
 			{
-				R::exec('INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)')), $chunk);
+				$query = 'INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)'));
+				R::exec($query, $chunk);
 			}
-			$allEntries = R::getAll('SELECT * FROM media INNER JOIN hurr ON media.franchise = hurr.franchise');
+			$query = 'SELECT * FROM media INNER JOIN hurr ON media.franchise = hurr.franchise';
+			$allEntries = R::getAll($query);
 			$allEntries = array_map(function($entry) { return new Model_MixedUserMedia($entry); }, $allEntries);
 			R::rollback();
 

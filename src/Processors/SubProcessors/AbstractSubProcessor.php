@@ -52,14 +52,14 @@ abstract class AbstractSubProcessor
 		{
 			$columns = array_keys(reset($rows));
 			$single = '(' . join(', ', array_fill(0, count($columns), '?')) . ')';
-			$sql = sprintf('INSERT INTO %s(%s) VALUES %s',
+			$query = sprintf('INSERT INTO %s(%s) VALUES %s',
 				$tableName,
 				join(', ', $columns),
 				join(', ', array_fill(0, count($rows), $single))
 			);
 			$flattened = call_user_func_array('array_merge', array_map('array_values', $rows));
 
-			$lastInsertId = R::exec($sql, $flattened);
+			$lastInsertId = R::exec($query, $flattened);
 		}
 		return $lastInsertId;
 	}
@@ -71,11 +71,11 @@ abstract class AbstractSubProcessor
 		{
 			$single []= $key . ' = ?';
 		}
-		$sql = sprintf('DELETE FROM %s WHERE %s',
+		$query = sprintf('DELETE FROM %s WHERE %s',
 			$tableName,
 			join(' AND ', $single));
 
-		R::exec($sql, array_values($conditions));
+		R::exec($query, array_values($conditions));
 	}
 
 	public abstract function process(array $documents, &$context);

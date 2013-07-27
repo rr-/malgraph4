@@ -7,12 +7,12 @@ $mediaProcessors =
 	Media::Manga => new MangaProcessor()
 ];
 
-$sql = 'SELECT um.mal_id, um.media FROM usermedia um' .
+$query = 'SELECT um.mal_id, um.media FROM usermedia um' .
 	' LEFT JOIN media m ON um.media = m.media AND um.mal_id = m.mal_id' .
 	' WHERE m.id IS NULL' .
 	' GROUP BY um.media || um.mal_id';
 
-$rows = R::getAll($sql);
+$rows = R::getAll($query);
 foreach ($rows as $row)
 {
 	$row = ReflectionHelper::arrayToClass($row);

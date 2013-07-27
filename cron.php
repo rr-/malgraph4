@@ -25,19 +25,19 @@ foreach ($userNames as $userName)
 	try
 	{
 		printf('Processing user %s' . PHP_EOL, $userName);
-		$sql = 'SELECT 0 FROM user WHERE LOWER(name) = LOWER(?)' .
+		$query = 'SELECT 0 FROM user WHERE LOWER(name) = LOWER(?)' .
 			' AND processed >= DATETIME("now", "-1 days")';
-		if (R::getAll($sql, [$userName]))
+		if (R::getAll($query, [$userName]))
 		{
 			echo 'Too soon' . PHP_EOL;
 			continue;
 		}
 		$context = $userProcessor->process($userName);
-		$sql = 'SELECT um.mal_id, um.media FROM usermedia um' .
+		$query = 'SELECT um.mal_id, um.media FROM usermedia um' .
 			' LEFT OUTER JOIN media m ON um.mal_id = m.mal_id AND um.media = m.media' .
 			' WHERE um.user_id = ?' .
 			' AND (m.id IS NULL OR m.processed <= DATETIME("now", "-21 days"))';
-		foreach (R::getAll($sql, [$context->user->id]) as $row)
+		foreach (R::getAll($query, [$context->user->id]) as $row)
 		{
 			$row = ReflectionHelper::arrayToClass($row);
 			printf('Processing %s #%d' . PHP_EOL, Media::toString($row->media), $row->mal_id);
