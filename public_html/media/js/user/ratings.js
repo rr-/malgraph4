@@ -45,13 +45,13 @@ $(function()
 	var themes =
 	[
 		{ 'params': { }, 'name': 'Blue (default)' },
-		{ 'params': { 'bar1': '00ffaaaa', 'bar2': '00ee6677', 'line1': 'c0ffaaaa', 'line2': 'c0ee6677', 'back': 'ffffffff', 'font1': '20442233', 'font2': '85aa4444', 'title': '00cc5566' }, 'name': 'Pink' },
-		{ 'params': { 'bar1': '0044ff44', 'bar2': '00008800', 'line1': 'dd44ff44', 'line2': 'dd00aa00', 'back': 'ffffffff', 'font1': '20227722', 'font2': '90227722', 'title': '00227722' }, 'name': 'Green' },
-		{ 'params': { 'bar1': '00eecc05', 'bar2': '00dd2200', 'line1': 'aaffdd00', 'line2': 'aaff0000', 'back': 'ffffffff', 'font1': '20220700', 'font2': '90220700', 'title': '00220700' }, 'name': 'Flame (yellow + red)' },
-		{ 'params': { 'bar1': 'aa000000', 'bar2': '33000000', 'line1': 'ff000000', 'line2': 'dd000000', 'back': 'ffffffff', 'font1': '20000000', 'font2': '90000000', 'title': '20000000' }, 'name': 'Gray' },
-		{ 'params': { 'bar1': '0084a0d4', 'bar2': '0003359a', 'line1': '00446084', 'line2': '0001156a', 'back': '00000000', 'font1': '00779fe2', 'font2': '50779fe2', 'title': '00779fe2' }, 'name': 'unBlue (blue on black)' },
-		{ 'params': { 'bar1': '0044ff44', 'bar2': '00008800', 'line1': '00004400', 'line2': '00008800', 'back': '00000000', 'font1': '2044ff44', 'font2': '00008800', 'title': '0033aa33' }, 'name': 'Matrix (green on black)' },
-		{ 'params': { 'bar1': 'a4c0f4', 'bar2': '13459a', 'line1': 'f8fafe', 'line2': 'eff2f8', 'back': 'ffffff', 'font1': '000000', 'font2': 'aaaaaa', 'title': '577fc2' }, 'name': 'Custom' },
+		{ 'params': { 'bar1': '00ffaaaa', 'bar2': '00ee6677', 'line1': 'c0ffaaaa', 'line2': 'c0ee6677', 'back': 'ffffffff', 'font1': '20442233', 'font2': '85aa4444', 'title': '00cc5566', 'logo': '00cc5566' }, 'name': 'Pink' },
+		{ 'params': { 'bar1': '0044ff44', 'bar2': '00008800', 'line1': 'dd44ff44', 'line2': 'dd00aa00', 'back': 'ffffffff', 'font1': '20227722', 'font2': '90227722', 'title': '00227722', 'logo': '00227722' }, 'name': 'Green' },
+		{ 'params': { 'bar1': '00eecc05', 'bar2': '00dd2200', 'line1': 'aaffdd00', 'line2': 'aaff0000', 'back': 'ffffffff', 'font1': '20220700', 'font2': '90220700', 'title': '00220700', 'logo': '00220700' }, 'name': 'Flame (yellow + red)' },
+		{ 'params': { 'bar1': 'aa000000', 'bar2': '33000000', 'line1': 'ff000000', 'line2': 'dd000000', 'back': 'ffffffff', 'font1': '20000000', 'font2': '90000000', 'title': '20000000', 'logo': '20000000' }, 'name': 'Gray' },
+		{ 'params': { 'bar1': '0084a0d4', 'bar2': '0003359a', 'line1': '00446084', 'line2': '0001156a', 'back': '00000000', 'font1': '00779fe2', 'font2': '50779fe2', 'title': '00779fe2', 'logo': '00779fe2' }, 'name': 'unBlue (blue on black)' },
+		{ 'params': { 'bar1': '0044ff44', 'bar2': '00008800', 'line1': '00004400', 'line2': '00008800', 'back': '00000000', 'font1': '2044ff44', 'font2': '00008800', 'title': '0033aa33', 'logo': '0033aa33' }, 'name': 'Matrix (green on black)' },
+		{ 'params': { 'bar1': 'a4c0f4', 'bar2': '13459a', 'line1': 'f8fafe', 'line2': 'eff2f8', 'back': 'ffffff', 'font1': '000000', 'font2': 'aaaaaa', 'title': '577fc2', 'logo': '577fc2' }, 'name': 'Custom' },
 	];
 	$('select[name=\'theme\']').each(function()
 	{
