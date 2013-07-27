@@ -263,6 +263,8 @@ select,
 	background-position: 0 -1em;
 	box-shadow: 0 0 0.5em #eee;
 	border: 1px solid #aaa;
+	color: black;
+	text-decoration: none;
 }
 select:focus,
 input:focus {

@@ -47,7 +47,7 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 		$viewContext->meta->scripts []= '/media/js/user/achievements.js';
 
 		$achList = TextHelper::loadJson(Config::$achievementsDefinitionPath);
-		$imgFiles = scandir(Config::$achievementsImageDir);
+		$imgFiles = scandir(Config::$mediaDirectory . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . 'ach');
 
 		$list = $viewContext->user->getMixedUserMedia($viewContext->media);
 		$listFinished = UserMediaFilter::doFilter($list, UserMediaFilter::finished());

@@ -29,9 +29,12 @@ class UserControllerRatingsModule extends AbstractUserControllerModule
 		$viewContext->meta->keywords = array_merge($viewContext->meta->keywords, ['profile', 'list', 'achievements', 'ratings', 'activity', 'favorites', 'suggestions', 'recommendations']);
 		$viewContext->meta->styles []= '/media/css/infobox.css';
 		$viewContext->meta->styles []= '/media/css/user/ratings.css';
+		$viewContext->meta->styles []= '/media/css/jquery.farbtastic.css';
 		$viewContext->meta->scripts []= 'http://code.highcharts.com/highcharts.js';
 		$viewContext->meta->scripts []= '/media/js/highcharts-mg.js';
+		$viewContext->meta->scripts []= '/media/js/jquery.farbtastic.js';
 		$viewContext->meta->scripts []= '/media/js/user/entries.js';
+		$viewContext->meta->scripts []= '/media/js/user/ratings.js';
 
 		$list = $viewContext->user->getMixedUserMedia($viewContext->media);
 		$list = UserMediaFilter::doFilter($list, UserMediaFilter::nonPlanned());

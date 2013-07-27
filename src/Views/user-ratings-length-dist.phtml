@@ -48,7 +48,7 @@
 				var chart = new Highcharts.Chart({
 					chart: { renderTo: $('.rating-length-dist .target')[0], type: 'line', marginTop: 15, marginRight: 15 },
 					xAxis: {
-						categories: <?php echo json_encode($viewContext->lengthDistribution->getGroupsKeys()) ?>,
+						categories: <?php echo json_encode(array_values($viewContext->lengthDistribution->getGroupsKeys())) ?>,
 						labels: { rotation: -45, align: 'right' },
 						title: { text: '<?php echo $viewContext->media == Media::Anime ? 'Episode' : 'Chapter' ?> count', margin: 15 } },
 					yAxis: { title: { text: 'Mean score', margin: 15 } },

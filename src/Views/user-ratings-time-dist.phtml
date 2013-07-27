@@ -44,7 +44,7 @@
 			<script type="text/javascript">
 				var chart = new Highcharts.Chart({
 					chart: { renderTo: $('.rating-time-dist .target')[0], type: 'bar', marginRight: 15 },
-					xAxis: { categories: <?php echo json_encode(array_map(function($x) { return $x == 0 ? '-' : $x; }, $viewContext->ratingDistribution->getGroupsKeys())) ?>, title: { text: 'Rating' } },
+					xAxis: { categories: <?php echo json_encode(array_map(function($x) { return $x == 0 ? '-' : $x; }, array_values($viewContext->ratingDistribution->getGroupsKeys()))) ?>, title: { text: 'Rating' } },
 					yAxis: { title: {text: 'Hours spent', margin: 15 } },
 					tooltip: { formatter: function() {
 						var text;

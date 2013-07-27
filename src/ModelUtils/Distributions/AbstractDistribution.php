@@ -120,7 +120,6 @@ abstract class AbstractDistribution
 				return $this->getGroupSize($key) > 0;
 			});
 		}
-		$x = array_values($x);
 		return $x;
 	}
 
@@ -163,7 +162,6 @@ abstract class AbstractDistribution
 			$safeKey = self::serializeKey($key);
 			$x[$safeKey] = $this->getGroupSize($key);
 		}
-		$x = array_values($x);
 		return $x;
 	}
 

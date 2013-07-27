@@ -7,13 +7,14 @@ $classNames = ReflectionHelper::loadClasses($dir);
 $classNames = array_filter($classNames, function($className) {
 	return substr_compare($className, 'Controller', -10, 10) === 0;
 });
+$bypassCache = !empty($_GET['bypass-cache']);
 
 $controllerContext = new ControllerContext();
 $viewContext = new ViewContext();
 try
 {
 	$url = $_SERVER['REQUEST_URI'];
-	if (Cache::isFresh($url))
+	if (Cache::isFresh($url) and !$bypassCache)
 	{
 		Cache::load($url);
 		exit(0);

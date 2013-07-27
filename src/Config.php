@@ -16,10 +16,10 @@ class Config extends Singleton
 	static $bannedCreatorsListPath;
 	static $errorLogPath;
 	static $achievementsDefinitionPath;
-	static $achievementsImageDir;
 	static $sendReferrer;
 	static $maxDbBindings;
 	static $usersPerCronRun;
+	static $mediaDirectory;
 
 	public static function doInit()
 	{
@@ -33,7 +33,7 @@ class Config extends Singleton
 		self::$bannedCreatorsListPath = $rootDir . 'banned-creators.lst';
 		self::$errorLogPath = $rootDir . 'errors.log';
 		self::$achievementsDefinitionPath = $rootDir . 'achievements.json';
-		self::$achievementsImageDir = join(DIRECTORY_SEPARATOR, [$rootDir, '..', 'public_html', 'media', 'img', 'ach']);
+		self::$mediaDirectory = join(DIRECTORY_SEPARATOR, [$rootDir, '..', 'public_html', 'media']);
 		self::$mirrorEnabled = false;
 		self::$cacheEnabled = true;
 		self::$cacheTimeToLive = 24 * 60 * 60;

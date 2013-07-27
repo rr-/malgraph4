@@ -62,4 +62,29 @@ class TextHelper
 		return $output;
 	}
 
+	public static function roundPercentages($distribution)
+	{
+		//largest remainder method
+		$total = max(array_sum($distribution), 1);
+		$percentages = array_map(function($x) use ($total)
+		{
+			return $x * 100.0 / $total;
+		}, $distribution);
+
+		asort($percentages, SORT_NUMERIC);
+		$percentagesRounded = array_map('floor', $percentages);
+
+		$keys = array_keys($percentages);
+		$sum = array_sum($percentagesRounded);
+		while ($sum < 100)
+		{
+			assert(!empty($keys));
+			$key = array_shift($keys);
+			$percentagesRounded[$key] ++;
+			$sum ++;
+		}
+
+		return $percentagesRounded;
+	}
+
 }
