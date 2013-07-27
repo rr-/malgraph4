@@ -20,7 +20,9 @@ class Queue
 		$data = $size > 0
 			? fread($this->handle, $size)
 			: null;
-		return explode("\n", $data);
+		$lines = explode("\n", $data);
+		$lines = array_filter($lines);
+		return $lines;
 	}
 
 	private function writeLines($lines)
