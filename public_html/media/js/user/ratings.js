@@ -96,17 +96,14 @@ $(function()
 
 	function changedColor(color)
 	{
-		var target = this.target;
-		var key = target.parents('.export').find('select.color').val();
-		var textarea = target.parents('.export').find('textarea');
+		var target = $('.export');
+		var key = target.find('select.color').val();
+		var textarea = target.find('textarea');
 		textarea.val(textarea.val().replace(new RegExp(key + '=([a-f0-9]+)'), key + '=' + color.substr(1)));
 	}
 
 	/* custom theme editing */
-	$('.export .colorpicker').each(function()
-	{
-		$.farbtastic($(this), changedColor).target = $(this);
-	});
+	$.farbtastic($('.export .colorpicker'), { callback: changedColor, width: 200, height: 200}).target = $(this);
 
 	$('.export select.color').change(function()
 	{

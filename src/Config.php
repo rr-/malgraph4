@@ -20,6 +20,7 @@ class Config extends Singleton
 	static $maxDbBindings;
 	static $usersPerCronRun;
 	static $mediaDirectory;
+	static $mediaUrl;
 
 	public static function doInit()
 	{
@@ -34,6 +35,7 @@ class Config extends Singleton
 		self::$errorLogPath = $rootDir . 'errors.log';
 		self::$achievementsDefinitionPath = $rootDir . 'achievements.json';
 		self::$mediaDirectory = join(DIRECTORY_SEPARATOR, [$rootDir, '..', 'public_html', 'media']);
+		self::$mediaUrl = '/media/';
 		self::$mirrorEnabled = false;
 		self::$cacheEnabled = true;
 		self::$cacheTimeToLive = 24 * 60 * 60;

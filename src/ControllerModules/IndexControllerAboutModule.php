@@ -13,7 +13,8 @@ class IndexControllerAboutModule extends AbstractControllerModule
 
 	public static function work(&$viewContext)
 	{
-		$viewContext->viewName = 'about';
+		$viewContext->viewName = 'index-about';
 		$viewContext->meta->title = 'MALgraph - about';
+		WebMediaHelper::addCustom($viewContext);
 	}
 }

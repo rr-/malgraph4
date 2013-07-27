@@ -27,5 +27,6 @@ class UserControllerHistoryModule extends AbstractUserControllerModule
 		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . ' - activity (' . Media::toString($viewContext->media) . ')';
 		$viewContext->meta->description = $viewContext->user->name . '&rsquo;s ' . Media::toString($viewContext->media) . ' activity on MALgraph, an online tool that extends your MyAnimeList profile.';
 		$viewContext->meta->keywords = array_merge($viewContext->meta->keywords, ['profile', 'list', 'achievements', 'ratings', 'activity', 'favorites', 'suggestions', 'recommendations']);
+		WebMediaHelper::addCustom($viewContext);
 	}
 }

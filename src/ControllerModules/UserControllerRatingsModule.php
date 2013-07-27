@@ -27,14 +27,11 @@ class UserControllerRatingsModule extends AbstractUserControllerModule
 		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . ' - rating statistics (' . Media::toString($viewContext->media) . ')';
 		$viewContext->meta->description = $viewContext->user->name . '&rsquo;s ' . Media::toString($viewContext->media) . ' rating statistics on MALgraph, an online tool that extends your MyAnimeList profile.';
 		$viewContext->meta->keywords = array_merge($viewContext->meta->keywords, ['profile', 'list', 'achievements', 'ratings', 'activity', 'favorites', 'suggestions', 'recommendations']);
-		$viewContext->meta->styles []= '/media/css/infobox.css';
-		$viewContext->meta->styles []= '/media/css/user/ratings.css';
-		$viewContext->meta->styles []= '/media/css/jquery.farbtastic.css';
-		$viewContext->meta->scripts []= 'http://code.highcharts.com/highcharts.js';
-		$viewContext->meta->scripts []= '/media/js/highcharts-mg.js';
-		$viewContext->meta->scripts []= '/media/js/jquery.farbtastic.js';
-		$viewContext->meta->scripts []= '/media/js/user/entries.js';
-		$viewContext->meta->scripts []= '/media/js/user/ratings.js';
+		WebMediaHelper::addHighcharts($viewContext);
+		WebMediaHelper::addFarbtastic($viewContext);
+		WebMediaHelper::addInfobox($viewContext);
+		WebMediaHelper::addEntries($viewContext);
+		WebMediaHelper::addCustom($viewContext);
 
 		$list = $viewContext->user->getMixedUserMedia($viewContext->media);
 		$list = UserMediaFilter::doFilter($list, UserMediaFilter::nonPlanned());

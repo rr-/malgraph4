@@ -13,13 +13,12 @@ class IndexControllerGlobalsModule extends AbstractControllerModule
 
 	public static function work(&$viewContext)
 	{
-		$viewContext->viewName = 'globals';
+		$viewContext->viewName = 'index-globals';
 		$viewContext->meta->title = 'MALgraph - global statistics';
 		$viewContext->meta->description = 'Global community statistics on MALgraph, an online tool that extends your MyAnimeList profile.';
-		$viewContext->meta->styles []= '/media/css/infobox.css';
-		$viewContext->meta->styles []= '/media/css/index/globals.css';
-		$viewContext->meta->scripts []= 'http://code.highcharts.com/highcharts.js';
-		$viewContext->meta->scripts []= '/media/js/highcharts-mg.js';
+		WebMediaHelper::addHighcharts($viewContext);
+		WebMediaHelper::addInfobox($viewContext);
+		WebMediaHelper::addCustom($viewContext);
 
 		$viewContext->userCount = Model_User::getCount();
 		$viewContext->mediaCount = [];

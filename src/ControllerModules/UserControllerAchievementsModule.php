@@ -41,10 +41,8 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . ' - achievements (' . Media::toString($viewContext->media) . ')';
 		$viewContext->meta->description = $viewContext->user->name . '&rsquo;s ' . Media::toString($viewContext->media) . ' achievements on MALgraph, an online tool that extends your MyAnimeList profile.';
 		$viewContext->meta->keywords = array_merge($viewContext->meta->keywords, ['profile', 'list', 'achievements', 'ratings', 'activity', 'favorites', 'suggestions', 'recommendations']);
-		$viewContext->meta->styles []= '/media/css/user/achievements.css';
-		$viewContext->meta->styles []= '/media/css/user/general.css';
-		$viewContext->meta->scripts []= '/media/js/user/entries.js';
-		$viewContext->meta->scripts []= '/media/js/user/achievements.js';
+		WebMediaHelper::addEntries($viewContext);
+		WebMediaHelper::addCustom($viewContext);
 
 		$achList = TextHelper::loadJson(Config::$achievementsDefinitionPath);
 		$imgFiles = scandir(Config::$mediaDirectory . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . 'ach');

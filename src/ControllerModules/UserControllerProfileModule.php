@@ -22,9 +22,8 @@ class UserControllerProfileModule extends AbstractUserControllerModule
 		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . '&rsquo;s profile';
 		$viewContext->meta->description = $viewContext->user->name . '&rsquo;s profile on MALgraph, an online tool that extends your MyAnimeList profile.';
 		$viewContext->meta->keywords = array_merge($viewContext->meta->keywords, ['profile', 'list', 'achievements', 'ratings', 'activity', 'favorites', 'suggestions', 'recommendations']);
-		$viewContext->meta->styles []= '/media/css/user/profile.css';
-		$viewContext->meta->scripts []= '/media/js/user/profile.js';
-		$viewContext->meta->scripts []= '/media/js/user/entries.js';
+		WebMediaHelper::addEntries($viewContext);
+		WebMediaHelper::addCustom($viewContext);
 
 		$viewContext->yearsOnMal = null;
 		if (intval($viewContext->user->join_date))

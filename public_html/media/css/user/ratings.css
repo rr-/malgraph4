@@ -85,7 +85,8 @@ ul.infobox .btn {
 	box-sizing: border-box;
 }
 
-.export .body {
+.export .body-wrapper,
+.export .custom-theme p {
 	text-align: center;
 }
 .export .body p {
@@ -116,9 +117,6 @@ ul.infobox .btn {
 	overflow: hidden;
 	white-space: pre;
 }
-.export .custom-theme .color-picker {
-	text-align: center;
-}
-.export .custom-theme .farbtastic {
-	margin: 0 auto;
+.export .custom-theme select {
+	width: 100%;
 }

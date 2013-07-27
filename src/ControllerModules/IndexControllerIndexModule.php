@@ -13,9 +13,8 @@ class IndexControllerIndexModule extends AbstractControllerModule
 
 	public static function work(&$viewContext)
 	{
-		$viewContext->viewName = 'index';
-		$viewContext->meta->styles []= '/media/css/index/index.css';
-		$viewContext->meta->scripts []= '/media/js/index/index.js';
+		$viewContext->viewName = 'index-index';
 		$viewContext->meta->keywords = array_merge($viewContext->meta->keywords, ['myanimelist', 'mal', 'rating', 'favorites', 'score']);
+		WebMediaHelper::addCustom($viewContext);
 	}
 }
