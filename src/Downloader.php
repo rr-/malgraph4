@@ -45,10 +45,11 @@ class Downloader
 		return new Document($url, $code, $headers, $content);
 	}
 
-	public function downloadMulti(array $urls)
+	public static function downloadMulti(array $urls)
 	{
 		$handles = [];
 		$documents = [];
+		$urls = array_combine($urls, $urls);
 
 		//if mirror exists, load its content and purge url from download queue
 		$mirrorPaths = [];

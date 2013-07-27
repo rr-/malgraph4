@@ -39,8 +39,7 @@ abstract class AbstractProcessor
 			}
 		}
 
-		$downloader = new Downloader();
-		$documents = $downloader->downloadMulti($urls);
+		$documents = Downloader::downloadMulti($urls);
 
 		try
 		{
