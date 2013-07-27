@@ -34,6 +34,7 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 					UserMediaFilter::score($filterParam)
 				);
 				break;
+
 			case 'length':
 				$filter = UserMediaFilter::combine(
 					UserMediaFilter::nonPlanned(),
@@ -42,6 +43,7 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 				);
 				$computeMeanScore = true;
 				break;
+
 			case 'year':
 				$filter = UserMediaFilter::combine(
 					UserMediaFilter::nonPlanned(),
@@ -49,6 +51,7 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 				);
 				$computeMeanScore = true;
 				break;
+
 			case 'decade':
 				$filter = UserMediaFilter::combine(
 					UserMediaFilter::nonPlanned(),
@@ -56,6 +59,7 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 				);
 				$computeMeanScore = true;
 				break;
+
 			case 'creator':
 				$filter = UserMediaFilter::combine(
 					UserMediaFilter::nonPlanned(),
@@ -75,6 +79,7 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 				$viewContext->genreName = R::getAll('SELECT * FROM ' . $table . ' WHERE mal_id = ?', [$filterParam])[0]['name'];
 				$computeMeanScore = true;
 				break;
+
 			case 'genre':
 				$filter = UserMediaFilter::combine(
 					UserMediaFilter::nonPlanned(),
@@ -83,12 +88,15 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 				$viewContext->genreName = R::getAll('SELECT * FROM mediagenre WHERE mal_id = ?', [$filterParam])[0]['name'];
 				$computeMeanScore = true;
 				break;
+
 			case 'franchises':
 				$filter = UserMediaFilter::nonPlanned();
 				break;
 			case 'mismatches':
+
 				$filter = null;
 				break;
+
 			default:
 				throw new Exception('Unknown sender (' . $sender . ')');
 		}
