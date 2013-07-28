@@ -1,4 +1,4 @@
-<div class="section acti-line-daily">
+<div class="section history-daily">
 	<h2>
 		Daily activity
 	</h2>
@@ -57,7 +57,7 @@
 
 		<script type="text/javascript">
 			var chart = new Highcharts.Chart({
-				chart: { renderTo: $('.acti-line-daily .target')[0], type: 'column', marginTop: 8 },
+				chart: { renderTo: $('.history-daily .target')[0], type: 'column', marginTop: 8 },
 				xAxis: {
 					categories: <?php echo json_encode(array_map(function($x) { return $x % 1 == 0 ? $x : ''; }, array_keys($viewContext->dayPeriods))) ?>, title: { text: 'Days ago', margin: 15 },
 					labels: { style: { fontSize: '10px !important' } },
@@ -80,10 +80,10 @@
 					data: <?php echo json_encode(array_map(function($p) { return count($p); }, array_values($viewContext->dayPeriods))) ?>,
 					point: { events: { click: function(e) {
 						var category = this.category;
-						toggleEntries($('.acti-line-daily .entries-wrapper'), {'sender': 'daily-history', 'filter-param': this.category}, false, function()
+						toggleEntries($('.history-daily .entries-wrapper'), {'sender': 'daily-history', 'filter-param': this.category}, false, function()
 						{
-							$('.acti-line-daily .entries-wrapper .entries-sub-wrapper').hide();
-							$('.acti-line-daily .entries-wrapper #days-ago-' + category).show();
+							$('.history-daily .entries-wrapper .entries-sub-wrapper').hide();
+							$('.history-daily .entries-wrapper #days-ago-' + category).show();
 						});
 					} } }
 				} ],
