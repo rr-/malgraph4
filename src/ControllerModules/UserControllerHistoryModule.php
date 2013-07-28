@@ -32,6 +32,42 @@ class UserControllerHistoryModule extends AbstractUserControllerModule
 		WebMediaHelper::addEntries($viewContext);
 		WebMediaHelper::addCustom($viewContext);
 
+		$list = $viewContext->user->getMixedUserMedia($viewContext->media);
+		$listFinished = UserMediaFilter::doFilter($list, UserMediaFilter::finished());
+		$monthlyHistoryGroups = [];
+		$unknownEntries = [];
+		$max = 0;
+		foreach ($listFinished as $entry)
+		{
+			$key = $entry->end_date;
+			list ($year, $month, $day) = array_map('intval', explode('-', $key));
+			if (!$year or !$month)
+			{
+				$unknownEntries []= $entry;
+				continue;
+			}
+
+			if (!isset($monthlyHistoryGroups[$year]))
+			{
+				$monthlyHistoryGroups[$year] = [];
+			}
+			if (!isset($monthlyHistoryGroups[$year][$month]))
+			{
+				$monthlyHistoryGroups[$year][$month] = [];
+			}
+			$monthlyHistoryGroups[$year][$month] []= $entry;
+			$max = max($max, count($monthlyHistoryGroups[$year][$month]));
+		}
+		krsort($monthlyHistoryGroups, SORT_NUMERIC);
+		foreach ($monthlyHistoryGroups as &$group)
+		{
+			ksort($group, SORT_NUMERIC);
+		}
+		unset($group);
+		$viewContext->monthlyHistoryMax = $max;
+		$viewContext->monthlyHistoryGroups = $monthlyHistoryGroups;
+		$viewContext->monthlyHistoryUnknownEntries = $unknownEntries;
+
 		$dailyHistory = $viewContext->user->getHistory($viewContext->media);
 		$dailyHistoryGroups = [];
 		$dailyTitles = [];
