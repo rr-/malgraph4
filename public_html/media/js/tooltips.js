@@ -23,8 +23,7 @@ $(function() {
 			$(div).position({of: $(target), my: posMy, at: posAt, collision: 'fit fit'})
 				.mouseenter(function() { stopTooltipRemoval(target); })
 				.mouseleave(function() { startTooltipRemoval(target); })
-				.hide()
-				.fadeIn('fast');
+				.show();
 
 		}).mouseleave(function() {
 			var target = $(this);
@@ -32,9 +31,7 @@ $(function() {
 			if (!div) {
 				return;
 			}
-			div.fadeOut('fast', function() {
-				$(this).remove();
-			});
+			div.remove();
 		});
 	});
 });
