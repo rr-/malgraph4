@@ -107,7 +107,7 @@ class Model_User extends RedBean_SimpleModel
 		{
 			R::begin();
 			$query = 'CREATE TEMPORARY TABLE hurr (franchise VARCHAR(10))';
-			R::exec();
+			R::exec($query);
 			foreach (array_chunk(array_keys($ownClusters), Config::$maxDbBindings) as $chunk)
 			{
 				$query = 'INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)'));
