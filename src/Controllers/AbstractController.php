@@ -6,7 +6,15 @@ abstract class AbstractController
 		throw new UnimplementedException();
 	}
 
-	public static function work($controllerContext, &$viewContext)
+	public static function preWork(&$controllerContext, &$viewContext)
+	{
+	}
+
+	public static function postWork(&$controllerContext, &$viewContext)
+	{
+	}
+
+	public static function work(&$controllerContext, &$viewContext)
 	{
 		throw new UnimplementedException();
 	}

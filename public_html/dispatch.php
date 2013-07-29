@@ -26,22 +26,29 @@ try
 
 	if (!empty($workingClassName))
 	{
-		if (Cache::isFresh($url) and !$bypassCache and !$controllerContext->bypassCache)
+		$workingClassName::preWork($controllerContext, $viewContext);
+		$bypassCache |= $controllerContext->bypassCache;
+		if (Cache::isFresh($url) and !$bypassCache)
 		{
 			Cache::load($url);
+			flush();
 		}
 		else
 		{
-			Cache::beginSave($url);
+			if (!$bypassCache)
+			{
+				Cache::beginSave($url);
+			}
 			$workingClassName::work($controllerContext, $viewContext);
 			View::render($viewContext);
-			flush();
-			Cache::endSave();
+			if (!$bypassCache)
+			{
+				flush();
+				Cache::endSave();
+			}
 		}
-	}
+		$workingClassName::postWork($controllerContext, $viewContext);
 
-	if (HttpHeadersHelper::headersSent())
-	{
 		if (HttpHeadersHelper::getCurrentHeader('Content-Type') == 'text/html')
 		{
 			printf('<!-- retrieved in %.05fs -->', microtime(true) - $viewContext->renderStart);

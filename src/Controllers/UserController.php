@@ -40,8 +40,10 @@ class UserController extends AbstractController
 		return true;
 	}
 
-	public static function work($controllerContext, &$viewContext)
+	public static function preWork(&$controllerContext, &$viewContext)
 	{
+		HttpHeadersHelper::setCurrentHeader('Content-Type', 'text/html');
+		$controllerContext->bypassCache = true;
 		$viewContext->media = $controllerContext->media;
 		$viewContext->module = $controllerContext->module;
 
@@ -65,12 +67,20 @@ class UserController extends AbstractController
 			$viewContext->meta->title = 'MALgraph - user enqueued';
 			return;
 		}
+
+		$controllerContext->bypassCache = false;
 		$viewContext->user = $user;
 		$viewContext->meta->styles []= '/media/css/menu.css';
+	}
 
+	public static function work(&$controllerContext, &$viewContext)
+	{
 		assert(!empty($controllerContext->module));
-		$module = $controllerContext->module;
-		$module::work($viewContext);
-		$viewContext->userMenu = true;
+		if (!empty($viewContext->user))
+		{
+			$module = $controllerContext->module;
+			$module::work($viewContext);
+			$viewContext->userMenu = true;
+		}
 	}
 }
