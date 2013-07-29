@@ -12,14 +12,14 @@ $(function()
 	{
 		$('#header input').focus();
 	}
-	$('.search').submit(function(event)
+	$('.search').submit(function(e)
 	{
 		var userName = $(this).find('[name=user-name]').val();
 		if (userName.replace(/^\s+|\s+$/, '') == '')
 		{
 			$(this).find('[name=user-name]').val('');
-			event.preventDefault();
-			event.stopPropagation();
+			e.preventDefault();
+			e.stopPropagation();
 		}
 	});
 });
