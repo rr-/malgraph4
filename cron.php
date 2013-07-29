@@ -3,11 +3,7 @@ require_once 'src/core.php';
 
 $userNames = [];
 $queue = new Queue(Config::$userQueuePath);
-for ($i = 0; $i < Config::$usersPerCronRun; $i ++)
-{
-	$userNames []= $queue->dequeue();
-}
-$userNames = array_filter($userNames);
+$userNames = $queue->dequeue(Config::$usersPerCronRun);
 if (empty($userNames))
 {
 	exit(0);

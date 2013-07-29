@@ -44,14 +44,6 @@ class Queue
 		$this->file = $file;
 	}
 
-	public function peek()
-	{
-		$this->open();
-		$lines = $this->readLines();
-		$this->close();
-		return array_shift($lines) ?: null;
-	}
-
 	public function seek($string)
 	{
 		$this->open();
@@ -61,29 +53,59 @@ class Queue
 		return $index !== false ? $index + 1 : false;
 	}
 
-	public function dequeue()
+	private function _dequeue($num, $doWrite)
 	{
 		$this->open();
 		$lines = $this->readLines();
-		$firstLine = array_shift($lines);
-		$this->writeLines($lines);
-		$this->close();
-		return $firstLine ?: null;
-	}
-
-	public function enqueue($string)
-	{
-		$this->open();
-		$lines = $this->readLines();
-		$index = array_search($string, $lines);
-		if ($index === false)
+		$return = [];
+		foreach (range(1, $num === null ? 1 : $num) as $i)
 		{
-			$index = count($lines);
-			$lines []= $string;
+			$line = array_shift($lines);
+			if ($line)
+			{
+				$return []= $line;
+			}
+		}
+		if ($doWrite)
+		{
 			$this->writeLines($lines);
 		}
 		$this->close();
-		return $index !== false ? $index + 1 : false;
+		return $num !== null
+			? $return
+			: reset($return);
+	}
+
+	public function peek($num = null)
+	{
+		return $this->_dequeue($num, false);
+	}
+
+	public function dequeue($num = null)
+	{
+		return $this->_dequeue($num, true);
+	}
+
+	public function enqueue($newLines)
+	{
+		$this->open();
+		$lines = $this->readLines();
+		$indexes = [];
+		foreach ((array) $newLines as $newLine)
+		{
+			$index = array_search($newLine, $lines);
+			if ($index === false)
+			{
+				$index = count($lines);
+				$lines []= $newLine;
+				$this->writeLines($lines);
+			}
+			$indexes []= $index + 1;
+		}
+		$this->close();
+		return is_array($newLines)
+			? $indexes
+			: reset($indexes);
 	}
 
 	public function size()
