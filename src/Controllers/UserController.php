@@ -67,7 +67,6 @@ class UserController extends AbstractController
 		}
 		$viewContext->user = $user;
 		$viewContext->meta->styles []= '/media/css/menu.css';
-		$viewContext->meta->styles []= '/media/css/user/general.css';
 
 		assert(!empty($controllerContext->module));
 		$module = $controllerContext->module;
