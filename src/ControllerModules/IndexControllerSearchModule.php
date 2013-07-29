@@ -13,14 +13,13 @@ class IndexControllerSearchModule extends AbstractControllerModule
 
 	public static function work(&$viewContext)
 	{
-		$userName = $_POST['user-name'];
+		$userName = !empty($_POST['user-name']) ? $_POST['user-name'] : '';
 		$userName = trim($userName);
-		$media = !empty($_POST['media']) ?: Media::Anime;
 
 		if (empty($userName))
 		{
 			$viewContext->layoutName = null;
-			$url = IndexControllerIndexModule::url($userName, $media);
+			$url = IndexControllerIndexModule::url(rName);
 			HttpHeadersHelper::setCurrentHeader('Location', $url);
 			return;
 		}
@@ -32,7 +31,7 @@ class IndexControllerSearchModule extends AbstractControllerModule
 		}
 
 		$viewContext->layoutName = null;
-		$url = UserControllerProfileModule::url($userName, $media);
+		$url = UserControllerProfileModule::url($userName);
 		HttpHeadersHelper::setCurrentHeader('Location', $url);
 	}
 }
