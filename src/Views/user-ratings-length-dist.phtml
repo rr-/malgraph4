@@ -24,12 +24,13 @@
 
 				<li>
 					<div>
+						<?php $key = $viewContext->lengthDistribution->getLargestGroupKey() ?>
 						<?php if ($viewContext->media == Media::Anime): ?>
 							<?php list($num, $txt) = explode(' ', TextHelper::getEpisodesText($key)) ?>
 						<?php elseif ($viewContext->media == Media::Manga): ?>
 							<?php list($num, $txt) = explode(' ', TextHelper::getChaptersText($key)) ?>
 						<?php endif ?>
-						<span class="prefix">Which is</span>
+						<span class="prefix">Most common</span>
 						<span class="subject"><?php echo $num ?></span>
 						<span class="suffix"><?php echo $txt ?></span>
 					</div>
@@ -45,39 +46,125 @@
 			</div>
 
 			<script type="text/javascript">
-				var chart = new Highcharts.Chart({
-					chart: { renderTo: $('.rating-length-dist .target')[0], type: 'line', marginTop: 15, marginRight: 15 },
-					xAxis: {
+				var chart = new Highcharts.Chart(
+				{
+					chart:
+					{
+						renderTo: $('.rating-length-dist .target')[0],
+						type: 'line',
+						marginTop: 15
+					},
+
+					xAxis:
+					{
 						categories: <?php echo json_encode(array_values($viewContext->lengthDistribution->getGroupsKeys())) ?>,
-						labels: { rotation: -45, align: 'right' },
-						title: { text: '<?php echo $viewContext->media == Media::Anime ? 'Episode' : 'Chapter' ?> count', margin: 15 } },
-					yAxis: { title: { text: 'Mean score', margin: 15 } },
-					tooltip: { formatter: function() {
-						var text;
-						if (this.x == '?') {
-							text = 'Mean score for titles of unknown length: ';
-						} else {
-							text = 'Mean score for titles of length ' + this.x;
-							<?php if ($viewContext->media == Media::Anime): ?>
-								if (this.x == '1') {
-									text += ' (w/o movies)';
+						labels:
+						{
+							rotation: -45,
+							align: 'right'
+						},
+						title:
+						{
+							text: '<?php echo $viewContext->media == Media::Anime ? 'Episode' : 'Chapter' ?> count',
+							margin: 15
+						}
+					},
+
+					yAxis:
+					[
+						{
+							opposite: true,
+							title:
+							{
+								text: 'Mean score',
+								margin: 10,
+								style:
+								{
+									color: Highcharts.theme.colors[1]
 								}
-							<?php endif ?>
-							text += ': ';
+							},
+							labels:
+							{
+								style:
+								{
+									color: Highcharts.theme.colors[1]
+								}
+							}
+						},
+						{
+							title:
+							{
+								text: 'Title count',
+								margin: 10,
+							}
 						}
-						if (this.y > 0) {
-							text += this.y.toFixed(2);
-						} else {
-							text += 'unrated!';
+					],
+
+					tooltip:
+					{
+						shared: true,
+						formatter: function()
+						{
+							var text;
+							if (this.x == '?')
+							{
+								text = 'Mean score for titles of unknown length: ';
+							}
+							else
+							{
+								text = 'Mean score for titles of ' + this.x + ' length';
+								<?php if ($viewContext->media == Media::Anime): ?>
+									if (this.x == '1')
+									{
+										text += ' (w/o movies)';
+									}
+								<?php endif ?>
+								text += ': ';
+							}
+							if (this.points[1].y > 0)
+							{
+								text += this.points[1].y.toFixed(2);
+							}
+							else
+							{
+								text += 'unrated!';
+							}
+							text += ' (' + this.points[0].y + ' titles)';
+							return text;
 						}
-						return text;
-					} },
-					series: [ {
-						data: <?php echo json_encode(array_values($scores)) ?>,
-						point: { events: { click: function(e) {
-							toggleEntries($('.rating-length-dist .entries-wrapper'), {'sender': 'length', 'filter-param': this.category});
-						} } }
-					} ]
+					},
+
+					series:
+					[
+						{
+							type: 'column',
+							data: <?php echo json_encode(array_values($viewContext->lengthDistribution->getGroupsSizes())) ?>,
+							yAxis: 1,
+							point:
+							{
+								events:
+								{
+									click: function(e)
+									{
+										toggleEntries($('.rating-length-dist .entries-wrapper'), {'sender': 'length', 'filter-param': this.category});
+									}
+								}
+							}
+						},
+						{
+							data: <?php echo json_encode(array_values($scores)) ?>,
+							point:
+							{
+								events:
+								{
+									click: function(e)
+									{
+										toggleEntries($('.rating-length-dist .entries-wrapper'), {'sender': 'length', 'filter-param': this.category});
+									}
+								}
+							}
+						}
+					]
 				});
 			</script>
 		<?php endif ?>
