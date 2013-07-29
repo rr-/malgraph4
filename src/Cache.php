@@ -16,7 +16,7 @@ class Cache
 		$contents = substr($data, $pos + 2);
 		foreach ($headers as $key => $value)
 		{
-			header($key, $value);
+			HttpHeadersHelper::setCurrentHeader($key, $value);
 		}
 		echo $contents;
 	}
@@ -60,7 +60,7 @@ class Cache
 		}
 		self::$state = 0;
 
-		$headers = getallheaders();
+		$headers = HttpHeadersHelper::getCurrentHeaders();
 		$contents = ob_get_contents();
 		ob_end_clean();
 

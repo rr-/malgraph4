@@ -40,9 +40,6 @@ h1, h2, h3 {
 .clear {
 	clear: both;
 }
-.load-time {
-	display: none;
-}
 
 #no-script {
 	position: fixed;

@@ -394,9 +394,9 @@ class UserControllerExportModule extends AbstractUserControllerModule
 		imagesavealpha($img, true);
 
 		$viewContext->layoutName = null;
-		header('Content-type: image/png');
-		header('Cache-Control: no-cache, must-revalidate');
-		header('Expires: Sat, 26 Jul 1997 05:00:00 GMT');
+		HttpHeadersHelper::setCurrentHeader('Content-type', 'image/png');
+		HttpHeadersHelper::setCurrentHeader('Cache-Control', 'no-cache, must-revalidate');
+		HttpHeadersHelper::setCurrentHeader('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
 		imagepng($img);
 	}
 }

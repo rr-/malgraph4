@@ -21,7 +21,7 @@ class IndexControllerSearchModule extends AbstractControllerModule
 		{
 			$viewContext->layoutName = null;
 			$url = IndexControllerIndexModule::url($userName, $media);
-			header('Location: ' . $url);
+			HttpHeadersHelper::setCurrentHeader('Location', $url);
 			return;
 		}
 
@@ -33,6 +33,6 @@ class IndexControllerSearchModule extends AbstractControllerModule
 
 		$viewContext->layoutName = null;
 		$url = UserControllerProfileModule::url($userName, $media);
-		header('Location: ' . $url);
+		HttpHeadersHelper::setCurrentHeader('Location', $url);
 	}
 }

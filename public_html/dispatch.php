@@ -17,7 +17,6 @@ try
 	if (Cache::isFresh($url) and !$bypassCache)
 	{
 		Cache::load($url);
-		exit(0);
 	}
 	foreach ($classNames as $className)
 	{
@@ -27,8 +26,15 @@ try
 			$className::work($controllerContext, $viewContext);
 			View::render($viewContext);
 			Cache::endSave();
-			exit(0);
 		}
+	}
+	if (HttpHeadersHelper::headersSent())
+	{
+		if (HttpHeadersHelper::getCurrentHeader('Content-Type') == 'text/html')
+		{
+			printf('<!-- retrieved in %.05fs -->', microtime(true) - $viewContext->renderStart);
+		}
+		exit(0);
 	}
 	$viewContext->viewName = 'error-404';
 	View::render($viewContext);

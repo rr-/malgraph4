@@ -97,12 +97,6 @@
 		<div class="clear"></div>
 	</div>
 
-	<p class="load-time">
-		<?php printf('%.05f', microtime(true) - $viewContext->renderStart) ?>s
-		&nbsp;|&nbsp;
-		<?php echo date('M d Y, H:i:s') ?> UTC
-	</p>
-
 	<div id="glider">
 		<div>
 			<div class="target"></div>
@@ -127,3 +121,4 @@
 	<?php endif ?>
 </body>
 </html>
+<?php printf('<!-- generated in %.05fs -->', microtime(true) - $viewContext->renderStart) ?>

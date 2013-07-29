@@ -15,27 +15,12 @@ class Downloader
 	private static function parseResult($result, $url)
 	{
 		$pos = strpos($result, "\r\n\r\n");
-		$headers = [];
 		$content = substr($result, $pos + 4);
 		$headerLines = explode("\r\n", substr($result, 0, $pos));
 
 		preg_match('/\d{3}/', array_shift($headerLines), $matches);
 		$code = intval($matches[0]);
-
-		foreach ($headerLines as $line)
-		{
-			list($key, $value) = explode(': ', $line);
-			if (!isset($headers[$key]))
-			{
-				$headers[$key] = $value;
-			}
-			else
-			{
-				$headers[$key] = array_merge(
-					array($headers[$key]),
-					array($value));
-			}
-		}
+		$headers = HttpHeadersHelper::parseHeaderLines($headerLines);
 
 		return new Document($url, $code, $headers, $content);
 	}
