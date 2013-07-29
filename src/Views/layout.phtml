@@ -121,4 +121,4 @@
 	<?php endif ?>
 </body>
 </html>
-<?php printf('<!-- generated in %.05fs -->', microtime(true) - $viewContext->renderStart) ?>
+<?php printf('<!-- generated in %.05fs at %s -->', microtime(true) - $viewContext->renderStart, date('Y-m-d H:i:s')) ?>
