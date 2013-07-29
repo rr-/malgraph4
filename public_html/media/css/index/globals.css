@@ -1,7 +1,10 @@
 .target {
-	width: 400px;
+	width: 470px;
 	height: 210px;
 }
 ul.infobox {
 	height: 200px;
+}
+.section-body {
+	margin-bottom: 2em;
 }

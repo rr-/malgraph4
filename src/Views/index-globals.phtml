@@ -1,14 +1,38 @@
-<h1>Global statistics</h1>
+<h2>Global statistics</h2>
 
-<p>As of <?php echo date('M d Y, H:i') ?> UTC our database has:</p>
-<ul>
-<li><?php echo $viewContext->mediaCount[Media::Anime] ?> anime entries</li>
-<li><?php echo $viewContext->mediaCount[Media::Manga] ?> manga entries</li>
-<li><?php echo $viewContext->userCount ?> users</li>
-<li><?php echo $viewContext->queuedUserCount  ?> queued users</li>
-</ul>
+<div class="mini-section">
+	<div class="left">
+		<p class="big-number">
+			<span class="desc">Anime entries:</span>
+			<span class="value"><?php echo $viewContext->mediaCount[Media::Anime] ?></span>
+		</p>
+	</div>
 
-<p>Below you can see some basic average user&rsquo;s stats: how many anime or manga they completed or how skewed their ratings are. These graphs are based on all MALgraph users&rsquo; data.</p>
+	<div class="right">
+		<p class="big-number">
+			<span class="desc">Manga entries:</span>
+			<span class="value"><?php echo $viewContext->mediaCount[Media::Manga] ?></span>
+		</p>
+	</div>
+</div>
+
+<div class="mini-section">
+	<div class="left">
+		<p class="big-number">
+			<span class="desc">Users:</span>
+			<span class="value"><?php echo $viewContext->userCount ?></span>
+		</p>
+	</div>
+
+	<div class="right">
+		<p class="big-number">
+			<span class="desc">Queued users:</span>
+			<span class="value"><?php echo $viewContext->queuedUserCount ?></span>
+		</p>
+	</div>
+
+	<div class="clear"></div>
+</div>
 
 <?php foreach (Media::getconstList() as $media): ?>
 	<div class="section <?php echo Media::toString($media) ?>-rating-dist">

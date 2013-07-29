@@ -23,6 +23,7 @@ class UserControllerProfileModule extends AbstractUserControllerModule
 		$viewContext->meta->description = $viewContext->user->name . '&rsquo;s profile on MALgraph, an online tool that extends your MyAnimeList profile.';
 		$viewContext->meta->keywords = array_merge($viewContext->meta->keywords, ['profile', 'list', 'achievements', 'ratings', 'activity', 'favorites', 'suggestions', 'recommendations']);
 		WebMediaHelper::addEntries($viewContext);
+		WebMediaHelper::addMiniSections($viewContext);
 		WebMediaHelper::addCustom($viewContext);
 
 		$viewContext->yearsOnMal = null;

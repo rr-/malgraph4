@@ -18,6 +18,7 @@ class IndexControllerGlobalsModule extends AbstractControllerModule
 		$viewContext->meta->description = 'Global community statistics on MALgraph, an online tool that extends your MyAnimeList profile.';
 		WebMediaHelper::addHighcharts($viewContext);
 		WebMediaHelper::addInfobox($viewContext);
+		WebMediaHelper::addMiniSections($viewContext);
 		WebMediaHelper::addCustom($viewContext);
 
 		$viewContext->userCount = Model_User::getCount();

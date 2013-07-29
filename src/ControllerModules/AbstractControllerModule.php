@@ -38,5 +38,4 @@ abstract class AbstractControllerModule
 	{
 		return - 1;
 	}
-
 }
