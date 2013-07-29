@@ -21,6 +21,7 @@ class UserSubProcessorUserMedia extends UserSubProcessor
 	{
 		$this->delete('usermedia', ['user_id' => $context->user->id]);
 
+		$context->user->cool = false;
 		foreach (Media::getConstList() as $media)
 		{
 			$key = $media == Media::Anime
@@ -91,7 +92,7 @@ class UserSubProcessorUserMedia extends UserSubProcessor
 			$user = &$context->user;
 			$user->{Media::toString($media) . '_days_spent'} = $daysSpent;
 			$user->{Media::toString($media) . '_private'} = $isPrivate;
-			$user->cool = $dist->getRatedCount() >= 50 and $dist->getStandardDeviation() >= 1.5;
+			$user->cool |= ($dist->getRatedCount() >= 50 and $dist->getStandardDeviation() >= 1.5);
 			R::store($user);
 		}
 	}

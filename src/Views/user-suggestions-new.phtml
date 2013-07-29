@@ -1,1 +1,14 @@
-
+<div class="section new-recommendations">
+	<h2>Recommendations</h2>
+	<div class="section-body">
+		<?php if (empty($viewContext->newRecommendations)): ?>
+			<p>Sorry, no new recommendations. Hey, this shouldn&rsquo;t have happened!</p>
+		<?php else: ?>
+			<ul>
+				<?php foreach ($viewContext->newRecommendations as $entry): ?>
+					<li><?php echo $entry->title ?>&nbsp;&ndash; computed score: <?php printf('%.02f', $entry->cfScore) ?></li>
+				<?php endforeach ?>
+			</ul>
+		<?php endif ?>
+	</div>
+</div>

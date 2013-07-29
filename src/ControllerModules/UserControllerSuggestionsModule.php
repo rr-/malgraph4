@@ -30,37 +30,39 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 		WebMediaHelper::addCustom($viewContext);
 
 
+		//get list of cool users
 		$goal = 50;
 		$mainUser = $viewContext->user;
 		$coolUsers = Model_User::getCoolUsers($goal);
-		#$coolUsers = array_filter($coolUsers, function($user) use ($mainUser) { return $user->id != $mainUser->id; });
-		var_dump($coolUsers);die;
+		$coolUsers = array_filter($coolUsers, function($user) use ($mainUser) { return $user->id != $mainUser->id; });
 
+		//get their stuff, like lists and mean scores
 		$lists = [];
 		$meanScores = [];
-		foreach (array_merge($coolUsers, (array) $mainUser) as $user)
+		foreach (array_merge($coolUsers, [$mainUser]) as $user)
 		{
 			$list = $user->getMixedUserMedia($viewContext->media);
 			$listCompleted = UserMediaFilter::doFilter($list, UserMediaFilter::finished());
-			$keys = array_map(function($e) { return $e->id; }, $listCompleted);
+			$keys = array_map(function($e) { return $e->media . $e->mal_id; }, $listCompleted);
 			$values = $listCompleted;
 			$lists[$user->id] = array_combine($keys, $values);
+			$dist = RatingDistribution::fromEntries($lists[$user->id]);
 			$meanScores[$user->id] = $dist->getMeanScore();
 		}
 		$addStatic = count($lists[$mainUser->id]) <= 20;
 
-		#$simNormalize = 0;
+		//fill base entries
 		$selectedEntries = [];
-		$similarity = [];
 		foreach ($coolUsers as $coolUser)
 		{
 			//compute similarity indexes between "me" and selected user
 			$sum1 = $sum2a = $sum2b = 0;
 			foreach ($lists[$mainUser->id] as $e1)
 			{
-				if (isset($lists[$coolUser->id][$e1->id]))
+				$key = $e1->media . $e1->mal_id;
+				if (isset($lists[$coolUser->id][$key]))
 				{
-					$e2 = $lists[$coolUser->id][$e1->id];
+					$e2 = $lists[$coolUser->id][$key];
 					$tmp1 = ($e1->score - $meanScores[$mainUser->id]);
 					$tmp2 = ($e2->score - $meanScores[$coolUser->id]);
 					$sum1 += $tmp1 * $tmp2;
@@ -68,103 +70,94 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 					$sum2b += $tmp2 * $tmp2;
 				}
 			}
-			$similarity[$coolUser->id] = $sum1 / max(1, sqrt($sum2a * $sum2b));
+			$similarity = $sum1 / max(1, sqrt($sum2a * $sum2b));
 
 			//check what titles are on their list
 			foreach ($lists[$coolUser->id] as $e2)
 			{
 				$add = false;
-				if (!isset($lists[$mainUser->id][$e2->id]))
+				$key = $e2->media . $e2->mal_id;
+				if (!isset($lists[$mainUser->id][$key]))
 				{
 					$add = true;
 				}
 				else
 				{
-					$e1 = $lists[$mainUser->id][$e2->id];
-					if ($e1->status == UserListEntry::Planned)
+					$e1 = $lists[$mainUser->id][$key];
+					if ($e1->status == UserListStatus::Planned)
 					{
 						$add = true;
 					}
 				}
 				if ($add)
 				{
-					$selectedEntries[$e2->id] = $e2;
-				}
-			}
-			#$simNormalize += abs($selUser->sim);
-		}
-
-		/*
-		$finalAM = [];
-
-		$list = $u->getList(ChibiRegistry::getView()->am);
-
-		//get title ratings
-		$finalAM = [];
-		foreach ($selAM as $id) {
-			$score = 0;
-			foreach ($selUsers as $selUser) {
-				$e2 = $selUser->list->getEntryByID($id);
-				//filter sources
-				if ($e2) {
-					$score2 = $e2->getScore();
-					if ($score2) {
-						$score += $selUser->sim * ($score2 - $selUser->meanScore);
+					if (!isset($selectedEntries[$key]))
+					{
+						$e2->cfScore = $meanScores[$mainUser->id];
+						$selectedEntries[$key] = $e2;
 					}
+					$selectedEntries[$key]->cfScore += $similarity * ($e2->score - $meanScores[$coolUser->id]);
 				}
 			}
-			#$score *= $simNormalize;
-			$score += $meanScore;
-			$finalAM[$id] = $score;
 		}
-		arsort($finalAM, SORT_NUMERIC);
-		$finalAM = array_keys($finalAM);
 
-		//always append at the end shuffled static recommendations
-		$staticRecs = ChibiRegistry::getHelper('mg')->loadJSON(ChibiConfig::getInstance()->chibi->runtime->rootFolder . DIRECTORY_SEPARATOR . ChibiConfig::getInstance()->misc->staticRecsDefFile);
-		shuffle($staticRecs[ChibiRegistry::getView()->am]);
-		$finalAM = array_merge($finalAM, $staticRecs[ChibiRegistry::getView()->am]);
+		//sort these entries by rating
+		uasort($selectedEntries, function($a, $b)
+		{
+			return $a->cfScore < $b->cfScore ? 1 : -1;
+		});
 
-		//now, compute final recommendations
-		$limit = 15;
-		$recs = [];
-		$nonPlannedRecs = 0;
-		while (count($finalAM) > 0 and $nonPlannedRecs < $limit) {
-			//make sure only first unwatched thing in franchise is going to be recommended
-			$franchise = $modelAM->get(array_shift($finalAM))->getFranchise();
-			uasort($franchise->entries, function($a, $b) { return $a->getID() > $b->getID() ? 1 : -1; });
-			$amEntry = null;
-			foreach ($franchise->entries as $franchiseEntry) {
-				if ($franchiseEntry->getStatus() == AMEntry::STATUS_NOT_YET_PUBLISHED) {
+		//append shuffled static recommendations at the end of above recommendations
+		$staticRecIds = TextHelper::loadSimpleList(Config::$staticRecommendationListPath);
+		$staticRecEntries = Model_MixedUserMedia::getFromIdList($staticRecIds);
+		shuffle($staticRecEntries);
+		foreach ($staticRecEntries as $entry)
+		{
+			$entry->cfScore = $entry->average_score;
+			$selectedEntries []= $entry;
+		}
+
+		//trim entries to 25 entries
+		//this is to reduce franchise computation time. note that we add extra
+		//10 entries so that franchises that will be completely filtered out
+		//due to whatever reason (for example, everything still not watched
+		//hasn't aired yet) won't reduce suggestion count to under desired 15.
+		$selectedEntries = array_slice($selectedEntries, 0, 25);
+
+		//finally for each recommended entry, get first non-watched entry from
+		//franchise that is already airing. this is to prevent recommending
+		//season 15 when user has only watched season 3 and properly
+		//recommending season 4 instead.
+		$franchises = Model_MixedUserMedia::getFranchises($selectedEntries, true);
+		$finalEntries = [];
+		foreach ($franchises as $franchise)
+		{
+			DataSorter::sort($franchise->allEntries, DataSorter::MediaMalId);
+			DataSorter::sort($franchise->ownEntries, DataSorter::MediaMalId);
+			$cfScore = reset($franchise->ownEntries)->cfScore;
+			foreach ($franchise->allEntries as $entry)
+			{
+				if ($entry->publishing_status == MediaStatus::NotYetPublished)
+				{
 					continue;
 				}
-				$userEntry = $u->getList(ChibiRegistry::getView()->am)->getEntryByID($franchiseEntry->getID());
-				if (!$userEntry) {
-					$amEntry = $franchiseEntry;
-					$nonPlannedRecs ++;
-					break;
-				} elseif ($userEntry->getStatus() == UserListEntry::STATUS_PLANNED) {
-					$amEntry = $franchiseEntry;
-					break;
+				$key = $entry->media . $entry->mal_id;
+				if (isset($lists[$mainUser->id][$key]))
+				{
+					continue;
 				}
+				$finalEntry = reset($franchise->allEntries);
+				if (!isset($finalEntry->cfScore))
+				{
+					$finalEntry->cfScore = $cfScore;
+				}
+				$finalEntries []= $finalEntry;
+				break;
 			}
-			if (empty($amEntry)) {
-				continue;
-			}
-			//don't recommend more than one thing in given franchise
-			foreach ($franchise->entries as $franchiseEntry) {
-				$id2 = $franchiseEntry->getID();
-				$finalAM = array_filter($finalAM, function($id) use ($id2) { return $id != $id2; });
-			}
-			$rec = new StdClass;
-			$rec->userEntry = $userEntry;
-			$rec->amEntry = $amEntry;
-			$recs []= $rec;
 		}
+		$finalEntries = array_slice($finalEntries, 0, 15);
+		$viewContext->newRecommendations = $finalEntries;
 
-		ChibiRegistry::getHelper('session')->restore();
-		ChibiRegistry::getView()->recs[$u->getID()] = $recs;
-		*/
 
 
 
@@ -175,7 +168,7 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 			$dontRecommend[$entry->media . $entry->mal_id] = true;
 		}
 
-		$allFranchises = $viewContext->user->getFranchisesFromUserMedia($list, true);
+		$allFranchises = Model_MixedUserMedia::getFranchises($list, true);
 		$franchises = [];
 		foreach ($allFranchises as &$franchise)
 		{
@@ -198,6 +191,7 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 			}
 
 			DataSorter::sort($franchise->allEntries, DataSorter::MediaMalId);
+			DataSorter::sort($franchise->ownEntries, DataSorter::MediaMalId);
 			$dist = RatingDistribution::fromEntries($franchise->ownEntries);
 			$franchise->meanScore = $dist->getMeanScore();
 			$franchises []= $franchise;

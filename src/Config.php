@@ -14,6 +14,7 @@ class Config extends Singleton
 	static $bannedUsersListPath;
 	static $bannedGenresListPath;
 	static $bannedCreatorsListPath;
+	static $staticRecommendationListPath;
 	static $errorLogPath;
 	static $achievementsDefinitionPath;
 	static $sendReferrer;
@@ -34,6 +35,7 @@ class Config extends Singleton
 		self::$bannedCreatorsListPath = $rootDir . 'banned-creators.lst';
 		self::$errorLogPath = $rootDir . 'errors.log';
 		self::$achievementsDefinitionPath = $rootDir . 'achievements.json';
+		self::$staticRecommendationListPath = $rootDir . 'static-recommendations.lst';
 		self::$mediaDirectory = join(DIRECTORY_SEPARATOR, [$rootDir, '..', 'public_html', 'media']);
 		self::$mediaUrl = '/media/';
 		self::$mirrorEnabled = false;

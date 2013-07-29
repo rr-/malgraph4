@@ -64,12 +64,15 @@ class Model_User extends RedBean_SimpleModel
 	public static function getCoolUsers($goal)
 	{
 		$query = 'SELECT id FROM user WHERE cool = 1 ORDER BY RANDOM() LIMIT ?';
-		$userIds = array_values(R::getAll($query, [$goal]));
+		$userIds = array_map(function($x) { return intval($x['id']); }, R::getAll($query, [$goal]));
+		if (empty($userIds))
+		{
+			return [];
+		}
 
-		$query = 'id IN (' . R::genSlots(count($userIds)) . ')';
-		var_dump($query);
+		$query = 'id IN (' . R::genSlots($userIds) . ')';
 		$result = R::findAll('user', $query, $userIds);
-		return $result;
+		return array_map(function($x) { return $x->box(); }, $result);
 	}
 
 	public function getMismatchedUserMedia(array $entries)
@@ -91,58 +94,5 @@ class Model_User extends RedBean_SimpleModel
 			}
 		}
 		return $entriesMismatched;
-	}
-
-	/**
-	* Map entries to dictionary of franchise->entries
-	*/
-	private static function clusterize($entries)
-	{
-		$clusters = [];
-		foreach ($entries as $entry)
-		{
-			if (!isset($clusters[$entry->franchise]))
-			{
-				$clusters[$entry->franchise] = [];
-			}
-			$clusters[$entry->franchise] []= $entry;
-		}
-		return $clusters;
-	}
-
-	public function getFranchisesFromUserMedia(array $ownEntries, $loadEverything = false)
-	{
-		$ownClusters = self::clusterize($ownEntries);
-
-		if ($loadEverything)
-		{
-			R::begin();
-			$query = 'CREATE TEMPORARY TABLE hurr (franchise VARCHAR(10))';
-			R::exec($query);
-			foreach (array_chunk(array_keys($ownClusters), Config::$maxDbBindings) as $chunk)
-			{
-				$query = 'INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)'));
-				R::exec($query, $chunk);
-			}
-			$query = 'SELECT * FROM media INNER JOIN hurr ON media.franchise = hurr.franchise';
-			$allEntries = R::getAll($query);
-			$allEntries = array_map(function($entry) { return new Model_MixedUserMedia($entry); }, $allEntries);
-			R::rollback();
-
-			$allClusters = self::clusterize($allEntries);
-		}
-
-		$franchises = [];
-		foreach ($ownClusters as $key => $ownCluster)
-		{
-			$franchise = new StdClass;
-			$franchise->allEntries =
-				!empty($allClusters[$key])
-				? $allClusters[$key]
-				: [];
-			$franchise->ownEntries = array_values($ownCluster);
-			$franchises []= $franchise;
-		}
-		return $franchises;
 	}
 }

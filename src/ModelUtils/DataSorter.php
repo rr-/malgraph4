@@ -31,7 +31,7 @@ class DataSorter
 			case self::MediaMalId:
 				$cb = function($a, $b)
 				{
-					return strcmp($a->media . $a->mal_id, $b->media . $b->mal_id);
+					return strcmp(sprintf('%s%05d', $a->media, $a->mal_id), sprintf('%s%05d', $b->media, $b->mal_id));
 				};
 				break;
 			default:

@@ -61,7 +61,7 @@ class UserControllerProfileModule extends AbstractUserControllerModule
 			{
 				$viewContext->chapters = array_sum(array_map(function($mixedMediaEntry) { return $mixedMediaEntry->finished_chapters; }, $list));
 			}
-			$franchises = $viewContext->user->getFranchisesFromUserMedia($listNonPlanned);
+			$franchises = Model_MixedUserMedia::getFranchises($listNonPlanned);
 			$viewContext->franchiseCount[$media] = count(array_filter($franchises, function($franchise) { return count($franchise->ownEntries) > 1; }));
 
 			$mismatched = $viewContext->user->getMismatchedUserMedia($list);

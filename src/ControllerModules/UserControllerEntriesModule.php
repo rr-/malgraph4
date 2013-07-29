@@ -113,7 +113,7 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 			}
 			if ($sender == 'franchises')
 			{
-				$franchises = $viewContext->user->getFranchisesFromUserMedia($list);
+				$franchises = Model_MixedUserMedia::getFranchises($list);
 				foreach ($franchises as &$franchise)
 				{
 					$dist = RatingDistribution::fromEntries($franchise->ownEntries);
