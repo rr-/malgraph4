@@ -61,6 +61,17 @@ class Model_User extends RedBean_SimpleModel
 		return R::getAll($query)[0]['count'];
 	}
 
+	public static function getCoolUsers($goal)
+	{
+		$query = 'SELECT id FROM user WHERE cool = 1 ORDER BY RANDOM() LIMIT ?';
+		$userIds = array_values(R::getAll($query, [$goal]));
+
+		$query = 'id IN (' . R::genSlots(count($userIds)) . ')';
+		var_dump($query);
+		$result = R::findAll('user', $query, $userIds);
+		return $result;
+	}
+
 	public function getMismatchedUserMedia(array $entries)
 	{
 		$entriesMismatched = [];

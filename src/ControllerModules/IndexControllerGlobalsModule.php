@@ -21,6 +21,7 @@ class IndexControllerGlobalsModule extends AbstractControllerModule
 		WebMediaHelper::addCustom($viewContext);
 
 		$viewContext->userCount = Model_User::getCount();
+		$viewContext->queuedUserCount = (new Queue(Config::$userQueuePath))->size();
 		$viewContext->mediaCount = [];
 		$viewContext->ratingDistribution = [];
 		foreach (Media::getConstList() as $media)

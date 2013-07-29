@@ -1,7 +1,14 @@
 <h1>Global statistics</h1>
 
-<p>These graphs are based on all MALgraph users&rsquo; data. Here you can see some basic average user&rsquo;s stats: how many anime or manga they completed or how skewed their ratings are.</p>
-<p>As of <?php echo date('M d Y, H:i') ?> UTC we have <?php echo $viewContext->userCount ?> users, <?php echo $viewContext->mediaCount[Media::Anime] ?> anime and <?php echo $viewContext->mediaCount[Media::Manga] ?> manga entries in the database.</p>
+<p>As of <?php echo date('M d Y, H:i') ?> UTC our database has:</p>
+<ul>
+<li><?php echo $viewContext->mediaCount[Media::Anime] ?> anime entries</li>
+<li><?php echo $viewContext->mediaCount[Media::Manga] ?> manga entries</li>
+<li><?php echo $viewContext->userCount ?> users</li>
+<li><?php echo $viewContext->queuedUserCount  ?> queued users</li>
+</ul>
+
+<p>Below you can see some basic average user&rsquo;s stats: how many anime or manga they completed or how skewed their ratings are. These graphs are based on all MALgraph users&rsquo; data.</p>
 
 <?php foreach (Media::getconstList() as $media): ?>
 	<div class="section <?php echo Media::toString($media) ?>-rating-dist">

@@ -18,6 +18,7 @@ try
 		website VARCHAR(100),
 		gender VARCHAR(1),
 		processed TIMESTAMP,
+		cool BOOLEAN,
 
 		anime_views INTEGER,
 		anime_days_spent FLOAT,

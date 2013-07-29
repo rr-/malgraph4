@@ -85,10 +85,13 @@ class UserSubProcessorUserMedia extends UserSubProcessor
 			}
 			$this->insert('usermedia', $data);
 
+			$dist = RatingDistribution::fromEntries(array_map(function($x) { return ReflectionHelper::arrayToClass($x); }, $data));
+
 			$daysSpent = Strings::makeFloat(self::getNodeValue($xpath, '//user_days_spent_watching'));
 			$user = &$context->user;
 			$user->{Media::toString($media) . '_days_spent'} = $daysSpent;
 			$user->{Media::toString($media) . '_private'} = $isPrivate;
+			$user->cool = $dist->getRatedCount() >= 50 and $dist->getStandardDeviation() >= 1.5;
 			R::store($user);
 		}
 	}
