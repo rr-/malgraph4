@@ -66,11 +66,11 @@
 	float: right;
 }
 
-p.number {
+p.big-number span.desc {
 	font-size: 110%;
 	vertical-align: middle;
 }
-p.number span {
+p.big-number span.value {
 	font-size: 150%;
 	padding-left: 1em;
 	display: inline-block;

@@ -5,9 +5,9 @@
 	</h2>
 	<div class="section-body">
 		<div class="left mini-section">
-			<p class="number">
-				Completed:
-				<span><?php echo $viewContext->finished[$media] ?></span>
+			<p class="big-number">
+				<span class="desc">Completed:</span>
+				<span class="value"><?php echo $viewContext->finished[$media] ?></span>
 			</p>
 
 			<div class="bar">
@@ -18,9 +18,9 @@
 		</div>
 
 		<div class="right mini-section">
-			<p class="number">
-				Mean score:
-				<span><?php printf('%.02f', $viewContext->meanUserScore[$media]) ?></span>
+			<p class="big-number">
+				<span class="desc">Mean score:</span>
+				<span class="value"><?php printf('%.02f', $viewContext->meanUserScore[$media]) ?></span>
 			</p>
 
 			<div class="bar">
@@ -36,9 +36,9 @@
 		<div class="clear"></div>
 
 		<div class="left mini-section">
-			<p class="number">
-				Franchises:
-				<span><?php echo $viewContext->franchiseCount[$media] ?></span>
+			<p class="big-number">
+				<span class="desc">Franchises:</span>
+				<span class="value"><?php echo $viewContext->franchiseCount[$media] ?></span>
 			</p>
 			<a href="javascript:toggleEntries($('.<?php echo Media::toString($media) ?>-summary .entries-wrapper'), {'sender': 'franchises', 'media': '<?php echo $media ?>'})">
 				Click to show full list
@@ -46,13 +46,13 @@
 		</div>
 
 		<div class="right mini-section">
-			<p class="number">
+			<p class="big-number">
 				<?php if ($media == Media::Anime): ?>
-					Episodes:
-					<span><?php echo $viewContext->episodes ?></span>
+					<span class="desc">Episodes:</span>
+					<span class="value"><?php echo $viewContext->episodes ?></span>
 				<?php elseif ($media == Media::Manga): ?>
-					Chapters:
-					<span><?php echo $viewContext->chapters ?></span>
+					<span class="desc">Chapters:</span>
+					<span class="value"><?php echo $viewContext->chapters ?></span>
 				<?php endif ?>
 			</p>
 			<?php if ($viewContext->mismatchedCount[$media]): ?>

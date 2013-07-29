@@ -22,9 +22,9 @@
 
 		<div class="left">
 			<div class="mini-section list-views">
-				<p class="number">
-					List views:
-					<span><?php echo $viewContext->user->anime_views + $viewContext->user->manga_views ?></span>
+				<p class="big-number">
+					<span class="desc">List views:</span>
+					<span class="value"><?php echo $viewContext->user->anime_views + $viewContext->user->manga_views ?></span>
 				</p>
 
 				<div class="bar">
@@ -43,9 +43,9 @@
 
 			<div class="mini-section">
 				<div class="years">
-					<p class="number">
-						Years on MAL:
-						<span>
+					<p class="big-number">
+						<span class="desc">Years on MAL:</span>
+						<span class="value">
 							<?php if ($viewContext->yearsOnMal): ?>
 								<?php printf('%.1f', $viewContext->yearsOnMal) ?>
 							<?php else: ?>
