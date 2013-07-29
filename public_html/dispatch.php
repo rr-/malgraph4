@@ -25,6 +25,7 @@ try
 			Cache::beginSave($url);
 			$className::work($controllerContext, $viewContext);
 			View::render($viewContext);
+			flush();
 			Cache::endSave();
 		}
 	}
