@@ -85,4 +85,12 @@ class Queue
 		$this->close();
 		return $index !== false ? $index + 1 : false;
 	}
+
+	public function size()
+	{
+		$this->open();
+		$lines = $this->readLines();
+		$this->close();
+		return count($lines);
+	}
 }
