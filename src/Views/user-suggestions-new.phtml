@@ -4,11 +4,30 @@
 		<?php if (empty($viewContext->newRecommendations)): ?>
 			<p>Sorry, no new recommendations. Hey, this shouldn&rsquo;t have happened!</p>
 		<?php else: ?>
-			<ul>
-				<?php foreach ($viewContext->newRecommendations as $entry): ?>
-					<li><?php echo $entry->title ?>&nbsp;&ndash; computed score: <?php printf('%.02f', $entry->cfScore) ?></li>
-				<?php endforeach ?>
-			</ul>
+			<table style="width: 100%">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th data-tooltip="Average score">Avg</th>
+						<th data-tooltip="Computed score">CF</th>
+						<th data-tooltip="Based on X users">#</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ($viewContext->newRecommendations as $entry): ?>
+						<tr>
+							<td>
+								<a href="<?php echo $entry->mal_link ?>">
+								<?php echo $entry->title ?>
+								</a>
+							</td>
+							<td><?php printf('%.02f', $entry->average_score) ?></td>
+							<td><?php printf('%.02f', $entry->cfScore) ?></td>
+							<td><?php echo $entry->cfUsers ?></td>
+						</tr>
+					<?php endforeach ?>
+				</tbody>
+			</table>
 		<?php endif ?>
 	</div>
 </div>

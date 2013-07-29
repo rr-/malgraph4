@@ -38,18 +38,22 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 
 		//get their stuff, like lists and mean scores
 		$lists = [];
+		$listsCompleted = [];
 		$meanScores = [];
 		foreach (array_merge($coolUsers, [$mainUser]) as $user)
 		{
 			$list = $user->getMixedUserMedia($viewContext->media);
+			$keys = array_map(function($e) { return $e->media . $e->mal_id; }, $list);
+			$lists[$user->id] = array_combine($keys, $list);
+
 			$listCompleted = UserMediaFilter::doFilter($list, UserMediaFilter::finished());
 			$keys = array_map(function($e) { return $e->media . $e->mal_id; }, $listCompleted);
-			$values = $listCompleted;
-			$lists[$user->id] = array_combine($keys, $values);
-			$dist = RatingDistribution::fromEntries($lists[$user->id]);
+			$listsCompleted[$user->id] = array_combine($keys, $listCompleted);
+
+			$dist = RatingDistribution::fromEntries($listsCompleted[$user->id]);
 			$meanScores[$user->id] = $dist->getMeanScore();
 		}
-		$addStatic = count($lists[$mainUser->id]) <= 20;
+		$addStatic = count($listsCompleted[$mainUser->id]) <= 20;
 
 		//fill base entries
 		$selectedEntries = [];
@@ -57,12 +61,12 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 		{
 			//compute similarity indexes between "me" and selected user
 			$sum1 = $sum2a = $sum2b = 0;
-			foreach ($lists[$mainUser->id] as $e1)
+			foreach ($listsCompleted[$mainUser->id] as $e1)
 			{
 				$key = $e1->media . $e1->mal_id;
-				if (isset($lists[$coolUser->id][$key]))
+				if (isset($listsCompleted[$coolUser->id][$key]))
 				{
-					$e2 = $lists[$coolUser->id][$key];
+					$e2 = $listsCompleted[$coolUser->id][$key];
 					$tmp1 = ($e1->score - $meanScores[$mainUser->id]);
 					$tmp2 = ($e2->score - $meanScores[$coolUser->id]);
 					$sum1 += $tmp1 * $tmp2;
@@ -73,32 +77,28 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 			$similarity = $sum1 / max(1, sqrt($sum2a * $sum2b));
 
 			//check what titles are on their list
-			foreach ($lists[$coolUser->id] as $e2)
+			foreach ($listsCompleted[$coolUser->id] as $e2)
 			{
-				$add = false;
 				$key = $e2->media . $e2->mal_id;
 				if (!isset($lists[$mainUser->id][$key]))
 				{
-					$add = true;
-				}
-				else
-				{
-					$e1 = $lists[$mainUser->id][$key];
-					if ($e1->status == UserListStatus::Planned)
-					{
-						$add = true;
-					}
-				}
-				if ($add)
-				{
 					if (!isset($selectedEntries[$key]))
 					{
-						$e2->cfScore = $meanScores[$mainUser->id];
+						$e2->cfScore = 0;
+						$e2->cfNormalize = 0;
+						$e2->cfUsers = 0;
 						$selectedEntries[$key] = $e2;
 					}
 					$selectedEntries[$key]->cfScore += $similarity * ($e2->score - $meanScores[$coolUser->id]);
+					$selectedEntries[$key]->cfUsers ++;
+					$selectedEntries[$key]->cfNormalize += abs($similarity);
 				}
 			}
+		}
+		foreach ($selectedEntries as $key => $e)
+		{
+			$e->cfScore /= max(1, $e->cfNormalize);
+			$e->cfScore += $meanScores[$mainUser->id];
 		}
 
 		//sort these entries by rating
@@ -107,14 +107,28 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 			return $a->cfScore < $b->cfScore ? 1 : -1;
 		});
 
-		//append shuffled static recommendations at the end of above recommendations
+		//append shuffled static recommendations at the end of above
+		//recommendations
 		$staticRecIds = TextHelper::loadSimpleList(Config::$staticRecommendationListPath);
 		$staticRecEntries = Model_MixedUserMedia::getFromIdList($staticRecIds);
-		shuffle($staticRecEntries);
 		foreach ($staticRecEntries as $entry)
 		{
+			if ($entry->media != $viewContext->media)
+			{
+				continue;
+			}
 			$entry->cfScore = $entry->average_score;
-			$selectedEntries []= $entry;
+			$entry->cfUsers = 0;
+			$key = $entry->media . $entry->mal_id;
+			if (isset($lists[$mainUser->id][$key]))
+			{
+				continue;
+			}
+			$key = $entry->media . $entry->mal_id;
+			if (!isset($selectedEntries[$key]))
+			{
+				$selectedEntries[$key] = $entry;
+			}
 		}
 
 		//trim entries to 25 entries
@@ -134,7 +148,6 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 		{
 			DataSorter::sort($franchise->allEntries, DataSorter::MediaMalId);
 			DataSorter::sort($franchise->ownEntries, DataSorter::MediaMalId);
-			$cfScore = reset($franchise->ownEntries)->cfScore;
 			foreach ($franchise->allEntries as $entry)
 			{
 				if ($entry->publishing_status == MediaStatus::NotYetPublished)
@@ -146,17 +159,26 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 				{
 					continue;
 				}
-				$finalEntry = reset($franchise->allEntries);
-				if (!isset($finalEntry->cfScore))
+				if (!isset($entry->cfScore))
 				{
-					$finalEntry->cfScore = $cfScore;
+					$entry->cfScore = reset($franchise->ownEntries)->cfScore;
+					$entry->cfUsers = reset($franchise->ownEntries)->cfUsers;
 				}
-				$finalEntries []= $finalEntry;
+				$finalEntries[$key] = $entry;
 				break;
 			}
 		}
-		$finalEntries = array_slice($finalEntries, 0, 15);
-		$viewContext->newRecommendations = $finalEntries;
+		$selectedEntries = $finalEntries;
+		$selectedEntries = array_slice($selectedEntries, 0, 15);
+
+		//sort these entries by rating again, score could have changed after
+		//franchise tinkering
+		uasort($selectedEntries, function($a, $b)
+		{
+			return $a->cfScore < $b->cfScore ? 1 : -1;
+		});
+
+		$viewContext->newRecommendations = $selectedEntries;
 
 
 
