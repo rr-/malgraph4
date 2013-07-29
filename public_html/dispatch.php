@@ -14,21 +14,32 @@ $viewContext = new ViewContext();
 try
 {
 	$url = $_SERVER['REQUEST_URI'];
-	if (Cache::isFresh($url) and !$bypassCache)
-	{
-		Cache::load($url);
-	}
+	$workingClassName = null;
 	foreach ($classNames as $className)
 	{
 		if ($className::parseRequest($url, $controllerContext))
 		{
+			$workingClassName = $className;
+			break;
+		}
+	}
+
+	if (!empty($workingClassName))
+	{
+		if (Cache::isFresh($url) and !$bypassCache and !$controllerContext->bypassCache)
+		{
+			Cache::load($url);
+		}
+		else
+		{
 			Cache::beginSave($url);
-			$className::work($controllerContext, $viewContext);
+			$workingClassName::work($controllerContext, $viewContext);
 			View::render($viewContext);
 			flush();
 			Cache::endSave();
 		}
 	}
+
 	if (HttpHeadersHelper::headersSent())
 	{
 		if (HttpHeadersHelper::getCurrentHeader('Content-Type') == 'text/html')
@@ -37,6 +48,7 @@ try
 		}
 		exit(0);
 	}
+
 	$viewContext->viewName = 'error-404';
 	View::render($viewContext);
 }
