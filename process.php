@@ -24,14 +24,9 @@ foreach ($argv as $key)
 	{
 		$processor->process($key);
 	}
-	catch (BadProcessorKeyException $e)
-	{
-		echo $e->getMessage() . PHP_EOL;
-	}
 	catch (Exception $e)
 	{
-		Logger::log(Config::$errorLogPath, $e);
-		echo $e . PHP_EOL;
+		echo $e->getMessage() . PHP_EOL;
 		$exitCode = 1;
 	}
 }
