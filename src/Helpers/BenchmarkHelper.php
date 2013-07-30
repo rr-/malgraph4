@@ -6,7 +6,7 @@ class BenchmarkHelper extends Singleton
 	public static function benchmark($message)
 	{
 		$delta = microtime(true) - self::$start;
-		printf('%.05f: %s', $delta, $message);
+		printf('%.05f: %s' . PHP_EOL, $delta, $message);
 	}
 
 	public static function doInit()
