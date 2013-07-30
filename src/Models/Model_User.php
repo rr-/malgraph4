@@ -14,8 +14,7 @@ class Model_User extends RedBean_SimpleModel
 			' LEFT JOIN media m ON m.media = um.media AND m.mal_id = um.mal_id' .
 			' WHERE um.user_id = ? AND um.media = ?';
 		$rows = R::getAll($query, [$this->id, $media]);
-		$result = array_map(function($row) { return new Model_MixedUserMedia($row); }, $rows);
-		return $result;
+		return array_map(function($row) { return new Model_MixedUserMedia($row); }, $rows);
 	}
 
 	public function getFriends()
@@ -24,8 +23,7 @@ class Model_User extends RedBean_SimpleModel
 			' WHERE user_id = ?' .
 			' ORDER BY name COLLATE NOCASE ASC';
 		$rows = R::getAll($query, [$this->id]);
-		$result = array_map(function($row) { return ReflectionHelper::arrayToClass($row); }, $rows);
-		return $result;
+		return ReflectionHelper::arraysToClasses($rows);
 	}
 
 	public function getClubs()
@@ -34,8 +32,7 @@ class Model_User extends RedBean_SimpleModel
 			' WHERE user_id = ?' .
 			' ORDER BY name COLLATE NOCASE ASC';
 		$rows = R::getAll($query, [$this->id]);
-		$result = array_map(function($row) { return ReflectionHelper::arrayToClass($row); }, $rows);
-		return $result;
+		return ReflectionHelper::arraysToClasses($rows);
 	}
 
 	public function getHistory($media)
@@ -46,8 +43,7 @@ class Model_User extends RedBean_SimpleModel
 			' WHERE uh.user_id = ? AND uh.media = ?' .
 			' ORDER BY timestamp DESC';
 		$rows = R::getAll($query, [$this->id, $media]);
-		$result = array_map(function($row) { return new Model_MixedUserMedia($row); }, $rows);
-		return $result;
+		return array_map(function($row) { return new Model_MixedUserMedia($row); }, $rows);
 	}
 
 	public function isUserMediaPrivate($media)

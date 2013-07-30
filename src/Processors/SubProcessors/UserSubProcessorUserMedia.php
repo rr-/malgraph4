@@ -86,7 +86,7 @@ class UserSubProcessorUserMedia extends UserSubProcessor
 			}
 			$this->insert('usermedia', $data);
 
-			$dist = RatingDistribution::fromEntries(array_map(function($x) { return ReflectionHelper::arrayToClass($x); }, $data));
+			$dist = RatingDistribution::fromEntries(ReflectionHelper::arraysToClasses($data));
 
 			$daysSpent = Strings::makeFloat(self::getNodeValue($xpath, '//user_days_spent_watching'));
 			$user = &$context->user;

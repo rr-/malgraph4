@@ -29,12 +29,24 @@ class ReflectionHelper
 		return !self::isAbstract($className);
 	}
 
-	public static function arrayToClass(array $array)
+	public static function arrayToClass(array $array, $className = null)
 	{
-		$x = new StdClass;
+		$x = $className === null
+			? new StdClass
+			: new $className;
 		foreach ($array as $key => $val)
 		{
 			$x->$key = $val;
+		}
+		return $x;
+	}
+
+	public static function arraysToClasses(array $array, $className = null)
+	{
+		$x = [];
+		foreach ($array as $key => $subArray)
+		{
+			$x[$key] = self::arrayToClass($subArray, $className);
 		}
 		return $x;
 	}
