@@ -8,7 +8,7 @@ class UserControllerHistoryModule extends AbstractUserControllerModule
 
 	public static function getUrlParts()
 	{
-		return ['acti', 'hist', 'activity', 'history'];
+		return ['hist', 'acti', 'history', 'activity'];
 	}
 
 	public static function getMediaAvailability()
