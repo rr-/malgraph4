@@ -36,7 +36,7 @@ class UserSubProcessorUserMedia extends UserSubProcessor
 			$xpath = new DOMXPath($doc);
 			if ($xpath->query('//myinfo')->length == 0)
 			{
-				throw new BadDocumentNodeException($documents[$key], 'myinfo');
+				throw new BadDocumentNodeException($documents[$key], 'myinfo', '');
 			}
 
 			$nodes = $xpath->query('//anime | //manga');
