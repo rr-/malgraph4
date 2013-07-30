@@ -25,6 +25,20 @@ class Downloader
 		return new Document($url, $code, $headers, $content);
 	}
 
+	private static function urlToPath($url)
+	{
+		return Config::$mirrorPath . DIRECTORY_SEPARATOR . rawurlencode($url) . '.dat';
+	}
+
+	public static function purgeCache(array $urls)
+	{
+		foreach ($urls as $url)
+		{
+			$path = self::urlToPath($url);
+			unlink($path);
+		}
+	}
+
 	public static function downloadMulti(array $urls)
 	{
 		$handles = [];
@@ -32,13 +46,11 @@ class Downloader
 		$urls = array_combine($urls, $urls);
 
 		//if mirror exists, load its content and purge url from download queue
-		$mirrorPaths = [];
 		if (Config::$mirrorEnabled)
 		{
 			foreach ($urls + [] as $url)
 			{
-				$path = Config::$mirrorPath . DIRECTORY_SEPARATOR . rawurlencode($url) . '.dat';
-				$mirrorPaths[$url] = $path;
+				$path = self::urlToPath($url);
 				if (file_exists($path))
 				{
 					$rawResult = file_get_contents($path);
@@ -82,7 +94,7 @@ class Downloader
 			$rawResult = curl_multi_getcontent($handle);
 			if (Config::$mirrorEnabled)
 			{
-				file_put_contents($mirrorPaths[$url], $rawResult);
+				file_put_contents(self::urlToPath($url), $rawResult);
 			}
 			$documents[$url] = self::parseResult($rawResult, $urls[$url]);
 			curl_multi_remove_handle($multiHandle, $handle);

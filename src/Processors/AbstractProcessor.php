@@ -69,6 +69,7 @@ abstract class AbstractProcessor
 		catch (Exception $e)
 		{
 			R::rollback();
+			Downloader::purgeCache($urls);
 			throw $e;
 		}
 

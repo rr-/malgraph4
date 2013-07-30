@@ -10,7 +10,8 @@ $mediaProcessors =
 $query = 'SELECT um.mal_id, um.media FROM usermedia um' .
 	' LEFT JOIN media m ON um.media = m.media AND um.mal_id = m.mal_id' .
 	' WHERE m.id IS NULL' .
-	' GROUP BY um.media || um.mal_id';
+	' GROUP BY um.media || um.mal_id' .
+	' ORDER BY um.mal_id';
 
 $rows = R::getAll($query);
 foreach ($rows as $row)
