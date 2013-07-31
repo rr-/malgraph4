@@ -39,27 +39,26 @@ class Model_MixedUserMedia
 		return $allEntries;
 	}
 
-	private static $ratingDistributionCache;
-	public static function getRatingDistribution($media)
+	public static function getRatingDistribution($media, $doRecompute = false)
 	{
-		if (self::$ratingDistributionCache === null)
+		$dist = file_exists(Config::$globalsCachePath)
+			? TextHelper::loadJson(Config::$globalsCachePath, true)
+			: [];
+
+		if (empty($dist) or $doRecompute)
 		{
-			$query = 'SELECT media, score, COUNT(score) AS count FROM usermedia GROUP BY media, score';
-			self::$ratingDistributionCache = R::getAll($query);
-		}
-		$result = self::$ratingDistributionCache;
-		$dist = [];
-		foreach ($result as $row)
-		{
-			if ($row['media'] != $media)
+			$query = 'SELECT score, COUNT(score) AS count FROM usermedia WHERE media = ? GROUP BY score';
+			$result = R::getAll($query, [$media]);
+			$dist[$media] = [];
+			foreach ($result as $row)
 			{
-				continue;
+				$count = $row['count'];
+				$score = $row['score'];
+				$dist[$media][$score] = $count;
 			}
-			$count = $row['count'];
-			$score = $row['score'];
-			$dist[$score] = $count;
+			TextHelper::putJson(Config::$globalsCachePath, $dist);
 		}
-		return RatingDistribution::fromArray($dist);
+		return RatingDistribution::fromArray($dist[$media]);
 	}
 
 	/**

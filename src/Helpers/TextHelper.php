@@ -1,11 +1,11 @@
 <?php
 class TextHelper
 {
-	public static function loadJson($path)
+	public static function loadJson($path, $fetchAsArray = false)
 	{
 		$contents = file_get_contents($path);
 		$contents = preg_replace('/#(.*)$/m', '', $contents);
-		return json_decode($contents);
+		return json_decode($contents, $fetchAsArray);
 	}
 
 	public static function loadSimpleList($path)
@@ -16,6 +16,12 @@ class TextHelper
 		$lines = array_map('trim', $lines);
 		$lines = array_filter($lines);
 		return $lines;
+	}
+
+	public static function putJson($path, $json)
+	{
+		$contents = json_encode($json);
+		file_put_contents($path, $contents);
 	}
 
 	private static function getNumberText($number, $short, $fmt, $shortForm, $longForm)

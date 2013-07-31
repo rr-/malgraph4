@@ -22,6 +22,7 @@ class Config extends Singleton
 	static $usersPerCronRun;
 	static $mediaDirectory;
 	static $mediaUrl;
+	static $globalsCachePath;
 
 	public static function doInit()
 	{
@@ -36,6 +37,7 @@ class Config extends Singleton
 		self::$errorLogPath = $rootDir . 'errors.log';
 		self::$achievementsDefinitionPath = $rootDir . 'achievements.json';
 		self::$staticRecommendationListPath = $rootDir . 'static-recommendations.lst';
+		self::$globalsCachePath = $rootDir . 'globals-cache.dat';
 		self::$mediaDirectory = join(DIRECTORY_SEPARATOR, [$rootDir, '..', 'public_html', 'media']);
 		self::$mediaUrl = '/media/';
 		self::$mirrorEnabled = false;
