@@ -103,7 +103,13 @@ $(function()
 	}
 
 	/* custom theme editing */
-	$.farbtastic($('.export .colorpicker'), { callback: changedColor, width: 200, height: 200}).target = $(this);
+	var opt =
+	{
+		callback: changedColor,
+		width: 200,
+		height: 200
+	};
+	$.farbtastic($('.export .colorpicker'), opt).target = $(this);
 
 	$('.export select.color').change(function()
 	{

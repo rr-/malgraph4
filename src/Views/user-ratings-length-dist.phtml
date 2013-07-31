@@ -46,7 +46,7 @@
 			</div>
 
 			<script type="text/javascript">
-				var chart = new Highcharts.Chart(
+				var opt =
 				{
 					chart:
 					{
@@ -170,7 +170,9 @@
 							}
 						}
 					]
-				});
+				};
+
+				new Highcharts.Chart(opt);
 			</script>
 		<?php endif ?>
 	</div>

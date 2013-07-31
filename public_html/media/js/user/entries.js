@@ -25,7 +25,9 @@ function toggleEntries(target, data, ajax, cb)
 {
 	if (typeof(cb) === 'undefined')
 	{
-		cb = function() { }
+		cb = function()
+		{
+		}
 	}
 	if (typeof(ajax) === 'undefined')
 	{

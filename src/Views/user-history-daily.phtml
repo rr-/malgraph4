@@ -56,39 +56,102 @@
 		</div>
 
 		<script type="text/javascript">
-			var chart = new Highcharts.Chart({
-				chart: { renderTo: $('.history-daily .target')[0], type: 'column', marginTop: 8 },
-				xAxis: {
-					categories: <?php echo json_encode(array_map(function($x) { return $x % 1 == 0 ? $x : ''; }, array_keys($viewContext->dayPeriods))) ?>, title: { text: 'Days ago', margin: 15 },
-					labels: { style: { fontSize: '10px !important' } },
-					plotBands: { 'from': 6.5, 'to': 6.5 + 7, 'zIndex': 3, 'color': 'rgba(200, 230, 255, 0.2)'}
+			var opt =
+			{
+				chart:
+				{
+					renderTo: $('.history-daily .target')[0],
+					type: 'column',
+					marginTop: 8
 				},
-				yAxis: { title: { text: '<?php echo $viewContext->media == Media::Manga ? 'Chapter' : 'Episode' ?> count' }, min: 0 },
 
-				tooltip: { formatter: function() {
-					var text = '<?php echo $viewContext->media == Media::Manga ? 'Chapters' : 'Episodes' ?> completed ';
-					if (this.x == 0) {
-						text += 'today';
-					} else if (this.x == 1) {
-						text += 'yesterday';
-					} else {
-						text += this.x + ' days ago';
-					}
-					text += ': ' + this.y;
-					return text; } },
-				series: [ {
-					data: <?php echo json_encode(array_map(function($p) { return count($p); }, array_values($viewContext->dayPeriods))) ?>,
-					point: { events: { click: function(e) {
-						var category = this.category;
-						toggleEntries($('.history-daily .entries-wrapper'), {'sender': 'daily-history', 'filter-param': this.category}, false, function()
+				xAxis:
+				{
+					categories: <?php echo json_encode(array_map(function($x) { return $x % 1 == 0 ? $x : ''; }, array_keys($viewContext->dayPeriods))) ?>,
+					title:
+					{
+						text: 'Days ago',
+						margin: 15
+					},
+					labels:
+					{
+						style:
 						{
-							$('.history-daily .entries-wrapper .entries-sub-wrapper').hide();
-							$('.history-daily .entries-wrapper #days-ago-' + category).show();
-						});
-					} } }
-				} ],
-				plotOptions: { column: { pointWidth: 17 } }
-			});
+							fontSize: '10px !important'
+						}
+					},
+					plotBands:
+					{
+						'from': 6.5,
+						'to': 6.5 + 7,
+						'zIndex': 3,
+						'color': 'rgba(200, 230, 255, 0.2)'
+					}
+				},
+
+				yAxis:
+				{
+					title:
+					{
+						text: '<?php echo $viewContext->media == Media::Manga ? 'Chapter' : 'Episode' ?> count'
+					},
+					min: 0
+				},
+
+				tooltip:
+				{
+					formatter: function()
+					{
+						var text = '<?php echo $viewContext->media == Media::Manga ? 'Chapters' : 'Episodes' ?> completed ';
+						if (this.x == 0)
+						{
+							text += 'today';
+						}
+						else if (this.x == 1)
+						{
+							text += 'yesterday';
+						}
+						else
+						{
+							text += this.x + ' days ago';
+						}
+						text += ': ' + this.y;
+						return text;
+					}
+				},
+
+				series:
+				[
+					{
+						data: <?php echo json_encode(array_map(function($p) { return count($p); }, array_values($viewContext->dayPeriods))) ?>,
+						point:
+						{
+							events:
+							{
+								click: function(e)
+								{
+									var category = this.category;
+									toggleEntries($('.history-daily .entries-wrapper'), {'sender': 'daily-history', 'filter-param': this.category}, false, function()
+									{
+										$('.history-daily .entries-wrapper .entries-sub-wrapper').hide();
+										$('.history-daily .entries-wrapper #days-ago-' + category).show();
+									});
+								}
+							}
+						}
+					}
+				],
+
+				plotOptions:
+				{
+					column:
+					{
+						pointWidth: 17
+					}
+				}
+			};
+
+			new Highcharts.Chart(opt);
 		</script>
 	</div>
 </div>

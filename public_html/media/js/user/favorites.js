@@ -30,11 +30,30 @@ $(function()
 		}
 	});
 
-	$('table').tablesorter(
-	{
-		headers: { 0: { sorter: false }, 5: { sorter: 'percent' } },
-		widgets: ['ord'],
-		sortList: [[4,1]]
-	});
+	var opt = {
+		headers:
+		{
+			0:
+			{
+				sorter: false
+			},
+			5:
+			{
+				sorter: 'percent'
+			}
+		},
+
+		widgets:
+		[
+			'ord'
+		],
+
+		sortList:
+		[
+			[4,1]
+		]
+	};
+
+	$('table').tablesorter(opt);
 });
 

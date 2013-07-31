@@ -17,65 +17,129 @@
 			</div>
 
 			<script type="text/javascript">
-				$('.decades .target').each(function() {
-					var chart = new Highcharts.Chart({
-						chart: { renderTo: this, type: 'line', marginTop: 8 },
-						xAxis: {
-							categories: <?php echo json_encode(array_reverse($viewContext->favYears->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY))) ?>,
-							labels: { enabled: false },
-							title: { text: 'Decades', margin: 15 },
-							<?php $json = [];
-								$i = 0;
-								foreach ($viewContext->favDecades->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY) as $decade) {
-									$band = [
-										'from' => $decade - 0.5,
-										'to' => $decade + 9.5,
-										'label' => ['text' => $decade . 's'],
-										'zIndex' => 3,
-									];
-									if ($i ++ % 2 == 0) {
-										$band['color'] = 'rgba(200, 230, 255, 0.2)';
-									}
-									$json []= $band;
-								} ?>
-							plotBands: <?php echo json_encode($json) ?>
+				var opt =
+				{
+					chart:
+					{
+						renderTo: $('.decades .target')[0],
+						type: 'line',
+						marginTop: 8
+					},
+
+					xAxis:
+					{
+						categories: <?php echo json_encode(array_reverse($viewContext->favYears->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY))) ?>,
+						labels:
+						{
+							enabled: false
 						},
-						yAxis: { title: { text: 'Mean score' } },
-						tooltip: { formatter: function() {
+						title:
+						{
+							text: 'Decades',
+							margin: 15
+						},
+						<?php $json = [];
+							$i = 0;
+							foreach ($viewContext->favDecades->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY) as $decade)
+							{
+								$band = [
+									'from' => $decade - 0.5,
+									'to' => $decade + 9.5,
+									'label' => ['text' => $decade . 's'],
+									'zIndex' => 3,
+								];
+								if ($i ++ % 2 == 0)
+								{
+									$band['color'] = 'rgba(200, 230, 255, 0.2)';
+								}
+								$json []= $band;
+							} ?>
+						plotBands: <?php echo json_encode($json) ?>
+					},
+
+					yAxis:
+					{
+						title:
+						{
+							text: 'Mean score'
+						}
+					},
+
+					tooltip:
+					{
+						formatter: function()
+						{
 							var text = 'Mean score of titles from ';
-							if (this.series.name == 'decades') {
+							if (this.series.name == 'decades')
+							{
 								text += Math.floor(this.x / 10) * 10;
 								text += 's';
-							} else {
+							}
+							else
+							{
 								text += this.x;
 							}
 							text += ': ';
-							if (this.y == 0) {
+							if (this.y == 0)
+							{
 								text += 'unrated!';
-							} else {
+							}
+							else
+							{
 								text += Math.round(this.y * 100) / 100.0;
 							}
-							return text; } },
-						series: [ {
+							return text;
+						}
+					},
+
+					series:
+					[
+						{
 							name: 'years',
-							data: <?php echo json_encode(array_reverse(array_map(function($year) use ($viewContext) {
+							data: <?php echo json_encode(array_reverse(array_map(function($year) use ($viewContext)
+							{
 								return [$year, $viewContext->yearScores[$year]];
 							}, $viewContext->favYears->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY)))) ?>,
-							point: { events: { click: function(e) {
-								toggleEntries($('.decades .entries-wrapper'), {'sender': 'year', 'filter-param': this.category});
-							} } }
-						}, {
+							point:
+							{
+								events:
+								{
+									click: function(e)
+									{
+										toggleEntries($('.decades .entries-wrapper'), {'sender': 'year', 'filter-param': this.category});
+									}
+								}
+							}
+						},
+						{
 							name: 'decades',
-							data: <?php echo json_encode(array_reverse(array_map(function($decade) use ($viewContext) {
+							data: <?php echo json_encode(array_reverse(array_map(function($decade) use ($viewContext)
+							{
 								return [$decade + 4.5, $viewContext->decadeScores[$decade]]; },
 							$viewContext->favDecades->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY | AbstractDistribution::IGNORE_EMPTY_GROUPS)))) ?>,
-							point: { events: { click: function(e) {
-								toggleEntries($('.decades .entries-wrapper'), {'sender': 'decade', 'filter-param': Math.floor(this.category / 10) * 10});
-							} } }
-						} ],
-						plotOptions: { column: { pointWidth: 17 } }
-					});
-				});
+							point:
+							{
+								events:
+								{
+									click: function(e)
+									{
+										toggleEntries($('.decades .entries-wrapper'), {'sender': 'decade', 'filter-param': Math.floor(this.category / 10) * 10});
+									}
+								}
+							}
+						}
+					],
+
+					plotOptions:
+					{
+						column:
+						{
+							pointWidth: 17
+						}
+					}
+				};
+
+				new Highcharts.Chart(opt);
 			</script>
 		<?php endif ?>
 	</div>

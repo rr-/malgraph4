@@ -70,25 +70,61 @@
 					</div>
 
 					<script type="text/javascript">
-						var chart = new Highcharts.Chart({
-							chart: { renderTo: $('.<?php echo Media::toString($media) ?>-rating-dist .target')[0], type: 'bar', marginRight: 35 },
-							xAxis: { categories: <?php echo json_encode(array_values($ratingDistribution->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY))) ?>, title: { text: 'Rating' } },
-							yAxis: { title: { text: 'Count', margin: 15 } },
-							tooltip: { formatter: function() {
-								var text;
-								if (this.x == '-') {
-									text = 'Unrated titles: ';
-								} else {
-									text = 'Titles rated with ' + this.x + ': ' + this.y;
+						var opt =
+						{
+							chart:
+							{
+								renderTo: $('.<?php echo Media::toString($media) ?>-rating-dist .target')[0],
+								type: 'bar',
+								marginRight: 35
+							},
+
+							xAxis:
+							{
+								categories: <?php echo json_encode(array_values($ratingDistribution->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY))) ?>,
+								title:
+								{
+									text: 'Rating'
 								}
-								var percent = this.y * 100.0 / <?php echo max(1, $ratingDistribution->getRatedCount()) ?>;
-								text += ' (' + (Math.round(percent * 100.0) / 100.0) + '%)';
-								return text;
-							} },
-							series: [ {
-								data: <?php echo json_encode(array_values($ratingDistribution->getGroupsSizes(AbstractDistribution::IGNORE_NULL_KEY))) ?>,
-							} ]
-						});
+							},
+
+							yAxis:
+							{
+								title:
+								{
+									text: 'Count',
+									margin: 15
+								}
+							},
+
+							tooltip:
+							{
+								formatter: function()
+								{
+									var text;
+									if (this.x == '-')
+									{
+										text = 'Unrated titles: ';
+									}
+									else
+									{
+										text = 'Titles rated with ' + this.x + ': ' + this.y;
+									}
+									var percent = this.y * 100.0 / <?php echo max(1, $ratingDistribution->getRatedCount()) ?>;
+									text += ' (' + (Math.round(percent * 100.0) / 100.0) + '%)';
+									return text;
+								}
+							},
+
+							series:
+							[
+								{
+									data: <?php echo json_encode(array_values($ratingDistribution->getGroupsSizes(AbstractDistribution::IGNORE_NULL_KEY))) ?>
+								}
+							]
+						};
+
+						new Highcharts.Chart(opt);
 					</script>
 				</div>
 			</div>

@@ -1,9 +1,23 @@
-Highcharts.theme = {
-	colors: ['#1969CB', '#ED561B', '#50B432', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
+Highcharts.theme =
+{
+	colors:
+	[
+		'#1969CB',
+		'#ED561B',
+		'#50B432',
+		'#DDDF00',
+		'#24CBE5',
+		'#64E572',
+		'#FF9655',
+		'#FFF263',
+		'#6AF9C4'
+	],
 
-	credits: {'enabled': false},
+	credits:
+	{'enabled': false},
 
-	chart: {
+	chart:
+	{
 		plotShadow: false,
 		backgroundColor: 'rgba(255, 255, 255, 0)',
 		spacingTop: 0,
@@ -14,22 +28,30 @@ Highcharts.theme = {
 	},
 
 	title: false,
-	legend: { enabled: false },
+	legend:
+	{
+	enabled: false
+	},
 
-	xAxis: {
+	xAxis:
+	{
 		gridLineWidth: 1,
 		minorGridLineColor: '#f5f5f5',
 		gridLineColor: '#f5f5f5',
 		lineColor: '#000',
 		tickColor: '#000',
-		labels: {
-			style: {
+		labels:
+		{
+			style:
+			{
 				color: '#000',
 				font: '8pt Verdana, Dejavu Sans, sans-serif'
 			}
 		},
-		title: {
-			style: {
+		title:
+		{
+			style:
+			{
 				color: '#333',
 				fontWeight: 'bold',
 				fontSize: '9pt',
@@ -39,7 +61,8 @@ Highcharts.theme = {
 		}
 	},
 
-	yAxis: {
+	yAxis:
+	{
 		minorTickInterval: 'auto',
 		gridLineColor: '#ddd',
 		minorGridLineColor: '#f5f5f5',
@@ -47,14 +70,18 @@ Highcharts.theme = {
 		lineWidth: 1,
 		tickWidth: 1,
 		tickColor: '#000',
-		labels: {
-			style: {
+		labels:
+		{
+			style:
+			{
 				color: '#000',
 				font: '8pt Verdana, Dejavu Sans, sans-serif'
 			}
 		},
-		title: {
-			style: {
+		title:
+		{
+			style:
+			{
 				color: '#333',
 				fontWeight: 'bold',
 				fontSize: '9pt',
@@ -63,31 +90,40 @@ Highcharts.theme = {
 		}
 	},
 
-	labels: {
-		style: {
+	labels:
+	{
+		style:
+		{
 			color: '#99b'
 		}
 	},
 
-	plotOptions: {
-		bar: {
+	plotOptions:
+	{
+		bar:
+		{
 			pointWidth: 18,
 			borderWidth: 1,
 			shadow: false,
 		},
-		column: {
+		column:
+		{
 			pointWidth: 18,
 			borderWidth: 1,
 			shadow: false,
 		},
-		line: {
+		line:
+		{
 			shadow: false,
 		}
 	},
 
-	tooltip: {
+	tooltip:
+	{
 		backgroundColor: 'auto',
-		style: {} ,
+		style:
+		{
+		},
 		useHTML: true,
 		shadow: false,
 		borderWidth: 0

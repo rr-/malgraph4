@@ -98,28 +98,71 @@
 			</div>
 
 			<script type="text/javascript">
-				var chart = new Highcharts.Chart({
-					chart: { renderTo: $('.rating-dist .target')[0], type: 'bar', marginRight: 35 },
-					xAxis: { categories: <?php echo json_encode(array_map(function($x) { return $x == 0 ? '-' : $x; }, array_values($viewContext->ratingDistribution->getGroupsKeys()))) ?>, title: { text: 'Rating' } },
-					yAxis: { title: { text: 'Count', margin: 15 } },
-					tooltip: { formatter: function() {
-						var text;
-						if (this.x == '-') {
-							text = 'Unrated titles: ' + this.y;
-						} else {
-							text = 'Titles rated with ' + this.x + ': ' + this.y;
+				var opt =
+				{
+					chart:
+					{
+						renderTo: $('.rating-dist .target')[0],
+						type: 'bar',
+						marginRight: 35
+					},
+
+					xAxis:
+					{
+						categories: <?php echo json_encode(array_map(function($x) { return $x == 0 ? '-' : $x; }, array_values($viewContext->ratingDistribution->getGroupsKeys()))) ?>,
+						title:
+						{
+							text: 'Rating'
 						}
-						var percent = this.y * 100.0 / <?php echo max(1, $viewContext->ratingDistribution->getTotalSize()) ?>;
-						text = text + ' (' + (Math.round(percent * 100.0) / 100.0) + '%)';
-						return text;
-					} },
-					series: [ {
-						data: <?php echo json_encode(array_values($viewContext->ratingDistribution->getGroupsSizes())) ?>,
-						point: { events: { click: function(e) {
-							toggleEntries($('.rating-dist .entries-wrapper'), {'sender': 'ratings', 'filter-param': this.category});
-						} } }
-					} ]
-				});
+					},
+
+					yAxis:
+					{
+						title:
+						{
+							text: 'Count',
+							margin: 15
+						}
+					},
+
+					tooltip:
+					{
+						formatter: function()
+						{
+							var text;
+							if (this.x == '-')
+							{
+								text = 'Unrated titles: ' + this.y;
+							}
+							else
+							{
+								text = 'Titles rated with ' + this.x + ': ' + this.y;
+							}
+							var percent = this.y * 100.0 / <?php echo max(1, $viewContext->ratingDistribution->getTotalSize()) ?>;
+							text = text + ' (' + (Math.round(percent * 100.0) / 100.0) + '%)';
+							return text;
+						}
+					},
+
+					series:
+					[
+						{
+							data: <?php echo json_encode(array_values($viewContext->ratingDistribution->getGroupsSizes())) ?>,
+							point:
+							{
+								events:
+								{
+									click: function(e)
+									{
+										toggleEntries($('.rating-dist .entries-wrapper'), {'sender': 'ratings', 'filter-param': this.category});
+									}
+								}
+							}
+						}
+					]
+				};
+
+				new Highcharts.Chart(opt);
 			</script>
 		<?php endif ?>
 	</div>
