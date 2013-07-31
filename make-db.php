@@ -74,6 +74,7 @@ try
 	)');
 	R::exec('CREATE INDEX IF NOT EXISTS ind_usermedia_score ON usermedia (score)');
 	R::exec('CREATE INDEX IF NOT EXISTS ind_usermedia_mediascore ON usermedia(media,score)');
+	R::exec('CREATE INDEX IF NOT EXISTS ind_usermedia_mediamalid ON usermedia(media,mal_id)');
 
 	R::exec('CREATE TABLE IF NOT EXISTS media (
 		id INTEGER PRIMARY KEY,
@@ -102,6 +103,7 @@ try
 
 		UNIQUE (mal_id, media)
 	)');
+	#R::exec('CREATE INDEX IF NOT EXISTS ind_media_mediamalid ON media(media,mal_id)');
 
 	R::exec('CREATE TABLE IF NOT EXISTS mediagenre (
 		id INTEGER PRIMARY KEY,
