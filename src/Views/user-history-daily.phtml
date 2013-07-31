@@ -36,7 +36,7 @@
 				<div class="entries-sub-wrapper" id="days-ago-<?php echo $daysAgo ?>">
 					<p>
 						<a class="close"><i class="icon-close"></i></a>
-						<?php echo $viewContext->media == Media::Manga ? 'Episodes' : 'Chapters' ?> from <?php echo $daysAgo ?> days ago: (<?php echo count($entries) ?>)
+						<?php echo $viewContext->media == Media::Manga ? 'Chapters' : 'Episodes' ?> from <?php echo $daysAgo ?> days ago: (<?php echo count($entries) ?>)
 					</p>
 					<ul>
 						<?php foreach ($entries as $entry): ?>
