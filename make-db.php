@@ -73,6 +73,7 @@ try
 		FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE CASCADE
 	)');
 	R::exec('CREATE INDEX IF NOT EXISTS ind_usermedia_score ON usermedia (score)');
+	R::exec('CREATE INDEX IF NOT EXISTS ind_usermedia_mediascore ON usermedia(media,score)');
 
 	R::exec('CREATE TABLE IF NOT EXISTS media (
 		id INTEGER PRIMARY KEY,

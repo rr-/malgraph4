@@ -39,13 +39,24 @@ class Model_MixedUserMedia
 		return $allEntries;
 	}
 
+	private static $ratingDistributionCache;
 	public static function getRatingDistribution($media)
 	{
-		$dist = [];
-		$result = R::getAll('SELECT COUNT(*) AS count FROM usermedia WHERE media = ? GROUP BY score', [$media]);
-		foreach ($result as $score => $columns)
+		if (self::$ratingDistributionCache === null)
 		{
-			$count = $columns['count'];
+			$query = 'SELECT media, score, COUNT(score) AS count FROM usermedia GROUP BY media, score';
+			self::$ratingDistributionCache = R::getAll($query);
+		}
+		$result = self::$ratingDistributionCache;
+		$dist = [];
+		foreach ($result as $row)
+		{
+			if ($row['media'] != $media)
+			{
+				continue;
+			}
+			$count = $row['count'];
+			$score = $row['score'];
 			$dist[$score] = $count;
 		}
 		return RatingDistribution::fromArray($dist);
