@@ -31,7 +31,7 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 
 
 		//get list of cool users
-		$goal = 50;
+		$goal = 20;
 		$mainUser = $viewContext->user;
 		$coolUsers = Model_User::getCoolUsers($goal);
 		$coolUsers = array_filter($coolUsers, function($user) use ($mainUser) { return $user->id != $mainUser->id; });
