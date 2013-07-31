@@ -6,9 +6,8 @@ class MediaGenreDistribution extends AbstractDistribution
 		return 0;
 	}
 
-	public static function fromEntries(array $entries = [])
+	public static function attachGenres(array &$entries)
 	{
-		$dist = new self();
 		R::begin();
 		R::exec('CREATE TEMPORARY TABLE hurr (media_id INTEGER)');
 		foreach (array_chunk(array_map(function($entry) { return $entry->media_id; }, $entries), Config::$maxDbBindings) as $chunk)
@@ -38,8 +37,13 @@ class MediaGenreDistribution extends AbstractDistribution
 			}
 			$map[$row->media_id]->genres []= $row;
 		}
+	}
 
-		foreach ($map as $entry)
+	public static function fromEntries(array $entries = [])
+	{
+		$dist = new self();
+		self::attachGenres($entries);
+		foreach ($entries as $entry)
 		{
 			$dist->addEntry($entry);
 		}
