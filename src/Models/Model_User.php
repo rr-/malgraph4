@@ -12,9 +12,9 @@ class Model_User extends RedBean_SimpleModel
 	{
 		$query = 'SELECT m.*, um.*, m.id AS media_id FROM usermedia um' .
 			' LEFT JOIN media m ON m.media = um.media AND m.mal_id = um.mal_id' .
-			' AND um.media = ?' .
 			' WHERE um.user_id = ?';
-		$rows = R::getAll($query, [$media, $this->id]);
+		$rows = R::getAll($query, [$this->id]);
+		$rows = array_filter($rows, function($row) use ($media) { return $row['media'] == $media; });
 		return array_map(function($row) { return new Model_MixedUserMedia($row); }, $rows);
 	}
 
