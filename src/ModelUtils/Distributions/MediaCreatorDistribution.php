@@ -33,7 +33,7 @@ class MediaCreatorDistribution extends AbstractDistribution
 		foreach ($entries as $entry)
 		{
 			$entry->creators = [];
-			$map[$entry->media_id] = &$entry;
+			$map[$entry->media_id] = $entry;
 		}
 
 		foreach ($data as $row)
