@@ -9,8 +9,7 @@
 					<tr>
 						<th>Title</th>
 						<th data-tooltip="Average score">Avg</th>
-						<th data-tooltip="Computed score">CF</th>
-						<th data-tooltip="Based on X users">#</th>
+						<th data-tooltip="Hypothetical score">HS</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -22,8 +21,7 @@
 								</a>
 							</td>
 							<td><?php printf('%.02f', $entry->average_score) ?></td>
-							<td><?php printf('%.02f', $entry->cfScore) ?></td>
-							<td><?php echo $entry->cfUsers ?></td>
+							<td><?php printf('%.02f', $entry->hypotheticalScore) ?></td>
 						</tr>
 					<?php endforeach ?>
 				</tbody>

@@ -21,19 +21,11 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 		return 5;
 	}
 
-	public static function work(&$viewContext)
+	private static function getRecs($viewContext, $goal)
 	{
-		$viewContext->viewName = 'user-suggestions';
-		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . ' - suggestions (' . Media::toString($viewContext->media) . ')';
-		$viewContext->meta->description = $viewContext->user->name . '&rsquo;s ' . Media::toString($viewContext->media) . ' suggestions on MALgraph, an online tool that extends your MyAnimeList profile.';
-		$viewContext->meta->keywords = array_merge($viewContext->meta->keywords, ['profile', 'list', 'achievements', 'ratings', 'activity', 'favorites', 'suggestions', 'recommendations']);
-		WebMediaHelper::addCustom($viewContext);
-
-
 		//get list of cool users
-		$goal = 20;
 		$mainUser = $viewContext->user;
-		$coolUsers = Model_User::getCoolUsers($goal);
+		$coolUsers = Model_User::getCoolUsers(20);
 		$coolUsers = array_filter($coolUsers, function($user) use ($mainUser) { return $user->id != $mainUser->id; });
 
 		//get their stuff, like lists and mean scores
@@ -136,7 +128,7 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 		//10 entries so that franchises that will be completely filtered out
 		//due to whatever reason (for example, everything still not watched
 		//hasn't aired yet) won't reduce suggestion count to under desired 15.
-		$selectedEntries = array_slice($selectedEntries, 0, 25);
+		$selectedEntries = array_slice($selectedEntries, 0, $goal * 3);
 
 		//finally for each recommended entry, get first non-watched entry from
 		//franchise that is already airing. this is to prevent recommending
@@ -169,7 +161,7 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 			}
 		}
 		$selectedEntries = $finalEntries;
-		$selectedEntries = array_slice($selectedEntries, 0, 15);
+		$selectedEntries = array_slice($selectedEntries, 0, $goal);
 
 		//sort these entries by rating again, score could have changed after
 		//franchise tinkering
@@ -178,9 +170,25 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 			return $a->cfScore < $b->cfScore ? 1 : -1;
 		});
 
-		$viewContext->newRecommendations = $selectedEntries;
+		foreach ($selectedEntries as $entry)
+		{
+			$entry->hypotheticalScore = $entry->cfScore;
+		}
+
+		return $selectedEntries;
+	}
+
+	public static function work(&$viewContext)
+	{
+		$viewContext->viewName = 'user-suggestions';
+		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . ' - suggestions (' . Media::toString($viewContext->media) . ')';
+		$viewContext->meta->description = $viewContext->user->name . '&rsquo;s ' . Media::toString($viewContext->media) . ' suggestions on MALgraph, an online tool that extends your MyAnimeList profile.';
+		$viewContext->meta->keywords = array_merge($viewContext->meta->keywords, ['profile', 'list', 'achievements', 'ratings', 'activity', 'favorites', 'suggestions', 'recommendations']);
+		WebMediaHelper::addCustom($viewContext);
 
 
+		$goal = 10;
+		$viewContext->newRecommendations = self::getRecs($viewContext, $goal);
 
 
 		$list = $viewContext->user->getMixedUserMedia($viewContext->media);
@@ -220,7 +228,7 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 		}
 		DataSorter::sort($franchises, DataSorter::MeanScore);
 
-		$viewContext->franchises = $franchises;
+		$viewContext->franchises = [];#$franchises;
 		$viewContext->private = $viewContext->user->isUserMediaPrivate($viewContext->media);
 	}
 }
