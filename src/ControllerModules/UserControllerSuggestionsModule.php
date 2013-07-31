@@ -157,7 +157,7 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 				$key = $entry->media . $entry->mal_id;
 				if (isset($lists[$mainUser->id][$key]))
 				{
-					continue;
+					break;
 				}
 				if (!isset($entry->cfScore))
 				{
