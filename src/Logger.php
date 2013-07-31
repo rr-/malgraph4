@@ -13,14 +13,20 @@ class Logger
 			: 'cron';
 	}
 
-	public static function logLine($logPath, $line)
+	public static function purge($logPath)
+	{
+		$handle = fopen($logPath, 'wb');
+		fclose($handle);
+	}
+
+	public static function logLine($logPath, $line = null)
 	{
 		$handle = fopen($logPath, 'ab');
 		flock($handle, LOCK_EX);
 		$data = sprintf('%s %s %s' . PHP_EOL,
 			self::getTimestamp(),
 			self::getRequestUri(),
-			$line ?: '---');
+			$line !== null ? $line : '---');
 		fwrite($handle, $data);
 		fclose($handle);
 	}
