@@ -1,22 +1,31 @@
 <?php
-class BanHelper
+class BanHelper extends Singleton
 {
+	private static $bannedUsers;
+	private static $bannedGenres;
+	private static $bannedCreators;
+
+	public static function doInit()
+	{
+		self::$bannedUsers = array_map('strtolower', TextHelper::loadSimpleList(Config::$bannedUsersListPath));
+		self::$bannedGenres = TextHelper::loadSimpleList(Config::$bannedGenresListPath);
+		self::$bannedCreators = TextHelper::loadSimpleList(Config::$bannedCreatorsListPath);
+	}
+
 	public static function isUserBanned($userName)
 	{
-		$lines = TextHelper::loadSimpleList(Config::$bannedUsersListPath);
-		$lines = array_map('strtolower', $lines);
-		return in_array(strtolower($userName), $lines);
+		return in_array(strtolower($userName), self::$bannedUsers);
 	}
 
 	public static function isGenreBanned($media, $genreId)
 	{
-		$lines = TextHelper::loadSimpleList(Config::$bannedGenresListPath);
-		return in_array($media . $genreId, $lines);
+		return in_array($media . $genreId, self::$bannedGenres);
 	}
 
 	public static function isCreatorBanned($media, $creatorId)
 	{
-		$lines = TextHelper::loadSimpleList(Config::$bannedCreatorsListPath);
-		return in_array($media . $creatorId, $lines);
+		return in_array($media . $creatorId, self::$bannedCreators);
 	}
 }
+
+BanHelper::init();
