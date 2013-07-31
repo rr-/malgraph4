@@ -112,12 +112,15 @@
 							}
 							else
 							{
-								text = 'Mean score for titles of ' + this.x + ' length';
+								text = 'Mean score for titles ' + this.x;
 								<?php if ($viewContext->media == Media::Anime): ?>
+									text += ' ep. long';
 									if (this.x == '1')
 									{
 										text += ' (w/o movies)';
 									}
+								<?php else: ?>
+									text += ' ch. long';
 								<?php endif ?>
 								text += ': ';
 							}
@@ -129,7 +132,7 @@
 							{
 								text += 'unrated!';
 							}
-							text += ' (' + this.points[0].y + ' titles)';
+							text += ' (total: ' + this.points[0].y + ')';
 							return text;
 						}
 					},
