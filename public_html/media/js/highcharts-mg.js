@@ -10,6 +10,7 @@ Highcharts.theme = {
 		spacingBottom: 0,
 		spacingLeft: 0,
 		spacingRight: 0,
+		alignTicks: false,
 	},
 
 	title: false,
