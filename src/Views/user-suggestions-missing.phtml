@@ -4,11 +4,10 @@
 	</h2>
 	<p class="undelete-msg">There are <strong>0</strong> hidden suggestions. <a href="#" class="undelete-trigger">Show them</a></p>
 	<div class="section-body">
-		<?php if (empty($viewContext->franchises)): ?>
+		<?php if ($viewContext->private): ?>
+			<p>Same as above&hellip;</p>
+		<?php elseif (empty($viewContext->franchises)): ?>
 			<p>Yay! No missing relations!</p>
-		<?php elseif ($viewContext->private): ?>
-			<p>Since <?php echo $viewContext->user->name ?>&rsquo;s <?php echo Media::toString($viewContext->media) ?> list is marked as private, we can&rsquo;t reveal its content by showing suggestions.<br>
-			If this is your list, click <a target="_blank" href="http://myanimelist.net/editprofile.php?go=listpreferences">here</a> to change privacy settings.</p>
 		<?php else: ?>
 			<table>
 				<thead>
