@@ -115,8 +115,8 @@
 							name: 'decades',
 							data: <?php echo json_encode(array_reverse(array_map(function($decade) use ($viewContext)
 							{
-								return [$decade + 4.5, $viewContext->decadeScores[$decade]]; },
-							$viewContext->favDecades->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY | AbstractDistribution::IGNORE_EMPTY_GROUPS)))) ?>,
+								return [$decade + 4.5, $viewContext->decadeScores[$decade]];
+							}, $viewContext->favDecades->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY | AbstractDistribution::IGNORE_EMPTY_GROUPS)))) ?>,
 							point:
 							{
 								events:

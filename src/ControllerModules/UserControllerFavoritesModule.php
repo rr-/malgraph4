@@ -62,38 +62,38 @@ class UserControllerFavoritesModule extends AbstractUserControllerModule
 		$viewContext->favDecades = $favDecades;
 
 		$viewContext->yearScores = [];
-		foreach ($favYears->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY) as $key)
+		foreach ($favYears->getGroupsKeys() as $safeKey => $key)
 		{
 			$subEntries = $favYears->getGroupEntries($key);
-			$viewContext->yearScores[$key] = self::getMeanScore($subEntries);
+			$viewContext->yearScores[$safeKey] = self::getMeanScore($subEntries);
 		}
 
 		$viewContext->decadeScores = [];
-		foreach ($favDecades->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY) as $key)
+		foreach ($favDecades->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY) as $safeKey => $key)
 		{
 			$subEntries = $favDecades->getGroupEntries($key);
-			$viewContext->decadeScores[$key] = self::getMeanScore($subEntries);
+			$viewContext->decadeScores[$safeKey] = self::getMeanScore($subEntries);
 		}
 
 		$viewContext->creatorScores = [];
 		$viewContext->creatorValues = [];
 		$viewContext->creatorTimeSpent = [];
-		foreach ($favCreators->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY) as $key)
+		foreach ($favCreators->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY) as $safeKey => $key)
 		{
 			$subEntries = $favCreators->getGroupEntries($key);
-			$viewContext->creatorScores[$key->mal_id] = self::getMeanScore($subEntries);
-			$viewContext->creatorTimeSpent[$key->mal_id] = self::getTimeSpent($subEntries);
+			$viewContext->creatorScores[$safeKey] = self::getMeanScore($subEntries);
+			$viewContext->creatorTimeSpent[$safeKey] = self::getTimeSpent($subEntries);
 		}
 		$viewContext->creatorValues = DistributionEvaluator::evaluate($favCreators);
 
 		$viewContext->genreScores = [];
 		$viewContext->genreValues = [];
 		$viewContext->genreTimeSpent = [];
-		foreach ($favGenres->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY) as $key)
+		foreach ($favGenres->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY) as $safeKey => $key)
 		{
 			$subEntries = $favGenres->getGroupEntries($key);
-			$viewContext->genreScores[$key->mal_id] = self::getMeanScore($subEntries);
-			$viewContext->genreTimeSpent[$key->mal_id] = self::getTimeSpent($subEntries);
+			$viewContext->genreScores[$safeKey] = self::getMeanScore($subEntries);
+			$viewContext->genreTimeSpent[$safeKey] = self::getTimeSpent($subEntries);
 		}
 		$viewContext->genreValues = DistributionEvaluator::evaluate($favGenres);
 	}

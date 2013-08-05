@@ -5,16 +5,20 @@ class MediaDecadeDistribution extends AbstractDistribution
 	{
 		if (!empty($this->keys))
 		{
-			$min = $max = reset($this->keys);
-			while (list($i,) = each($this->keys))
+			$min = $max = null;
+			foreach ($this->keys as $safeKey => $key)
 			{
-				if ($min > $i)
+				if ($safeKey == $this->getNullGroupKey())
 				{
-					$min = $i;
+					continue;
 				}
-				elseif ($max < $i)
+				if ($min === null or $safeKey < $min)
 				{
-					$max = $i;
+					$min = $safeKey;
+				}
+				if ($max === null or $safeKey > $max)
+				{
+					$max = $safeKey;
 				}
 			}
 			for ($i = $min + 10; $i < $max; $i += 10)

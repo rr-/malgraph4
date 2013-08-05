@@ -36,18 +36,18 @@ class RatingDistribution extends AbstractDistribution
 	{
 		$mean = 0;
 		$totalSize = 0;
-		foreach ($this->groups as $key => $size)
+		foreach ($this->groups as $safeKey => $size)
 		{
-			if ($key == $this->getNullGroupKey())
+			if ($safeKey == $this->getNullGroupKey())
 			{
 				continue;
 			}
-			$mean += $key * $size;
+			$mean += $safeKey * $size;
 			$totalSize += $size;
 		}
 		if ($totalSize == 0)
 		{
-			return null;
+			return 0;
 		}
 		return $mean / max(1, $totalSize);
 	}
