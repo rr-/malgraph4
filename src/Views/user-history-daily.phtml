@@ -38,19 +38,25 @@
 						<a class="close"><i class="icon-close"></i></a>
 						<?php echo $viewContext->media == Media::Manga ? 'Chapters' : 'Episodes' ?> from <?php echo $daysAgo ?> days ago: (<?php echo count($entries) ?>)
 					</p>
-					<ul>
-						<?php foreach ($entries as $entry): ?>
-							<li>
-								<a target="_blank" href="<?php echo $entry->mal_link ?>">
-									<?php echo htmlspecialchars($entry->title) ?>
-								</a>
-								<span class="details">
-									&nbsp;(<?php echo $entry->progress ?>
-									&nbsp;&ndash; <?php echo date('M jS, H:i', strtotime($entry->timestamp)) ?>)
-								</span>
-							</li>
-						<?php endforeach ?>
-					</ul>
+					<?php if ($viewContext->isPrivate): ?>
+						<p>Can&rsquo;t show you titles from a private list.</p>
+					<?php elseif (empty($entries)): ?>
+						<p>None!</p>
+					<?php else: ?>
+						<ul>
+							<?php foreach ($entries as $entry): ?>
+								<li>
+									<a target="_blank" href="<?php echo $entry->mal_link ?>">
+										<?php echo htmlspecialchars($entry->title) ?>
+									</a>
+									<span class="details">
+										&nbsp;(<?php echo $entry->progress ?>
+										&nbsp;&ndash; <?php echo date('M jS, H:i', strtotime($entry->timestamp)) ?>)
+									</span>
+								</li>
+							<?php endforeach ?>
+						</ul>
+					<?php endif ?>
 				</div>
 			<?php endforeach ?>
 		</div>

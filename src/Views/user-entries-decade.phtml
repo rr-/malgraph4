@@ -16,10 +16,10 @@
 	<?php endif ?>
 </p>
 
-<?php if (empty($viewContext->entries)): ?>
-	<p>None!</p>
-<?php elseif ($viewContext->isPrivate): ?>
+<?php if ($viewContext->isPrivate): ?>
 	<p>Can&rsquo;t show you titles from a private list.</p>
+<?php elseif (empty($viewContext->entries)): ?>
+	<p>None!</p>
 <?php else: ?>
 	<ul>
 		<?php foreach ($viewContext->entries as $entry): ?>
@@ -32,4 +32,3 @@
 		<?php endforeach ?>
 	</ul>
 <?php endif ?>
-

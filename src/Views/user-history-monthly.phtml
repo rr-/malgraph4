@@ -59,16 +59,22 @@
 								<a class="close"><i class="icon-close"></i></a>
 								<?php printf('%s completed in %s %s: (%d)', ucfirst(Media::toString($viewContext->media)), $longMonthNames[$month - 1], $year, count($entries)) ?>
 							</p>
-							<ul>
-								<?php foreach ($entries as $entry): ?>
-									<li>
-										<a target="_blank" href="<?php echo $entry->mal_link ?>">
-											<?php echo htmlspecialchars($entry->title) ?>
-										</a>
-										<span class="details">&nbsp;(<?php echo $entry->score ? 'rated with ' . $entry->score : 'unrated' ?>)</span>
-									</li>
-								<?php endforeach ?>
-							</ul>
+							<?php if ($viewContext->isPrivate): ?>
+								<p>Can&rsquo;t show you titles from a private list.</p>
+							<?php elseif (empty($entries)): ?>
+								<p>None!</p>
+							<?php else: ?>
+								<ul>
+									<?php foreach ($entries as $entry): ?>
+										<li>
+											<a target="_blank" href="<?php echo $entry->mal_link ?>">
+												<?php echo htmlspecialchars($entry->title) ?>
+											</a>
+											<span class="details">&nbsp;(<?php echo $entry->score ? 'rated with ' . $entry->score : 'unrated' ?>)</span>
+										</li>
+									<?php endforeach ?>
+								</ul>
+							<?php endif ?>
 						</div>
 					<?php endforeach ?>
 				<?php endforeach ?>

@@ -7,10 +7,10 @@
 	<?php endif ?>
 </p>
 
-<?php if (empty($viewContext->franchises)): ?>
-	<p>None!</p>
-<?php elseif ($viewContext->isPrivate): ?>
+<?php if ($viewContext->isPrivate): ?>
 	<p>Can&rsquo;t show you titles from a private list.</p>
+<?php elseif (empty($viewContext->franchises)): ?>
+	<p>None!</p>
 <?php else: ?>
 	<ol class="franchises">
 		<?php foreach ($viewContext->franchises as $franchise): ?>

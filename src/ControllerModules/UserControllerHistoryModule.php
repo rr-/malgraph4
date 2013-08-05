@@ -93,6 +93,7 @@ class UserControllerHistoryModule extends AbstractUserControllerModule
 				: [];
 		}
 
+		$viewContext->isPrivate = $viewContext->user->isUserMediaPrivate($viewContext->media);
 		$viewContext->dayPeriods = $dayPeriods;
 		$viewContext->dailyTitles = $dailyTitles;
 	}

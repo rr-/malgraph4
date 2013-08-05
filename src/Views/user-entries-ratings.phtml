@@ -11,14 +11,14 @@
 	<?php endif ?>
 </p>
 
-<?php if (empty($viewContext->entries)): ?>
+<?php if ($viewContext->isPrivate): ?>
+	<p>Can&rsquo;t show you titles from a private list.</p>
+<?php elseif (empty($viewContext->entries)): ?>
 	<?php if ($viewContext->filterParam == 0): ?>
 		<p>Horray! No unrated titles.</p>
 	<?php else: ?>
 		<p>None!</p>
 	<?php endif ?>
-<?php elseif ($viewContext->isPrivate): ?>
-	<p>Can&rsquo;t show you titles from a private list.</p>
 <?php else: ?>
 	<ul>
 		<?php foreach ($viewContext->entries as $entry): ?>
