@@ -131,7 +131,7 @@
 								click: function(e)
 								{
 									var category = this.category;
-									toggleEntries($('.history-daily .entries-wrapper'), {'sender': 'daily-history', 'filter-param': this.category}, false, function()
+									toggleEntries($('.history-daily .entries-wrapper'), {'sender': 'daily-history', 'filter-param': category}, false, function()
 									{
 										$('.history-daily .entries-wrapper .entries-sub-wrapper').hide();
 										$('.history-daily .entries-wrapper #days-ago-' + category).show();

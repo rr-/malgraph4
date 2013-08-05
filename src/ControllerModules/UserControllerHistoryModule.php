@@ -89,7 +89,7 @@ class UserControllerHistoryModule extends AbstractUserControllerModule
 		{
 			$date = date('Y-m-d', mktime(24 * $i));
 			$dayPeriods[-$i] = isset($dailyHistoryGroups[$date])
-				? $dailyHistoryGroups[$key]
+				? $dailyHistoryGroups[$date]
 				: [];
 		}
 
