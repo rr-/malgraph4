@@ -11,60 +11,77 @@ $bypassCache = !empty($_GET['bypass-cache']);
 
 $controllerContext = new ControllerContext();
 $viewContext = new ViewContext();
-try
-{
-	$url = $_SERVER['REQUEST_URI'];
-	$workingClassName = null;
-	foreach ($classNames as $className)
-	{
-		if ($className::parseRequest($url, $controllerContext))
-		{
-			$workingClassName = $className;
-			break;
-		}
-	}
 
-	if (!empty($workingClassName))
+if (isset($_GET['e']))
+{
+	try
 	{
-		$workingClassName::preWork($controllerContext, $viewContext);
-		$bypassCache |= $controllerContext->bypassCache;
-		if (Cache::isFresh($url) and !$bypassCache)
+		$viewContext->viewName = 'error-' . $_GET['e'];
+		View::render($viewContext);
+	}
+	catch (Exception $e)
+	{
+		$viewContext->viewName = 'error-404';
+		View::render($viewContext);
+	}
+}
+else
+{
+	try
+	{
+		$url = $_SERVER['REQUEST_URI'];
+		$workingClassName = null;
+		foreach ($classNames as $className)
 		{
-			Cache::load($url);
-			flush();
-		}
-		else
-		{
-			if (!$bypassCache)
+			if ($className::parseRequest($url, $controllerContext))
 			{
-				Cache::beginSave($url);
+				$workingClassName = $className;
+				break;
 			}
-			$workingClassName::work($controllerContext, $viewContext);
-			View::render($viewContext);
-			if (!$bypassCache)
+		}
+
+		if (!empty($workingClassName))
+		{
+			$workingClassName::preWork($controllerContext, $viewContext);
+			$bypassCache |= $controllerContext->bypassCache;
+			if (Cache::isFresh($url) and !$bypassCache)
 			{
+				Cache::load($url);
 				flush();
-				Cache::endSave();
 			}
-		}
-		$workingClassName::postWork($controllerContext, $viewContext);
+			else
+			{
+				if (!$bypassCache)
+				{
+					Cache::beginSave($url);
+				}
+				$workingClassName::work($controllerContext, $viewContext);
+				View::render($viewContext);
+				if (!$bypassCache)
+				{
+					flush();
+					Cache::endSave();
+				}
+			}
+			$workingClassName::postWork($controllerContext, $viewContext);
 
-		if (HttpHeadersHelper::getCurrentHeader('Content-Type') == 'text/html')
-		{
-			printf('<!-- retrieved in %.05fs -->', microtime(true) - $viewContext->renderStart);
+			if (HttpHeadersHelper::getCurrentHeader('Content-Type') == 'text/html')
+			{
+				printf('<!-- retrieved in %.05fs -->', microtime(true) - $viewContext->renderStart);
+			}
+			exit(0);
 		}
-		exit(0);
+
+		$viewContext->viewName = 'error-404';
+		View::render($viewContext);
 	}
-
-	$viewContext->viewName = 'error-404';
-	View::render($viewContext);
+	catch (Exception $e)
+	{
+		#log error information
+		$viewContext->viewName = 'error';
+		$viewContext->exception = $e;
+		Logger::log(Config::$errorLogPath, $e);
+		View::render($viewContext);
+	}
+	exit(1);
 }
-catch (Exception $e)
-{
-	#log error information
-	$viewContext->viewName = 'error';
-	$viewContext->exception = $e;
-	Logger::log(Config::$errorLogPath, $e);
-	View::render($viewContext);
-}
-exit(1);

@@ -1,6 +1,9 @@
 DirectorySlash Off
 Options -Indexes
 
+ErrorDocument 404 /dispatch.php?e=404
+ErrorDocument 403 /dispatch.php?e=403
+
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
