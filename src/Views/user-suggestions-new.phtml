@@ -7,18 +7,23 @@
 			<ul>
 				<?php foreach ($viewContext->newRecommendations as $entry): ?>
 					<li>
-						<img src="<?php echo $entry->picture_url ?>" alt="<?php echo htmlspecialchars($entry->title) ?>">
+						<a target="_blank" href="<?php echo $entry->mal_link ?>" title="<?php echo htmlspecialchars($entry->title) ?>">
+							<img src="<?php echo $entry->picture_url ?>" alt="<?php echo htmlspecialchars($entry->title) ?>">
+						</a>
 
-						<div class="details">
-							<a href="<?php echo $entry->mal_link ?>">
-								<?php echo htmlspecialchars($entry->title) ?>
-							</a>
-
-							<div class="genres">
-								<?php echo implode(', ', array_map(function($x) { return $x->name; }, $entry->genres)) ?>
+						<div class="details-wrapper">
+							<div>
+								<a target="_blank" href="<?php echo $entry->mal_link ?>" title="<?php echo htmlspecialchars($entry->title) ?>">
+									<?php echo htmlspecialchars($entry->title) ?>
+								</a>
 							</div>
 
-							<div class="type">
+							<?php $genres = implode(', ', array_map(function($x) { return $x->name; }, $entry->genres)) ?>
+							<div class="genres details" title="<?php echo $genres ?>">
+								<?php echo $genres ?>
+							</div>
+
+							<div class="type details">
 								<?php echo ucfirst(MediaType::toString($entry->sub_type, $entry->media)) ?>
 								<?php $localSize = 0 ?>
 								<?php if ($entry->media == Media::Anime): ?>
@@ -30,7 +35,7 @@
 								<?php endif ?>
 							</div>
 
-							<div class="franchise">
+							<div class="franchise details">
 								<?php if (!empty($entry->franchiseSize) and $localSize != $entry->franchiseSize): ?>
 									<?php if ($entry->media == Media::Anime): ?>
 										(<?php echo TextHelper::getEpisodesText($entry->franchiseSize) ?> in franchise)
@@ -40,7 +45,7 @@
 								<?php endif ?>
 							</div>
 
-							<div class="season">
+							<div class="season details">
 								<?php echo ucfirst($entry->getSeason()) ?>
 							</div>
 						</div>

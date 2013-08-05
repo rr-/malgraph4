@@ -58,17 +58,18 @@
 	margin-right: 0.5em;
 	float: left;
 }
-.original .details {
+.original .details-wrapper {
 	float: left;
-	width: 210px;
-	white-space: pre;
+	width: 190px;
 	line-height: 133%;
-	overflow: hidden;
 }
-.original .details div {
-	font-size: 87.5%;
+.original .details-wrapper div {
+	white-space: pre;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+.original .details {
+	font-size: 85%;
 }
 .original .season {
 	color: gray;
@@ -80,7 +81,7 @@
 }
 .original li {
 	padding: 0;
-	margin: 0 0 1em 0;
+	margin: 0 1em 1em 0;
 	vertical-align: top;
 	display: inline-block;
 }
