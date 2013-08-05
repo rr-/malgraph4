@@ -82,6 +82,10 @@ class TextHelper
 
 		$keys = array_keys($percentages);
 		$sum = array_sum($percentagesRounded);
+		if ($sum == 0)
+		{
+			return $distribution;
+		}
 		while ($sum < 100)
 		{
 			assert(!empty($keys));

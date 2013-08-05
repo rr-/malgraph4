@@ -119,8 +119,8 @@ class UserControllerExportModule extends AbstractUserControllerModule
 			$y1 = ($i - 1) * ($settings->barHeight + $settings->barPadding);
 			$y2 = $i * ($settings->barHeight + $settings->barPadding);
 			$x1 = $mirror
-				? imagesx($img) - $count * imagesx($img) / $max
-				: $count * imagesx($img) / $max;
+				? imagesx($img) - $count * imagesx($img) / max(1, $max)
+				: $count * imagesx($img) / max(1, $max);
 			$x2 = $mirror
 				? 0
 				: imagesx($img);
@@ -159,7 +159,7 @@ class UserControllerExportModule extends AbstractUserControllerModule
 			$bbox = self::getBoundingBox($settings->fontSizeNormal, $settings->font, $text);
 			if ($center)
 			{
-				$x = ($w - $bbox->width) / 2.1;
+				$x = ($w - $bbox->width) / 2.0;
 			}
 			else
 			{
