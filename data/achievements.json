@@ -72,7 +72,9 @@
 				"M1231",  #Mahou Shoujo Lyrical Nanoha StrikerS THE COMICS
 				"M16872", #Mahou Shoujo Lyrical Nanoha Movie 1st the Comics
 				"M24457", #Mahou Shoujo Madoka Magica
+				"M27861", #Mahou Shoujo Madoka Magica (novel)
 				"M28961", #Mahou Shoujo Madoka Magica: Anthology
+				"M44319", #Mahou Shoujo Madoka Magica: The Different Story
 				"M24456", #Mahou Shoujo Oriko Magica
 				"M20521", #Mahou Shoujo Pretty Bell
 				"M9806",  #Mahou Tsukai Tai!
@@ -181,6 +183,7 @@
 				"A831",   #A Little Snow Fairy Sugar
 				"A1014",  #A Little Snow Fairy Sugar Special
 				"A5246",  #Adesugata Mahou no Sannin Musume
+				"A2041",  #Ai to Yuuki no Pig Girl Tonde Buurin (aka Super Pig)
 				"A103",   #Akazukin Chacha
 				"A367",   #Akazukin Chacha OVA
 				"A7152",  #Anyamal Tantei Kiruminzoo
@@ -217,6 +220,9 @@
 				"A10000", #Esper Mami: My Angel Mami-chan
 				"A9880",  #Esper Mami: Hoshizora no Dancing Doll
 				"A604",   #Fancy Lala
+				"A14829", #Fate/kaleid liner Prisma Illya
+				"A19109", #Fate/kaleid liner Prisma Illya Specials
+				"A18851", #Fate/kaleid liner Prisma Illya (2014)
 				"A1126",  #Figure 17
 				"A5684",  #Fresh Precure!
 				"A6527",  #Fresh Precure! Omocha no Kuni wa Himitsu ga Ippai!
@@ -229,9 +235,11 @@
 				"A1534",  #Futari wa Precure Splash Star
 				"A74",    #Gakuen Alice
 				"A11809", #gdgd Fairies
+				"A17651", #Genei wo Kakeru Taiyou
 				"A1865",  #Getsumen to Heiki Mina
 				"A7427",  #Getsumen to Heiki Mina Specials
 				"A980",   #Ground Defence Mao-chan
+				"A18713", #Haiyore! Nyaruko-san: Yasashii Teki no Shitome-kata
 				"A2230",  #Hana no Ko Lunlun
 				"A9264",  #Hana no Ko Lunlun: Konnichiwa Sakura no Sono
 				"A2804",  #Hana no Mahou Tsukai Mary Bell
@@ -269,6 +277,7 @@
 				"A9878",  #Licca-chan to Yamaneko Hoshi no Tabi
 				"A1995",  #Lingerie Senshi Papillon Rose
 				"A349",   #Magical Canan
+				"A17725", #Magical Star Kanon 100
 				"A2040",  #Mahou no Angel Sweet Mint
 				"A3660",  #Mahou no Idol Pastel Yumi
 				"A4113",  #Mahou no Mako-chan
@@ -282,6 +291,10 @@
 				"A2045",  #Mahou no Tenshi Creamy Mami: Eien no Once More
 				"A2046",  #Mahou no Tenshi Creamy Mami: Long Goodbye
 				"A2039",  #Mahou no Yousei Persia
+				"A2988",  #Mahou Shoujo Ai (hentai)
+				"A5653",  #Mahou Shoujo Ai San: The Anime (hentai)
+				"A10770", #Mahou Shoujo Elena (hentai)
+				"A8653",  #Mahou Shoujo Isuka (hentai)
 				"A76",    #Mahou Shoujo Lyrical Nanoha
 				"A77",    #Mahou Shoujo Lyrical Nanoha As
 				"A1915",  #Mahou Shoujo Lyrical Nanoha StrikerS
@@ -292,10 +305,12 @@
 				"A11977", #Mahou Shoujo Madoka Magica Movie 1: Hajimari no Monogatari
 				"A11979", #Mahou Shoujo Madoka Magica Movie 2: Eien no Monogatari
 				"A11981", #Mahou Shoujo Madoka Magica Movie 3
+				"A3526",  #Mahou Shoujo Meruru (hentai)
 				"A1918",  #Mahou Shoujo Pretty Sammy
 				"A1502",  #Mahou Shoujo Pretty Sammy (1996)
 				"A1503",  #Mahou Shoujo Pretty Sammy Specials
-				"A10519", #Mahou Shoujo Sonico★Magica
+				"A5401",  #Mahou Shoujo Sae (hentai)
+				"A10519", #Mahou Shoujo Sonico Magica
 				"A872",   #Mahou Shoujo Tai Arusu
 				"A3991",  #Mahou Shoujo Tai Arusu the Adventure
 				"A3845",  #Mahou Tsukai Chappy
@@ -306,10 +321,17 @@
 				"A5466",  #Mahou Tsukai Tai! vs Shamanic Princess
 				"A2277",  #Mahou Yuugi 2D
 				"A2278",  #Mahou Yuugi 3D
+				"A98",    #Mai-HiME
+				"A673",   #Mai-HiME Specials
+				"A8062",  #Mai-HiME: Kuro no Mai / Saigo no Bansan
+				"A99",    #Mai-Otome
+				"A3268",  #Mai-Otome 0: S.ifr
+				"A1609",  #Mai-Otome Zwei
 				"A2457",  #Majokko Club Yoningumi: A Kuukan Kara no Alien X
 				"A3388",  #Majokko Megu-chan
 				"A3881",  #Majokko Tickle
 				"A2457",  #Majokko Tsukune-chan
+				"A15813", #Majokko Shimai no Yoyo to Nene
 				"A626",   #Mamotte Shugogetten!
 				"A1110",  #Mermaid Melody Pichi Pichi Pitch Pure
 				"A521",   #Mermaid Melody: Pichi Pichi Pitch
@@ -407,10 +429,12 @@
 				"A179",   #Ultra Maniac OVA
 				"A6129",  #Umi Monogatari: Anata ga Ite Kureta Koto
 				"A688",   #Uta Kata
+				"A14283", #Vividred Operation
 				"A1533",  #Wedding Peach
 				"A1957",  #Wedding Peach DX
 				"A1932",  #Yes! Precure 5
 				"A3692",  #Yes! Precure 5 GoGo!
+				"A3051",  #Yes! Pretty Cure 5 Movie: Kagami no Kuni no Miracle Daibouken!
 				"A5454",  #Yokuwakaru Gendaimahou
 				"A6748",  #Yokuwakaru Gendaimahou 00
 				"A4651",  #Yume no Crayon Oukoku
@@ -429,6 +453,9 @@
 				"A12291", #Acchi Kocchi
 				"A713",   #Air (Movie)
 				"A10719", #Boku wa Tomodachi ga Sukunai
+				"A10897", #Boku wa Tomodachi ga Sukunai Episode 0
+				"A14967", #Boku wa Tomodachi ga Sukunai Next
+				"A14027", #Boku wa Tomodachi ga Sukunai: Add-on Disc
 				"A14741", #Chuunibyou demo Koi ga Shitai!
 				"A15687", #Chuunibyou demo Koi ga Shitai! Lite
 				"A15879", #Chuunibyou demo Koi ga Shitai!: Depth of Field - Ai to Nikushimi Gekijyo
@@ -451,7 +478,10 @@
 				"A3466",  #Kino no Tabi: The Beautiful World - Tou no Kuni
 				"A5678",  #Kobato.
 				"A10098", #Kobato. Special: Hajimete no Kobato.
+				"A17635", #Koitabi: True Tours Nanto
 				"A11887", #Kokoro Connect
+				"A16001", #Kokoro Connect: Michi Random
+				"A16782", #Kotonoha no Niwa
 				"A13655", #Little Busters!
 				"A444",   #Maria-sama ga Miteru: Haru
 				"A1738",  #Muteki Kanban Musume
@@ -485,11 +515,13 @@
 				"A4970",  #Afro Samurai: Resurrection
 				"A658",   #Akagi
 				"A47",    #Akira
+				"A2356",  #Amon: The Apocalypse of Devilman
 				"A2202",  #Arcadia of My Youth
 				"A2203",  #Arcadia of My Youth: Endless Orbit SSX
 				"A2582",  #Armored Trooper Votoms
 				"A2251",  #Baccano!
 				"A3901",  #Baccano! Specials
+				"A1468",  #Baoh Raihousha
 				"A67",    #Basilisk: Kouga Ninpou Chou
 				"A404",   #Bastard!!
 				"A4094",  #Batman: Gotham Knight
@@ -518,10 +550,13 @@
 				"A1",     #Cowboy Bebop
 				"A5",     #Cowboy Bebop: Tengoku no Tobira
 				"A114",   #Cromartie High School
+				"A6721",  #Dark Side Cat
 				"A499",   #Demon City Shinjuku
 				"A1178",  #Detonator Orgun
 				"A3702",  #Detroit Metal City
 				"A1726",  #Devil May Cry
+				"A2354",  #Devilman: The Birth
+				"A2355",  #Devilman: The Demon Bird
 				"A12885", #Dynamic Super Robots Grand Battle
 				"A12565", #Fate/Prototype
 				"A356",   #Fate/stay night
@@ -541,6 +576,7 @@
 				"A4486",  #Getter Robo G
 				"A5292",  #Getter Robo Go
 				"A978",   #Getter Robo: Armageddon
+				"A18771", #Gifuu Doudou!!: Kanetsugu to Keiji
 				"A4039",  #Golgo 13
 				"A1761",  #Golgo 13: Queen Bee
 				"A1760",  #Golgo 13: The Professional
@@ -631,7 +667,10 @@
 				"A3352",  #Tengen Toppa Gurren Lagann Special
 				"A6",     #Trigun
 				"A4106",  #Trigun: Badlands Rumble
-				"A4387"   #UFO Robo Grendizer tai Great Mazinger
+				"A4387",  #UFO Robo Grendizer tai Great Mazinger
+				"A1341",  #Violence Jack
+				"A1342",  #Violence Jack 2
+				"A1343"   #Violence Jack 3
 			]}
 		},
 		"mecha": {
@@ -782,7 +821,7 @@
 				{ "threshold": "1500-2499", "id": "numbers-anime-1500",  "level": "Passed 1500 mark",  "title": "The Collector",          "desc": "Watched 1500 animes. No, wait. The plural of anime is anime." },
 				{ "threshold": "2500-4999", "id": "numbers-anime-2500",  "level": "Passed 2500 mark",  "title": "The Maniac",             "desc": "Watched 2500 anime. Is this healthy? You should contact your doctor." },
 				{ "threshold": "5000-7499", "id": "numbers-anime-5000",  "level": "Passed 5000 mark",  "title": "The Legend",             "desc": "Watched 5000 anime. You&rsquo;re one of the chosen ones. You don&rsquo;t even have to brag, since everyone heard about you." },
-				{ "threshold": "7500-9999", "id": "numbers-anime-7500",  "level": "Passed 7500 mark",  "title": "Database breaker",       "desc": "Watched 7.5 &times; 10&sup3; anime. Are you having fun, breaking all the rules? By the way, do we even have that many anime in the database?!" },
+				{ "threshold": "7500-9999", "id": "numbers-anime-7500",  "level": "Passed 7500 mark",  "title": "Database breaker",       "desc": "Watched 7.5 &times; 10&sup3; anime. Are you having fun, breaking all the rules? By the way, since when do we have that many anime in the database?!" },
 				{ "threshold": "10000+",    "id": "numbers-anime-10000", "level": "Passed 10000 mark", "title": "This is it.",            "desc": "Watched 10000 anime. There is no higher level. You can stop now. Everyone, go home." }
 			],
 			"requirement": { "type": "finished-titles" }
