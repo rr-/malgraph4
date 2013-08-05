@@ -16,9 +16,10 @@ var slideDown = function(target)
 {
 	target.show();
 	target.css('height', 'auto');
-	target.css('height', target.height());
-	target.hide();
-	target.stop(true, true).slideDown('medium', resetHeight);
+	var height = target.height();
+	target.stop(true, true); //this can make target hidden
+	target.css('height', '0').show();
+	target.animate({'height': height}, 'medium', resetHeight);
 }
 
 function toggleEntries(target, data, ajax, cb)
