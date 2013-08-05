@@ -32,14 +32,14 @@
 								</td>
 								<td class="count"><?php printf('%d', count($entries)) ?></td>
 								<td class="mean">
-									<?php if ($viewContext->genreScores[$genre->id] == 0): ?>
+									<?php if ($viewContext->genreScores[$genre->mal_id] == 0): ?>
 										-
 									<?php else: ?>
-										<?php printf('%.02f', $viewContext->genreScores[$genre->id]) ?>
+										<?php printf('%.02f', $viewContext->genreScores[$genre->mal_id]) ?>
 									<?php endif ?>
 								</td>
-								<td class="value"><?php printf('%.02f', $viewContext->genreValues[$genre->id]) ?></td>
-								<td class="time"><?php printf('%.02f', $viewContext->genreTimeSpent[$genre->id] / 60.0) ?>h</td>
+								<td class="value"><?php printf('%.02f', $viewContext->genreValues[$genre->mal_id]) ?></td>
+								<td class="time"><?php printf('%.02f', $viewContext->genreTimeSpent[$genre->mal_id] / 60.0) ?>h</td>
 							</tr>
 						<?php endforeach ?>
 						<tr class="entries-wrapper-row">

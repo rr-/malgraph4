@@ -38,14 +38,14 @@
 								</td>
 								<td class="count"><?php printf('%d', count($entries)) ?></td>
 								<td class="mean">
-									<?php if ($viewContext->creatorScores[$creator->id] == 0): ?>
+									<?php if ($viewContext->creatorScores[$creator->mal_id] == 0): ?>
 										-
 									<?php else: ?>
-										<?php printf('%.02f', $viewContext->creatorScores[$creator->id]) ?>
+										<?php printf('%.02f', $viewContext->creatorScores[$creator->mal_id]) ?>
 									<?php endif ?>
 								</td>
-								<td class="value"><?php printf('%.02f', $viewContext->creatorValues[$creator->id]) ?></td>
-								<td class="time"><?php printf('%.02f', $viewContext->creatorTimeSpent[$creator->id] / 60.0) ?>h</td>
+								<td class="value"><?php printf('%.02f', $viewContext->creatorValues[$creator->mal_id]) ?></td>
+								<td class="time"><?php printf('%.02f', $viewContext->creatorTimeSpent[$creator->mal_id] / 60.0) ?>h</td>
 							</tr>
 						<?php endforeach ?>
 						<tr class="entries-wrapper-row">
