@@ -26,6 +26,47 @@ class Model_MixedUserMedia
 		$this->mal_link = 'http://myanimelist.net/' . Media::toString($this->media) . '/' . $this->mal_id;
 	}
 
+	public function getSeason()
+	{
+		$monthMap = [
+			1 => 'winter',
+			2 => 'winter',
+			3 => 'spring',
+			4 => 'spring',
+			5 => 'spring',
+			6 => 'summer',
+			7 => 'summer',
+			8 => 'summer',
+			9 => 'fall',
+			10 => 'fall',
+			11 => 'fall',
+			12 => 'winter',
+		];
+
+		$yearA = intval(substr($this->published_from, 0, 4));
+		$yearB = intval(substr($this->published_to, 0, 4));
+		$monthA = intval(substr($this->published_from, 6, 2));
+		$monthB = intval(substr($this->published_to, 6, 2));
+		if (!$yearA and !$yearB)
+		{
+			return null;
+		}
+		elseif (!$yearA)
+		{
+			if ($monthB)
+			{
+				return $monthMap[$monthB] . ' ' . $yearB;
+			}
+			return strval($yearB);
+		}
+		if ($monthA)
+		{
+			return $monthMap[$monthA] . ' ' . $yearA;
+		}
+		return strval($yearA);
+	}
+
+
 	public static function getFromIdList($list)
 	{
 		$allEntries = [];
