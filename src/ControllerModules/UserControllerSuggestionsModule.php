@@ -140,6 +140,18 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 		{
 			DataSorter::sort($franchise->allEntries, DataSorter::MediaMalId);
 			DataSorter::sort($franchise->ownEntries, DataSorter::MediaMalId);
+			$franchiseSize = 0;
+			foreach ($franchise->allEntries as $entry)
+			{
+				if ($entry->media == Media::Anime)
+				{
+					$franchiseSize += $entry->episodes;
+				}
+				elseif ($entry->media == Media::Manga)
+				{
+					$franchiseSize += $entry->chapters;
+				}
+			}
 			foreach ($franchise->allEntries as $entry)
 			{
 				if ($entry->publishing_status == MediaStatus::NotYetPublished)
@@ -151,6 +163,7 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 				{
 					break;
 				}
+				$entry->franchiseSize = $franchiseSize;
 				if (!isset($entry->cfScore))
 				{
 					$entry->cfScore = reset($franchise->ownEntries)->cfScore;
@@ -173,7 +186,9 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 		foreach ($selectedEntries as $entry)
 		{
 			$entry->hypotheticalScore = $entry->cfScore;
+			$entry->media_id = $entry->id;
 		}
+		MediaGenreDistribution::attachGenres($selectedEntries);
 
 		return $selectedEntries;
 	}

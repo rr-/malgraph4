@@ -1,31 +1,54 @@
-<div class="section new-recommendations">
+<div class="section original">
 	<h2>Recommendations</h2>
 	<div class="section-body">
 		<?php if (empty($viewContext->newRecommendations)): ?>
 			<p>Sorry, no new recommendations. Hey, this shouldn&rsquo;t have happened!</p>
 		<?php else: ?>
-			<table style="width: 100%">
-				<thead>
-					<tr>
-						<th>Title</th>
-						<th data-tooltip="Average score">Avg</th>
-						<th data-tooltip="Hypothetical score">HS</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php foreach ($viewContext->newRecommendations as $entry): ?>
-						<tr>
-							<td>
-								<a href="<?php echo $entry->mal_link ?>">
-								<?php echo $entry->title ?>
-								</a>
-							</td>
-							<td><?php printf('%.02f', $entry->average_score) ?></td>
-							<td><?php printf('%.02f', $entry->hypotheticalScore) ?></td>
-						</tr>
-					<?php endforeach ?>
-				</tbody>
-			</table>
+			<ul>
+				<?php foreach ($viewContext->newRecommendations as $entry): ?>
+					<li>
+						<img src="<?php echo $entry->picture_url ?>" alt="<?php echo htmlspecialchars($entry->title) ?>">
+
+						<div class="details">
+							<a href="<?php echo $entry->mal_link ?>">
+								<?php echo htmlspecialchars($entry->title) ?>
+							</a>
+
+							<div class="genres">
+								<?php echo implode(', ', array_map(function($x) { return $x->name; }, $entry->genres)) ?>
+							</div>
+
+							<div class="type">
+								<?php echo ucfirst(MediaType::toString($entry->sub_type, $entry->media)) ?>
+								<?php $localSize = 0 ?>
+								<?php if ($entry->media == Media::Anime): ?>
+									<?php if ($entry->sub_type != AnimeMediaType::Movie): ?>
+										, <?php echo TextHelper::getEpisodesText($localSize = $entry->episodes) ?>
+									<?php endif ?>
+								<?php elseif ($entry->media == Media::Manga): ?>
+									, <?php echo TextHelper::getChaptersText($localSize = $entry->chapters) ?>
+								<?php endif ?>
+							</div>
+
+							<div class="franchise">
+								<?php if (!empty($entry->franchiseSize) and $localSize != $entry->franchiseSize): ?>
+									<?php if ($entry->media == Media::Anime): ?>
+										(<?php echo TextHelper::getEpisodesText($entry->franchiseSize) ?> in franchise)
+									<?php elseif ($entry->media == Media::Manga): ?>
+										(<?php echo TextHelper::getChaptersText($entry->franchiseSize) ?> in franchise)
+									<?php endif ?>
+								<?php endif ?>
+							</div>
+
+							<div class="season">
+								<?php echo ucfirst($entry->getSeason()) ?>
+							</div>
+						</div>
+
+						<div class="clear"></div>
+					</li>
+				<?php endforeach ?>
+			</ul>
 		<?php endif ?>
 	</div>
 </div>
