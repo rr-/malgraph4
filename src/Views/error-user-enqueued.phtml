@@ -11,10 +11,10 @@
 		</div>
 
 		<script type="text/javascript">
-		window.setTimeout(<?php echo $min ?> * 1000, function()
+		window.setTimeout(function()
 		{
 			window.location.reload();
-		});
+		}, <?php echo $min * 60000 ?>);
 		</script>
 	</div>
 </div>
