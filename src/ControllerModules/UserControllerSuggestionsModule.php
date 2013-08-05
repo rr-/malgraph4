@@ -243,7 +243,7 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 		}
 		DataSorter::sort($franchises, DataSorter::MeanScore);
 
-		$viewContext->franchises = [];#$franchises;
+		$viewContext->franchises = $franchises;
 		$viewContext->private = $viewContext->user->isUserMediaPrivate($viewContext->media);
 	}
 }
