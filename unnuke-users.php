@@ -7,7 +7,6 @@ $processed = 0;
 $names = [];
 
 $exitCode = 0;
-$attempts = 0;
 while ($processed < $limit)
 {
 	if (empty($names))
@@ -29,27 +28,20 @@ while ($processed < $limit)
 
 	$name = reset($names);
 	printf('#%03d %s' . PHP_EOL, $processed, $name);
+	R::begin();
 	try
 	{
 		$userProcessor->process($name);
+		R::commit();
 		++ $processed;
 		array_shift($names);
-		$attempts = 0;
 	}
 	catch (Exception $e)
 	{
+		R::rollback();
 		echo $e->getMessage() . PHP_EOL;
 		$exitCode = 1;
-		$attempts ++;
-		if ($attempts >= 3)
-		{
-			array_shift($names);
-			$attempts = 0;
-		}
-		else
-		{
-			sleep(1);
-		}
+		array_shift($names);
 	}
 }
 exit($exitCode);

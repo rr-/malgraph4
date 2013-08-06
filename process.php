@@ -20,12 +20,15 @@ $exitCode = 0;
 foreach ($argv as $key)
 {
 	printf('Processing %s %s' . PHP_EOL, $pkey, is_numeric($key) ? '#' . $key : $key);
+	R::begin();
 	try
 	{
 		$processor->process($key);
+		R::commit();
 	}
 	catch (Exception $e)
 	{
+		R::rollback();
 		echo $e->getMessage() . PHP_EOL;
 		$exitCode = 1;
 	}

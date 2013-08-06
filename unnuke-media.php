@@ -17,7 +17,11 @@ $query = 'SELECT um.mal_id, um.media FROM usermedia um' .
 $exitCode = 0;
 $rows = R::getAll($query);
 $rows = ReflectionHelper::arraysToClasses($rows);
-$attempts = 0;
+
+$num = 20;
+$done = 0;
+R::begin();
+
 while (!empty($rows))
 {
 	$row = reset($rows);
@@ -26,22 +30,23 @@ while (!empty($rows))
 	{
 		$mediaProcessors[$row->media]->process($row->mal_id);
 		array_shift($rows);
-		$attempts = 0;
+		++ $done;
 	}
 	catch (Exception $e)
 	{
+		R::rollback();
+		R::begin();
 		echo $e->getMessage() . PHP_EOL;
 		$exitCode = 1;
-		$attempts ++;
-		if ($attempts >= 3)
-		{
-			array_shift($rows);
-			$attempts = 0;
-		}
-		else
-		{
-			sleep(1);
-		}
+		array_shift($rows);
+	}
+
+	if ($done % Config::$transactionCommitFrequency == Config::$transactionCommitFrequency - 1)
+	{
+		R::commit();
+		R::begin();
 	}
 }
+
+R::commit();
 exit($exitCode);

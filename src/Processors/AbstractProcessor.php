@@ -18,8 +18,6 @@ abstract class AbstractProcessor
 			return;
 		}
 
-		R::begin();
-
 		$urls = [];
 		try
 		{
@@ -65,11 +63,9 @@ abstract class AbstractProcessor
 				$subProcessor->process($subDocuments, $context);
 			}
 			$this->afterProcessing($context);
-			R::commit();
 		}
 		catch (Exception $e)
 		{
-			R::rollback();
 			Downloader::purgeCache($urls);
 			throw $e;
 		}
