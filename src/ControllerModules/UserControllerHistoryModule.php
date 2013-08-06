@@ -70,7 +70,6 @@ class UserControllerHistoryModule extends AbstractUserControllerModule
 
 		$dailyHistory = $viewContext->user->getHistory($viewContext->media);
 		$dailyHistoryGroups = [];
-		$dailyTitles = [];
 		foreach ($dailyHistory as $historyEntry)
 		{
 			$key = date('Y-m-d', strtotime($historyEntry->timestamp));
@@ -79,18 +78,22 @@ class UserControllerHistoryModule extends AbstractUserControllerModule
 				$dailyHistoryGroups[$key] = [];
 			}
 			$dailyHistoryGroups[$key] []= $historyEntry;
-			$dailyTitles[$historyEntry->media . $historyEntry->mal_id] = $historyEntry;
 		}
 		krsort($dailyHistoryGroups);
 
 		$days = 21;
 		$dayPeriods = [];
+		$dailyTitles = [];
 		for ($i = - $days; $i < 0; $i ++)
 		{
 			$date = date('Y-m-d', mktime(24 * $i));
 			$dayPeriods[-$i] = isset($dailyHistoryGroups[$date])
 				? $dailyHistoryGroups[$date]
 				: [];
+			foreach ($dayPeriods[-$i] as $historyEntry)
+			{
+				$dailyTitles[$historyEntry->media . $historyEntry->mal_id] = $historyEntry;
+			}
 		}
 
 		$viewContext->isPrivate = $viewContext->user->isUserMediaPrivate($viewContext->media);
