@@ -3,11 +3,11 @@ require_once 'src/core.php';
 
 $limit = 500;
 $userProcessor = new UserProcessor();
-$processed = 0;
+$done = 0;
 $names = [];
 
 $exitCode = 0;
-while ($processed < $limit)
+while ($done < $limit)
 {
 	if (empty($names))
 	{
@@ -27,13 +27,13 @@ while ($processed < $limit)
 	}
 
 	$name = reset($names);
-	printf('#%03d %s' . PHP_EOL, $processed, $name);
+	printf('#%03d %s' . PHP_EOL, $done, $name);
 	R::begin();
 	try
 	{
 		$userProcessor->process($name);
 		R::commit();
-		++ $processed;
+		++ $done;
 		array_shift($names);
 	}
 	catch (Exception $e)

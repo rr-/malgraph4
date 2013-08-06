@@ -2,6 +2,7 @@
 abstract class MediaSubProcessor extends AbstractSubProcessor
 {
 	const URL_MEDIA = 0;
+	const URL_RECS = 1;
 	protected $media;
 
 	public function __construct($media)
@@ -19,6 +20,7 @@ abstract class MediaSubProcessor extends AbstractSubProcessor
 		return
 		[
 			self::URL_MEDIA => 'http://myanimelist.net/' . $infix . '/' . $id,
+			self::URL_RECS => 'http://myanimelist.net/' . $infix . '/' . $id . '/dummy/userrecs',
 		];
 	}
 }

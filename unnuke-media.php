@@ -25,7 +25,7 @@ R::begin();
 while (!empty($rows))
 {
 	$row = reset($rows);
-	printf('Processing %s #%d' . PHP_EOL, Media::toString($row->media), $row->mal_id);
+	printf('Processing %s #%d, %d left' . PHP_EOL, Media::toString($row->media), $row->mal_id, count($rows));
 	try
 	{
 		$mediaProcessors[$row->media]->process($row->mal_id);

@@ -1,6 +1,6 @@
 <?php
 require_once 'src/core.php';
-$tables = ['mediagenre', 'mediatag', 'mediarelation', 'animeproducer', 'mangaauthor', 'media'];
+$tables = ['mediagenre', 'mediatag', 'mediarelation', 'animeproducer', 'mangaauthor', 'mediarec', 'media'];
 foreach ($tables as $table)
 {
 	echo 'Deleting from ' . $table . PHP_EOL;

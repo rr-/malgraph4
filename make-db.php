@@ -145,6 +145,14 @@ try
 		name VARCHAR(32),
 		FOREIGN KEY(media_id) REFERENCES media(id) ON DELETE CASCADE
 	)');
+
+	R::exec('CREATE TABLE IF NOT EXISTS mediarec (
+		id INTEGER PRIMARY KEY,
+		media_id INTEGER,
+		mal_id INTEGER,
+		count INTEGER,
+		FOREIGN KEY(media_id) REFERENCES media(id) ON DELETE CASCADE
+	)');
 }
 catch (Exception $e)
 {
