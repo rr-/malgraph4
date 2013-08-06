@@ -3,6 +3,9 @@
 <head>
 	<title><?php echo isset($viewContext->meta->title) ? $viewContext->meta->title : 'MALgraph' ?></title>
 	<meta charset="utf-8"/>
+	<?php if (isset($viewContext->meta->noIndex)): ?>
+		<meta name="robots" content="noindex, nofollow"/>
+	<?php endif ?>
 	<?php if (isset($viewContext->meta->keywords)): ?>
 		<meta name="keywords" content="<?php echo implode(',', $viewContext->meta->keywords) ?>">
 	<?php endif ?>

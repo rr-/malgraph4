@@ -46,6 +46,7 @@ class UserController extends AbstractController
 		$controllerContext->bypassCache = true;
 		$viewContext->media = $controllerContext->media;
 		$viewContext->module = $controllerContext->module;
+		$viewContext->meta->noIndex = true;
 
 		if (BanHelper::isUserBanned($controllerContext->userName))
 		{
