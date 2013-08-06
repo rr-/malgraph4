@@ -15,6 +15,7 @@ class Config extends Singleton
 	static $bannedGenresListPath;
 	static $bannedCreatorsListPath;
 	static $bannedGenresForRecsListPath;
+	static $bannedFranchiseCouplingListPath;
 	static $staticRecommendationListPath;
 	static $errorLogPath;
 	static $achievementsDefinitionPath;
@@ -37,6 +38,7 @@ class Config extends Singleton
 		self::$bannedGenresListPath = $rootDir . 'banned-genres.lst';
 		self::$bannedCreatorsListPath = $rootDir . 'banned-creators.lst';
 		self::$bannedGenresForRecsListPath = $rootDir . 'recs-banned-genres.lst';
+		self::$bannedFranchiseCouplingListPath = $rootDir . 'banned-franchise-coupling.lst';
 		self::$errorLogPath = $rootDir . 'errors.log';
 		self::$achievementsDefinitionPath = $rootDir . 'achievements.json';
 		self::$staticRecommendationListPath = $rootDir . 'static-recommendations.lst';
