@@ -26,24 +26,19 @@
 							</div>
 
 							<div class="type details">
-								<?php echo ucfirst(MediaType::toString($entry->sub_type, $entry->media)) ?>
 								<?php $localSize = 0 ?>
 								<?php if ($entry->media == Media::Anime): ?>
 									<?php if ($entry->sub_type != AnimeMediaType::Movie): ?>
-										, <?php echo TextHelper::getEpisodesText($localSize = $entry->episodes) ?>
+										<?php echo TextHelper::getEpisodesText($localSize = $entry->episodes, true) ?>
+									<?php else: ?>
+										<?php echo ucfirst(MediaType::toString($entry->sub_type, $entry->media)) ?>
 									<?php endif ?>
 								<?php elseif ($entry->media == Media::Manga): ?>
-									, <?php echo TextHelper::getChaptersText($localSize = $entry->chapters) ?>
+									<?php echo TextHelper::getChaptersText($localSize = $entry->chapters, true) ?>
 								<?php endif ?>
-							</div>
 
-							<div class="franchise details">
-								<?php if (!empty($entry->franchiseSize) and $localSize != $entry->franchiseSize): ?>
-									<?php if ($entry->media == Media::Anime): ?>
-										(<?php echo TextHelper::getEpisodesText($entry->franchiseSize) ?> in franchise)
-									<?php elseif ($entry->media == Media::Manga): ?>
-										(<?php echo TextHelper::getChaptersText($entry->franchiseSize) ?> in franchise)
-									<?php endif ?>
+								<?php if ($localSize > 0 and !empty($entry->franchiseSize) and $localSize != $entry->franchiseSize): ?>
+									&nbsp;(<?php echo $entry->franchiseSize ?> in franchise)
 								<?php endif ?>
 							</div>
 
