@@ -14,6 +14,7 @@ class Config extends Singleton
 	static $bannedUsersListPath;
 	static $bannedGenresListPath;
 	static $bannedCreatorsListPath;
+	static $bannedGenresForRecsListPath;
 	static $staticRecommendationListPath;
 	static $errorLogPath;
 	static $achievementsDefinitionPath;
@@ -34,6 +35,7 @@ class Config extends Singleton
 		self::$bannedUsersListPath = $rootDir . 'banned-users.lst';
 		self::$bannedGenresListPath = $rootDir . 'banned-genres.lst';
 		self::$bannedCreatorsListPath = $rootDir . 'banned-creators.lst';
+		self::$bannedGenresForRecsListPath = $rootDir . 'recs-banned-genres.lst';
 		self::$errorLogPath = $rootDir . 'errors.log';
 		self::$achievementsDefinitionPath = $rootDir . 'achievements.json';
 		self::$staticRecommendationListPath = $rootDir . 'static-recommendations.lst';

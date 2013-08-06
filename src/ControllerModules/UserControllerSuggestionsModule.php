@@ -129,6 +129,23 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 		//due to whatever reason (for example, everything still not watched
 		//hasn't aired yet) won't reduce suggestion count to under desired 15.
 		$selectedEntries = array_slice($selectedEntries, 0, $goal * 3);
+		MediaGenreDistribution::attachGenres($selectedEntries);
+
+		//filter out unrecommended genres
+		$finalEntries = [];
+		foreach ($selectedEntries as $entry)
+		{
+			foreach ($entry->genres as $genre)
+			{
+				if (BanHelper::isGenreBannedForRecs($entry->media, $genre->mal_id))
+				{
+					continue;
+				}
+				$finalEntries []= $entry;
+				break;
+			}
+		}
+		$selectedEntries = $finalEntries;
 
 		//finally for each recommended entry, get first non-watched entry from
 		//franchise that is already airing. this is to prevent recommending
