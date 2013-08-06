@@ -45,8 +45,8 @@ class Model_MixedUserMedia
 
 		$yearA = intval(substr($this->published_from, 0, 4));
 		$yearB = intval(substr($this->published_to, 0, 4));
-		$monthA = intval(substr($this->published_from, 6, 2));
-		$monthB = intval(substr($this->published_to, 6, 2));
+		$monthA = intval(substr($this->published_from, 5, 2));
+		$monthB = intval(substr($this->published_to, 5, 2));
 		if (!$yearA and !$yearB)
 		{
 			return null;
