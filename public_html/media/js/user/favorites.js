@@ -55,5 +55,28 @@ $(function()
 	};
 
 	$('table').tablesorter(opt);
-});
 
+	$('.toggle-decades-msg').click(function(e)
+	{
+		//decadesChart.series[1].setVisible(!decadesChart.series[1].visible);
+		if (decadesChart.series[0].visible && decadesChart.series[1].visible)
+		{
+			decadesChart.xAxis[0].axisTitle.attr({text: 'Years'});
+			decadesChart.series[0].show();
+			decadesChart.series[1].hide();
+		}
+		else if (decadesChart.series[0].visible)
+		{
+			decadesChart.xAxis[0].axisTitle.attr({text: 'Decades'});
+			decadesChart.series[0].hide();
+			decadesChart.series[1].show();
+		}
+		else
+		{
+			decadesChart.xAxis[0].axisTitle.attr({text: 'Years and decades'});
+			decadesChart.series[0].show();
+			decadesChart.series[1].show();
+		}
+		e.preventDefault();
+	});
+});

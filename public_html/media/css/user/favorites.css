@@ -31,3 +31,7 @@ span.info {
 tr.entries-wrapper-row td {
 	background: none !important;
 }
+
+.toggle-decades-msg {
+	text-align: center;
+}
