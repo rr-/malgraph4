@@ -131,7 +131,7 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 		$selectedEntries = array_slice($selectedEntries, 0, $goal * 3);
 
 		//filter out unrecommended genres
-		MediaGenreDistribution::attachGenres($selectedEntries);
+		Model_MixedUserMedia::attachGenres($selectedEntries);
 		$finalEntries = [];
 		foreach ($selectedEntries as $entry)
 		{
@@ -209,7 +209,7 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 			$entry->hypotheticalScore = $entry->cfScore;
 			$entry->media_id = $entry->id;
 		}
-		MediaGenreDistribution::attachGenres($selectedEntries);
+		Model_MixedUserMedia::attachGenres($selectedEntries);
 
 		return $selectedEntries;
 	}

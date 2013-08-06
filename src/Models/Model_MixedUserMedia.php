@@ -154,4 +154,82 @@ class Model_MixedUserMedia
 		}
 		return $franchises;
 	}
+
+	public static function attachGenres(array &$entries)
+	{
+		R::begin();
+		R::exec('CREATE TEMPORARY TABLE hurr (media_id INTEGER)');
+		foreach (array_chunk(array_map(function($entry) { return $entry->media_id; }, $entries), Config::$maxDbBindings) as $chunk)
+		{
+			R::exec('INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)')), $chunk);
+		}
+		$data = R::getAll('SELECT * FROM mediagenre mg INNER JOIN hurr ON mg.media_id = hurr.media_id');
+		R::rollback();
+
+		$map = [];
+		foreach ($entries as $entry)
+		{
+			$entry->genres = [];
+			$map[$entry->media_id] = $entry;
+		}
+
+		foreach ($data as $row)
+		{
+			$row = ReflectionHelper::arrayToClass($row);
+			if (!isset($map[$row->media_id]))
+			{
+				continue;
+			}
+			if (BanHelper::isGenreBanned($map[$row->media_id]->media, $row->mal_id))
+			{
+				continue;
+			}
+			$map[$row->media_id]->genres []= $row;
+		}
+	}
+
+	public static function attachCreators(array &$entries)
+	{
+		R::begin();
+		R::exec('CREATE TEMPORARY TABLE hurr (media_id INTEGER)');
+		foreach (array_chunk(array_map(function($entry) { return $entry->media_id; }, $entries), Config::$maxDbBindings) as $chunk)
+		{
+			R::exec('INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)')), $chunk);
+		}
+		switch (reset($entries)->media)
+		{
+			case Media::Anime:
+				$table = 'animeproducer';
+				break;
+			case Media::Manga:
+				$table = 'mangaauthor';
+				break;
+			default:
+				throw new BadMediaException();
+		}
+		$rows = R::getAll('SELECT * FROM ' . $table . ' mc INNER JOIN hurr ON mc.media_id = hurr.media_id');
+		$data = ReflectionHelper::arraysToClasses($rows);
+		R::rollback();
+
+		$map = [];
+		foreach ($entries as $entry)
+		{
+			$entry->creators = [];
+			$map[$entry->media_id] = $entry;
+		}
+
+		foreach ($data as $row)
+		{
+			if (!isset($map[$row->media_id]))
+			{
+				continue;
+			}
+			if (BanHelper::isCreatorBanned($map[$row->media_id]->media, $row->mal_id))
+			{
+				continue;
+			}
+			$map[$row->media_id]->creators []= $row;
+		}
+	}
+
 }
