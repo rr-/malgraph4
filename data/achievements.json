@@ -1,840 +1,1306 @@
 {
-	"manga": {
-		"mahou shoujo": {
-			"achievements": [
-				{ "threshold": "15-29", "id": "manga-mahoushoujo-1", "level": "Mahou Shoujo: level 1",   "title": "Let me lift that curse", "desc": "If you wish hard enough, you can become a magical girl in the blink of an eye." },
-				{ "threshold": "30-49", "id": "manga-mahoushoujo-2", "level": "Mahou Shoujo: level 2",   "title": "Conflict Breaker",       "desc": "Fighting hardly solves any problems. There are better ways to live our lives." },
-				{ "threshold": "50-79", "id": "manga-mahoushoujo-3", "level": "Mahou Shoujo: level 3",   "title": "Aim for the top",        "desc": "Even if you work alone, never forget your friends who helped you overcome all fears." },
-				{ "threshold": "80+",   "id": "manga-mahoushoujo-4", "level": "Mahou Shoujo: MAX POWER", "title": "Complete control",       "desc": "Read over 80 mahou shoujo manga. At this level magic circles form around you at will." }
+	"manga":
+	{
+		"mahou shoujo":
+		{
+			"achievements":
+			[
+				{
+					"threshold": "15-29",
+					"id": "manga-mahoushoujo-1",
+					"level": "Mahou Shoujo: level 1",
+					"title": "Let me lift that curse",
+					"desc": "If you wish hard enough, you can become a magical girl in the blink of an eye."
+				},
+				{
+					"threshold": "30-49",
+					"id": "manga-mahoushoujo-2",
+					"level": "Mahou Shoujo: level 2",
+					"title": "Conflict Breaker",
+					"desc": "Fighting hardly solves any problems. There are better ways to live our lives."
+				},
+				{
+					"threshold": "50-79",
+					"id": "manga-mahoushoujo-3",
+					"level": "Mahou Shoujo: level 3",
+					"title": "Aim for the top",
+					"desc": "Even if you work alone, never forget your friends who helped you overcome all fears."
+				},
+				{
+					"threshold": "80+",
+					"id": "manga-mahoushoujo-4",
+					"level": "Mahou Shoujo: MAX POWER",
+					"title": "Complete control",
+					"desc": "Read over 80 mahou shoujo manga. At this level magic circles form around you at will."
+				}
 			],
-			"requirement": {"type": "given-titles", "titles": [
-				"M3167",  #A Little Snow Fairy Sugar
-				"M7270",  #Akazukin Chacha
-				"M1818",  #Akihabara Dennou Gumi Patapi
-				"M77",    #Alice 19th
-				"M15820", #Alice Kara Mahou
-				"M3730",  #Asagiri no Miko
-				"M92",    #Bishoujo Senshi Sailor Moon
-				"M3630",  #Carat!
-				"M106",   #Cardcaptor Sakura
-				"M854",   #Codename wa Sailor V
-				"M172",   #Corrector Yui
-				"M18411", #Corrector Yui
-				"M18412", #Corrector Yui Ver.2
-				"M1661",  #Cutey Honey
-				"M1661",  #Cutey Honey Flash
-				"M1661",  #Cutey Honey ‘90
-				"M1661",  #Cutey Honey aGoGo!
-				"M1661",  #Cutey Honey Tennyo Densetsu
-				"M9987",  #Dai Mahou Touge
-				"M23986", #Daisuki desu!! Mahou Tenshi Kosumasu
-				"M10027", #Demashitaa! Powerpuff Girls Z
-				"M5917",  #Dr. Rin ni Kiitemite!
-				"M25923", #Eiga Futari wa Precure Max Heart
-				"M18046", #Esper Mami
-				"M9795",  #Fancy Lala
-				"M3526",  #Fate/kaleid liner Prisma Illya
-				"M13856", #Fate/kaleid liner Prisma Illya 2wei!
-				"M36131", #Fate/kaleid liner Prisma Illya drei!
-				"M3230",  #Figure 17
-				"M25927", #Fresh Precure!
-				"M8",     #Full Moon wo Sagashite
-				"M9275",  #Fushigi na Melmo
-				"M25921", #Futari wa Precure
-				"M25924", #Futari wa Precure Splash Star
-				"M320",   #Gakuen Alice
-				"M7115",  #Getsumen to Heiki Mina
-				"M9911",  #Ground Defence Mao-chan
-				"M25928", #Heartcatch Precure!
-				"M4998",  #Hime-chan no Ribbon
-				"M21406", #Himitsu no Akko-chan
-				"M1607",  #Itsudatte My Santa!
-				"M19898", #Jewelpet
-				"M32391", #Kaitou Tenshi Twin Angel
-				"M35",    #Kamichama Karin
-				"M2575",  #Kamichama Karin chu
-				"M36",    #Kamikaze Kaitou Jeanne
-				"M31835", #Kamikaze Kaitou Jeanne: Bangaihen
-				"M3498",  #Key Princess Story Eternal Alice Rondo
-				"M4649",  #Kurumi-tic Miracle
-				"M16468", #Kyouran Kazoku Nikki
-				"M12182", #Kyouran Kazoku Nikki
-				"M20088", #Lilpri
-				"M119",   #Magic Knight Rayearth
-				"M697",   #Magic Knight Rayearth II
-				"M14238", #Magical Girl Lyrical Nanoha ViVid
-				"M11189", #Magical Nyan Nyan Taruto
-				"M24087", #Mahochu-!
-				"M9882",  #Mahou no Tenshi Creamy Mami
-				"M13268", #Mahou Senki Lyrical Nanoha Force
-				"M24295", #Mahou Shoujo Kazumi Magica - The Innocent Malice
-				"M3236",  #Mahou Shoujo Lyrical Nanoha As
-				"M1231",  #Mahou Shoujo Lyrical Nanoha StrikerS THE COMICS
-				"M16872", #Mahou Shoujo Lyrical Nanoha Movie 1st the Comics
-				"M24457", #Mahou Shoujo Madoka Magica
-				"M27861", #Mahou Shoujo Madoka Magica (novel)
-				"M28961", #Mahou Shoujo Madoka Magica: Anthology
-				"M44319", #Mahou Shoujo Madoka Magica: The Different Story
-				"M24456", #Mahou Shoujo Oriko Magica
-				"M20521", #Mahou Shoujo Pretty Bell
-				"M9806",  #Mahou Tsukai Tai!
-				"M27303", #Mahou Tsukai Tai!
-				"M12461", #Mahou Tsukai Sally
-				"M22942", #Majokko Tsukune-chan
-				"M22944", #Majokko Tsukune-chan Plus
-				"M423",   #Mermaid Melody Pichi Pichi Pitch
-				"M5217",  #Min Min Mint
-				"M5753",  #Miracle Dieter Miyuki
-				"M449",   #Miracle Girls
-				"M14610", #Moetan
-				"M24316", #Motto! Ojamajo Doremi
-				"M11910", #Nanako SOS
-				"M10825", #Nanatsuiro Drops
-				"M18884", #Nanatsuiro Drops Pure!!
-				"M10634", #Neko Mokoro
-				"M5626",  #Nurse Angel Ririka SOS
-				"M4175",  #Ojamajo Doremi
-				"M29283", #Ojamajo Doremi 16
-				"M8016",  #Oto x Maho
-				"M8552",  #Parallel Sailor Moon
-				"M9883",  #Persia ga suki!
-				"M31067", #Planet Guardian!
-				"M643",   #PQ Angels
-				"M1248",  #Pretear
-				"M1581",  #Princess Tutu
-				"M3692",  #Puchi Puri Yuushi
-				"M505",   #S to M no Sekai
-				"M13921", #Saint October
-				"M508",   #Saint Tail
-				"M1763",  #Shadow Lady
-				"M2902",  #Shin Kankaku Iyashikei Mahou Shoujo Behoimi-chan
-				"M772",   #Shoujo Kakumei Utena
-				"M26103", #Shoujo Kakumei Utena
-				"M931",   #Shoujo Kakumei Utena ~ Adolescence Mokushiroku
-				"M1524",  #Shoujo Tenshi Milcute - Milky&Cute
-				"M15116", #Shugo Chara-chan!
-				"M101",   #Shugo Chara!
-				"M17459", #Shugo Chara! Encore!
-				"M429",   #Sugar Sugar Rune
-				"M20569", #Super Doll Rika-chan
-				"M3309",  #Sweet Valerian
-				"M86",    #Time Stranger Kyoko
-				"M554",   #Tokyo Mew Mew
-				"M555",   #Tokyo Mew Mew a La Mode
-				"M956",   #Ultra Maniac
-				"M20821", #Umi Monogatari - Anata ga Ite Kureta Koto
-				"M20822", #Umi Monogatari - Minna Aishiteru!
-				"M930",   #Uta Kata
-				"M1288",  #Wedding Peach
-				"M9080",  #Wedding Peach: Young Love
-				"M25925", #Yes! Precure 5
-				"M25926", #Yes! Precure 5 GoGo
-				"M16064", #Yokuwakaru Gendaimahou
-				"M16065", #Yokuwakaru Gendaimahou
-				"M5821",  #Zettai Karen Children
-				"M190"    #Zodiac P.I.
-			]}
+			"requirement":
+			{
+				"type": "given-titles",
+				"titles":
+				[
+					"M3167",  #A Little Snow Fairy Sugar
+					"M7270",  #Akazukin Chacha
+					"M1818",  #Akihabara Dennou Gumi Patapi
+					"M77",    #Alice 19th
+					"M15820", #Alice Kara Mahou
+					"M3730",  #Asagiri no Miko
+					"M92",    #Bishoujo Senshi Sailor Moon
+					"M3630",  #Carat!
+					"M106",   #Cardcaptor Sakura
+					"M854",   #Codename wa Sailor V
+					"M172",   #Corrector Yui
+					"M18411", #Corrector Yui
+					"M18412", #Corrector Yui Ver.2
+					"M1661",  #Cutey Honey
+					"M1661",  #Cutey Honey Flash
+					"M1661",  #Cutey Honey ‘90
+					"M1661",  #Cutey Honey aGoGo!
+					"M1661",  #Cutey Honey Tennyo Densetsu
+					"M9987",  #Dai Mahou Touge
+					"M23986", #Daisuki desu!! Mahou Tenshi Kosumasu
+					"M10027", #Demashitaa! Powerpuff Girls Z
+					"M5917",  #Dr. Rin ni Kiitemite!
+					"M25923", #Eiga Futari wa Precure Max Heart
+					"M18046", #Esper Mami
+					"M9795",  #Fancy Lala
+					"M3526",  #Fate/kaleid liner Prisma Illya
+					"M13856", #Fate/kaleid liner Prisma Illya 2wei!
+					"M36131", #Fate/kaleid liner Prisma Illya drei!
+					"M3230",  #Figure 17
+					"M25927", #Fresh Precure!
+					"M8",     #Full Moon wo Sagashite
+					"M9275",  #Fushigi na Melmo
+					"M25921", #Futari wa Precure
+					"M25924", #Futari wa Precure Splash Star
+					"M320",   #Gakuen Alice
+					"M7115",  #Getsumen to Heiki Mina
+					"M9911",  #Ground Defence Mao-chan
+					"M25928", #Heartcatch Precure!
+					"M4998",  #Hime-chan no Ribbon
+					"M21406", #Himitsu no Akko-chan
+					"M1607",  #Itsudatte My Santa!
+					"M19898", #Jewelpet
+					"M32391", #Kaitou Tenshi Twin Angel
+					"M35",    #Kamichama Karin
+					"M2575",  #Kamichama Karin chu
+					"M36",    #Kamikaze Kaitou Jeanne
+					"M31835", #Kamikaze Kaitou Jeanne: Bangaihen
+					"M3498",  #Key Princess Story Eternal Alice Rondo
+					"M4649",  #Kurumi-tic Miracle
+					"M16468", #Kyouran Kazoku Nikki
+					"M12182", #Kyouran Kazoku Nikki
+					"M20088", #Lilpri
+					"M119",   #Magic Knight Rayearth
+					"M697",   #Magic Knight Rayearth II
+					"M14238", #Magical Girl Lyrical Nanoha ViVid
+					"M11189", #Magical Nyan Nyan Taruto
+					"M24087", #Mahochu-!
+					"M9882",  #Mahou no Tenshi Creamy Mami
+					"M13268", #Mahou Senki Lyrical Nanoha Force
+					"M24295", #Mahou Shoujo Kazumi Magica - The Innocent Malice
+					"M3236",  #Mahou Shoujo Lyrical Nanoha As
+					"M1231",  #Mahou Shoujo Lyrical Nanoha StrikerS THE COMICS
+					"M16872", #Mahou Shoujo Lyrical Nanoha Movie 1st the Comics
+					"M24457", #Mahou Shoujo Madoka Magica
+					"M27861", #Mahou Shoujo Madoka Magica (novel)
+					"M28961", #Mahou Shoujo Madoka Magica: Anthology
+					"M44319", #Mahou Shoujo Madoka Magica: The Different Story
+					"M24456", #Mahou Shoujo Oriko Magica
+					"M20521", #Mahou Shoujo Pretty Bell
+					"M9806",  #Mahou Tsukai Tai!
+					"M27303", #Mahou Tsukai Tai!
+					"M12461", #Mahou Tsukai Sally
+					"M22942", #Majokko Tsukune-chan
+					"M22944", #Majokko Tsukune-chan Plus
+					"M423",   #Mermaid Melody Pichi Pichi Pitch
+					"M5217",  #Min Min Mint
+					"M5753",  #Miracle Dieter Miyuki
+					"M449",   #Miracle Girls
+					"M14610", #Moetan
+					"M24316", #Motto! Ojamajo Doremi
+					"M11910", #Nanako SOS
+					"M10825", #Nanatsuiro Drops
+					"M18884", #Nanatsuiro Drops Pure!!
+					"M10634", #Neko Mokoro
+					"M5626",  #Nurse Angel Ririka SOS
+					"M4175",  #Ojamajo Doremi
+					"M29283", #Ojamajo Doremi 16
+					"M8016",  #Oto x Maho
+					"M8552",  #Parallel Sailor Moon
+					"M9883",  #Persia ga suki!
+					"M31067", #Planet Guardian!
+					"M643",   #PQ Angels
+					"M1248",  #Pretear
+					"M1581",  #Princess Tutu
+					"M3692",  #Puchi Puri Yuushi
+					"M505",   #S to M no Sekai
+					"M13921", #Saint October
+					"M508",   #Saint Tail
+					"M1763",  #Shadow Lady
+					"M2902",  #Shin Kankaku Iyashikei Mahou Shoujo Behoimi-chan
+					"M772",   #Shoujo Kakumei Utena
+					"M26103", #Shoujo Kakumei Utena
+					"M931",   #Shoujo Kakumei Utena ~ Adolescence Mokushiroku
+					"M1524",  #Shoujo Tenshi Milcute - Milky&Cute
+					"M15116", #Shugo Chara-chan!
+					"M101",   #Shugo Chara!
+					"M17459", #Shugo Chara! Encore!
+					"M429",   #Sugar Sugar Rune
+					"M20569", #Super Doll Rika-chan
+					"M3309",  #Sweet Valerian
+					"M86",    #Time Stranger Kyoko
+					"M554",   #Tokyo Mew Mew
+					"M555",   #Tokyo Mew Mew a La Mode
+					"M956",   #Ultra Maniac
+					"M20821", #Umi Monogatari - Anata ga Ite Kureta Koto
+					"M20822", #Umi Monogatari - Minna Aishiteru!
+					"M930",   #Uta Kata
+					"M1288",  #Wedding Peach
+					"M9080",  #Wedding Peach: Young Love
+					"M25925", #Yes! Precure 5
+					"M25926", #Yes! Precure 5 GoGo
+					"M16064", #Yokuwakaru Gendaimahou
+					"M16065", #Yokuwakaru Gendaimahou
+					"M5821",  #Zettai Karen Children
+					"M190"    #Zodiac P.I.
+				]
+			}
 		},
-		"sports": {
-			"achievements": [
-				{ "threshold": "15-29", "id": "manga-sports-1", "level": "Sports: level 1",   "title": "The stakes are high", "desc": "Joined the game for real. The more you read, the more addictive it gets." },
-				{ "threshold": "30-49", "id": "manga-sports-2", "level": "Sports: level 2",   "title": "Do you even read?",   "desc": "Even during the most exhausting excercise you still find time to read. Can&rsquo;t miss a chapter." },
-				{ "threshold": "50-79", "id": "manga-sports-3", "level": "Sports: level 3",   "title": "Got balls",           "desc": "Looking at all this struggling inspires you to become strong yourself." },
-				{ "threshold": "80+",   "id": "manga-sports-4", "level": "Sports: level MAX", "title": "Kuro Basket",         "desc": "You know the rules of all games already. The podium is yours!" }
+
+		"sports":
+		{
+			"achievements":
+			[
+				{
+					"threshold": "15-29",
+					"id": "manga-sports-1",
+					"level": "Sports: level 1",
+					"title": "The stakes are high",
+					"desc": "Joined the game for real. The more you read, the more addictive it gets."
+				},
+				{
+					"threshold": "30-49",
+					"id": "manga-sports-2",
+					"level": "Sports: level 2",
+					"title": "Do you even read?",
+					"desc": "Even during the most exhausting excercise you still find time to read. Can&rsquo;t miss a chapter."
+				},
+				{
+					"threshold": "50-79",
+					"id": "manga-sports-3",
+					"level": "Sports: level 3",
+					"title": "Got balls",
+					"desc": "Looking at all this struggling inspires you to become strong yourself."
+				},
+				{
+					"threshold": "80+",
+					"id": "manga-sports-4",
+					"level": "Sports: level MAX",
+					"title": "Kuro Basket",
+					"desc": "You know the rules of all games already. The podium is yours!"
+				}
 			],
-			"requirement": { "type": "genre-titles", "genre": 30 }
+			"requirement":
+			{
+				"type": "genre-titles",
+				"genre": 30
+			}
 		},
-		"mystery": {
-			"achievements": [
-				{ "threshold": "15-29", "id": "manga-mystery-1", "level": "Mystery: level 1",   "title": "Curiosity",             "desc": "If it is you who is curious, no case shall remain unsolved." },
-				{ "threshold": "30-49", "id": "manga-mystery-2", "level": "Mystery: level 2",   "title": "Determination",         "desc": "No matter who the villain is&hellip; you WILL find out the answers." },
-				{ "threshold": "50-79", "id": "manga-mystery-3", "level": "Mystery: level 3",   "title": "Collecting the pieces", "desc": "Sometimes the smallest bit of information can turn the whole case around." },
-				{ "threshold": "80+",   "id": "manga-mystery-4", "level": "Mystery: level MAX", "title": "Raw intuition",         "desc": "Investigative skills honed up. You know the answers just by looking at mere shards of data." }
+
+		"mystery":
+		{
+			"achievements":
+			[
+				{
+					"threshold": "15-29",
+					"id": "manga-mystery-1",
+					"level": "Mystery: level 1",
+					"title": "Curiosity",
+					"desc": "If it is you who is curious, no case shall remain unsolved."
+				},
+				{
+					"threshold": "30-49",
+					"id": "manga-mystery-2",
+					"level": "Mystery: level 2",
+					"title": "Determination",
+					"desc": "No matter who the villain is&hellip; you WILL find out the answers."
+				},
+				{
+					"threshold": "50-79",
+					"id": "manga-mystery-3",
+					"level": "Mystery: level 3",
+					"title": "Collecting the pieces",
+					"desc": "Sometimes the smallest bit of information can turn the whole case around."
+				},
+				{
+					"threshold": "80+",
+					"id": "manga-mystery-4",
+					"level": "Mystery: level MAX",
+					"title": "Raw intuition",
+					"desc": "Investigative skills honed up. You know the answers just by looking at mere shards of data."
+				}
 			],
-			"requirement": { "type": "genre-titles", "genre": 7 }
+			"requirement":
+			{
+				"type": "genre-titles",
+				"genre": 7
+			}
 		},
-		"count": {
-			"achievements": [
-				{ "threshold": "100-199",   "id": "numbers-manga-100",   "level": "Passed 100 mark",   "title": "Casual reader",         "desc": "Read 100 manga. Looks like reading doesn&rsquo;t hurt." },
-				{ "threshold": "200-299",   "id": "numbers-manga-200",   "level": "Passed 200 mark",   "title": "Bookworm",               "desc": "Read 200 manga. Sitting in your comfortable chair, reading favorite Korean comics. This is bliss." },
-				{ "threshold": "300-399",   "id": "numbers-manga-300",   "level": "Passed 300 mark",   "title": "Dat scent",              "desc": "Read 300 manga. There&rsquo;s nothing better than the smell of freshly opened book. Or a PDF." },
-				{ "threshold": "400-499",   "id": "numbers-manga-400",   "level": "Passed 400 mark",   "title": "Where do I put these?",  "desc": "Read 400 manga. Consider investing in another bookshelf, or you&rsquo;ll be swimming in books soon." },
-				{ "threshold": "500-749",   "id": "numbers-manga-500",   "level": "Passed 500 mark",   "title": "Half a grand",           "desc": "Read 500 manga. Now think of what kind of person you&rsquo;d be if you didn&rsquo;t start reading manga then. On that particular day&hellip;" },
-				{ "threshold": "750-999",   "id": "numbers-manga-750",   "level": "Passed 750 mark",   "title": "Read or die",            "desc": "Read 750 manga. Made a bow out of paper. Please remember that paper doesn&rsquo;t work well as a bulletproof shield." },
-				{ "threshold": "1000-1499", "id": "numbers-manga-1000",  "level": "Passed 1000 mark",  "title": "Librarian",              "desc": "Read 1000 manga. You work with books, right? Right?&hellip;" },
-				{ "threshold": "1500-2499", "id": "numbers-manga-1500",  "level": "Passed 1500 mark",  "title": "The floor is books",     "desc": "Read 1500 manga. Sleeping on books must be pretty&hellip;&nbsp;hard?" },
-				{ "threshold": "2500-4999", "id": "numbers-manga-2500",  "level": "Passed 2500 mark",  "title": "Still not enough",       "desc": "Read 2500 manga. You&rsquo;ve read six lifetimes worth of words." },
-				{ "threshold": "5000-7499", "id": "numbers-manga-5000",  "level": "Passed 5000 mark",  "title": "Sleep deprivation",      "desc": "Read 5000 manga. Think of all the mangakas and writers that couldn&rsquo;t sleep just to make this moment happen." },
-				{ "threshold": "7500-9999", "id": "numbers-manga-7500",  "level": "Passed 7500 mark",  "title": "Reincarnation",          "desc": "Read 7500 manga. How, exactly? This is not possible within one lifetime." },
-				{ "threshold": "10000+",    "id": "numbers-manga-10000", "level": "Passed 10000 mark", "title": "I&rsquo;ve seen it all", "desc": "Read 10000 manga. Ten. Thousand. Manga. An average user&rsquo;s list is shorter than your list of titles starting with &bdquo;A&rdquo; alone." }
+
+		"count":
+		{
+			"achievements":
+			[
+				{
+					"threshold": "100-199",
+					"id": "numbers-manga-100",
+					"level": "Passed 100 mark",
+					"title": "Casual reader",
+					"desc": "Read 100 manga. Looks like reading doesn&rsquo;t hurt."
+				},
+				{
+					"threshold": "200-299",
+					"id": "numbers-manga-200",
+					"level": "Passed 200 mark",
+					"title": "Bookworm",
+					"desc": "Read 200 manga. Sitting in your comfortable chair, reading favorite Korean comics. This is bliss."
+				},
+				{
+					"threshold": "300-399",
+					"id": "numbers-manga-300",
+					"level": "Passed 300 mark",
+					"title": "Dat scent",
+					"desc": "Read 300 manga. There&rsquo;s nothing better than the smell of freshly opened book. Or a PDF."
+				},
+				{
+					"threshold": "400-499",
+					"id": "numbers-manga-400",
+					"level": "Passed 400 mark",
+					"title": "Where do I put these?",
+					"desc": "Read 400 manga. Consider investing in another bookshelf, or you&rsquo;ll be swimming in books soon."
+				},
+				{
+					"threshold": "500-749",
+					"id": "numbers-manga-500",
+					"level": "Passed 500 mark",
+					"title": "Half a grand",
+					"desc": "Read 500 manga. Now think of what kind of person you&rsquo;d be if you didn&rsquo;t start reading manga then. On that particular day&hellip;"
+				},
+				{
+					"threshold": "750-999",
+					"id": "numbers-manga-750",
+					"level": "Passed 750 mark",
+					"title": "Read or die",
+					"desc": "Read 750 manga. Made a bow out of paper. Please remember that paper doesn&rsquo;t work well as a bulletproof shield."
+				},
+				{
+					"threshold": "1000-1499",
+					"id": "numbers-manga-1000",
+					"level": "Passed 1000 mark",
+					"title": "Librarian",
+					"desc": "Read 1000 manga. You work with books, right? Right?&hellip;"
+				},
+				{
+					"threshold": "1500-2499",
+					"id": "numbers-manga-1500",
+					"level": "Passed 1500 mark",
+					"title": "The floor is books",
+					"desc": "Read 1500 manga. Sleeping on books must be pretty&hellip;&nbsp;hard?"
+				},
+				{
+					"threshold": "2500-4999",
+					"id": "numbers-manga-2500",
+					"level": "Passed 2500 mark",
+					"title": "Still not enough",
+					"desc": "Read 2500 manga. You&rsquo;ve read six lifetimes worth of words."
+				},
+				{
+					"threshold": "5000-7499",
+					"id": "numbers-manga-5000",
+					"level": "Passed 5000 mark",
+					"title": "Sleep deprivation",
+					"desc": "Read 5000 manga. Think of all the mangakas and writers that couldn&rsquo;t sleep just to make this moment happen."
+				},
+				{
+					"threshold": "7500-9999",
+					"id": "numbers-manga-7500",
+					"level": "Passed 7500 mark",
+					"title": "Reincarnation",
+					"desc": "Read 7500 manga. How, exactly? This is not possible within one lifetime."
+				},
+				{
+					"threshold": "10000+",
+					"id": "numbers-manga-10000",
+					"level": "Passed 10000 mark",
+					"title": "I&rsquo;ve seen it all",
+					"desc": "Read 10000 manga. Ten. Thousand. Manga. An average user&rsquo;s list is shorter than your list of titles starting with &bdquo;A&rdquo; alone."
+				}
 			],
-			"requirement": { "type": "finished-titles" }
+			"requirement":
+			{
+				"type": "finished-titles"
+			}
 		}
 	},
-	"anime": {
-		"mahou shoujo": {
-			"achievements": [
-				{ "threshold": "15-29", "id": "anime-mahoushoujo-1", "level": "Mahou Shoujo: level 1",   "title": "Signed the contract",       "desc": "Became a magical girl and started saving the world, step by step." },
-				{ "threshold": "30-49", "id": "anime-mahoushoujo-2", "level": "Mahou Shoujo: level 2",   "title": "Magic is my middle name",   "desc": "Transformed into a magical girl: level two. In the name of the Moon, I will punish you!" },
-				{ "threshold": "50-79", "id": "anime-mahoushoujo-3", "level": "Mahou Shoujo: level 3",   "title": "Too magical to comprehend", "desc": "Watched so many mahou shoujo anime that you sparkle occasionally." },
-				{ "threshold": "80+",   "id": "anime-mahoushoujo-4", "level": "Mahou Shoujo: MAX POWER", "title": "Are you a wizard",          "desc": "All limiters removed. You can call yourself a god, a wizard, or whatever you wish. You set the rules." }
+
+
+
+	"anime":
+	{
+		"mahou shoujo":
+		{
+			"achievements":
+			[
+				{
+					"threshold": "15-29",
+					"id": "anime-mahoushoujo-1",
+					"level": "Mahou Shoujo: level 1",
+					"title": "Signed the contract",
+					"desc": "Became a magical girl and started saving the world, step by step."
+				},
+				{
+					"threshold": "30-49",
+					"id": "anime-mahoushoujo-2",
+					"level": "Mahou Shoujo: level 2",
+					"title": "Magic is my middle name",
+					"desc": "Transformed into a magical girl: level two. In the name of the Moon, I will punish you!"
+				},
+				{
+					"threshold": "50-79",
+					"id": "anime-mahoushoujo-3",
+					"level": "Mahou Shoujo: level 3",
+					"title": "Too magical to comprehend",
+					"desc": "Watched so many mahou shoujo anime that you sparkle occasionally."
+				},
+				{
+					"threshold": "80+",
+					"id": "anime-mahoushoujo-4",
+					"level": "Mahou Shoujo: MAX POWER",
+					"title": "Are you a wizard",
+					"desc": "All limiters removed. You can call yourself a god, a wizard, or whatever you wish. You set the rules."
+				}
 			],
-			"requirement": {"type": "given-titles", "titles": [
-				"A831",   #A Little Snow Fairy Sugar
-				"A1014",  #A Little Snow Fairy Sugar Special
-				"A5246",  #Adesugata Mahou no Sannin Musume
-				"A2041",  #Ai to Yuuki no Pig Girl Tonde Buurin (aka Super Pig)
-				"A103",   #Akazukin Chacha
-				"A367",   #Akazukin Chacha OVA
-				"A7152",  #Anyamal Tantei Kiruminzoo
-				"A231",   #Asagiri no Miko
-				"A232",   #Cardcaptor Sakura
-				"A372",   #Cardcaptor Sakura Movie 2: The Sealed Card
-				"A2424",  #Cardcaptor Sakura Specials
-				"A1078",  #Cardcaptor Sakura: Leave It to Kero-chan
-				"A371",   #Cardcaptor Sakura: The Movie
-				"A111",   #Corrector Yui
-				"A2036",  #Cosmic Baton Girl Comet-san
-				"A1661",  #Cutey Honey
-				"A1853",  #Cutey Honey F
-				"A6496",  #Cutey Honey Flash: The Movie
-				"A2288",  #Cyberteam in Akihabara
-				"A2289",  #Cyberteam in Akihabara: 2011 Summer Vacation
-				"A933",   #Dai Mahou Touge
-				"A1841",  #Dai Mahou Touge Omake
-				"A1221",  #Demashitaa! Powerpuff Girls Z
-				"A660",   #Denshin Mamotte Shugogetten
-				"A16419", #Dokidoki! Precure
-				"A17357", #Dokidoki! Precure Movie
-				"A2259",  #Dr. Rin ni Kiitemite!
-				"A812",   #Earth Maiden Arjuna
-				"A1930",  #Eiga Futari wa Precure Max Heart
-				"A1931",  #Eiga Futari wa Precure Max Heart 2: Yukizora no Tomodachi
-				"A4124",  #Eiga Futari wa Precure Splash Star Tick-Tock Kiki Ippatsu!
-				"A5753",  #Eiga Precure All Stars DX: Minna Tomodachi - Kiseki no Zenin Daishuugou!
-				"A8133",  #Eiga Precure All Stars DX2: Kibou no Hikari - Rainbow Jewel wo Mamore!
-				"A9979",  #Eiga Precure All Stars DX3: Mirai ni Todoke! Sekai wo Tsunagu Niji-iro no Hana
-				"A10821", #Eiga Suite Precure♪: Torimodose! Kokoro ga Tsunaku Kiseki no Melody
-				"A4703",  #Eiga Yes! Precure 5 GoGo! Okashi no Kuni no Happy Birthday
-				"A3023",  #Esper Mami
-				"A10000", #Esper Mami: My Angel Mami-chan
-				"A9880",  #Esper Mami: Hoshizora no Dancing Doll
-				"A604",   #Fancy Lala
-				"A14829", #Fate/kaleid liner Prisma Illya
-				"A19109", #Fate/kaleid liner Prisma Illya Specials
-				"A18851", #Fate/kaleid liner Prisma Illya (2014)
-				"A1126",  #Figure 17
-				"A5684",  #Fresh Precure!
-				"A6527",  #Fresh Precure! Omocha no Kuni wa Himitsu ga Ippai!
-				"A122",   #Full Moon wo Sagashite
-				"A5476",  #Fushigi na Melmo
-				"A505",   #Fushigiboshi no Futagohime
-				"A1886",  #Fushigiboshi no Futagohime Gyu!
-				"A603",   #Futari wa Precure
-				"A1929",  #Futari wa Precure Max Heart
-				"A1534",  #Futari wa Precure Splash Star
-				"A74",    #Gakuen Alice
-				"A11809", #gdgd Fairies
-				"A17651", #Genei wo Kakeru Taiyou
-				"A1865",  #Getsumen to Heiki Mina
-				"A7427",  #Getsumen to Heiki Mina Specials
-				"A980",   #Ground Defence Mao-chan
-				"A18713", #Haiyore! Nyaruko-san: Yasashii Teki no Shitome-kata
-				"A2230",  #Hana no Ko Lunlun
-				"A9264",  #Hana no Ko Lunlun: Konnichiwa Sakura no Sono
-				"A2804",  #Hana no Mahou Tsukai Mary Bell
-				"A9862",  #Hana no Mahou Tsukai Mary Bell: Phoenix no Kagi
-				"A3320",  #Harbor Light Monogatari: Fashion Lala Yori
-				"A7645",  #Heartcatch Precure!
-				"A9288",  #Heartcatch Precure! Hana no Miyako de Fashion Show... Desu ka!
-				"A10491", #Higurashi no Naku Koro ni Kira
-				"A2037",  #Hime-chan no Ribbon
-				"A8206",  #Hime Chen! Otogi Chikku Idol Lilpri
-				"A3285",  #Himitsu no Akko-chan
-				"A12569", #Himitsu no Akko-chan (Movie)
-				"A3838",  #Himitsu no Akko-chan 2
-				"A3839",  #Himitsu no Akko-chan 3
-				"A12971", #Himitsu no Akko-chan: Umi da! Obake da!! Natsu matsuri
-				"A9911",  #Houkago no Pleiades
-				"A588",   #Itsudatte My Santa!
-				"A6008",  #Jewelpet
-				"A12963", #Jewelpet Kira Deco!
-				"A12965", #Jewelpet Movie: Sweets Dance Princess
-				"A10359", #Jewelpet Sunshine
-				"A8217",  #Jewelpet Tinkle
-				"A577",   #Kagihime Monogatari Eikyuu Alice Rinbukyoku
-				"A3805",  #Kaitou Tenshi Twin Angel
-				"A10217", #Kaitou Tenshi Twin Angel: Kyun Kyun Tokimeki Paradise!!
-				"A1808",  #Kamichama Karin
-				"A142",   #Kamikaze Kaitou Jeanne
-				"A6318",  #Kigurumikku V3
-				"A766",   #Kishin Houkou Demonbane
-				"A1067",  #Kishin Houkou Demonbane (2006)
-				"A3577",  #Kyouran Kazoku Nikki
-				"A9792",  #Licca-chan Fushigi na Fushigi na Yunia Monogatari
-				"A7294",  #Licca-chan Fushigi na Mahou no Ring
-				"A8919",  #Licca-chan no Nichiyoubi
-				"A9878",  #Licca-chan to Yamaneko Hoshi no Tabi
-				"A1995",  #Lingerie Senshi Papillon Rose
-				"A349",   #Magical Canan
-				"A17725", #Magical Star Kanon 100
-				"A2040",  #Mahou no Angel Sweet Mint
-				"A3660",  #Mahou no Idol Pastel Yumi
-				"A4113",  #Mahou no Mako-chan
-				"A518",   #Mahou no Princess Minky Momo
-				"A2272",  #Mahou no Princess Minky Momo: Yume no Naka no Rondo
-				"A5953",  #Mahou no Princess Minky Momo: Yume wo Dakishimete
-				"A5400",  #Mahou no Shiho-chan
-				"A2038",  #Mahou no Star Magical Emi
-				"A8443",  #Mahou no Star Magical Emi: Semishigure
-				"A2044",  #Mahou no Tenshi Creamy Mami
-				"A2045",  #Mahou no Tenshi Creamy Mami: Eien no Once More
-				"A2046",  #Mahou no Tenshi Creamy Mami: Long Goodbye
-				"A2039",  #Mahou no Yousei Persia
-				"A2988",  #Mahou Shoujo Ai (hentai)
-				"A5653",  #Mahou Shoujo Ai San: The Anime (hentai)
-				"A10770", #Mahou Shoujo Elena (hentai)
-				"A8653",  #Mahou Shoujo Isuka (hentai)
-				"A76",    #Mahou Shoujo Lyrical Nanoha
-				"A77",    #Mahou Shoujo Lyrical Nanoha As
-				"A1915",  #Mahou Shoujo Lyrical Nanoha StrikerS
-				"A12101", #Mahou Shoujo Lyrical Nanoha: Lyrical Toy Box
-				"A4985",  #Mahou Shoujo Lyrical Nanoha: The Movie 1st
-				"A10153", #Mahou Shoujo Lyrical Nanoha: The Movie 2nd As
-				"A9756",  #Mahou Shoujo Madoka Magica
-				"A11977", #Mahou Shoujo Madoka Magica Movie 1: Hajimari no Monogatari
-				"A11979", #Mahou Shoujo Madoka Magica Movie 2: Eien no Monogatari
-				"A11981", #Mahou Shoujo Madoka Magica Movie 3
-				"A3526",  #Mahou Shoujo Meruru (hentai)
-				"A1918",  #Mahou Shoujo Pretty Sammy
-				"A1502",  #Mahou Shoujo Pretty Sammy (1996)
-				"A1503",  #Mahou Shoujo Pretty Sammy Specials
-				"A5401",  #Mahou Shoujo Sae (hentai)
-				"A10519", #Mahou Shoujo Sonico Magica
-				"A872",   #Mahou Shoujo Tai Arusu
-				"A3991",  #Mahou Shoujo Tai Arusu the Adventure
-				"A3845",  #Mahou Tsukai Chappy
-				"A3356",  #Mahou Tsukai Sally
-				"A3875",  #Mahou Tsukai Sally 2
-				"A630",   #Mahou Tsukai Tai!
-				"A629",   #Mahou Tsukai Tai! OVA
-				"A5466",  #Mahou Tsukai Tai! vs Shamanic Princess
-				"A2277",  #Mahou Yuugi 2D
-				"A2278",  #Mahou Yuugi 3D
-				"A98",    #Mai-HiME
-				"A673",   #Mai-HiME Specials
-				"A8062",  #Mai-HiME: Kuro no Mai / Saigo no Bansan
-				"A99",    #Mai-Otome
-				"A3268",  #Mai-Otome 0: S.ifr
-				"A1609",  #Mai-Otome Zwei
-				"A2457",  #Majokko Club Yoningumi: A Kuukan Kara no Alien X
-				"A3388",  #Majokko Megu-chan
-				"A3881",  #Majokko Tickle
-				"A2457",  #Majokko Tsukune-chan
-				"A15813", #Majokko Shimai no Yoyo to Nene
-				"A626",   #Mamotte Shugogetten!
-				"A1110",  #Mermaid Melody Pichi Pichi Pitch Pure
-				"A521",   #Mermaid Melody: Pichi Pichi Pitch
-				"A6492",  #Minky Momo in Tabidachi no Eki
-				"A3630",  #Miracle Shoujo Limit-chan
-				"A3573",  #Moegaku*5
-				"A2367",  #Moetan
-				"A4421",  #Moetan Specials
-				"A352",   #Motto! Ojamajo Doremi
-				"A2948",  #Motto! Ojamajo Doremi: Secret of the Frog Stone
-				"A623",   #Nana 7 of 7
-				"A3619",  #Nanako SOS
-				"A1688",  #Nanatsuiro Drops
-				"A616",   #Nurse Angel Ririka SOS
-				"A615",   #Nurse Witch Komugi-chan
-				"A921",   #Nurse Witch Komugi-chan Magikarte Z
-				"A10520", #Nurse Witch Komugi-chan Magikarte Z Special
-				"A920",   #Nurse Witch Komugi-chan Special
-				"A3136",  #Ochamegami Monogatari: Korokoro Poron
-				"A350",   #Ojamajo Doremi
-				"A353",   #Ojamajo Doremi Dokkaan!
-				"A1376",  #Ojamajo Doremi Na-i-sho
-				"A12591", #Ojamajo Doremi OVA
-				"A351",   #Ojamajo Doremi Sharp
-				"A2947",  #Ojamajo Doremi Sharp Movie
-				"A614",   #Okusama wa Mahou Shoujo
-				"A3112",  #Papillon Rose
-				"A10549", #Precure All Stars GoGo Dream Live!
-				"A12221", #Precure All Stars New Stage: Mirai no Tomodachi
-				"A16442", #Precure All Stars New Stage 2: Kokoro no Tomodachi
-				"A11569", #Precure All-Stars DX the Dance Live: Miracle Dance Stage e Youkoso
-				"A10736", #Precure kara Minna e no Ouen Movie
-				"A100",   #Pretear
-				"A721",   #Princess Tutu
-				"A3265",  #Princess Tutu Recaps
-				"A327",   #Puchi Puri Yuushi
-				"A564",   #Puni Puni Poemi
-				"A151",   #Re: Cutey Honey
-				"A941",   #Renkin San-kyuu Magical Pokaan
-				"A1489",  #Renkin San-kyuu Magical Pokaan Specials
-				"A530",   #Sailor Moon
-				"A8756",  #Sailor Moon Memorial
-				"A740",   #Sailor Moon R
-				"A8757",  #Sailor Moon R Memorial
-				"A531",   #Sailor Moon R Movie: Promise of the Rose
-				"A2937",  #Sailor Moon R: Make Up! Sailor Senshi!
-				"A532",   #Sailor Moon S
-				"A8758",  #Sailor Moon S Memorial
-				"A997",   #Sailor Moon S Movie: Hearts in Ice
-				"A996",   #Sailor Moon Sailor Stars
-				"A8760",  #Sailor Moon Sailor Stars Memorial
-				"A1239",  #Sailor Moon SuperS
-				"A8759",  #Sailor Moon SuperS Memorial
-				"A1240",  #Sailor Moon SuperS Movie: Black Dream Hole
-				"A1278",  #Sailor Moon SuperS Plus: Amis First Love
-				"A3076",  #Sailor Moon SuperS Special
-				"A1724",  #Saint October
-				"A6311",  #Sarutobi Ecchan
-				"A1881",  #Sasami: Mahou Shoujo Club
-				"A1882",  #Sasami: Mahou Shoujo Club 2
-				"A3328",  #School Days: Magical Heart Kokoro-chan
-				"A11751", #Senki Zesshou Symphogear
-				"A355",   #Shakugan no Shana
-				"A2787",  #Shakugan no Shana II
-				"A3956",  #Shakugan no Shana II Specials
-				"A6773",  #Shakugan no Shana III (Final)
-				"A12823", #Shakugan no Shana III (Final) Special
-				"A1815",  #Shakugan no Shana Movie
-				"A3221",  #Shakugan no Shana Movie Special
-				"A6572",  #Shakugan no Shana S
-				"A7375",  #Shakugan no Shana S Specials
-				"A1531",  #Shakugan no Shana Special: Koi to Onsen no Kougai Gakushuu!
-				"A1066",  #Shakugan no Shana Specials
-				"A6330",  #Shakugan no Shana: Naze Nani Shana
-				"A14957", #Shakugan no Shana: Naze Nani Shana 2
-				"A1182",  #Shamanic Princess
-				"A2497",  #Shin Cutey Honey
-				"A440",   #Shoujo Kakumei Utena
-				"A441",   #Shoujo Kakumei Utena: Adolescence Mokushiroku
-				"A2923",  #Shugo Chara!
-				"A7082",  #Shugo Chara! Party!
-				"A5262",  #Shugo Chara!! Doki
-				"A12191", #Smile Precure!
-				"A15307", #Smile Precure! Movie: Ehon no Naka wa Minna Chiguhagu!
-				"A1642",  #Sugar Sugar Rune
-				"A9893",  #Suite Precure
-				"A2066",  #Super Doll Licca-chan
-				"A10199", #Super Doll Licca-Chan: Licca-chan Zettai Zetsumei! Doll Knights no Kiseki
-				"A2727",  #Sweet Valerian
-				"A3862",  #Sweet Valerian Specials
-				"A687",   #Tokyo Mew Mew
-				"A9393",  #T.P. Sakura: Time Paladin Sakura
-				"A1613",  #Time Stranger Kyoko
-				"A178",   #Ultra Maniac
-				"A179",   #Ultra Maniac OVA
-				"A6129",  #Umi Monogatari: Anata ga Ite Kureta Koto
-				"A688",   #Uta Kata
-				"A14283", #Vividred Operation
-				"A1533",  #Wedding Peach
-				"A1957",  #Wedding Peach DX
-				"A1932",  #Yes! Precure 5
-				"A3692",  #Yes! Precure 5 GoGo!
-				"A3051",  #Yes! Pretty Cure 5 Movie: Kagami no Kuni no Miracle Daibouken!
-				"A5454",  #Yokuwakaru Gendaimahou
-				"A6748",  #Yokuwakaru Gendaimahou 00
-				"A4651",  #Yume no Crayon Oukoku
-				"A4038",  #Zettai Karen Children
-				"A7754"   #Zettai Karen Children OVA: Aitazousei! Ubawareta Mirai?
-			]}
+			"requirement":
+			{
+				"type": "given-titles",
+				"titles":
+				[
+					"A831",   #A Little Snow Fairy Sugar
+					"A1014",  #A Little Snow Fairy Sugar Special
+					"A5246",  #Adesugata Mahou no Sannin Musume
+					"A2041",  #Ai to Yuuki no Pig Girl Tonde Buurin (aka Super Pig)
+					"A103",   #Akazukin Chacha
+					"A367",   #Akazukin Chacha OVA
+					"A7152",  #Anyamal Tantei Kiruminzoo
+					"A231",   #Asagiri no Miko
+					"A232",   #Cardcaptor Sakura
+					"A372",   #Cardcaptor Sakura Movie 2: The Sealed Card
+					"A2424",  #Cardcaptor Sakura Specials
+					"A1078",  #Cardcaptor Sakura: Leave It to Kero-chan
+					"A371",   #Cardcaptor Sakura: The Movie
+					"A111",   #Corrector Yui
+					"A2036",  #Cosmic Baton Girl Comet-san
+					"A1661",  #Cutey Honey
+					"A1853",  #Cutey Honey F
+					"A6496",  #Cutey Honey Flash: The Movie
+					"A2288",  #Cyberteam in Akihabara
+					"A2289",  #Cyberteam in Akihabara: 2011 Summer Vacation
+					"A933",   #Dai Mahou Touge
+					"A1841",  #Dai Mahou Touge Omake
+					"A1221",  #Demashitaa! Powerpuff Girls Z
+					"A660",   #Denshin Mamotte Shugogetten
+					"A16419", #Dokidoki! Precure
+					"A17357", #Dokidoki! Precure Movie
+					"A2259",  #Dr. Rin ni Kiitemite!
+					"A812",   #Earth Maiden Arjuna
+					"A1930",  #Eiga Futari wa Precure Max Heart
+					"A1931",  #Eiga Futari wa Precure Max Heart 2: Yukizora no Tomodachi
+					"A4124",  #Eiga Futari wa Precure Splash Star Tick-Tock Kiki Ippatsu!
+					"A5753",  #Eiga Precure All Stars DX: Minna Tomodachi - Kiseki no Zenin Daishuugou!
+					"A8133",  #Eiga Precure All Stars DX2: Kibou no Hikari - Rainbow Jewel wo Mamore!
+					"A9979",  #Eiga Precure All Stars DX3: Mirai ni Todoke! Sekai wo Tsunagu Niji-iro no Hana
+					"A10821", #Eiga Suite Precure♪: Torimodose! Kokoro ga Tsunaku Kiseki no Melody
+					"A4703",  #Eiga Yes! Precure 5 GoGo! Okashi no Kuni no Happy Birthday
+					"A3023",  #Esper Mami
+					"A10000", #Esper Mami: My Angel Mami-chan
+					"A9880",  #Esper Mami: Hoshizora no Dancing Doll
+					"A604",   #Fancy Lala
+					"A14829", #Fate/kaleid liner Prisma Illya
+					"A19109", #Fate/kaleid liner Prisma Illya Specials
+					"A18851", #Fate/kaleid liner Prisma Illya (2014)
+					"A1126",  #Figure 17
+					"A5684",  #Fresh Precure!
+					"A6527",  #Fresh Precure! Omocha no Kuni wa Himitsu ga Ippai!
+					"A122",   #Full Moon wo Sagashite
+					"A5476",  #Fushigi na Melmo
+					"A505",   #Fushigiboshi no Futagohime
+					"A1886",  #Fushigiboshi no Futagohime Gyu!
+					"A603",   #Futari wa Precure
+					"A1929",  #Futari wa Precure Max Heart
+					"A1534",  #Futari wa Precure Splash Star
+					"A74",    #Gakuen Alice
+					"A11809", #gdgd Fairies
+					"A17651", #Genei wo Kakeru Taiyou
+					"A1865",  #Getsumen to Heiki Mina
+					"A7427",  #Getsumen to Heiki Mina Specials
+					"A980",   #Ground Defence Mao-chan
+					"A18713", #Haiyore! Nyaruko-san: Yasashii Teki no Shitome-kata
+					"A2230",  #Hana no Ko Lunlun
+					"A9264",  #Hana no Ko Lunlun: Konnichiwa Sakura no Sono
+					"A2804",  #Hana no Mahou Tsukai Mary Bell
+					"A9862",  #Hana no Mahou Tsukai Mary Bell: Phoenix no Kagi
+					"A3320",  #Harbor Light Monogatari: Fashion Lala Yori
+					"A7645",  #Heartcatch Precure!
+					"A9288",  #Heartcatch Precure! Hana no Miyako de Fashion Show... Desu ka!
+					"A10491", #Higurashi no Naku Koro ni Kira
+					"A2037",  #Hime-chan no Ribbon
+					"A8206",  #Hime Chen! Otogi Chikku Idol Lilpri
+					"A3285",  #Himitsu no Akko-chan
+					"A12569", #Himitsu no Akko-chan (Movie)
+					"A3838",  #Himitsu no Akko-chan 2
+					"A3839",  #Himitsu no Akko-chan 3
+					"A12971", #Himitsu no Akko-chan: Umi da! Obake da!! Natsu matsuri
+					"A9911",  #Houkago no Pleiades
+					"A588",   #Itsudatte My Santa!
+					"A6008",  #Jewelpet
+					"A12963", #Jewelpet Kira Deco!
+					"A12965", #Jewelpet Movie: Sweets Dance Princess
+					"A10359", #Jewelpet Sunshine
+					"A8217",  #Jewelpet Tinkle
+					"A577",   #Kagihime Monogatari Eikyuu Alice Rinbukyoku
+					"A3805",  #Kaitou Tenshi Twin Angel
+					"A10217", #Kaitou Tenshi Twin Angel: Kyun Kyun Tokimeki Paradise!!
+					"A1808",  #Kamichama Karin
+					"A142",   #Kamikaze Kaitou Jeanne
+					"A6318",  #Kigurumikku V3
+					"A766",   #Kishin Houkou Demonbane
+					"A1067",  #Kishin Houkou Demonbane (2006)
+					"A3577",  #Kyouran Kazoku Nikki
+					"A9792",  #Licca-chan Fushigi na Fushigi na Yunia Monogatari
+					"A7294",  #Licca-chan Fushigi na Mahou no Ring
+					"A8919",  #Licca-chan no Nichiyoubi
+					"A9878",  #Licca-chan to Yamaneko Hoshi no Tabi
+					"A1995",  #Lingerie Senshi Papillon Rose
+					"A349",   #Magical Canan
+					"A17725", #Magical Star Kanon 100
+					"A2040",  #Mahou no Angel Sweet Mint
+					"A3660",  #Mahou no Idol Pastel Yumi
+					"A4113",  #Mahou no Mako-chan
+					"A518",   #Mahou no Princess Minky Momo
+					"A2272",  #Mahou no Princess Minky Momo: Yume no Naka no Rondo
+					"A5953",  #Mahou no Princess Minky Momo: Yume wo Dakishimete
+					"A5400",  #Mahou no Shiho-chan
+					"A2038",  #Mahou no Star Magical Emi
+					"A8443",  #Mahou no Star Magical Emi: Semishigure
+					"A2044",  #Mahou no Tenshi Creamy Mami
+					"A2045",  #Mahou no Tenshi Creamy Mami: Eien no Once More
+					"A2046",  #Mahou no Tenshi Creamy Mami: Long Goodbye
+					"A2039",  #Mahou no Yousei Persia
+					"A2988",  #Mahou Shoujo Ai (hentai)
+					"A5653",  #Mahou Shoujo Ai San: The Anime (hentai)
+					"A10770", #Mahou Shoujo Elena (hentai)
+					"A8653",  #Mahou Shoujo Isuka (hentai)
+					"A76",    #Mahou Shoujo Lyrical Nanoha
+					"A77",    #Mahou Shoujo Lyrical Nanoha As
+					"A1915",  #Mahou Shoujo Lyrical Nanoha StrikerS
+					"A12101", #Mahou Shoujo Lyrical Nanoha: Lyrical Toy Box
+					"A4985",  #Mahou Shoujo Lyrical Nanoha: The Movie 1st
+					"A10153", #Mahou Shoujo Lyrical Nanoha: The Movie 2nd As
+					"A9756",  #Mahou Shoujo Madoka Magica
+					"A11977", #Mahou Shoujo Madoka Magica Movie 1: Hajimari no Monogatari
+					"A11979", #Mahou Shoujo Madoka Magica Movie 2: Eien no Monogatari
+					"A11981", #Mahou Shoujo Madoka Magica Movie 3
+					"A3526",  #Mahou Shoujo Meruru (hentai)
+					"A1918",  #Mahou Shoujo Pretty Sammy
+					"A1502",  #Mahou Shoujo Pretty Sammy (1996)
+					"A1503",  #Mahou Shoujo Pretty Sammy Specials
+					"A5401",  #Mahou Shoujo Sae (hentai)
+					"A10519", #Mahou Shoujo Sonico Magica
+					"A872",   #Mahou Shoujo Tai Arusu
+					"A3991",  #Mahou Shoujo Tai Arusu the Adventure
+					"A3845",  #Mahou Tsukai Chappy
+					"A3356",  #Mahou Tsukai Sally
+					"A3875",  #Mahou Tsukai Sally 2
+					"A630",   #Mahou Tsukai Tai!
+					"A629",   #Mahou Tsukai Tai! OVA
+					"A5466",  #Mahou Tsukai Tai! vs Shamanic Princess
+					"A2277",  #Mahou Yuugi 2D
+					"A2278",  #Mahou Yuugi 3D
+					"A98",    #Mai-HiME
+					"A673",   #Mai-HiME Specials
+					"A8062",  #Mai-HiME: Kuro no Mai / Saigo no Bansan
+					"A99",    #Mai-Otome
+					"A3268",  #Mai-Otome 0: S.ifr
+					"A1609",  #Mai-Otome Zwei
+					"A2457",  #Majokko Club Yoningumi: A Kuukan Kara no Alien X
+					"A3388",  #Majokko Megu-chan
+					"A3881",  #Majokko Tickle
+					"A2457",  #Majokko Tsukune-chan
+					"A15813", #Majokko Shimai no Yoyo to Nene
+					"A626",   #Mamotte Shugogetten!
+					"A1110",  #Mermaid Melody Pichi Pichi Pitch Pure
+					"A521",   #Mermaid Melody: Pichi Pichi Pitch
+					"A6492",  #Minky Momo in Tabidachi no Eki
+					"A3630",  #Miracle Shoujo Limit-chan
+					"A3573",  #Moegaku*5
+					"A2367",  #Moetan
+					"A4421",  #Moetan Specials
+					"A352",   #Motto! Ojamajo Doremi
+					"A2948",  #Motto! Ojamajo Doremi: Secret of the Frog Stone
+					"A623",   #Nana 7 of 7
+					"A3619",  #Nanako SOS
+					"A1688",  #Nanatsuiro Drops
+					"A616",   #Nurse Angel Ririka SOS
+					"A615",   #Nurse Witch Komugi-chan
+					"A921",   #Nurse Witch Komugi-chan Magikarte Z
+					"A10520", #Nurse Witch Komugi-chan Magikarte Z Special
+					"A920",   #Nurse Witch Komugi-chan Special
+					"A3136",  #Ochamegami Monogatari: Korokoro Poron
+					"A350",   #Ojamajo Doremi
+					"A353",   #Ojamajo Doremi Dokkaan!
+					"A1376",  #Ojamajo Doremi Na-i-sho
+					"A12591", #Ojamajo Doremi OVA
+					"A351",   #Ojamajo Doremi Sharp
+					"A2947",  #Ojamajo Doremi Sharp Movie
+					"A614",   #Okusama wa Mahou Shoujo
+					"A3112",  #Papillon Rose
+					"A10549", #Precure All Stars GoGo Dream Live!
+					"A12221", #Precure All Stars New Stage: Mirai no Tomodachi
+					"A16442", #Precure All Stars New Stage 2: Kokoro no Tomodachi
+					"A11569", #Precure All-Stars DX the Dance Live: Miracle Dance Stage e Youkoso
+					"A10736", #Precure kara Minna e no Ouen Movie
+					"A100",   #Pretear
+					"A721",   #Princess Tutu
+					"A3265",  #Princess Tutu Recaps
+					"A327",   #Puchi Puri Yuushi
+					"A564",   #Puni Puni Poemi
+					"A151",   #Re: Cutey Honey
+					"A941",   #Renkin San-kyuu Magical Pokaan
+					"A1489",  #Renkin San-kyuu Magical Pokaan Specials
+					"A530",   #Sailor Moon
+					"A8756",  #Sailor Moon Memorial
+					"A740",   #Sailor Moon R
+					"A8757",  #Sailor Moon R Memorial
+					"A531",   #Sailor Moon R Movie: Promise of the Rose
+					"A2937",  #Sailor Moon R: Make Up! Sailor Senshi!
+					"A532",   #Sailor Moon S
+					"A8758",  #Sailor Moon S Memorial
+					"A997",   #Sailor Moon S Movie: Hearts in Ice
+					"A996",   #Sailor Moon Sailor Stars
+					"A8760",  #Sailor Moon Sailor Stars Memorial
+					"A1239",  #Sailor Moon SuperS
+					"A8759",  #Sailor Moon SuperS Memorial
+					"A1240",  #Sailor Moon SuperS Movie: Black Dream Hole
+					"A1278",  #Sailor Moon SuperS Plus: Amis First Love
+					"A3076",  #Sailor Moon SuperS Special
+					"A1724",  #Saint October
+					"A6311",  #Sarutobi Ecchan
+					"A1881",  #Sasami: Mahou Shoujo Club
+					"A1882",  #Sasami: Mahou Shoujo Club 2
+					"A3328",  #School Days: Magical Heart Kokoro-chan
+					"A11751", #Senki Zesshou Symphogear
+					"A355",   #Shakugan no Shana
+					"A2787",  #Shakugan no Shana II
+					"A3956",  #Shakugan no Shana II Specials
+					"A6773",  #Shakugan no Shana III (Final)
+					"A12823", #Shakugan no Shana III (Final) Special
+					"A1815",  #Shakugan no Shana Movie
+					"A3221",  #Shakugan no Shana Movie Special
+					"A6572",  #Shakugan no Shana S
+					"A7375",  #Shakugan no Shana S Specials
+					"A1531",  #Shakugan no Shana Special: Koi to Onsen no Kougai Gakushuu!
+					"A1066",  #Shakugan no Shana Specials
+					"A6330",  #Shakugan no Shana: Naze Nani Shana
+					"A14957", #Shakugan no Shana: Naze Nani Shana 2
+					"A1182",  #Shamanic Princess
+					"A2497",  #Shin Cutey Honey
+					"A440",   #Shoujo Kakumei Utena
+					"A441",   #Shoujo Kakumei Utena: Adolescence Mokushiroku
+					"A2923",  #Shugo Chara!
+					"A7082",  #Shugo Chara! Party!
+					"A5262",  #Shugo Chara!! Doki
+					"A12191", #Smile Precure!
+					"A15307", #Smile Precure! Movie: Ehon no Naka wa Minna Chiguhagu!
+					"A1642",  #Sugar Sugar Rune
+					"A9893",  #Suite Precure
+					"A2066",  #Super Doll Licca-chan
+					"A10199", #Super Doll Licca-Chan: Licca-chan Zettai Zetsumei! Doll Knights no Kiseki
+					"A2727",  #Sweet Valerian
+					"A3862",  #Sweet Valerian Specials
+					"A687",   #Tokyo Mew Mew
+					"A9393",  #T.P. Sakura: Time Paladin Sakura
+					"A1613",  #Time Stranger Kyoko
+					"A178",   #Ultra Maniac
+					"A179",   #Ultra Maniac OVA
+					"A6129",  #Umi Monogatari: Anata ga Ite Kureta Koto
+					"A688",   #Uta Kata
+					"A14283", #Vividred Operation
+					"A1533",  #Wedding Peach
+					"A1957",  #Wedding Peach DX
+					"A1932",  #Yes! Precure 5
+					"A3692",  #Yes! Precure 5 GoGo!
+					"A3051",  #Yes! Pretty Cure 5 Movie: Kagami no Kuni no Miracle Daibouken!
+					"A5454",  #Yokuwakaru Gendaimahou
+					"A6748",  #Yokuwakaru Gendaimahou 00
+					"A4651",  #Yume no Crayon Oukoku
+					"A4038",  #Zettai Karen Children
+					"A7754"   #Zettai Karen Children OVA: Aitazousei! Ubawareta Mirai?
+				]
+			}
 		},
-		"slice of life": {
-			"achievements": [
-				{ "threshold": "25-39", "id": "anime-sliceoflife-1", "level": "Slice Of Life: level 1",   "title": "Normal high school boy",          "desc": "Got started into the furious ride with slice-of-life anime." },
-				{ "threshold": "40-59", "id": "anime-sliceoflife-2", "level": "Slice Of Life: level 2",   "title": "cute &times; ( girls + things )", "desc": "Didn&rsquo;t get bored of watching cute girls doing cute things. As if that&rsquo;s possible." },
-				{ "threshold": "60-99", "id": "anime-sliceoflife-3", "level": "Slice Of Life: level 3",   "title": "Enjoying life",                   "desc": "Found the equilibrium between boring and interesting." },
-				{ "threshold": "100+",  "id": "anime-sliceoflife-4", "level": "Slice Of Life: level MAX", "title": "Prima Undine",                    "desc": "Awarded Ph.D. degree in sliceoflife-ology. You can teach others how to stay calm and take it easy." }
+
+		"slice of life":
+		{
+			"achievements":
+			[
+				{
+					"threshold": "25-39",
+					"id": "anime-sliceoflife-1",
+					"level": "Slice Of Life: level 1",
+					"title": "Normal high school boy",
+					"desc": "Got started into the furious ride with slice-of-life anime."
+				},
+				{
+					"threshold": "40-59",
+					"id": "anime-sliceoflife-2",
+					"level": "Slice Of Life: level 2",
+					"title": "cute &times; ( girls + things )",
+					"desc": "Didn&rsquo;t get bored of watching cute girls doing cute things. As if that&rsquo;s possible."
+				},
+				{
+					"threshold": "60-99",
+					"id": "anime-sliceoflife-3",
+					"level": "Slice Of Life: level 3",
+					"title": "Enjoying life",
+					"desc": "Found the equilibrium between boring and interesting."
+				},
+				{
+					"threshold": "100+",
+					"id": "anime-sliceoflife-4",
+					"level": "Slice Of Life: level MAX",
+					"title": "Prima Undine",
+					"desc": "Awarded Ph.D. degree in sliceoflife-ology. You can teach others how to stay calm and take it easy."
+				}
 			],
-			"requirement": {"type": "genre-titles", "genre": 36, "titles": [
-				"A12291", #Acchi Kocchi
-				"A713",   #Air (Movie)
-				"A10719", #Boku wa Tomodachi ga Sukunai
-				"A10897", #Boku wa Tomodachi ga Sukunai Episode 0
-				"A14967", #Boku wa Tomodachi ga Sukunai Next
-				"A14027", #Boku wa Tomodachi ga Sukunai: Add-on Disc
-				"A14741", #Chuunibyou demo Koi ga Shitai!
-				"A15687", #Chuunibyou demo Koi ga Shitai! Lite
-				"A15879", #Chuunibyou demo Koi ga Shitai!: Depth of Field - Ai to Nikushimi Gekijyo
-				"A2167",  #Clannad
-				"A1723",  #Clannad (Movie)
-				"A6351",  #Clannad: Another World, Kyou Chapter
-				"A9379",  #Denpa Onna to Seishun Otoko
-				"A10638", #Denpa Onna to Seishun Otoko Special
-				"A10838", #Double-J
-				"A16",    #Honey and Clover
-				"A1142",  #Honey and Clover II
-				"A8426",  #Hourou Musuko
-				"A10935", #Hourou Musuko Specials
-				"A6958",  #Hyakko OVA
-				"A863",   #Joshi Kousei
-				"A1530",  #Kanon (2006)
-				"A3318",  #Kimi ga Nozomu Eien: Next Season
-				"A1379",  #Kino no Tabi: Nanika wo Suru Tame ni - Life Goes On.
-				"A2175",  #Kino no Tabi: The Beautiful World - Byouki no Kuni: For You
-				"A3466",  #Kino no Tabi: The Beautiful World - Tou no Kuni
-				"A5678",  #Kobato.
-				"A10098", #Kobato. Special: Hajimete no Kobato.
-				"A17635", #Koitabi: True Tours Nanto
-				"A11887", #Kokoro Connect
-				"A16001", #Kokoro Connect: Michi Random
-				"A16782", #Kotonoha no Niwa
-				"A13655", #Little Busters!
-				"A444",   #Maria-sama ga Miteru: Haru
-				"A1738",  #Muteki Kanban Musume
-				"A5690",  #Nodame Cantabile Finale
-				"A8038",  #Nodame Cantabile Finale Special
-				"A8190",  #Nodame Cantabile OVA 2
-				"A12673", #Papa no Iukoto wo Kikinasai! Special
-				"A611",   #Platonic Chain
-				"A11491", #Recorder to Randoseru Do
-				"A13377", #Recorder to Randoseru Re
-				"A14627", #Recorder to Randoseru Special
-				"A8675",  #Seitokai Yakuindomo
-				"A10119", #Seitokai Yakuindomo OVA
-				"A9888",  #Shinryaku! Ika Musume Specials
-				"A6127",  #Toradora!: SOS!
-				"A1210",  #Welcome to the NHK
-				"A14335", #Yama no Susume
-				"A6586",  #Yumeiro Pâtissière
-				"A12665"  #Yuru Yuri: Doushite Tomaranai Tokimeki Doki Doki Paradox Eternal
-			]}
+			"requirement":
+			{
+				"type": "genre-titles",
+				"genre": 36,
+				"titles":
+				[
+					"A12291", #Acchi Kocchi
+					"A713",   #Air (Movie)
+					"A10719", #Boku wa Tomodachi ga Sukunai
+					"A10897", #Boku wa Tomodachi ga Sukunai Episode 0
+					"A14967", #Boku wa Tomodachi ga Sukunai Next
+					"A14027", #Boku wa Tomodachi ga Sukunai: Add-on Disc
+					"A14741", #Chuunibyou demo Koi ga Shitai!
+					"A15687", #Chuunibyou demo Koi ga Shitai! Lite
+					"A15879", #Chuunibyou demo Koi ga Shitai!: Depth of Field - Ai to Nikushimi Gekijyo
+					"A2167",  #Clannad
+					"A1723",  #Clannad (Movie)
+					"A6351",  #Clannad: Another World, Kyou Chapter
+					"A9379",  #Denpa Onna to Seishun Otoko
+					"A10638", #Denpa Onna to Seishun Otoko Special
+					"A10838", #Double-J
+					"A16",    #Honey and Clover
+					"A1142",  #Honey and Clover II
+					"A8426",  #Hourou Musuko
+					"A10935", #Hourou Musuko Specials
+					"A6958",  #Hyakko OVA
+					"A863",   #Joshi Kousei
+					"A1530",  #Kanon (2006)
+					"A3318",  #Kimi ga Nozomu Eien: Next Season
+					"A1379",  #Kino no Tabi: Nanika wo Suru Tame ni - Life Goes On.
+					"A2175",  #Kino no Tabi: The Beautiful World - Byouki no Kuni: For You
+					"A3466",  #Kino no Tabi: The Beautiful World - Tou no Kuni
+					"A5678",  #Kobato.
+					"A10098", #Kobato. Special: Hajimete no Kobato.
+					"A17635", #Koitabi: True Tours Nanto
+					"A11887", #Kokoro Connect
+					"A16001", #Kokoro Connect: Michi Random
+					"A16782", #Kotonoha no Niwa
+					"A13655", #Little Busters!
+					"A444",   #Maria-sama ga Miteru: Haru
+					"A1738",  #Muteki Kanban Musume
+					"A5690",  #Nodame Cantabile Finale
+					"A8038",  #Nodame Cantabile Finale Special
+					"A8190",  #Nodame Cantabile OVA 2
+					"A12673", #Papa no Iukoto wo Kikinasai! Special
+					"A611",   #Platonic Chain
+					"A11491", #Recorder to Randoseru Do
+					"A13377", #Recorder to Randoseru Re
+					"A14627", #Recorder to Randoseru Special
+					"A8675",  #Seitokai Yakuindomo
+					"A10119", #Seitokai Yakuindomo OVA
+					"A9888",  #Shinryaku! Ika Musume Specials
+					"A6127",  #Toradora!: SOS!
+					"A1210",  #Welcome to the NHK
+					"A14335", #Yama no Susume
+					"A6586",  #Yumeiro Pâtissière
+					"A12665"  #Yuru Yuri: Doushite Tomaranai Tokimeki Doki Doki Paradox Eternal
+				]
+			}
 		},
-		"gar": {
-			"achievements": [
-				{ "threshold": "25-39", "id": "anime-gar-1", "level": "GAR: level 1",         "title": "So manly I can&rsquo;t breathe", "desc": "Watching all those men made you feel like a little girl&hellip; and you liked it." },
-				{ "threshold": "40-59", "id": "anime-gar-2", "level": "GAR: level 2",         "title": "Testosterone storm",             "desc": "Your body has adapted into GAR anime. You can hear your muscles growing." },
-				{ "threshold": "60-99", "id": "anime-gar-3", "level": "GAR: level 3",         "title": "You are already man.",           "desc": "Resistance is futile. People are simply no match for you." },
-				{ "threshold": "100+",  "id": "anime-gar-4", "level": "GAR: level MAKSHIMUM", "title": "Alpha Male",                     "desc": "You aren&rsquo;t made out of testosterone. Testosterone is made out of you." }
+
+		"gar":
+		{
+			"achievements":
+			[
+				{
+					"threshold": "25-39",
+					"id": "anime-gar-1",
+					"level": "GAR: level 1",
+					"title": "So manly I can&rsquo;t breathe",
+					"desc": "Watching all those men made you feel like a little girl&hellip; and you liked it."
+				},
+				{
+					"threshold": "40-59",
+					"id": "anime-gar-2",
+					"level": "GAR: level 2",
+					"title": "Testosterone storm",
+					"desc": "Your body has adapted into GAR anime. You can hear your muscles growing."
+				},
+				{
+					"threshold": "60-99",
+					"id": "anime-gar-3",
+					"level": "GAR: level 3",
+					"title": "You are already man.",
+					"desc": "Resistance is futile. People are simply no match for you."
+				},
+				{
+					"threshold": "100+",
+					"id": "anime-gar-4",
+					"level": "GAR: level MAKSHIMUM",
+					"title": "Alpha Male",
+					"desc": "You aren&rsquo;t made out of testosterone. Testosterone is made out of you."
+				}
 			],
-			"requirement": {"type": "given-titles", "titles": [
-				"A1292",  #Afro Samurai
-				"A4970",  #Afro Samurai: Resurrection
-				"A658",   #Akagi
-				"A47",    #Akira
-				"A2356",  #Amon: The Apocalypse of Devilman
-				"A2202",  #Arcadia of My Youth
-				"A2203",  #Arcadia of My Youth: Endless Orbit SSX
-				"A2582",  #Armored Trooper Votoms
-				"A2251",  #Baccano!
-				"A3901",  #Baccano! Specials
-				"A1468",  #Baoh Raihousha
-				"A67",    #Basilisk: Kouga Ninpou Chou
-				"A404",   #Bastard!!
-				"A4094",  #Batman: Gotham Knight
-				"A9513",  #Beelzebub
-				"A33",    #Berserk
-				"A10218", #Berserk Ougon Jidaihen I: Haou no Tamago
-				"A12113", #Berserk Ougon Jidaihen II: Doldrey Kouryaku
-				"A12115", #Berserk Ougon Jidaihen III: Kourin
-				"A889",   #Black Lagoon
-				"A4901",  #Black Lagoon: Robertas Blood Trail
-				"A1519",  #Black Lagoon: The Second Barrage
-				"A3389",  #Bus Gamer
-				"A1470",  #City Hunter
-				"A1471",  #City Hunter 2
-				"A1472",  #City Hunter 3
-				"A1473",  #City Hunter 91
-				"A1474",  #City Hunter: .357 Magnum
-				"A1475",  #City Hunter: Bay City Wars
-				"A1479",  #City Hunter: Death of the Vicious Criminal Ryo Saeba
-				"A1478",  #City Hunter: Goodbye My Sweetheart
-				"A1476",  #City Hunter: Million Dollar Conspiracy
-				"A1477",  #City Hunter: The Secret Service
-				"A5032",  #Cobra the Animation
-				"A4646",  #Cobra the Animation: The Psycho-Gun
-				"A5031",  #Cobra the Animation: Time Drive
-				"A1",     #Cowboy Bebop
-				"A5",     #Cowboy Bebop: Tengoku no Tobira
-				"A114",   #Cromartie High School
-				"A6721",  #Dark Side Cat
-				"A499",   #Demon City Shinjuku
-				"A1178",  #Detonator Orgun
-				"A3702",  #Detroit Metal City
-				"A1726",  #Devil May Cry
-				"A2354",  #Devilman: The Birth
-				"A2355",  #Devilman: The Demon Bird
-				"A12885", #Dynamic Super Robots Grand Battle
-				"A12565", #Fate/Prototype
-				"A356",   #Fate/stay night
-				"A7559",  #Fate/stay night TV Reproduction
-				"A6922",  #Fate/stay night: Unlimited Blade Works
-				"A10087", #Fate/Zero
-				"A11741", #Fate/Zero 2nd Season
-				"A13183", #Fate/Zero Remix
-				"A384",   #Gantz
-				"A395",   #Gantz 2nd Stage
-				"A890",   #GaoGaiGar
-				"A1382",  #GaoGaiGar Final
-				"A4416",  #GaoGaiGar Final Grand Glorious Gathering
-				"A5776",  #GaoGaiGar: Blockaded Numbers Special
-				"A3579",  #Getter Robo
-				"A8252",  #Getter Robo (Movie)
-				"A4486",  #Getter Robo G
-				"A5292",  #Getter Robo Go
-				"A978",   #Getter Robo: Armageddon
-				"A18771", #Gifuu Doudou!!: Kanetsugu to Keiji
-				"A4039",  #Golgo 13
-				"A1761",  #Golgo 13: Queen Bee
-				"A1760",  #Golgo 13: The Professional
-				"A4385",  #Great Mazinger vs. Getter Robo
-				"A4386",  #Great Mazinger vs. Getter Robo G: Kuuchuu Dai-Gekitotsu
-				"A3481",  #Grendizer: Getter Robo G - Great Mazinger Kessen! Daikaijuu
-				"A411",   #Gun x Sword
-				"A267",   #Gungrave
-				"A263",   #Hajime no Ippo
-				"A12069", #Hajime no Ippo Special
-				"A264",   #Hajime no Ippo: Champion Road
-				"A265",   #Hajime no Ippo: Mashiba vs. Kimura
-				"A5258",  #Hajime no Ippo: New Challenger
-				"A1645",  #Harlock Saga
-				"A967",   #Hokuto no Ken
-				"A1356",  #Hokuto no Ken 2
-				"A1358",  #Hokuto no Ken Movie
-				"A7363",  #Hokuto No Ken: Legend of Heroes
-				"A2174",  #Hokuto no Ken: Raoh Gaiden Gekitou-hen
-				"A1773",  #Hokuto no Ken: Raoh Gaiden Junai-hen
-				"A4549",  #Hokuto no Ken: Raoh Gaiden Ten no Haoh
-				"A4312",  #Hokuto no Ken: Toki-den
-				"A3027",  #Hokuto no Ken: Yuria-den
-				"A5291",  #Hokuto no Ken: Zero Kenshiro Den
-				"A16774", #Inferno Cop
-				"A666",   #JoJo"s Bizarre Adventure
-				"A665",   #JoJo"s Bizarre Adventure (2000)
-				"A14719", #Jojo"s Bizarre Adventure (2012)
-				"A3603",  #JoJo"s Bizarre Adventure: Phantom Blood
-				"A3002",  #Kaiji
-				"A10271", #Kaiji: Hakairoku Hen
-				"A6293",  #Koukou Butouden Crows
-				"A820",   #Legend of the Galactic Heroes
-				"A2253",  #Mazinger Z
-				"A10625", #Mazinger Z (Movie)
-				"A3898",  #Mazinger Z vs. Devilman
-				"A4388",  #Mazinger Z vs. Dr. Hell
-				"A4406",  #Mazinger Z vs. General Dark
-				"A1064",  #Mazinkaiser
-				"A8666",  #Mazinkaiser SKL
-				"A2734",  #Mazinkaiser: Shitou! Ankoku Dai Shogun
-				"A1285",  #MD Geist
-				"A1286",  #MD Geist II: Death Force
-				"A96",    #Mobile Fighter G Gundam
-				"A6946",  #Mudazumo Naki Kaikaku: The Legend of Koizumi
-				"A1357",  #New Fist of the North Star
-				"A2978",  #New Getter Robo
-				"A1455",  #Ninja Resurrection
-				"A5040",  #One Outs
-				"A400",   #Outlaw Star
-				"A6675",  #Redline
-				"A917",   #Riding Bean
-				"A45",    #Rurouni Kenshin
-				"A46",    #Rurouni Kenshin: Ishinshishi e no Requiem
-				"A44",    #Rurouni Kenshin: Tsuiokuhen
-				"A2903",  #Sakigake!! Otokojuku
-				"A4031",  #Sakigake!! Otokojuku Movie
-				"A1608",  #Salaryman Kintarou
-				"A166",   #Samurai 7
-				"A205",   #Samurai Champloo
-				"A5355",  #Sengoku Basara
-				"A6634",  #Sengoku Basara Two
-				"A10483", #Sengoku Basara Two: Ryuko
-				"A6581",  #Sengoku Basara: Setonai no Gekitotsu! Hi wo Fuku Umi no Daiyousai - Fugaku!!
-				"A9745",  #Sengoku Basara: The Last Party
-				"A938",   #Shin Getter Robo vs. Neo Getter Robo
-				"A5485",  #Shin Mazinger Shougeki! Z-Hen
-				"A1913",  #Shonan Junai Gumi
-				"A1541",  #Souten no Ken
-				"A3864",  #Souten no Ken Specials
-				"A2451",  #Space Adventure Cobra
-				"A5742",  #Space Adventure Cobra Pilot
-				"A2452",  #Space Adventure Cobra: The Movie
-				"A1000",  #Space Pirate Captain Harlock
-				"A2470",  #Space Pirate Captain Harlock: The Mystery of Arcadia
-				"A1081",  #Space Pirate Captain Herlock: The Endless Odyssey
-				"A876",   #Street Fighter II V
-				"A1362",  #Street Fighter II: The Movie
-				"A3252",  #Super Express Mazinger 7
-				"A2418",  #Sword of the Stranger
-				"A2001",  #Tengen Toppa Gurren Lagann
-				"A5947",  #Tengen Toppa Gurren Lagann Gekijouban Zenyasai Special: Virals Sweet Dream
-				"A4107",  #Tengen Toppa Gurren Lagann Movie: Gurren-hen
-				"A4565",  #Tengen Toppa Gurren Lagann Movie: Lagann-hen
-				"A10622", #Tengen Toppa Gurren Lagann OVA
-				"A4705",  #Tengen Toppa Gurren Lagann Parallel Works
-				"A8348",  #Tengen Toppa Gurren Lagann Parallel Works 2
-				"A3352",  #Tengen Toppa Gurren Lagann Special
-				"A6",     #Trigun
-				"A4106",  #Trigun: Badlands Rumble
-				"A4387",  #UFO Robo Grendizer tai Great Mazinger
-				"A1341",  #Violence Jack
-				"A1342",  #Violence Jack 2
-				"A1343"   #Violence Jack 3
-			]}
+			"requirement":
+			{
+				"type": "given-titles",
+				"titles":
+				[
+					"A1292",  #Afro Samurai
+					"A4970",  #Afro Samurai: Resurrection
+					"A658",   #Akagi
+					"A47",    #Akira
+					"A2356",  #Amon: The Apocalypse of Devilman
+					"A2202",  #Arcadia of My Youth
+					"A2203",  #Arcadia of My Youth: Endless Orbit SSX
+					"A2582",  #Armored Trooper Votoms
+					"A2251",  #Baccano!
+					"A3901",  #Baccano! Specials
+					"A1468",  #Baoh Raihousha
+					"A67",    #Basilisk: Kouga Ninpou Chou
+					"A404",   #Bastard!!
+					"A4094",  #Batman: Gotham Knight
+					"A9513",  #Beelzebub
+					"A33",    #Berserk
+					"A10218", #Berserk Ougon Jidaihen I: Haou no Tamago
+					"A12113", #Berserk Ougon Jidaihen II: Doldrey Kouryaku
+					"A12115", #Berserk Ougon Jidaihen III: Kourin
+					"A889",   #Black Lagoon
+					"A4901",  #Black Lagoon: Robertas Blood Trail
+					"A1519",  #Black Lagoon: The Second Barrage
+					"A3389",  #Bus Gamer
+					"A1470",  #City Hunter
+					"A1471",  #City Hunter 2
+					"A1472",  #City Hunter 3
+					"A1473",  #City Hunter 91
+					"A1474",  #City Hunter: .357 Magnum
+					"A1475",  #City Hunter: Bay City Wars
+					"A1479",  #City Hunter: Death of the Vicious Criminal Ryo Saeba
+					"A1478",  #City Hunter: Goodbye My Sweetheart
+					"A1476",  #City Hunter: Million Dollar Conspiracy
+					"A1477",  #City Hunter: The Secret Service
+					"A5032",  #Cobra the Animation
+					"A4646",  #Cobra the Animation: The Psycho-Gun
+					"A5031",  #Cobra the Animation: Time Drive
+					"A1",     #Cowboy Bebop
+					"A5",     #Cowboy Bebop: Tengoku no Tobira
+					"A114",   #Cromartie High School
+					"A6721",  #Dark Side Cat
+					"A499",   #Demon City Shinjuku
+					"A1178",  #Detonator Orgun
+					"A3702",  #Detroit Metal City
+					"A1726",  #Devil May Cry
+					"A2354",  #Devilman: The Birth
+					"A2355",  #Devilman: The Demon Bird
+					"A12885", #Dynamic Super Robots Grand Battle
+					"A12565", #Fate/Prototype
+					"A356",   #Fate/stay night
+					"A7559",  #Fate/stay night TV Reproduction
+					"A6922",  #Fate/stay night: Unlimited Blade Works
+					"A10087", #Fate/Zero
+					"A11741", #Fate/Zero 2nd Season
+					"A13183", #Fate/Zero Remix
+					"A384",   #Gantz
+					"A395",   #Gantz 2nd Stage
+					"A890",   #GaoGaiGar
+					"A1382",  #GaoGaiGar Final
+					"A4416",  #GaoGaiGar Final Grand Glorious Gathering
+					"A5776",  #GaoGaiGar: Blockaded Numbers Special
+					"A3579",  #Getter Robo
+					"A8252",  #Getter Robo (Movie)
+					"A4486",  #Getter Robo G
+					"A5292",  #Getter Robo Go
+					"A978",   #Getter Robo: Armageddon
+					"A18771", #Gifuu Doudou!!: Kanetsugu to Keiji
+					"A4039",  #Golgo 13
+					"A1761",  #Golgo 13: Queen Bee
+					"A1760",  #Golgo 13: The Professional
+					"A4385",  #Great Mazinger vs. Getter Robo
+					"A4386",  #Great Mazinger vs. Getter Robo G: Kuuchuu Dai-Gekitotsu
+					"A3481",  #Grendizer: Getter Robo G - Great Mazinger Kessen! Daikaijuu
+					"A411",   #Gun x Sword
+					"A267",   #Gungrave
+					"A263",   #Hajime no Ippo
+					"A12069", #Hajime no Ippo Special
+					"A264",   #Hajime no Ippo: Champion Road
+					"A265",   #Hajime no Ippo: Mashiba vs. Kimura
+					"A5258",  #Hajime no Ippo: New Challenger
+					"A1645",  #Harlock Saga
+					"A967",   #Hokuto no Ken
+					"A1356",  #Hokuto no Ken 2
+					"A1358",  #Hokuto no Ken Movie
+					"A7363",  #Hokuto No Ken: Legend of Heroes
+					"A2174",  #Hokuto no Ken: Raoh Gaiden Gekitou-hen
+					"A1773",  #Hokuto no Ken: Raoh Gaiden Junai-hen
+					"A4549",  #Hokuto no Ken: Raoh Gaiden Ten no Haoh
+					"A4312",  #Hokuto no Ken: Toki-den
+					"A3027",  #Hokuto no Ken: Yuria-den
+					"A5291",  #Hokuto no Ken: Zero Kenshiro Den
+					"A16774", #Inferno Cop
+					"A666",   #JoJo"s Bizarre Adventure
+					"A665",   #JoJo"s Bizarre Adventure (2000)
+					"A14719", #Jojo"s Bizarre Adventure (2012)
+					"A3603",  #JoJo"s Bizarre Adventure: Phantom Blood
+					"A3002",  #Kaiji
+					"A10271", #Kaiji: Hakairoku Hen
+					"A6293",  #Koukou Butouden Crows
+					"A820",   #Legend of the Galactic Heroes
+					"A2253",  #Mazinger Z
+					"A10625", #Mazinger Z (Movie)
+					"A3898",  #Mazinger Z vs. Devilman
+					"A4388",  #Mazinger Z vs. Dr. Hell
+					"A4406",  #Mazinger Z vs. General Dark
+					"A1064",  #Mazinkaiser
+					"A8666",  #Mazinkaiser SKL
+					"A2734",  #Mazinkaiser: Shitou! Ankoku Dai Shogun
+					"A1285",  #MD Geist
+					"A1286",  #MD Geist II: Death Force
+					"A96",    #Mobile Fighter G Gundam
+					"A6946",  #Mudazumo Naki Kaikaku: The Legend of Koizumi
+					"A1357",  #New Fist of the North Star
+					"A2978",  #New Getter Robo
+					"A1455",  #Ninja Resurrection
+					"A5040",  #One Outs
+					"A400",   #Outlaw Star
+					"A6675",  #Redline
+					"A917",   #Riding Bean
+					"A45",    #Rurouni Kenshin
+					"A46",    #Rurouni Kenshin: Ishinshishi e no Requiem
+					"A44",    #Rurouni Kenshin: Tsuiokuhen
+					"A2903",  #Sakigake!! Otokojuku
+					"A4031",  #Sakigake!! Otokojuku Movie
+					"A1608",  #Salaryman Kintarou
+					"A166",   #Samurai 7
+					"A205",   #Samurai Champloo
+					"A5355",  #Sengoku Basara
+					"A6634",  #Sengoku Basara Two
+					"A10483", #Sengoku Basara Two: Ryuko
+					"A6581",  #Sengoku Basara: Setonai no Gekitotsu! Hi wo Fuku Umi no Daiyousai - Fugaku!!
+					"A9745",  #Sengoku Basara: The Last Party
+					"A938",   #Shin Getter Robo vs. Neo Getter Robo
+					"A5485",  #Shin Mazinger Shougeki! Z-Hen
+					"A1913",  #Shonan Junai Gumi
+					"A1541",  #Souten no Ken
+					"A3864",  #Souten no Ken Specials
+					"A2451",  #Space Adventure Cobra
+					"A5742",  #Space Adventure Cobra Pilot
+					"A2452",  #Space Adventure Cobra: The Movie
+					"A1000",  #Space Pirate Captain Harlock
+					"A2470",  #Space Pirate Captain Harlock: The Mystery of Arcadia
+					"A1081",  #Space Pirate Captain Herlock: The Endless Odyssey
+					"A876",   #Street Fighter II V
+					"A1362",  #Street Fighter II: The Movie
+					"A3252",  #Super Express Mazinger 7
+					"A2418",  #Sword of the Stranger
+					"A2001",  #Tengen Toppa Gurren Lagann
+					"A5947",  #Tengen Toppa Gurren Lagann Gekijouban Zenyasai Special: Virals Sweet Dream
+					"A4107",  #Tengen Toppa Gurren Lagann Movie: Gurren-hen
+					"A4565",  #Tengen Toppa Gurren Lagann Movie: Lagann-hen
+					"A10622", #Tengen Toppa Gurren Lagann OVA
+					"A4705",  #Tengen Toppa Gurren Lagann Parallel Works
+					"A8348",  #Tengen Toppa Gurren Lagann Parallel Works 2
+					"A3352",  #Tengen Toppa Gurren Lagann Special
+					"A6",     #Trigun
+					"A4106",  #Trigun: Badlands Rumble
+					"A4387",  #UFO Robo Grendizer tai Great Mazinger
+					"A1341",  #Violence Jack
+					"A1342",  #Violence Jack 2
+					"A1343"   #Violence Jack 3
+				]
+			}
 		},
-		"mecha": {
-			"achievements": [
-				{ "threshold": "25-39", "id": "anime-mecha-1", "level": "Mecha: level 1",   "title": "Me? PILOT this thing?!",     "desc": "A secret organization wants you to pilot a huge mecha. Can you do it?" },
-				{ "threshold": "40-59", "id": "anime-mecha-2", "level": "Mecha: level 2",   "title": "Engineer",                   "desc": "After watching over 40 mecha anime you should be able to build your own mobile suit. Remember not to kill the rest of us." },
-				{ "threshold": "60-99", "id": "anime-mecha-3", "level": "Mecha: level 3",   "title": "Mechazawa",                  "desc": "Having watched over 60 mecha anime, you&rsquo;ve probably became a robot already. Nice job, hero." },
-				{ "threshold": "100+",  "id": "anime-mecha-4", "level": "Mecha: level MAX", "title": "Pierce the H E A V E N S !", "desc": "Do the impossible. See the invisible. ROW ROW FIGHT THE POWAH! &hellip;You just sang that in your head, didn&rsquo;t you?" }
+
+		"mecha":
+		{
+			"achievements":
+			[
+				{
+					"threshold": "25-39",
+					"id": "anime-mecha-1",
+					"level": "Mecha: level 1",
+					"title": "Me? PILOT this thing?!",
+					"desc": "A secret organization wants you to pilot a huge mecha. Can you do it?"
+				},
+				{
+					"threshold": "40-59",
+					"id": "anime-mecha-2",
+					"level": "Mecha: level 2",
+					"title": "Engineer",
+					"desc": "After watching over 40 mecha anime you should be able to build your own mobile suit. Remember not to kill the rest of us."
+				},
+				{
+					"threshold": "60-99",
+					"id": "anime-mecha-3",
+					"level": "Mecha: level 3",
+					"title": "Mechazawa",
+					"desc": "Having watched over 60 mecha anime, you&rsquo;ve probably became a robot already. Nice job, hero."
+				},
+				{
+					"threshold": "100+",
+					"id": "anime-mecha-4",
+					"level": "Mecha: level MAX",
+					"title": "Pierce the H E A V E N S !",
+					"desc": "Do the impossible. See the invisible. ROW ROW FIGHT THE POWAH! &hellip;You just sang that in your head, didn&rsquo;t you?"
+				}
 			],
-			"requirement": {"type": "genre-titles", "genre": 18, "titles": [
-				"A5289",  #Beast Wars Second: LioConvoy in Imminent Danger!
-				#"A8728",  #Code Geass: Hangyaku no Lelouch - Kiseki no Birthday Picture Drama
-				"A9591",  #Code Geass: Hangyaku no Lelouch R2: Flash Specials
-				"A10534", #Doraemon: Nobita and the New Steel Troops - Angel Wings
-				"A2665",  #Doraemon: Nobita and the Platoon of Iron Men
-				"A72",    #Full Metal Panic Fumoffu
-				"A1015",  #Full Metal Panic! The Second Raid OVA
-				"A10050", #Macross Frontier Music Clip Shuu: Nyankuri
-				"A4939",  #Macross Fufonfia
-				"A1954",  #Magic Knight Rayearth OVA
-				"A2733",  #Mobile Police Patlabor Minimum
-				"A2743",  #Mobile Suit Gundam Seed: Seed Supernova - Tanekyara Gekijo
-				"A4130",  #Petit Eva: Evangelion@School
-				"A559",   #RahXephon Interlude: Her and Herself // Thatness and Thereness
-				"A2168",  #Sakura Taisen: New York
-				"A3252",  #Super Express Mazinger 7
-				"A5947",  #Tengen Toppa Gurren Lagann Gekijouban Zenyasai Special: Virals Sweet Dream
-				"A10622", #Tengen Toppa Gurren Lagann OVA
-				"A4705",  #Tengen Toppa Gurren Lagann Parallel Works
-				"A1762",  #The Heroic Legend of Arslan
-				"A14401", #Titan Rain
-				"A5462"   #Top wo Nerae! Science Lesson
-			]}
+			"requirement":
+			{
+				"type": "genre-titles",
+				"genre": 18,
+				"titles":
+				[
+					"A5289",  #Beast Wars Second: LioConvoy in Imminent Danger!
+					#"A8728",  #Code Geass: Hangyaku no Lelouch - Kiseki no Birthday Picture Drama
+					"A9591",  #Code Geass: Hangyaku no Lelouch R2: Flash Specials
+					"A10534", #Doraemon: Nobita and the New Steel Troops - Angel Wings
+					"A2665",  #Doraemon: Nobita and the Platoon of Iron Men
+					"A72",    #Full Metal Panic Fumoffu
+					"A1015",  #Full Metal Panic! The Second Raid OVA
+					"A10050", #Macross Frontier Music Clip Shuu: Nyankuri
+					"A4939",  #Macross Fufonfia
+					"A1954",  #Magic Knight Rayearth OVA
+					"A2733",  #Mobile Police Patlabor Minimum
+					"A2743",  #Mobile Suit Gundam Seed: Seed Supernova - Tanekyara Gekijo
+					"A4130",  #Petit Eva: Evangelion@School
+					"A559",   #RahXephon Interlude: Her and Herself // Thatness and Thereness
+					"A2168",  #Sakura Taisen: New York
+					"A3252",  #Super Express Mazinger 7
+					"A5947",  #Tengen Toppa Gurren Lagann Gekijouban Zenyasai Special: Virals Sweet Dream
+					"A10622", #Tengen Toppa Gurren Lagann OVA
+					"A4705",  #Tengen Toppa Gurren Lagann Parallel Works
+					"A1762",  #The Heroic Legend of Arslan
+					"A14401", #Titan Rain
+					"A5462"   #Top wo Nerae! Science Lesson
+				]
+			}
 		},
-		"historical": {
-			"achievements": [
-				{ "threshold": "25-39", "id": "anime-historical-1", "level": "Historical: level 1",   "title": "History class",          "desc": "History doesn&rsquo;t have to be boring. There&rsquo;s a lot to learn." },
-				{ "threshold": "40-59", "id": "anime-historical-2", "level": "Historical: level 2",   "title": "A look at passing time", "desc": "Instead of dreaming of the future, you prefer to look back at the past." },
-				{ "threshold": "60-99", "id": "anime-historical-3", "level": "Historical: level 3",   "title": "Archaeologist",          "desc": "You have learned that sometimes going further just isn&rsquo;t worth it. And yet you try." },
-				{ "threshold": "100+",  "id": "anime-historical-4", "level": "Historical: level MAX", "title": "Time machine",           "desc": "Kids these days are boring. You&rsquo;d rather watch something heartwarming about siblings catching fireflies." }
+
+		"historical":
+		{
+			"achievements":
+			[
+				{
+					"threshold": "25-39",
+					"id": "anime-historical-1",
+					"level": "Historical: level 1",
+					"title": "History class",
+					"desc": "History doesn&rsquo;t have to be boring. There&rsquo;s a lot to learn."
+				},
+				{
+					"threshold": "40-59",
+					"id": "anime-historical-2",
+					"level": "Historical: level 2",
+					"title": "A look at passing time",
+					"desc": "Instead of dreaming of the future, you prefer to look back at the past."
+				},
+				{
+					"threshold": "60-99",
+					"id": "anime-historical-3",
+					"level": "Historical: level 3",
+					"title": "Archaeologist",
+					"desc": "You have learned that sometimes going further just isn&rsquo;t worth it. And yet you try."
+				},
+				{
+					"threshold": "100+",
+					"id": "anime-historical-4",
+					"level": "Historical: level MAX",
+					"title": "Time machine",
+					"desc": "Kids these days are boring. You&rsquo;d rather watch something heartwarming about siblings catching fireflies."
+				}
 			],
-			"requirement": {"type": "genre-titles", "genre": 13, "titles": [
-				"A2546",  #Alps Monogatari: Watashi no Annette
-				"A4723",  #Animated Classics of Japanese Literature (Seishun Anime Zenshuu)
-				"A2251",  #Baccano!
-				"A12561", #Benkeitai Ushiwaka
-				"A405",   #Blood: The Last Vampire
-				"A2800",  #Candy Candy
-				"A723",   #Candy Candy (Movie)
-				"A2802",  #Candy Candy: Candy no Natsuyasumi
-				"A2801",  #Candy Candy: Haru no Yobigoe
-				"A2800",  #Chikara to Onna no Yo no Naka
-				"A60",    #Chrno Crusade
-				"A1482",  #D.Gray-man
-				"A724",   #Enzai
-				"A2553",  #Flanders no Inu
-				"A2623",  #Flanders no Inu (Movie)
-				"A7775",  #Futatsu no Kurumi
-				"A1049",  #Gauche the Cellist
-				"A10643", #Gintama: Dai Hanseikai
-				"A336",   #Ginyuu Mokushiroku Meine Liebe
-				"A7867",  #Gon
-				"A8425",  #Gosick
-				"A10504", #Gosick Recap
-				"A1200",  #Gun-dou Musashi
-				"A10270", #Gun-dou Musashi Recap
-				"A1663",  #Haha wo Tazunete Sanzenri
-				"A8763",  #Hajime Ningen Gyatoruz
-				"A4551",  #Hakushaku to Yousei
-				"A4876",  #Hashire Melos!
-				"A2405",  #Hello! Lady Lynn
-				"A4800",  #Huckleberry Finn Monogatarii
-				"A2831",  #Ie Naki Ko (Movie)
-				"A2829",  #Ie Naki Ko Remi
-				"A10471", #Ie Naki Ko Remi Specials
-				"A249",   #InuYasha
-				"A6811",  #InuYasha: Kanketsu-hen
-				"A4886",  #InuYasha: Kuroi Tessaiga
-				"A5900",  #Jean Valjean Monogatari
-				"A3110",  #Kaze no Naka no Shoujo: Kinpatsu no Jeanie
-				"A8436",  #Ketsudan
-				"A4262",  #Koihime†Musou
-				"A5305",  #Koihime†Musou OVA
-				"A4898",  #Kuroshitsuji
-				"A6707",  #Kuroshitsuji II
-				"A9136",  #Kuroshitsuji II Specials
-				"A8068",  #Kuroshitsuji Picture Drama
-				"A6163",  #Kuroshitsuji Recap
-				"A6793",  #Kuroshitsuji Special
-				"A9773",  #Lady Lady!! (1988)
-				"A4926",  #Marco: Haha wo Tazunete Sanzenri
-				"A9395",  #Miyanishi Tatasuya Gekijou: Omae Umasou da na
-				"A2246",  #Mononoke
-				"A1375",  #My Daddy Long Legs
-				"A3381",  #Nadia the Secret of Blue Water Omakes
-				"A618",   #Ninja Scroll: The Series
-				"A912",   #Ninku
-				"A9204",  #Omae Umasou da na
-				"A8487",  #Onigamiden
-				"A10180", #Otome Youkai Zakuro Picture Drama
-				"A1035",  #Patalliro Saiyuki!
-				"A6114",  #Rainbow: Nisha Rokubou no Shichinin
-				"A9716",  #Rurouni Kenshin: Review Special
-				"A4664",  #Rurouni Kenshin: Special Techniques
-				"A839",   #Samurai Spirits 2
-				"A6057",  #Sasuke
-				"A3038",  #Senya Ichiya Monogatari
-				"A6112",  #Shin Koihime†Musou
-				"A7774",  #Shin Koihime†Musou OVA
-				"A8635",  #Shin Koihime†Musou: Live Revolution
-				"A8057",  #Shin Koihime†Musou: Otome Tairan
-				"A10297", #Shin Koihime†Musou: Otome Tairan OVA
-				"A173",   #Tactics
-				"A1452",  #The Samurai
-				"A8961",  #Tono to Issho: Ippunkan Gekijou
-				"A5917",  #Tsuru ni Notte: Tomoko no Bouken
-				"A4132"   #Wakakusa no Yon Shimai
-			]}
+			"requirement":
+			{
+				"type": "genre-titles",
+				"genre": 13,
+				"titles":
+				[
+					"A2546",  #Alps Monogatari: Watashi no Annette
+					"A4723",  #Animated Classics of Japanese Literature (Seishun Anime Zenshuu)
+					"A2251",  #Baccano!
+					"A12561", #Benkeitai Ushiwaka
+					"A405",   #Blood: The Last Vampire
+					"A2800",  #Candy Candy
+					"A723",   #Candy Candy (Movie)
+					"A2802",  #Candy Candy: Candy no Natsuyasumi
+					"A2801",  #Candy Candy: Haru no Yobigoe
+					"A2800",  #Chikara to Onna no Yo no Naka
+					"A60",    #Chrno Crusade
+					"A1482",  #D.Gray-man
+					"A724",   #Enzai
+					"A2553",  #Flanders no Inu
+					"A2623",  #Flanders no Inu (Movie)
+					"A7775",  #Futatsu no Kurumi
+					"A1049",  #Gauche the Cellist
+					"A10643", #Gintama: Dai Hanseikai
+					"A336",   #Ginyuu Mokushiroku Meine Liebe
+					"A7867",  #Gon
+					"A8425",  #Gosick
+					"A10504", #Gosick Recap
+					"A1200",  #Gun-dou Musashi
+					"A10270", #Gun-dou Musashi Recap
+					"A1663",  #Haha wo Tazunete Sanzenri
+					"A8763",  #Hajime Ningen Gyatoruz
+					"A4551",  #Hakushaku to Yousei
+					"A4876",  #Hashire Melos!
+					"A2405",  #Hello! Lady Lynn
+					"A4800",  #Huckleberry Finn Monogatarii
+					"A2831",  #Ie Naki Ko (Movie)
+					"A2829",  #Ie Naki Ko Remi
+					"A10471", #Ie Naki Ko Remi Specials
+					"A249",   #InuYasha
+					"A6811",  #InuYasha: Kanketsu-hen
+					"A4886",  #InuYasha: Kuroi Tessaiga
+					"A5900",  #Jean Valjean Monogatari
+					"A3110",  #Kaze no Naka no Shoujo: Kinpatsu no Jeanie
+					"A8436",  #Ketsudan
+					"A4262",  #Koihime†Musou
+					"A5305",  #Koihime†Musou OVA
+					"A4898",  #Kuroshitsuji
+					"A6707",  #Kuroshitsuji II
+					"A9136",  #Kuroshitsuji II Specials
+					"A8068",  #Kuroshitsuji Picture Drama
+					"A6163",  #Kuroshitsuji Recap
+					"A6793",  #Kuroshitsuji Special
+					"A9773",  #Lady Lady!! (1988)
+					"A4926",  #Marco: Haha wo Tazunete Sanzenri
+					"A9395",  #Miyanishi Tatasuya Gekijou: Omae Umasou da na
+					"A2246",  #Mononoke
+					"A1375",  #My Daddy Long Legs
+					"A3381",  #Nadia the Secret of Blue Water Omakes
+					"A618",   #Ninja Scroll: The Series
+					"A912",   #Ninku
+					"A9204",  #Omae Umasou da na
+					"A8487",  #Onigamiden
+					"A10180", #Otome Youkai Zakuro Picture Drama
+					"A1035",  #Patalliro Saiyuki!
+					"A6114",  #Rainbow: Nisha Rokubou no Shichinin
+					"A9716",  #Rurouni Kenshin: Review Special
+					"A4664",  #Rurouni Kenshin: Special Techniques
+					"A839",   #Samurai Spirits 2
+					"A6057",  #Sasuke
+					"A3038",  #Senya Ichiya Monogatari
+					"A6112",  #Shin Koihime†Musou
+					"A7774",  #Shin Koihime†Musou OVA
+					"A8635",  #Shin Koihime†Musou: Live Revolution
+					"A8057",  #Shin Koihime†Musou: Otome Tairan
+					"A10297", #Shin Koihime†Musou: Otome Tairan OVA
+					"A173",   #Tactics
+					"A1452",  #The Samurai
+					"A8961",  #Tono to Issho: Ippunkan Gekijou
+					"A5917",  #Tsuru ni Notte: Tomoko no Bouken
+					"A4132"   #Wakakusa no Yon Shimai
+				]
+			}
 		},
-		"boku no pico": {
-			"achievements": [
-				{ "threshold": "3+", "id": "anime-bokunopico", "level": "It&rsquo;s just an ice cream", "title": "Feels&hellip; weird, man", "desc": "Watched Boku no Pico. This is what you get when you follow /a/&rsquo;s recommendations." }
+
+		"boku no pico":
+		{
+			"achievements":
+			[
+				{
+					"threshold": "3+",
+					"id": "anime-bokunopico",
+					"level": "It&rsquo;s just an ice cream",
+					"title": "Feels&hellip; weird, man",
+					"desc": "Watched Boku no Pico. This is what you get when you follow /a/&rsquo;s recommendations."
+				}
 			],
-			"requirement": {"type": "given-titles", "titles": [
-				"A1639",  #Boku no Pico
-				"A5391",  #Pico to Chico
-				"A4866",  #Pico x CoCo x Chico
-				"A6546"   #Pico: My Little Summer Story
-			]}
+			"requirement":
+			{
+				"type": "given-titles",
+				"titles":
+				[
+					"A1639",  #Boku no Pico
+					"A5391",  #Pico to Chico
+					"A4866",  #Pico x CoCo x Chico
+					"A6546"   #Pico: My Little Summer Story
+				]
+			}
 		},
-		"very low mean score": {
-			"achievements": [
-				{ "threshold": "0-2.99", "id": "score-anime-lessthanthree", "title": "Less than three",             "desc": "Mean anime score lower than 3. Is this hate, or is this love?", "tooltip": "Mean score: {progress-subject}" }
+
+		"very low mean score":
+		{
+			"achievements":
+			[
+				{
+					"threshold": "0-2.99",
+					"id": "score-anime-lessthanthree",
+					"title": "Less than three",
+					"desc": "Mean anime score lower than 3. Is this hate, or is this love?",
+					"tooltip": "Mean score: {progress-subject}"
+				}
 			],
-			"requirement": { "type": "mean-score" }
+			"requirement":
+			{
+				"type": "mean-score"
+			}
 		},
-		"low mean score": {
-			"achievements": [
-				{ "threshold": "3-5",    "id": "score-anime-suffering",     "title": "Watching anime is suffering", "desc": "Mean anime score lower than 5. Someone has to counterweigh the fanboys, right?", "tooltip": "Mean score: {progress-subject}" }
+
+		"low mean score":
+		{
+			"achievements":
+			[
+				{
+					"threshold": "3-5",
+					"id": "score-anime-suffering",
+					"title": "Watching anime is suffering",
+					"desc": "Mean anime score lower than 5. Someone has to counterweigh the fanboys, right?",
+					"tooltip": "Mean score: {progress-subject}"
+				}
 			],
-			"requirement": { "type": "mean-score" }
+			"requirement":
+			{
+				"type": "mean-score"
+			}
 		},
-		"high mean score": {
-			"achievements": [
-				{ "threshold": "8.5-10", "id": "score-anime-ilovethem",     "title": "I love Chinese cartoons",     "desc": "Mean anime score higher than 8.5. How about using the whole scale and re-rating stuff? That could make you look less like a fanboy&hellip;", "tooltip": "Mean score: {progress-subject}" }
+
+		"high mean score":
+		{
+			"achievements":
+			[
+				{
+					"threshold": "8.5-10",
+					"id": "score-anime-ilovethem",
+					"title": "I love Chinese cartoons",
+					"desc": "Mean anime score higher than 8.5. How about using the whole scale and re-rating stuff? That could make you look less like a fanboy&hellip;",
+					"tooltip": "Mean score: {progress-subject}"
+				}
 			],
-			"requirement": { "type": "mean-score" }
+			"requirement":
+			{
+				"type": "mean-score"
+			}
 		},
-		"count": {
-			"achievements": [
-				{ "threshold": "100-199",   "id": "numbers-anime-100",   "level": "Passed 100 mark",   "title": "The first step",         "desc": "Watched 100 anime. Congratulations, you broke the magical number. Take a breath now, it will only get more difficult." },
-				{ "threshold": "200-299",   "id": "numbers-anime-200",   "level": "Passed 200 mark",   "title": "Casual watcher",         "desc": "Watched 200 anime. You&rsquo;re used to seeing character&rsquo;s eyes bigger than their nose. If they have any nose." },
-				{ "threshold": "300-399",   "id": "numbers-anime-300",   "level": "Passed 300 mark",   "title": "A millionaire",          "desc": "Watched 300 anime. You DID buy all of them, right?" },
-				{ "threshold": "400-499",   "id": "numbers-anime-400",   "level": "Passed 400 mark",   "title": "Bragging rights",        "desc": "Watched 400 anime. That&rsquo;s&hellip; a lot. You can be proud of yourself, that&rsquo;s for sure." },
-				{ "threshold": "500-749",   "id": "numbers-anime-500",   "level": "Passed 500 mark",   "title": "A lot of free time",     "desc": "Watched 500 anime. Now pause, take a breath and stretch a bit. Remember not to sit too close to the screen." },
-				{ "threshold": "750-999",   "id": "numbers-anime-750",   "level": "Passed 750 mark",   "title": "Not even my final form", "desc": "Watched 750 anime. Your power level is way above others&rsquo;. The only way is up." },
-				{ "threshold": "1000-1499", "id": "numbers-anime-1000",  "level": "Passed 1000 mark",  "title": "Gotta watch them all!",  "desc": "Watched 1000 anime. You should already know what that picture means." },
-				{ "threshold": "1500-2499", "id": "numbers-anime-1500",  "level": "Passed 1500 mark",  "title": "The Collector",          "desc": "Watched 1500 animes. No, wait. The plural of anime is anime." },
-				{ "threshold": "2500-4999", "id": "numbers-anime-2500",  "level": "Passed 2500 mark",  "title": "The Maniac",             "desc": "Watched 2500 anime. Is this healthy? You should contact your doctor." },
-				{ "threshold": "5000-7499", "id": "numbers-anime-5000",  "level": "Passed 5000 mark",  "title": "The Legend",             "desc": "Watched 5000 anime. You&rsquo;re one of the chosen ones. You don&rsquo;t even have to brag, since everyone heard about you." },
-				{ "threshold": "7500-9999", "id": "numbers-anime-7500",  "level": "Passed 7500 mark",  "title": "Database breaker",       "desc": "Watched 7.5 &times; 10&sup3; anime. Are you having fun, breaking all the rules? By the way, since when do we have that many anime in the database?!" },
-				{ "threshold": "10000+",    "id": "numbers-anime-10000", "level": "Passed 10000 mark", "title": "This is it.",            "desc": "Watched 10000 anime. There is no higher level. You can stop now. Everyone, go home." }
+
+		"count":
+		{
+			"achievements":
+			[
+				{
+					"threshold": "100-199",
+					"id": "numbers-anime-100",
+					"level": "Passed 100 mark",
+					"title": "The first step",
+					"desc": "Watched 100 anime. Congratulations, you broke the magical number. Take a breath now, it will only get more difficult."
+				},
+				{
+					"threshold": "200-299",
+					"id": "numbers-anime-200",
+					"level": "Passed 200 mark",
+					"title": "Casual watcher",
+					"desc": "Watched 200 anime. You&rsquo;re used to seeing character&rsquo;s eyes bigger than their nose. If they have any nose."
+				},
+				{
+					"threshold": "300-399",
+					"id": "numbers-anime-300",
+					"level": "Passed 300 mark",
+					"title": "A millionaire",
+					"desc": "Watched 300 anime. You DID buy all of them, right?"
+				},
+				{
+					"threshold": "400-499",
+					"id": "numbers-anime-400",
+					"level": "Passed 400 mark",
+					"title": "Bragging rights",
+					"desc": "Watched 400 anime. That&rsquo;s&hellip; a lot. You can be proud of yourself, that&rsquo;s for sure."
+				},
+				{
+					"threshold": "500-749",
+					"id": "numbers-anime-500",
+					"level": "Passed 500 mark",
+					"title": "A lot of free time",
+					"desc": "Watched 500 anime. Now pause, take a breath and stretch a bit. Remember not to sit too close to the screen."
+				},
+				{
+					"threshold": "750-999",
+					"id": "numbers-anime-750",
+					"level": "Passed 750 mark",
+					"title": "Not even my final form",
+					"desc": "Watched 750 anime. Your power level is way above others&rsquo;. The only way is up."
+				},
+				{
+					"threshold": "1000-1499",
+					"id": "numbers-anime-1000",
+					"level": "Passed 1000 mark",
+					"title": "Gotta watch them all!",
+					"desc": "Watched 1000 anime. You should already know what that picture means."
+				},
+				{
+					"threshold": "1500-2499",
+					"id": "numbers-anime-1500",
+					"level": "Passed 1500 mark",
+					"title": "The Collector",
+					"desc": "Watched 1500 animes. No, wait. The plural of anime is anime."
+				},
+				{
+					"threshold": "2500-4999",
+					"id": "numbers-anime-2500",
+					"level": "Passed 2500 mark",
+					"title": "The Maniac",
+					"desc": "Watched 2500 anime. Is this healthy? You should contact your doctor."
+				},
+				{
+					"threshold": "5000-7499",
+					"id": "numbers-anime-5000",
+					"level": "Passed 5000 mark",
+					"title": "The Legend",
+					"desc": "Watched 5000 anime. You&rsquo;re one of the chosen ones. You don&rsquo;t even have to brag, since everyone heard about you."
+				},
+				{
+					"threshold": "7500-9999",
+					"id": "numbers-anime-7500",
+					"level": "Passed 7500 mark",
+					"title": "Database breaker",
+					"desc": "Watched 7.5 &times; 10&sup3; anime. Are you having fun, breaking all the rules? By the way, since when do we have that many anime in the database?!"
+				},
+				{
+					"threshold": "10000+",
+					"id": "numbers-anime-10000",
+					"level": "Passed 10000 mark",
+					"title": "This is it.",
+					"desc": "Watched 10000 anime. There is no higher level. You can stop now. Everyone, go home."
+				}
 			],
-			"requirement": { "type": "finished-titles" }
+			"requirement":
+			{
+				"type": "finished-titles"
+			}
 		}
 	}
 }
