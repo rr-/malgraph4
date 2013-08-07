@@ -58,10 +58,17 @@
 	margin-right: 0.5em;
 	float: left;
 }
+.original .details-wrapper .header:after {
+	margin: 0.1em 0;
+	content: '';
+	height: 1px;
+	display: block;
+	background: #e6e6e6 linear-gradient(to right, #e6e6e6, #fff) repeat-y;
+}
 .original .details-wrapper {
 	float: left;
 	width: 190px;
-	line-height: 133%;
+	line-height: 1.5em;
 }
 .original .details-wrapper div {
 	white-space: pre;
@@ -70,9 +77,6 @@
 }
 .original .details {
 	font-size: 85%;
-}
-.original .season {
-	color: gray;
 }
 
 .original ul {
