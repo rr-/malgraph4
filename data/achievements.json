@@ -801,11 +801,21 @@
 				"A6546"   #Pico: My Little Summer Story
 			]}
 		},
-		"mean score": {
+		"very low mean score": {
 			"achievements": [
-				{ "threshold": "8.5-10", "id": "score-anime-ilovethem",     "title": "I love Chinese cartoons",     "desc": "Mean anime score higher than 8.5. How about using the whole scale and re-rating stuff? That could make you look less like a fanboy&hellip;", "tooltip": "Mean score: {progress-subject}" },
-				{ "threshold": "3-5",    "id": "score-anime-suffering",     "title": "Watching anime is suffering", "desc": "Mean anime score lower than 5. Someone has to counterweigh the fanboys, right?", "tooltip": "Mean score: {progress-subject}" },
 				{ "threshold": "0-2.99", "id": "score-anime-lessthanthree", "title": "Less than three",             "desc": "Mean anime score lower than 3. Is this hate, or is this love?", "tooltip": "Mean score: {progress-subject}" }
+			],
+			"requirement": { "type": "mean-score" }
+		},
+		"low mean score": {
+			"achievements": [
+				{ "threshold": "3-5",    "id": "score-anime-suffering",     "title": "Watching anime is suffering", "desc": "Mean anime score lower than 5. Someone has to counterweigh the fanboys, right?", "tooltip": "Mean score: {progress-subject}" }
+			],
+			"requirement": { "type": "mean-score" }
+		},
+		"high mean score": {
+			"achievements": [
+				{ "threshold": "8.5-10", "id": "score-anime-ilovethem",     "title": "I love Chinese cartoons",     "desc": "Mean anime score higher than 8.5. How about using the whole scale and re-rating stuff? That could make you look less like a fanboy&hellip;", "tooltip": "Mean score: {progress-subject}" }
 			],
 			"requirement": { "type": "mean-score" }
 		},
