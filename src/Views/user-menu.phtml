@@ -38,24 +38,6 @@
 	<div class="clear"></div>
 </div>
 
-<!--
-<div class="share">
-	<p>Share:</p>
-	<ul>
-		<li>
-			<a data-tooltip="Share on Twitter" target="_blank" href="https://twitter.com/intent/tweet?url=<?php echo rawurlencode(UrlHelper::currentUrl()) ?>">
-				<i class="icon-twitter"></i>
-			</a>
-		</li>
-		<li>
-			<a data-tooltip="Share on Facebook" target="_blank" href="http://www.facebook.com/sharer.php?u=<?php echo rawurlencode(UrlHelper::currentUrl()) ?>&amp;t=Share+MALgraph">
-				<i class="icon-facebook"></i>
-			</a>
-		</li>
-	</ul>
-</div>
--->
-
 <input type="hidden" id="user-id" value="<?php echo $viewContext->user->id ?>">
 <input type="hidden" id="user-name" value="<?php echo $viewContext->user->name ?>">
 <input type="hidden" id="media" value="<?php echo Media::toString($viewContext->media) ?>">
