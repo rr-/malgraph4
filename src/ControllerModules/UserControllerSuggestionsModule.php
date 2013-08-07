@@ -22,78 +22,69 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 	}
 
 
-	private static function addRecsFromCollaborativeFiltering($viewContext, $goal, $list, array &$selectedEntries)
+	private static function addRecsFromRecommendations($viewContext, $goal, $list, array &$selectedEntries, array $dontRecommend)
 	{
-		//get list of cool users
-		$mainUser = $viewContext->user;
-		$coolUsers = Model_User::getCoolUsers(20);
-		$coolUsers = array_filter($coolUsers, function($user) use ($mainUser) { return $user->id != $mainUser->id; });
+		Model_MixedUserMedia::attachRecommendations($list);
 
-		//get their stuff, like lists and mean scores
-		$lists = [];
-		$listsCompleted = [];
-		$meanScores = [];
-		foreach (array_merge($coolUsers, [$mainUser]) as $user)
+		$dist = RatingDistribution::fromEntries($list);
+		$meanScore = $dist->getMeanScore();
+
+		$selectedEntriesWeights = [];
+		foreach ($list as $entry)
 		{
-			$list = $user->getMixedUserMedia($viewContext->media);
-			$keys = array_map(function($e) { return $e->media . $e->mal_id; }, $list);
-			$lists[$user->id] = array_combine($keys, $list);
-
-			$listCompleted = UserMediaFilter::doFilter($list, UserMediaFilter::finished());
-			$keys = array_map(function($e) { return $e->media . $e->mal_id; }, $listCompleted);
-			$listsCompleted[$user->id] = array_combine($keys, $listCompleted);
-
-			$dist = RatingDistribution::fromEntries($listsCompleted[$user->id]);
-			$meanScores[$user->id] = $dist->getMeanScore();
-		}
-
-		//fill base entries
-		$selectedEntries = [];
-		foreach ($coolUsers as $coolUser)
-		{
-			//compute similarity indexes between "me" and selected user
-			$sum1 = $sum2a = $sum2b = 0;
-			foreach ($listsCompleted[$mainUser->id] as $e1)
+			$key1 = $entry->media . $entry->mal_id;
+			foreach ($entry->recommendations as $rec)
 			{
-				$key = $e1->media . $e1->mal_id;
-				if (isset($listsCompleted[$coolUser->id][$key]))
+				$key2 = $entry->media . $rec->mal_id;
+				if (!isset($selectedEntriesWeights[$key2]))
 				{
-					$e2 = $listsCompleted[$coolUser->id][$key];
-					$tmp1 = ($e1->score - $meanScores[$mainUser->id]);
-					$tmp2 = ($e2->score - $meanScores[$coolUser->id]);
-					$sum1 += $tmp1 * $tmp2;
-					$sum2a += $tmp1 * $tmp1;
-					$sum2b += $tmp2 * $tmp2;
+					$selectedEntriesWeights[$key2] = [];
 				}
-			}
-			$similarity = $sum1 / max(1, sqrt($sum2a * $sum2b));
-
-			//check what titles are on their list
-			foreach ($listsCompleted[$coolUser->id] as $e2)
-			{
-				$key = $e2->media . $e2->mal_id;
-				if (!isset($lists[$mainUser->id][$key]))
-				{
-					if (!isset($selectedEntries[$key]))
-					{
-						$e2->hypothetical_score = 0;
-						$e2->cf_normalize = 0;
-						$selectedEntries[$key] = $e2;
-					}
-					$selectedEntries[$key]->hypothetical_score += $similarity * ($e2->score - $meanScores[$coolUser->id]);
-					$selectedEntries[$key]->cf_normalize += abs($similarity);
-				}
+				$selectedEntriesWeights[$key2] []= [$entry, $rec->count];
 			}
 		}
-		foreach ($selectedEntries as $key => $e)
+
+		foreach ($selectedEntriesWeights as $key => $items)
 		{
-			$e->hypothetical_score /= max(1, $e->cf_normalize);
-			$e->hypothetical_score += $meanScores[$mainUser->id];
+			$maxWeight = max(array_map(function($item) { return $item[1]; }, $items));
+			$sum = 0;
+			$count = 0;
+			foreach ($items as $item)
+			{
+				list ($sourceEntry, $weight) = $item;
+				$sum += ($sourceEntry->score ?: $sourceEntry->average_score) * $weight;
+				$count += $weight;
+			}
+			#the more recommendations, the more close it will be to source scores (log scale)
+			$const = 1.2;
+			$weight = pow($const, - $count);
+			$selectedEntriesWeights[$key] =
+				(1 - $weight) * ($sum / max(1, $count)) +
+				$weight * $meanScore;
+		}
+
+		foreach (array_keys($dontRecommend) as $key)
+		{
+			unset($selectedEntriesWeights[$key]);
+		}
+
+		//make it faster by trimming the list
+		arsort($selectedEntriesWeights, SORT_NUMERIC);
+		$selectedEntriesWeights = array_slice($selectedEntriesWeights, 0, $goal * 10);
+
+		foreach (Model_MixedUserMedia::getFromIdList(array_keys($selectedEntriesWeights)) as $entry)
+		{
+			$key = $entry->media . $entry->mal_id;
+			$entry->hypothetical_score = $selectedEntriesWeights[$key];
+			if (!isset($selectedEntries[$key]))
+			{
+				$selectedEntries[$key] = $entry;
+			}
 		}
 	}
 
 
-	private static function addRecsFromStaticRecommendations($viewContext, $goal, $list, array &$selectedEntries)
+	private static function addRecsFromStaticRecommendations($viewContext, $goal, array $dontRecommend, array &$selectedEntries)
 	{
 		$staticRecIds = TextHelper::loadSimpleList(Config::$staticRecommendationListPath);
 		$staticRecEntries = Model_MixedUserMedia::getFromIdList($staticRecIds);
@@ -104,7 +95,7 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 				continue;
 			}
 			$key = $entry->media . $entry->mal_id;
-			if (isset($list[$key]))
+			if (isset($dontRecommend[$key]))
 			{
 				continue;
 			}
@@ -117,14 +108,14 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 	}
 
 
-	private static function filterBannedGenres($viewContext, $goal, $list, array &$selectedEntries)
+	private static function filterBannedGenres($viewContext, $goal, array &$selectedEntries)
 	{
 		//make it faster by trimming the list
 		uasort($selectedEntries, function($a, $b)
 		{
 			return $a->hypothetical_score < $b->hypothetical_score ? 1 : -1;
 		});
-		$selectedEntries = array_slice($selectedEntries, 0, $goal * 3);
+		$selectedEntries = array_slice($selectedEntries, 0, $goal * 10);
 
 		Model_MixedUserMedia::attachGenres($selectedEntries);
 		$finalEntries = [];
@@ -176,7 +167,7 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 				}
 
 				$key = $entry->media . $entry->mal_id;
-				if (isset($list[$key]))
+				if (isset($dontRecommend[$key]))
 				{
 					$entryToAdd = null;
 					break;
@@ -200,20 +191,23 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 	}
 
 
-	private static function getRecs($viewContext, $goal)
+	private static function getRecs($viewContext, $goal, $list, $allFranchises)
 	{
-		$list = [];
-		foreach ($viewContext->user->getMixedUserMedia($viewContext->media) as $entry)
+		$dontRecommend = [];
+		foreach ($allFranchises as $franchise)
 		{
-			$key = $entry->media . $entry->mal_id;
-			$list[$key] = $entry;
+			foreach ($franchise->allEntries as $entry)
+			{
+				$key = $entry->media . $entry->mal_id;
+				$dontRecommend[$key] = true;
+			}
 		}
 
 		$selectedEntries = [];
-		self::addRecsFromCollaborativeFiltering($viewContext, $goal, $list, $selectedEntries);
-		self::addRecsFromStaticRecommendations($viewContext, $goal, $list, $selectedEntries);
-		self::filterBannedGenres($viewContext, $goal, $list, $selectedEntries);
-		self::filterFranchises($viewContext, $goal, $list, $selectedEntries);
+		self::addRecsFromRecommendations($viewContext, $goal, $list, $selectedEntries, $dontRecommend);
+		self::addRecsFromStaticRecommendations($viewContext, $goal, $dontRecommend, $selectedEntries);
+		self::filterBannedGenres($viewContext, $goal, $selectedEntries);
+		self::filterFranchises($viewContext, $goal, $dontRecommend, $selectedEntries);
 
 		uasort($selectedEntries, function($a, $b)
 		{
@@ -231,28 +225,14 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 	}
 
 
-
-	public static function work(&$viewContext)
+	private static function getMissing($viewContext, $list, $allFranchises)
 	{
-		$viewContext->viewName = 'user-suggestions';
-		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . ' - suggestions (' . Media::toString($viewContext->media) . ')';
-		$viewContext->meta->description = $viewContext->user->name . '&rsquo;s ' . Media::toString($viewContext->media) . ' suggestions on MALgraph, an online tool that extends your MyAnimeList profile.';
-		$viewContext->meta->keywords = array_merge($viewContext->meta->keywords, ['profile', 'list', 'achievements', 'ratings', 'activity', 'favorites', 'suggestions', 'recommendations']);
-		WebMediaHelper::addCustom($viewContext);
-
-
-		$goal = 10;
-		$viewContext->newRecommendations = self::getRecs($viewContext, $goal);
-
-
-		$list = $viewContext->user->getMixedUserMedia($viewContext->media);
 		$dontRecommend = [];
 		foreach ($list as $entry)
 		{
 			$dontRecommend[$entry->media . $entry->mal_id] = true;
 		}
 
-		$allFranchises = Model_MixedUserMedia::getFranchises($list, true);
 		$franchises = [];
 		foreach ($allFranchises as &$franchise)
 		{
@@ -281,8 +261,30 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 			$franchises []= $franchise;
 		}
 		DataSorter::sort($franchises, DataSorter::MeanScore);
+		return $franchises;
+	}
 
-		$viewContext->franchises = $franchises;
+
+	public static function work(&$viewContext)
+	{
+		$viewContext->viewName = 'user-suggestions';
+		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . ' - suggestions (' . Media::toString($viewContext->media) . ')';
+		$viewContext->meta->description = $viewContext->user->name . '&rsquo;s ' . Media::toString($viewContext->media) . ' suggestions on MALgraph, an online tool that extends your MyAnimeList profile.';
+		$viewContext->meta->keywords = array_merge($viewContext->meta->keywords, ['profile', 'list', 'achievements', 'ratings', 'activity', 'favorites', 'suggestions', 'recommendations']);
+		WebMediaHelper::addCustom($viewContext);
+
+
+		$list = [];
+		foreach ($viewContext->user->getMixedUserMedia($viewContext->media) as $entry)
+		{
+			$key = $entry->media . $entry->mal_id;
+			$list[$key] = $entry;
+		}
+		$allFranchises = Model_MixedUserMedia::getFranchises($list, true);
+
+		$goal = 10;
+		$viewContext->newRecommendations = self::getRecs($viewContext, $goal, $list, $allFranchises);
+		$viewContext->franchises = self::getMissing($viewContext, $list, $allFranchises);
 		$viewContext->private = $viewContext->user->isUserMediaPrivate($viewContext->media);
 	}
 }
