@@ -232,4 +232,32 @@ class Model_MixedUserMedia
 		}
 	}
 
+	public static function attachRecommendations(array &$entries)
+	{
+		R::begin();
+		R::exec('CREATE TEMPORARY TABLE hurr (media_id INTEGER)');
+		foreach (array_chunk(array_map(function($entry) { return $entry->media_id; }, $entries), Config::$maxDbBindings) as $chunk)
+		{
+			R::exec('INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)')), $chunk);
+		}
+		$rows = R::getAll('SELECT * FROM mediarec mr INNER JOIN hurr ON mr.media_id = hurr.media_id');
+		$data = ReflectionHelper::arraysToClasses($rows);
+		R::rollback();
+
+		$map = [];
+		foreach ($entries as $entry)
+		{
+			$entry->recommendations = [];
+			$map[$entry->media_id] = $entry;
+		}
+
+		foreach ($data as $row)
+		{
+			if (!isset($map[$row->media_id]))
+			{
+				continue;
+			}
+			$map[$row->media_id]->recommendations []= $row;
+		}
+	}
 }
