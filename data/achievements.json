@@ -1183,7 +1183,7 @@
 					"threshold": "0-2.99",
 					"id": "score-anime-lessthanthree",
 					"title": "Less than three",
-					"desc": "Mean anime score lower than 3. Is this hate, or is this love?",
+					"desc": "Mean anime score lower than 3. Is it hate, or is it love?",
 					"tooltip": "Mean score: {progress-subject}"
 				}
 			],
@@ -1253,9 +1253,8 @@
 				{
 					"threshold": "10+",
 					"id": "long-runner-anime",
-					"level": "I like them long",
-					"title": "Long runner",
-					"desc": "Didn&rsquo;t fall asleep while watching long anime series. 150 episodes isn&rsquo;t such a big deal for you."
+					"title": "I like them long",
+					"desc": "Didn&rsquo;t fall asleep while watching long anime series. 150 episodes isn&rsquo;t a big deal to you."
 				}
 			],
 			"requirement":
