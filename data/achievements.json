@@ -248,6 +248,23 @@
 			}
 		},
 
+		"no drop":
+		{
+			"achievements":
+			[
+				{
+				"threshold": "50+",
+				"id": "nodrop-manga",
+				"title": "I never drop",
+				"desc": "No matter how bad it was, you&rsquo;ve never dropped any manga. That&rsquo;s impressive."
+				}
+			],
+			"requirement":
+			{
+				"type": "no-drop"
+			}
+		},
+
 		"count":
 		{
 			"achievements":
@@ -1205,6 +1222,23 @@
 			"requirement":
 			{
 				"type": "mean-score"
+			}
+		},
+
+		"no drop":
+		{
+			"achievements":
+			[
+				{
+					"threshold": "50+",
+					"id": "nodrop-anime",
+					"title": "Completionist",
+					"desc": "You&rsquo;ve managed to survive watching so many anime without dropping any of them. You masochist."
+				}
+			],
+			"requirement":
+			{
+				"type": "no-drop"
 			}
 		},
 

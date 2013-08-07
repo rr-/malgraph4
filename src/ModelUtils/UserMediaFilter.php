@@ -22,6 +22,14 @@ class UserMediaFilter
 		};
 	}
 
+	public static function dropped()
+	{
+		return function($row)
+		{
+			return $row->status == UserListStatus::Dropped;
+		};
+	}
+
 	public static function finished()
 	{
 		return function($row)

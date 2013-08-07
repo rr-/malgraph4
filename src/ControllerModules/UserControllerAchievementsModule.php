@@ -50,6 +50,8 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 		$list = $viewContext->user->getMixedUserMedia($viewContext->media);
 		$listFinished = UserMediaFilter::doFilter($list, UserMediaFilter::finished());
 		$listNonPlanned = UserMediaFilter::doFilter($list, UserMediaFilter::nonPlanned());
+		$listDropped = UserMediaFilter::doFilter($list, UserMediaFilter::dropped());
+		$distribution = RatingDistribution::fromEntries($listNonPlanned);
 
 		$evaluators =
 		[
@@ -76,14 +78,22 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 				return [count($listFinished), null];
 			},
 
-			'mean-score' => function($groupData) use ($listNonPlanned)
+			'mean-score' => function($groupData) use ($listNonPlanned, $distribution)
 			{
-				$distribution = RatingDistribution::fromEntries($listNonPlanned);
 				if ($distribution->getRatedCount() > 0)
 				{
 					return [$distribution->getMeanScore(), null];
 				}
 				return [null, null];
+			},
+
+			'no-drop' => function($groupData) use ($listFinished, $listDropped)
+			{
+				if (count($listDropped) > 0)
+				{
+					return [0, null];
+				}
+				return [count($listFinished), null];
 			},
 		];
 
