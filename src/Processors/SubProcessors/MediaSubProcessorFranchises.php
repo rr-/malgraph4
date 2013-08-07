@@ -17,10 +17,6 @@ class MediaSubProcessorFranchises extends MediaSubProcessor
 			{
 				continue;
 			}
-			if (in_array($relation['type'], [MediaRelation::Other, MediaRelation::Character/*, MediaRelation::SpinOff, MediaRelation::AlternativeSetting*/]))
-			{
-				continue;
-			}
 			if (BanHelper::isFranchiseCouplingBanned($relation['media'], $relation['mal_id'], $context->media->media, $context->media->mal_id))
 			{
 				continue;
