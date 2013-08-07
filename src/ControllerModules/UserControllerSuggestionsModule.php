@@ -21,7 +21,8 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 		return 5;
 	}
 
-	private static function getRecs($viewContext, $goal)
+
+	private static function addRecsFromCollaborativeFiltering($viewContext, $goal, $list, array &$selectedEntries)
 	{
 		//get list of cool users
 		$mainUser = $viewContext->user;
@@ -45,7 +46,6 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 			$dist = RatingDistribution::fromEntries($listsCompleted[$user->id]);
 			$meanScores[$user->id] = $dist->getMeanScore();
 		}
-		$addStatic = count($listsCompleted[$mainUser->id]) <= 20;
 
 		//fill base entries
 		$selectedEntries = [];
@@ -76,31 +76,25 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 				{
 					if (!isset($selectedEntries[$key]))
 					{
-						$e2->cfScore = 0;
-						$e2->cfNormalize = 0;
-						$e2->cfUsers = 0;
+						$e2->hypothetical_score = 0;
+						$e2->cf_normalize = 0;
 						$selectedEntries[$key] = $e2;
 					}
-					$selectedEntries[$key]->cfScore += $similarity * ($e2->score - $meanScores[$coolUser->id]);
-					$selectedEntries[$key]->cfUsers ++;
-					$selectedEntries[$key]->cfNormalize += abs($similarity);
+					$selectedEntries[$key]->hypothetical_score += $similarity * ($e2->score - $meanScores[$coolUser->id]);
+					$selectedEntries[$key]->cf_normalize += abs($similarity);
 				}
 			}
 		}
 		foreach ($selectedEntries as $key => $e)
 		{
-			$e->cfScore /= max(1, $e->cfNormalize);
-			$e->cfScore += $meanScores[$mainUser->id];
+			$e->hypothetical_score /= max(1, $e->cf_normalize);
+			$e->hypothetical_score += $meanScores[$mainUser->id];
 		}
+	}
 
-		//sort these entries by rating
-		uasort($selectedEntries, function($a, $b)
-		{
-			return $a->cfScore < $b->cfScore ? 1 : -1;
-		});
 
-		//append shuffled static recommendations at the end of above
-		//recommendations
+	private static function addRecsFromStaticRecommendations($viewContext, $goal, $list, array &$selectedEntries)
+	{
 		$staticRecIds = TextHelper::loadSimpleList(Config::$staticRecommendationListPath);
 		$staticRecEntries = Model_MixedUserMedia::getFromIdList($staticRecIds);
 		foreach ($staticRecEntries as $entry)
@@ -109,28 +103,29 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 			{
 				continue;
 			}
-			$entry->cfScore = $entry->average_score;
-			$entry->cfUsers = 0;
 			$key = $entry->media . $entry->mal_id;
-			if (isset($lists[$mainUser->id][$key]))
+			if (isset($list[$key]))
 			{
 				continue;
 			}
-			$key = $entry->media . $entry->mal_id;
 			if (!isset($selectedEntries[$key]))
 			{
+				$entry->hypothetical_score = $entry->average_score;
 				$selectedEntries[$key] = $entry;
 			}
 		}
+	}
 
-		//trim entries to 25 entries
-		//this is to reduce franchise computation time. note that we add extra
-		//10 entries so that franchises that will be completely filtered out
-		//due to whatever reason (for example, everything still not watched
-		//hasn't aired yet) won't reduce suggestion count to under desired 15.
+
+	private static function filterBannedGenres($viewContext, $goal, $list, array &$selectedEntries)
+	{
+		//make it faster by trimming the list
+		uasort($selectedEntries, function($a, $b)
+		{
+			return $a->hypothetical_score < $b->hypothetical_score ? 1 : -1;
+		});
 		$selectedEntries = array_slice($selectedEntries, 0, $goal * 3);
 
-		//filter out unrecommended genres
 		Model_MixedUserMedia::attachGenres($selectedEntries);
 		$finalEntries = [];
 		foreach ($selectedEntries as $entry)
@@ -150,20 +145,27 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 			}
 		}
 		$selectedEntries = $finalEntries;
+	}
 
-		//finally for each recommended entry, get first non-watched entry from
-		//franchise that is already airing. this is to prevent recommending
-		//season 15 when user has only watched season 3 and properly
-		//recommending season 4 instead.
+
+	private static function filterFranchises($viewContext, $goal, $list, array &$selectedEntries)
+	{
 		$franchises = Model_MixedUserMedia::getFranchises($selectedEntries, true);
-		$finalEntries = [];
+		$selectedEntries = [];
 		foreach ($franchises as $franchise)
 		{
 			DataSorter::sort($franchise->allEntries, DataSorter::MediaMalId);
 			DataSorter::sort($franchise->ownEntries, DataSorter::MediaMalId);
+
+			$entryToAdd = null;
 			$franchiseSize = 0;
 			foreach ($franchise->allEntries as $entry)
 			{
+				if ($entry->publishing_status == MediaStatus::NotYetPublished)
+				{
+					continue;
+				}
+
 				if ($entry->media == Media::Anime)
 				{
 					$franchiseSize += $entry->episodes;
@@ -172,47 +174,63 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 				{
 					$franchiseSize += $entry->chapters;
 				}
-			}
-			foreach ($franchise->allEntries as $entry)
-			{
-				if ($entry->publishing_status == MediaStatus::NotYetPublished)
-				{
-					continue;
-				}
+
 				$key = $entry->media . $entry->mal_id;
-				if (isset($lists[$mainUser->id][$key]))
+				if (isset($list[$key]))
 				{
+					$entryToAdd = null;
 					break;
 				}
-				$entry->franchiseSize = $franchiseSize;
-				if (!isset($entry->cfScore))
+				if ($entryToAdd === null)
 				{
-					$entry->cfScore = reset($franchise->ownEntries)->cfScore;
-					$entry->cfUsers = reset($franchise->ownEntries)->cfUsers;
+					$entryToAdd = $entry;
 				}
-				$finalEntries[$key] = $entry;
-				break;
+			}
+
+			if ($entryToAdd !== null)
+			{
+				$entryToAdd->franchiseSize = $franchiseSize;
+				if (!isset($entryToAdd->hypothetical_score))
+				{
+					$entryToAdd->hypothetical_score = reset($franchise->ownEntries)->hypothetical_score;
+				}
+				$selectedEntries[$key] = $entryToAdd;
 			}
 		}
-		$selectedEntries = $finalEntries;
-		$selectedEntries = array_slice($selectedEntries, 0, $goal);
+	}
 
-		//sort these entries by rating again, score could have changed after
-		//franchise tinkering
+
+	private static function getRecs($viewContext, $goal)
+	{
+		$list = [];
+		foreach ($viewContext->user->getMixedUserMedia($viewContext->media) as $entry)
+		{
+			$key = $entry->media . $entry->mal_id;
+			$list[$key] = $entry;
+		}
+
+		$selectedEntries = [];
+		self::addRecsFromCollaborativeFiltering($viewContext, $goal, $list, $selectedEntries);
+		self::addRecsFromStaticRecommendations($viewContext, $goal, $list, $selectedEntries);
+		self::filterBannedGenres($viewContext, $goal, $list, $selectedEntries);
+		self::filterFranchises($viewContext, $goal, $list, $selectedEntries);
+
 		uasort($selectedEntries, function($a, $b)
 		{
-			return $a->cfScore < $b->cfScore ? 1 : -1;
+			return $a->hypothetical_score < $b->hypothetical_score ? 1 : -1;
 		});
+		$selectedEntries = array_slice($selectedEntries, 0, $goal);
 
 		foreach ($selectedEntries as $entry)
 		{
-			$entry->hypotheticalScore = $entry->cfScore;
 			$entry->media_id = $entry->id;
 		}
 		Model_MixedUserMedia::attachGenres($selectedEntries);
 
 		return $selectedEntries;
 	}
+
+
 
 	public static function work(&$viewContext)
 	{
