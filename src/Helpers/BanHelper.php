@@ -58,6 +58,23 @@ class BanHelper extends Singleton
 		return in_array(strtolower($userName), self::$bannedUsers);
 	}
 
+	public static function banUser($userName, $ban = true)
+	{
+		if ($ban)
+		{
+			self::$bannedUsers []= strtolower($userName);
+			self::$bannedUsers = array_unique(self::$bannedUsers);
+		}
+		else
+		{
+			self::$bannedUsers = array_filter(self::$bannedUsers, function($bannedUserName) use ($userName)
+			{
+				return $bannedUserName != $userName;
+			});
+		}
+		TextHelper::putSimpleList(Config::$bannedUsersListPath, self::$bannedUsers);
+	}
+
 	public static function isGenreBanned($media, $genreId)
 	{
 		return in_array($media . $genreId, self::$bannedGenres);

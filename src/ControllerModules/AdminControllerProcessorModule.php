@@ -121,6 +121,29 @@ class AdminControllerProcessorModule extends AbstractControllerModule
 				$viewContext->messageType = 'info';
 				$viewContext->message = sprintf('Successfully processed %d entities in %.02fs', $num, microtime(true) - $startTime);
 			}
+
+			elseif ($action == 'toggle-block')
+			{
+				$numBanned = 0;
+				$numUnbanned = 0;
+				foreach ($chosenUsers as $userName)
+				{
+					$isBanned = BanHelper::isUserBanned($userName);
+					if ($isBanned)
+					{
+						$numUnbanned ++;
+					}
+					else
+					{
+						$numBanned ++;
+					}
+					BanHelper::banUser($userName, !$isBanned);
+				}
+
+				$viewContext->messageType = 'info';
+				$viewContext->message = sprintf('Successfully banned %d users and unbanned %d users', $numBanned, $numUnbanned);
+			}
+
 			else
 			{
 				throw new Exception('Unknown action: ' . $action);

@@ -18,6 +18,14 @@ class TextHelper
 		return $lines;
 	}
 
+	public static function putSimpleList($path, $lines)
+	{
+		$lines = array_map('trim', $lines);
+		$lines = array_filter($lines);
+		$contents = implode("\n", $lines);
+		file_put_contents($path, $contents);
+	}
+
 	public static function putJson($path, $json)
 	{
 		$contents = json_encode($json);
