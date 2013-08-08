@@ -28,9 +28,11 @@
 
 		<div class="control-group">
 			<div>
-				<label>You can also paste IDs below:</label><br>
+				<label>You can also paste some plain text garbage below:</label><br>
 				<textarea rows="5" name="ids"></textarea>
-				<small>(plaintext garbage is OK)</small>
+				<button class="btn" id="btn-guess-links">Guess links</button>
+				<button class="btn" id="btn-guess-anime">Guess anime</button>
+				<button class="btn" id="btn-guess-manga">Guess manga</button>
 			</div>
 		</div>
 
@@ -71,29 +73,43 @@
 			e.preventDefault();
 		}
 	});
-	$('textarea').keydown(function(e)
+
+	$('#btn-guess-links').click(function(e)
 	{
-		if (timeout == null)
+		e.preventDefault();
+		var text = $('textarea[name=\'ids\']').val();
+		var regex = /\/(anime|manga)[.\/].*?(\d+)/g;
+		var ids = [];
+		while ((match = regex.exec(text)) != null)
 		{
-			timeout = window.setTimeout(function()
+			var model = match[1];
+			var id = match[2];
+			var symb = model == 'anime' ? 'A' : 'M';
+			symb += id;
+			if (ids.lastIndexOf(symb) == -1)
 			{
-				var text = $('textarea[name=\'ids\']').val();
-				var regex = /\/(anime|manga)[.\/].*?(\d+)/g;
-				var ids = [];
-				while ((match = regex.exec(text)) != null)
-				{
-					var model = match[1];
-					var id = match[2];
-					var symb = model == 'anime' ? 'A' : 'M';
-					symb += id;
-					if (ids.lastIndexOf(symb) == -1)
-					{
-						ids.push(symb);
-					}
-				}
-				$('input[name=\'model-ids\']').val(ids.join(','));
-				timeout = null;
-			}, 100);
+				ids.push(symb);
+			}
 		}
+		$(this).parents('fieldset').find('input[name=\'model-ids\']').val(ids.join(','));
+	});
+
+	$('#btn-guess-anime, #btn-guess-manga').click(function(e)
+	{
+		e.preventDefault();
+		var text = $('textarea[name=\'ids\']').val();
+		var regex = /(\d+)/g;
+		var ids = [];
+		while ((match = regex.exec(text)) != null)
+		{
+			var id = match[1];
+			var symb = $(this).attr('id') == 'btn-guess-anime' ? 'A' : 'M';
+			symb += id;
+			if (ids.lastIndexOf(symb) == -1)
+			{
+				ids.push(symb);
+			}
+		}
+		$(this).parents('fieldset').find('input[name=\'model-ids\']').val(ids.join(','));
 	});
 </script>
