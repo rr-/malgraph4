@@ -47,12 +47,19 @@ class UserControllerProfileModule extends AbstractUserControllerModule
 		foreach (Media::getConstList() as $media)
 		{
 			$list = $viewContext->user->getMixedUserMedia($media);
-			$listFinished = UserMediaFilter::doFilter($list, UserMediaFilter::finished());
-			$listNonPlanned = UserMediaFilter::doFilter($list, UserMediaFilter::nonPlanned());
 
+			$listFinished = UserMediaFilter::doFilter($list, UserMediaFilter::finished());
 			$viewContext->finished[$media] = count($listFinished);
+			unset($listFinished);
+
+			$listNonPlanned = UserMediaFilter::doFilter($list, UserMediaFilter::nonPlanned());
 			$viewContext->meanUserScore[$media] = RatingDistribution::fromEntries($listNonPlanned)->getMeanScore();
 			$viewContext->meanGlobalScore[$media] = Model_MixedUserMedia::getRatingDistribution($media)->getMeanScore();
+			$franchises = Model_MixedUserMedia::getFranchises($listNonPlanned);
+			$viewContext->franchiseCount[$media] = count(array_filter($franchises, function($franchise) { return count($franchise->ownEntries) > 1; }));
+			unset($franchises);
+			unset($listNonPlanned);
+
 			if ($media == Media::Anime)
 			{
 				$viewContext->episodes = array_sum(array_map(function($mixedMediaEntry) { return $mixedMediaEntry->finished_episodes; }, $list));
@@ -61,11 +68,10 @@ class UserControllerProfileModule extends AbstractUserControllerModule
 			{
 				$viewContext->chapters = array_sum(array_map(function($mixedMediaEntry) { return $mixedMediaEntry->finished_chapters; }, $list));
 			}
-			$franchises = Model_MixedUserMedia::getFranchises($listNonPlanned);
-			$viewContext->franchiseCount[$media] = count(array_filter($franchises, function($franchise) { return count($franchise->ownEntries) > 1; }));
-
 			$mismatched = $viewContext->user->getMismatchedUserMedia($list);
 			$viewContext->mismatchedCount[$media] = count($mismatched);
+			unset($mismatched);
+			unset($list);
 		}
 	}
 }
