@@ -26,6 +26,7 @@ class Config extends Singleton
 	static $mediaUrl;
 	static $globalsCachePath;
 	static $transactionCommitFrequency;
+	static $adminPassword;
 
 	public static function doInit()
 	{
@@ -55,6 +56,7 @@ class Config extends Singleton
 		self::$maxDbBindings = 50;
 		self::$usersPerCronRun = 5;
 		self::$transactionCommitFrequency = 20;
+		self::$adminPassword = 'supersaiyan';
 	}
 }
 
