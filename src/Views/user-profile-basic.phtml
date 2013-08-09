@@ -1,6 +1,6 @@
 <div class="section basic">
 	<h2>
-		<a href="http://myanimelist.net/profile/<?php echo $viewContext->user->name ?>">
+		<a target="_blank" href="http://myanimelist.net/profile/<?php echo $viewContext->user->name ?>">
 			<?php echo $viewContext->user->name ?>
 		</a>&rsquo;s profile
 		<span class="updated" data-tooltip="Time of last data update" data-date="<?php echo date('c', strtotime($viewContext->user->processed)) ?>">
@@ -11,7 +11,7 @@
 
 	<div class="section-body">
 		<div class="right user-pic">
-			<a class="waitable" href="<?php echo UserControllerProfileModule::url($viewContext->user->name, $viewContext->media) ?>">
+			<a target="_blank" href="http://myanimelist.net/profile/<?php echo $viewContext->user->name ?>">
 			<?php if (empty($viewContext->user->picture_url)): ?>
 				<img class="profile unavailable" alt="No profile picture" src="<?php echo UrlHelper::absoluteUrl('/media/img/pixel.gif') ?>">
 			<?php else: ?>
