@@ -23,7 +23,6 @@ abstract class AbstractProcessor
 		{
 			$context = new ProcessingContext();
 			$context->key = $key;
-			$this->beforeProcessing($context);
 
 			$subProcessors = $this->getSubProcessors();
 			$urlMap = [];
@@ -50,19 +49,25 @@ abstract class AbstractProcessor
 				$document->content = '<?xml encoding="utf-8" ?'.'>' . $document->content;
 			}
 
-			foreach ($subProcessors as $subProcessor)
+			$f = function() use ($subProcessors, $context, $urlMap, $documents)
 			{
-				$subDocuments = [];
-				foreach ($urlMap as $url => $urlProcessors)
+				$this->beforeProcessing($context);
+				foreach ($subProcessors as $subProcessor)
 				{
-					if (in_array($subProcessor, $urlProcessors))
+					$subDocuments = [];
+					foreach ($urlMap as $url => $urlProcessors)
 					{
-						$subDocuments []= $documents[$url];
+						if (in_array($subProcessor, $urlProcessors))
+						{
+							$subDocuments []= $documents[$url];
+						}
 					}
+					$subProcessor->process($subDocuments, $context);
 				}
-				$subProcessor->process($subDocuments, $context);
-			}
-			$this->afterProcessing($context);
+				$this->afterProcessing($context);
+			};
+
+			R::transaction($f);
 		}
 		catch (Exception $e)
 		{

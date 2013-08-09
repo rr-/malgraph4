@@ -13,40 +13,34 @@ $query = 'SELECT um.mal_id, um.media FROM usermedia um' .
 		'SELECT null FROM media m' .
 		' WHERE m.mal_id = um.mal_id AND m.media = um.media' .
 	') ORDER BY um.mal_id';
-
-$exitCode = 0;
 $rows = R::getAll($query);
 $rows = ReflectionHelper::arraysToClasses($rows);
-
-$num = 20;
 $done = 0;
-R::begin();
 
-while (!empty($rows))
+$exitCode = 0;
+foreach (array_chunk($rows, Config::$transactionCommitFrequency) as $chunk)
 {
-	$row = reset($rows);
-	printf('Processing %s #%d, %d left' . PHP_EOL, Media::toString($row->media), $row->mal_id, count($rows));
 	try
 	{
-		$mediaProcessors[$row->media]->process($row->mal_id);
-		array_shift($rows);
-		++ $done;
+		R::transaction(function() use ($mediaProcessors, $chunk, &$done, $rows)
+		{
+			$length = strlen(count($rows));
+			foreach ($chunk as $row)
+			{
+				++ $done;
+				printf("(%0${length}d/%d) Processing %s #%d" . PHP_EOL,
+					$done, count($rows),
+					Media::toString($row->media), $row->mal_id);
+
+				$mediaProcessors[$row->media]->process($row->mal_id);
+			}
+		});
 	}
 	catch (Exception $e)
 	{
-		R::rollback();
-		R::begin();
 		echo $e->getMessage() . PHP_EOL;
 		$exitCode = 1;
-		array_shift($rows);
-	}
-
-	if ($done % Config::$transactionCommitFrequency == Config::$transactionCommitFrequency - 1)
-	{
-		R::commit();
-		R::begin();
 	}
 }
 
-R::commit();
 exit($exitCode);

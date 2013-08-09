@@ -91,11 +91,12 @@ class UserMediaFilter
 			return [];
 		}
 		$media = reset($list)->media;
-		R::begin();
-		R::exec('CREATE TEMPORARY TABLE hurr (media_id INTEGER)');
+		$query = 'CREATE TEMPORARY TABLE hurr (media_id INTEGER)';
+		R::exec($query);
 		foreach (array_chunk(array_map(function($entry) { return $entry->media_id; }, $list), Config::$maxDbBindings) as $chunk)
 		{
-			R::exec('INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)')), $chunk);
+			$query = 'INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)'));
+			R::exec($query, $chunk);
 		}
 		switch ($media)
 		{
@@ -108,8 +109,10 @@ class UserMediaFilter
 			default:
 				throw new BadMediaException();
 		}
-		$data = R::getAll('SELECT * FROM ' . $table . ' mc INNER JOIN hurr ON mc.media_id = hurr.media_id WHERE mc.mal_id = ?', [$genreId]);
-		R::rollback();
+		$query = 'SELECT * FROM ' . $table . ' mc INNER JOIN hurr ON mc.media_id = hurr.media_id WHERE mc.mal_id = ?';
+		$data = R::getAll($query, [$genreId]);
+		$query = 'DROP TABLE hurr';
+		R::exec($query);
 
 		$data = array_map(function($x) { return $x['media_id']; }, $data);
 		$data = array_flip($data);
@@ -122,14 +125,17 @@ class UserMediaFilter
 
 	public static function genre($genreId, $list)
 	{
-		R::begin();
-		R::exec('CREATE TEMPORARY TABLE hurr (media_id INTEGER)');
+		$query = 'CREATE TEMPORARY TABLE hurr (media_id INTEGER)';
+		R::exec($query);
 		foreach (array_chunk(array_map(function($entry) { return $entry->media_id; }, $list), Config::$maxDbBindings) as $chunk)
 		{
-			R::exec('INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)')), $chunk);
+			$query = 'INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)'));
+			R::exec($query, $chunk);
 		}
-		$data = R::getAll('SELECT * FROM mediagenre mg INNER JOIN hurr ON mg.media_id = hurr.media_id WHERE mg.mal_id = ?', [$genreId]);
-		R::rollback();
+		$query = 'SELECT * FROM mediagenre mg INNER JOIN hurr ON mg.media_id = hurr.media_id WHERE mg.mal_id = ?';
+		$data = R::getAll($query, [$genreId]);
+		$query = 'DROP TABLE hurr';
+		R::exec($query);
 
 		$data = array_map(function($x) { return $x['media_id']; }, $data);
 		$data = array_flip($data);

@@ -8,6 +8,7 @@ class Database extends Singleton
 		R::setup('sqlite:' . Config::$dbPath);
 		R::freeze(true);
 		R::exec('PRAGMA foreign_keys=ON');
+		R::exec('PRAGMA temp_store=MEMORY');
 
 		ReflectionHelper::loadClasses(__DIR__ . DIRECTORY_SEPARATOR . 'Models');
 	}

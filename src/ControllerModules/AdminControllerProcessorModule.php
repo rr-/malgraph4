@@ -104,17 +104,13 @@ class AdminControllerProcessorModule extends AbstractControllerModule
 				{
 					foreach ($ids as $id)
 					{
-						R::begin();
 						$mediaProcessors[$media]->process($id);
-						R::rollback();
 						++ $num;
 					}
 				}
 				foreach ($chosenUsers as $user)
 				{
-					R::begin();
 					$userProcessor->process($user);
-					R::rollback();
 					++ $num;
 				}
 
