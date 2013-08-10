@@ -1,34 +1,19 @@
 .main-wrapper {
-	margin-left: -400px;
-	width: 800px;
-}
-#logo {
-	width: 184px;
-	text-align: right;
-}
-#logo a {
-	width: 163px;
-	height: 28px;
-	background-image: url('../img/logo-header-big.png');
+	max-width: 800px;
 }
 #logo .sep {
 	margin-right: 0;
-}
-#header .search {
-	margin-left: 0.75em;
 }
 
 #menu-wrapper {
 	float: left;
 	position: relative;
-	width: 184px;
-	margin-right: 16px;
+	width: 180px;
 	font-size: 110%;
 }
 #main {
-	width: 600px;
-	position: relative;
-	float: left;
+	margin-left: 200px;
+	overflow: auto; /* allow children to clear floats */
 }
 
 #menu {
@@ -87,7 +72,7 @@
 #menu ul li a {
 	display: block;
 	color: dimgray;
-	padding: 4px 9px 4px 16px;
+	padding: 4px 9px 4px 8px;
 	text-align: right;
 	text-decoration: none;
 	border-right: 3px solid transparent;
@@ -114,9 +99,11 @@
 #menu ul li a:hover i {
 	opacity: 1;
 }
+#menu span {
+	margin-right: 12px;
+}
 #menu i {
 	background-color: #888;
-	margin-left: 12px;
 	opacity: .75;
 }
 #menu .anime i {
@@ -124,4 +111,31 @@
 }
 #menu .manga i {
 	background-color: #EBA478;
+}
+
+
+/* small screens */
+@media (max-width: 599px), (max-device-width: 599px) {
+	#menu-wrapper {
+		width: 40px;
+	}
+	#main {
+		margin-left: 60px;
+	}
+	#menu span {
+		display: none;
+	}
+}
+
+/* big screens */
+@media (min-width: 599px) and (min-device-width: 599px) {
+	#logo {
+		width: 184px;
+		text-align: right;
+	}
+	#logo a {
+		width: 163px;
+		height: 28px;
+		background-image: url('../img/logo-header-big.png');
+	}
 }

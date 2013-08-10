@@ -27,12 +27,19 @@ ul.infobox {
 	text-align: right;
 	padding-right: 16px;
 }
+.history-monthly table {
+	width: 100%;
+	table-layout: fixed;
+}
 .history-monthly table .box-cell {
 	padding: 0;
 }
+.history-monthly thead th {
+	width: 7.7%;
+	overflow: hidden;
+}
 .history-monthly table .box {
-	width: 40px;
-	height: 30px;
+	height: 2em;
 	background: #1969CB;
 }
 .history-monthly table .box-wrapper {

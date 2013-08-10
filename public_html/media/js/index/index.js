@@ -19,11 +19,9 @@ $(function()
 
 	$('#showcase menu li').each(function(i, index)
 	{
-		$(this).hover(function()
+		$(this).click(function(e)
 		{
 			switchShowcaseTab(i);
-		}).click(function(e)
-		{
 			e.preventDefault();
 		});
 	});

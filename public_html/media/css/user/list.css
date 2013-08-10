@@ -24,18 +24,20 @@ td.title {
 
 #filter-form label,
 #filter-form input,
-#filter-form select {
+#filter-form select,
+#filter-form button {
 	vertical-align: middle;
 	margin: 0 0.33em;
 }
 
 #filter-form label {
 	display: inline;
-	padding-right: 1em;
+	padding: 0;
+	margin: 0 0.5em 0 0;
 	line-height: 2em;
 }
 #filter-form #filter-title {
-	width: 40%;
+	width: 30%;
 }
 #filter-form #filter-status {
 	width: 20%;

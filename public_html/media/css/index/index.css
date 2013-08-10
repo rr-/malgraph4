@@ -38,6 +38,7 @@
 }
 #start span {
 	font-size: 90%;
+	white-space: pre;
 }
 
 footer {
@@ -67,22 +68,28 @@ footer a:focus {
 }
 
 body {
-	margin-top: 5em;
+	margin-top: 4em;
 }
 #header {
 	display: none;
 }
 .main-wrapper {
-	width: 700px;
-	margin-left: -350px;
+	max-width: 700px;
+}
+
+#showcase {
+	height: 20em;
+	margin-bottom: 4em;
+	position: relative;
+	overflow: hidden;
 }
 
 #showcase menu {
+	position: absolute;
+	bottom: 0;
 	margin: 0;
 	padding: 0;
-	float: left;
 	width: 205px;
-	margin-right: 1em;
 }
 #showcase menu ul {
 	list-style-type: none;
@@ -92,10 +99,12 @@ body {
 #showcase menu li {
 	display: inline-block;
 	padding: 0;
-	margin: 1em 0 1em 0;
+	margin: 0;
+}
+#showcase menu li:not(:last-of-type) {
+	margin-bottom: 2em;
 }
 #showcase menu li a {
-	cursor: inherit;
 	text-decoration: none;
 	display: inline-block;
 	color: #aaa;
@@ -110,17 +119,22 @@ body {
 }
 
 #showcase .tab-wrapper {
-	overflow: hidden;
-	height: 22.5em;
+	margin-left: 205px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
 }
 
 #showcase .tab {
 	display: none;
 	text-align: center;
 }
+#showcase .tab img {
+	max-width: 80%;
+}
 #showcase .tab img.screenshot {
 	margin: 0 auto;
-	max-width: 80%;
 	max-height: 15em;
 }
 
@@ -129,6 +143,8 @@ body {
 }
 #showcase .tab p {
 	font-size: 110%;
+	width: 85%;
+	margin: 1em auto 0 auto;
 }
 
 #showcase i[class^='icon-'] {

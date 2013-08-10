@@ -89,16 +89,10 @@ img {
 
 
 /* layout */
-#main {
-	position: relative;
-}
 .main-wrapper {
 	text-align: left;
 	margin: 0 auto;
-	position: relative;
-	left: 50%;
-	margin-left: -300px;
-	width: 600px;
+	max-width: 600px;
 	padding: 0 1em;
 }
 
@@ -120,17 +114,15 @@ h3 .icon-tooltip {
 
 /* search input */
 .search input {
-	width: 175px;
-	padding: 1px 4px 1px 4px !important;
-	margin: 0 -1px 0 0 !important;
-	vertical-align: bottom !important;
+	padding: 1px 4px 1px 4px;
+	margin: 0 -1px 0 0;
 	height: 25px;
 }
 .search button {
 	display: inline-block;
-	padding: 1px 12px !important;
-	margin: 0 -1px 0 0 !important;
-	vertical-align: bottom !important;
+	padding: 1px 12px;
+	margin: 0 -1px 0 0;
+	vertical-align: bottom;
 	height: 25px;
 }
 .search input, .search button {

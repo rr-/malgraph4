@@ -47,13 +47,13 @@
 		</script>
 
 		<div class="main-wrapper">
-			<div id="logo">
-				<a href="<?php echo IndexControllerIndexModule::url() ?>">
-					<span>MALgraph</span>
-				</a>
-				<div class="sep"></div>
-			</div>
 			<form class="waitable search" action="<?php echo IndexControllerSearchModule::url() ?>" method="post">
+				<div id="logo">
+					<a href="<?php echo IndexControllerIndexModule::url() ?>">
+						<span>MALgraph</span>
+					</a>
+					<div class="sep"></div>
+				</div>
 				<?php if (isset($viewContext->module)): ?>
 					<input type="hidden" name="module" value="<?php echo $viewContext->module ?>">
 				<?php endif ?>
@@ -64,15 +64,15 @@
 					<input type="search" name="user-name" placeholder="your MAL username">
 					<button data-tooltip="Search" name="submit" value="search" type="submit" class="btn"><i class="icon-search"></i></button>
 				</div>
+				<div id="top-nav">
+					<a class="waitable" href="<?php echo IndexControllerAboutModule::url() ?>">About</a>
+					<div class="sep"></div>
+					<a class="waitable" href="<?php echo IndexControllerPrivacyModule::url() ?>">Privacy</a>
+					<div class="sep"></div>
+					<a class="waitable" href="<?php echo IndexControllerGlobalsModule::url() ?>">Globals</a>
+				</div>
+				<div class="clear"></div>
 			</form>
-			<div id="top-nav">
-				<a class="waitable" href="<?php echo IndexControllerAboutModule::url() ?>">About</a>
-				<div class="sep"></div>
-				<a class="waitable" href="<?php echo IndexControllerPrivacyModule::url() ?>">Privacy</a>
-				<div class="sep"></div>
-				<a class="waitable" href="<?php echo IndexControllerGlobalsModule::url() ?>">Globals</a>
-			</div>
-			<div class="clear"></div>
 		</div>
 	</div>
 
