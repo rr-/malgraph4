@@ -10,20 +10,8 @@
 #header .input-append {
 	margin: 0;
 }
-#header ul {
+#header #top-nav {
 	float: right;
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-}
-#header ul li {
-	display: inline-block;
-	padding: 0 0 0 1em;
-	margin: 0;
-	vertical-align: middle;
-}
-#header ul li:first-child {
-	padding-left: 0;
 }
 #logo {
 	float: left;
@@ -31,18 +19,19 @@
 #logo a {
 	display: inline-block;
 	vertical-align: middle;
+	background-repeat: no-repeat;
 	background-image: url('../img/logo-header.png');
+	background-position: top right;
 	width: 50px;
 	height: 30px;
 	text-decoration: none;
 }
 #logo a span {
-	opacity: 0;
+	display: none;
 }
 
 #header .search {
 	float: left;
-	margin-left: 1em;
 	vertical-align: middle;
 	line-height: 30px;
 }
@@ -54,4 +43,14 @@
 }
 #header form input {
 	width: 100%;
+}
+
+#header .sep {
+	display: inline-block;
+	width: 0;
+	height: 24px;
+	border-left: 1px solid rgba(0, 0, 0, 0.1);
+	border-right: 1px solid rgba(255, 255, 255, 0.7);
+	margin: 0 0.75em;
+	vertical-align: middle;
 }

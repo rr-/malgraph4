@@ -1,11 +1,34 @@
-#menu-wrapper {
-	position: absolute;
-	right: 100%;
-	font-size: 110%;
+.main-wrapper {
+	margin-left: -400px;
+	width: 800px;
+}
+#logo {
+	width: 184px;
+	text-align: right;
+}
+#logo a {
+	width: 163px;
+	height: 28px;
+	background-image: url('../img/logo-header-big.png');
+}
+#logo .sep {
+	margin-right: 0;
+}
+#header .search {
+	margin-left: 0.75em;
 }
 
-.main-wrapper {
-	margin-left: -200px;
+#menu-wrapper {
+	float: left;
+	position: relative;
+	width: 184px;
+	margin-right: 16px;
+	font-size: 110%;
+}
+#main {
+	width: 600px;
+	position: relative;
+	float: left;
 }
 
 #menu {
@@ -67,7 +90,6 @@
 	padding: 4px 9px 4px 16px;
 	text-align: right;
 	text-decoration: none;
-	transition: color 0.2s ease, border-color: 0.2s ease;
 	border-right: 3px solid transparent;
 	margin: 1px 0;
 }
@@ -93,7 +115,6 @@
 	opacity: 1;
 }
 #menu i {
-	transition: opacity 0.2s ease;
 	background-color: #888;
 	margin-left: 12px;
 	opacity: .75;

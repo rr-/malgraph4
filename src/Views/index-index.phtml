@@ -1,50 +1,78 @@
-<div class="bigscreen">
-<div class="left-wrapper">
-<div class="left">
-	<p class="big">MALgraph</p>
-	<p class="small">An extension of your<br><a target="_blank" href="http://myanimelist.net">MyAnimeList</a> profile.</p>
-</div>
+<div id="showcase">
+	<menu>
+		<ul>
+			<li>
+				<a href="#">
+					<i class="icon-mg"></i>
+					<span>View numerous stats for <strong>anime and manga</strong></span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class="icon-suggestions"></i>
+					<span>Get personalized <strong>recommendations</strong></span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class="icon-achievements"></i>
+					<span>Earn <strong>achievements</strong> based on your list</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class="icon-globals"></i>
+					<span>Compare your data with <strong>global stats</strong></span>
+				</a>
+			</li>
+		</ul>
+	</menu>
+
+	<div class="tab-wrapper">
+		<div class="tab">
+			<img src="<?php echo UrlHelper::absoluteUrl('/media/img/logo-huge.png') ?>" alt="MALgraph">
+			<p>MALgraph is an extension of your MyAnimeList profile,<br>serving you various stats about your anime and manga.</p>
+		</div>
+
+		<div class="tab">
+			<img class="screenshot" src="<?php echo UrlHelper::absoluteUrl('/media/img/showcase-2.png') ?>" alt="Recommendations">
+			<p>Get recommendations based on your ratings<br>and check related titles you might have missed.</p>
+		</div>
+
+		<div class="tab">
+			<img class="screenshot" src="<?php echo UrlHelper::absoluteUrl('/media/img/showcase-3.png') ?>" alt="Achievements">
+			<p>Doing something big, like watching 100 mecha anime,<br>will earn you a badge. All your friends will envy you!</p>
+		</div>
+
+		<div class="tab">
+			<img class="screenshot" src="<?php echo UrlHelper::absoluteUrl('/media/img/showcase-4.png') ?>" alt="Global statistics">
+			<p>See how your mean score compares to other users&rsquo;,<br>check how many more manga is there for you to read.</p>
+		</div>
+	</div>
+
+	<div class="clear"></div>
 </div>
 
-<div class="right-wrapper">
-<div class="right">
-	<p>MALgraph displays more stats than you need&nbsp;&ndash;&nbsp;including
-	rating distribution, your favorite studios and personalized anime and manga
-	recommendations.</p>
-
+<div id="start">
 	<form class="waitable search" action="<?php echo IndexControllerSearchModule::url() ?>" method="post">
-		<p>Start here:</p>
 		<div class="control-group">
-			<input type="search" name="user-name" placeholder="your MAL username">
-			<!--<button data-tooltip="Search" name="submit" value="search" type="submit" class="btn"><i class="icon-search"></i></button>-->
+			<label for="mp-search">Start here:</label>
+			<input type="search" name="user-name" placeholder="your MAL username" id="mp-search">
+			<span>or <a href="<?php echo UserControllerProfileModule::url(mt_rand() % 2 == 0 ? 'fri' : 'rr-') ?>">load an example profile</a>.</span>
 		</div>
 	</form>
 </div>
-</div>
 
-<div class="clear"></div>
-</div>
-
-<div class="center">
-	<div class="links">
-		<a href="<?php echo UserControllerProfileModule::url(mt_rand() & 1 ? 'fri' : 'rr-', Media::Anime) ?>">Show me an example!</a>
-		<span class="bull">&bull;</span>
-		<a href="#" class="about-mal">What is MyAnimeList?</a>
-	</div>
-
-	<div class="about-mal">
-		<p><a target="_blank" href="http://myanimelist.net">MyAnimeList</a>
-		(abbreviated as MAL) is a&nbsp;site for anime/manga fans, which allows
-		them to make a&nbsp;list of titles they completed or plan to watch in
-		the future. Its users can rate their anime and manga, write
-		<em>sophisticated</em> recommendations and hang out on forums.</p>
-
-		<p>Some people like the social part of MAL, but don&rsquo;t
-		worry&nbsp;&ndash;&nbsp;if you don&rsquo;t want anyone to know your
-		real nickname, we&rsquo;ve got you covered.</p>
-
-		<p>If you don&rsquo;t have a&nbsp;MyAnimeList account yet, you can <a
-		target="_blank" href="http://myanimelist.net/register.php">create one
-		on this page</a>. Start cataloging your anime and manga, rate some
-		series and visit us again!</p> </div>
-</div>
+<footer>
+	<ul>
+		<li>
+			<a class="waitable" href="<?php echo IndexControllerAboutModule::url() ?>">About MALgraph</a>
+		</li>
+		<li>
+			<a class="waitable" href="<?php echo IndexControllerPrivacyModule::url() ?>">Privacy policy</a>
+		</li>
+		<li>
+			<a class="waitable" href="<?php echo IndexControllerGlobalsModule::url() ?>">Global stats</a>
+		</li>
+	</ul>
+</footer>

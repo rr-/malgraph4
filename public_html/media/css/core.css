@@ -64,6 +64,13 @@ h1, h2, h3 {
 a {
 	color: #1969CB;
 	text-decoration: none;
+	transition: all 0.2s ease;
+}
+a span {
+	transition: all 0.2s ease;
+}
+a i {
+	transition: all 0.2s ease;
 }
 	a:focus {
 		opacity: .8;
