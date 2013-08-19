@@ -1031,7 +1031,47 @@
 				]
 			}
 		},
-
+		
+		"romance":
+		{
+			"achievements":
+			[
+				{
+					"threshold": "25-39",
+					"id": "anime-romance-1",
+					"level": "Romance: level 1",
+					"title": "Stalker",
+					"desc": "I&rsquo;ll stalk you so hard you won&rsquo;t notice me for 24 episodes. Why don&rsquo;t you love me yet?"
+				},
+				{
+					"threshold": "40-59",
+					"id": "anime-romance-2",
+					"level": "Romance: level 2",
+					"title": "Unrequited love",
+					"desc": "If you won&rsquo;t confess, they&rsquo;ll never know how you feel. But don&rsquo;t bother if you&rsquo;re the best girl - these never win."
+				},
+				{
+					"threshold": "60-99",
+					"id": "anime-romance-3",
+					"level": "Romance: level 3",
+					"title": "Sparkles and bubbles",
+					"desc": "Every time you two get close you feel butterflies in your stomach. Now kiss."
+				},
+				{
+					"threshold": "100+",
+					"id": "anime-romance-4",
+					"level": "Romance: level MAX",
+					"title": "Heart full of love",
+					"desc": ""
+				}
+			],
+			"requirement":
+			{
+				"type": "genre-titles",
+				"genre": 22
+			}
+		},
+		
 		"historical":
 		{
 			"achievements":
@@ -1182,6 +1222,7 @@
 				{
 					"threshold": "0-2.99",
 					"id": "score-anime-lessthanthree",
+					"level": "0/10. Play next one.",
 					"title": "Less than three",
 					"desc": "Mean anime score lower than 3. Is it hate, or is it love?",
 					"tooltip": "Mean score: {progress-subject}"
@@ -1200,6 +1241,7 @@
 				{
 					"threshold": "3-5",
 					"id": "score-anime-suffering",
+					"level": "My eyes! It hurts!",
 					"title": "Watching anime is suffering",
 					"desc": "Mean anime score lower than 5. Someone has to counterweigh the fanboys, right?",
 					"tooltip": "Mean score: {progress-subject}"
@@ -1218,6 +1260,7 @@
 				{
 					"threshold": "8.5-10",
 					"id": "score-anime-ilovethem",
+					"level": "10/10! EVERYTHING!",
 					"title": "I love Chinese cartoons",
 					"desc": "Mean anime score higher than 8.5. How about using the whole scale and re-rating stuff? That could make you look less like a fanboy&hellip;",
 					"tooltip": "Mean score: {progress-subject}"
@@ -1236,6 +1279,7 @@
 				{
 					"threshold": "50+",
 					"id": "nodrop-anime",
+					"level": "I&rsquo;ll endure anything",
 					"title": "Completionist",
 					"desc": "You&rsquo;ve managed to survive watching so many anime without dropping any of them. You masochist."
 				}
@@ -1253,6 +1297,7 @@
 				{
 					"threshold": "10+",
 					"id": "long-runner-anime",
+					"level": "Anime, that is.",
 					"title": "I like them long",
 					"desc": "Didn&rsquo;t fall asleep while watching long anime series. 150 episodes isn&rsquo;t a big deal to you."
 				}
