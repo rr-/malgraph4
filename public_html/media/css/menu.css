@@ -130,7 +130,7 @@
 /* big screens */
 @media (min-width: 599px) and (min-device-width: 599px) {
 	#logo {
-		width: 184px;
+		width: 181px; /*184px -3px for border-right*/
 		text-align: right;
 	}
 	#logo a {

@@ -18,6 +18,10 @@ td.title {
 	text-align: left;
 }
 
+td.status i {
+	margin-top: 1px;
+}
+
 #filter-form {
 	white-space: nowrap;
 }
