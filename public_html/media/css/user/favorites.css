@@ -5,6 +5,9 @@
 	height: 300px;
 	width: 100%;
 }
+.types .target {
+	height: 256px;
+}
 
 table {
 	font-size: 90%;

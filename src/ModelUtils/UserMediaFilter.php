@@ -84,6 +84,14 @@ class UserMediaFilter
 		};
 	}
 
+	public static function type($type)
+	{
+		return function($row) use ($type)
+		{
+			return $row->sub_type == $type;
+		};
+	}
+
 	public static function creator($genreId, $list)
 	{
 		if (empty($list))

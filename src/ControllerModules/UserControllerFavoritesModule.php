@@ -56,10 +56,12 @@ class UserControllerFavoritesModule extends AbstractUserControllerModule
 		$favGenres = MediaGenreDistribution::fromEntries($listNonPlanned);
 		$favYears = MediaYearDistribution::fromEntries($listNonPlanned);
 		$favDecades = MediaDecadeDistribution::fromEntries($listNonPlanned);
+		$favTypes = MediaTypeDistribution::fromEntries($listNonPlanned);
 		$viewContext->favCreators = $favCreators;
 		$viewContext->favGenres = $favGenres;
 		$viewContext->favYears = $favYears;
 		$viewContext->favDecades = $favDecades;
+		$viewContext->favTypes = $favTypes;
 
 		$viewContext->yearScores = [];
 		foreach ($favYears->getGroupsKeys() as $safeKey => $key)

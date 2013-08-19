@@ -44,6 +44,14 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 				$computeMeanScore = true;
 				break;
 
+			case 'type':
+				$filter = UserMediaFilter::combine(
+					UserMediaFilter::nonPlanned(),
+					UserMediaFilter::type($filterParam)
+				);
+				$computeMeanScore = true;
+				break;
+
 			case 'year':
 				$filter = UserMediaFilter::combine(
 					UserMediaFilter::nonPlanned(),
