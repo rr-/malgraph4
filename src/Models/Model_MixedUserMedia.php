@@ -125,19 +125,12 @@ class Model_MixedUserMedia
 
 		if ($loadEverything)
 		{
-			$query = 'CREATE TEMPORARY TABLE hurr (franchise VARCHAR(10))';
-			R::exec($query);
-			foreach (array_chunk(array_keys($ownClusters), Config::$maxDbBindings) as $chunk)
-			{
-				$query = 'INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)'));
-				R::exec($query, $chunk);
-			}
-			$query = 'SELECT * FROM media INNER JOIN hurr ON media.franchise = hurr.franchise';
+			$tblName = self::createTemporaryTable($entries);
+			$query = 'SELECT * FROM media INNER JOIN ' . $tblName . ' ON media.franchise = ' . $tblName . '.franchise';
 			$rows = R::getAll($query);
-			$query = 'DROP TABLE hurr';
-			R::exec($query);
-			$allEntries = array_map(function($entry) { return new Model_MixedUserMedia($entry); }, $rows);
+			self::dropTemporaryTable($tblName);
 
+			$allEntries = array_map(function($entry) { return new Model_MixedUserMedia($entry); }, $rows);
 			$allClusters = self::clusterize($allEntries);
 		}
 
@@ -157,19 +150,12 @@ class Model_MixedUserMedia
 
 	public static function attachGenres(array &$entries)
 	{
-		$query = 'CREATE TEMPORARY TABLE hurr (media_id INTEGER)';
-		R::exec($query);
-		foreach (array_chunk(array_map(function($entry) { return $entry->media_id; }, $entries), Config::$maxDbBindings) as $chunk)
-		{
-			$query = 'INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)'));
-			R::exec($query, $chunk);
-		}
-		$query = 'SELECT * FROM mediagenre mg INNER JOIN hurr ON mg.media_id = hurr.media_id';
+		$tblName = self::createTemporaryTable($entries);
+		$query = 'SELECT * FROM mediagenre mg INNER JOIN ' . $tblName . ' ON mg.media_id = ' . $tblName . '.media_id';
 		$rows = R::getAll($query);
-		$query = 'DROP TABLE hurr';
-		R::exec($query);
-		$data = ReflectionHelper::arraysToClasses($rows);
+		self::dropTemporaryTable($tblName);
 
+		$data = ReflectionHelper::arraysToClasses($rows);
 		$map = [];
 		foreach ($entries as $entry)
 		{
@@ -193,13 +179,7 @@ class Model_MixedUserMedia
 
 	public static function attachCreators(array &$entries)
 	{
-		$query = 'CREATE TEMPORARY TABLE hurr (media_id INTEGER)';
-		R::exec($query);
-		foreach (array_chunk(array_map(function($entry) { return $entry->media_id; }, $entries), Config::$maxDbBindings) as $chunk)
-		{
-			$query = 'INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)'));
-			R::exec($query, $chunk);
-		}
+		$tblName = self::createTemporaryTable($entries);
 		switch (reset($entries)->media)
 		{
 			case Media::Anime:
@@ -211,12 +191,11 @@ class Model_MixedUserMedia
 			default:
 				throw new BadMediaException();
 		}
-		$query = 'SELECT * FROM ' . $table . ' mc INNER JOIN hurr ON mc.media_id = hurr.media_id';
+		$query = 'SELECT * FROM ' . $table . ' mc INNER JOIN ' . $tblName . ' ON mc.media_id = ' . $tblName . '.media_id';
 		$rows = R::getAll($query);
-		$query = 'DROP TABLE hurr';
-		R::exec($query);
-		$data = ReflectionHelper::arraysToClasses($rows);
+		self::dropTemporaryTable($tblName);
 
+		$data = ReflectionHelper::arraysToClasses($rows);
 		$map = [];
 		foreach ($entries as $entry)
 		{
@@ -240,19 +219,12 @@ class Model_MixedUserMedia
 
 	public static function attachRecommendations(array &$entries)
 	{
-		$query = 'CREATE TEMPORARY TABLE hurr (media_id INTEGER)';
-		R::exec($query);
-		foreach (array_chunk(array_map(function($entry) { return $entry->media_id; }, $entries), Config::$maxDbBindings) as $chunk)
-		{
-			$query = 'INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)'));
-			R::exec($query, $chunk);
-		}
-		$query = 'SELECT * FROM mediarec mr INNER JOIN hurr ON mr.media_id = hurr.media_id';
+		$tblName = self::createTemporaryTable($entries);
+		$query = 'SELECT * FROM mediarec mr INNER JOIN ' . $tblName . ' ON mr.media_id = ' . $tblName . '.media_id';
 		$rows = R::getAll($query);
-		$query = 'DROP TABLE hurr';
-		R::exec($query);
-		$data = ReflectionHelper::arraysToClasses($rows);
+		self::dropTemporaryTable($tblName);
 
+		$data = ReflectionHelper::arraysToClasses($rows);
 		$map = [];
 		foreach ($entries as $entry)
 		{
@@ -268,5 +240,33 @@ class Model_MixedUserMedia
 			}
 			$map[$row->media_id]->recommendations []= $row;
 		}
+	}
+
+	private static $temporaryTables = [];
+	private static function createTemporaryTable(array $entries)
+	{
+		$ids = array_map(function($entry) { return $entry->media_id; }, $entries);
+		$uniqueId = md5(join(',', $ids));
+		$tblName = 'hurr_' . $uniqueId;
+
+		if (!isset(self::$temporaryTables[$tblName]))
+		{
+			self::$temporaryTables[$tblName] = true;
+			$query = 'CREATE TEMPORARY TABLE ' . $tblName . ' (media_id INTEGER)';
+			R::exec($query);
+			foreach (array_chunk($ids, Config::$maxDbBindings) as $chunk)
+			{
+				$query = 'INSERT INTO ' . $tblName . ' VALUES ' . join(',', array_fill(0, count($chunk), '(?)'));
+				R::exec($query, $chunk);
+			}
+		}
+
+		return $tblName;
+	}
+
+	private static function dropTemporaryTable($tblName)
+	{
+		#$query = 'DROP TABLE ' . $tblName;
+		#R::exec($query);
 	}
 }

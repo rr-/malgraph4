@@ -34,12 +34,17 @@ class MediaYearDistribution extends AbstractDistribution
 
 	public static function getPublishedYear($entry)
 	{
-		$season = $entry->getSeason();
-		$pos = strpos($season, ' ');
-		$ret = $pos !== false
-			? substr($season, $pos + 1)
-			: $season;
-		return intval($ret);
+		$yearA = intval(substr($entry->published_from, 0, 4));
+		$yearB = intval(substr($entry->published_to, 0, 4));
+		if (!$yearA and !$yearB)
+		{
+			return null;
+		}
+		elseif (!$yearA)
+		{
+			return $yearB;
+		}
+		return $yearA;
 	}
 
 	public function addEntry($entry)
