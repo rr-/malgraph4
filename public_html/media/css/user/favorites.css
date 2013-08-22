@@ -5,8 +5,12 @@
 	height: 300px;
 	width: 100%;
 }
+
+.types .target-wrapper {
+	width: 100%;
+}
 .types .target {
-	height: 256px;
+	height: 220px;
 }
 
 table {

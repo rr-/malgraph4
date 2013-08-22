@@ -30,9 +30,21 @@
 					{
 						enabled: true,
 						layout: 'vertical',
-						align: 'left',
+						align: 'right',
 						verticalAlign: 'middle',
-						x: 20,
+						labelFormatter: function()
+						{
+							var percentages = <?php echo json_encode($viewContext->typePercentages) ?>;
+							var text = this.name;
+							text += ' - ' + this.y.toString();
+							text += ' (' + percentages[this.type] + '%)';
+							return text;
+						},
+						x: -40,
+						symbolPadding: 8,
+						itemMarginTop: 4,
+						itemMarginBottom: 4,
+						borderWidth: 0
 					},
 
 					xAxis:

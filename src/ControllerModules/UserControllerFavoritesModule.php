@@ -78,6 +78,8 @@ class UserControllerFavoritesModule extends AbstractUserControllerModule
 		$viewContext->creatorTimeSpent = $distTimeSpent[get_class($favCreators)];
 		$viewContext->genreTimeSpent = $distTimeSpent[get_class($favGenres)];
 
+		$viewContext->typePercentages = TextHelper::roundPercentages($favTypes->getGroupsSizes());
+
 		$viewContext->genreValues = DistributionEvaluator::evaluate($favGenres);
 		$viewContext->creatorValues = DistributionEvaluator::evaluate($favCreators);
 	}
