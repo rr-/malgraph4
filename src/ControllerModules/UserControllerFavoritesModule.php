@@ -21,22 +21,6 @@ class UserControllerFavoritesModule extends AbstractUserControllerModule
 		return 4;
 	}
 
-	private static function getMeanScore($entries)
-	{
-		$tmpDist = RatingDistribution::fromEntries($entries);
-		return $tmpDist->getMeanScore();
-	}
-
-	private static function getTimeSpent($entries)
-	{
-		$sum = 0;
-		foreach ($entries as $entry)
-		{
-			$sum += $entry->completed_duration;
-		}
-		return $sum;
-	}
-
 	public static function work(&$viewContext)
 	{
 		$viewContext->viewName = 'user-favorites';
@@ -63,40 +47,38 @@ class UserControllerFavoritesModule extends AbstractUserControllerModule
 		$viewContext->favDecades = $favDecades;
 		$viewContext->favTypes = $favTypes;
 
-		$viewContext->yearScores = [];
-		foreach ($favYears->getGroupsKeys() as $safeKey => $key)
+		$distMeanScore = [];
+		$distTimeSpent = [];
+		foreach ([$favCreators, $favGenres, $favDecades, $favYears] as $dist)
 		{
-			$subEntries = $favYears->getGroupEntries($key);
-			$viewContext->yearScores[$safeKey] = self::getMeanScore($subEntries);
+			$meanScore = [];
+			$timeSpent = [];
+			foreach ($dist->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY) as $safeKey => $key)
+			{
+				$meanScore[$safeKey] = 0;
+				$timeSpent[$safeKey] = 0;
+				$subEntries = $dist->getGroupEntries($key);
+				$scoreCount = 0;
+				foreach ($subEntries as $entry)
+				{
+					$timeSpent[$safeKey] += $entry->completed_duration;
+					$meanScore[$safeKey] += $entry->score;
+					$scoreCount += $entry->score > 0;
+				}
+				$meanScore[$safeKey] /= max(1, $scoreCount);
+			}
+			$distMeanScore[get_class($dist)] = $meanScore;
+			$distTimeSpent[get_class($dist)] = $timeSpent;
 		}
 
-		$viewContext->decadeScores = [];
-		foreach ($favDecades->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY) as $safeKey => $key)
-		{
-			$subEntries = $favDecades->getGroupEntries($key);
-			$viewContext->decadeScores[$safeKey] = self::getMeanScore($subEntries);
-		}
+		$viewContext->creatorScores = $distMeanScore[get_class($favCreators)];
+		$viewContext->genreScores = $distMeanScore[get_class($favGenres)];
+		$viewContext->yearScores = $distMeanScore[get_class($favYears)];
+		$viewContext->decadeScores = $distMeanScore[get_class($favDecades)];
+		$viewContext->creatorTimeSpent = $distTimeSpent[get_class($favCreators)];
+		$viewContext->genreTimeSpent = $distTimeSpent[get_class($favGenres)];
 
-		$viewContext->creatorScores = [];
-		$viewContext->creatorValues = [];
-		$viewContext->creatorTimeSpent = [];
-		foreach ($favCreators->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY) as $safeKey => $key)
-		{
-			$subEntries = $favCreators->getGroupEntries($key);
-			$viewContext->creatorScores[$safeKey] = self::getMeanScore($subEntries);
-			$viewContext->creatorTimeSpent[$safeKey] = self::getTimeSpent($subEntries);
-		}
-		$viewContext->creatorValues = DistributionEvaluator::evaluate($favCreators);
-
-		$viewContext->genreScores = [];
-		$viewContext->genreValues = [];
-		$viewContext->genreTimeSpent = [];
-		foreach ($favGenres->getGroupsKeys(AbstractDistribution::IGNORE_NULL_KEY) as $safeKey => $key)
-		{
-			$subEntries = $favGenres->getGroupEntries($key);
-			$viewContext->genreScores[$safeKey] = self::getMeanScore($subEntries);
-			$viewContext->genreTimeSpent[$safeKey] = self::getTimeSpent($subEntries);
-		}
 		$viewContext->genreValues = DistributionEvaluator::evaluate($favGenres);
+		$viewContext->creatorValues = DistributionEvaluator::evaluate($favCreators);
 	}
 }
