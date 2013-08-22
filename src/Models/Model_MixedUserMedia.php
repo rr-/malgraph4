@@ -125,10 +125,18 @@ class Model_MixedUserMedia
 
 		if ($loadEverything)
 		{
-			$tblName = self::createTemporaryTable($entries);
+			$tblName = 'hurr';
+			$query = 'CREATE TEMPORARY TABLE ' . $tblName . ' (franchise VARCHAR(10))';
+			R::exec($query);
+			foreach (array_chunk(array_keys($ownClusters), Config::$maxDbBindings) as $chunk)
+			{
+				$query = 'INSERT INTO ' . $tblName . ' VALUES ' . join(',', array_fill(0, count($chunk), '(?)'));
+				R::exec($query, $chunk);
+			}
 			$query = 'SELECT * FROM media INNER JOIN ' . $tblName . ' ON media.franchise = ' . $tblName . '.franchise';
 			$rows = R::getAll($query);
-			self::dropTemporaryTable($tblName);
+			$query = 'DROP TABLE ' . $tblName;
+			R::exec($query);
 
 			$allEntries = array_map(function($entry) { return new Model_MixedUserMedia($entry); }, $rows);
 			$allClusters = self::clusterize($allEntries);
