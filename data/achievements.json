@@ -291,6 +291,47 @@
 				"genre": 7
 			}
 		},
+		
+		"Romance":
+		{
+			"wiki-desc": "",
+			"achievements":
+			[
+				{
+					"threshold": "15-29",
+					"id": "manga-romance-1",
+					"level": "Romance: level 1",
+					"title": "",
+					"desc": ""
+				},
+				{
+					"threshold": "30-49",
+					"id": "manga-romance-2",
+					"level": "Romance: level 2",
+					"title": "Love me or die",
+					"desc": "Yandere is a form of love too. A rather extreme one, but still!"
+				},
+				{
+					"threshold": "50-79",
+					"id": "manga-romance-3",
+					"level": "Romance: level 3",
+					"title": "",
+					"desc": ""
+				},
+				{
+					"threshold": "80+",
+					"id": "manga-romance-4",
+					"level": "Romance: level MAX",
+					"title": "",
+					"desc": ""
+				}
+			],
+			"requirement":
+			{
+				"type": "genre-titles",
+				"genre": 22
+			}
+		},
 
 		"No drop":
 		{
