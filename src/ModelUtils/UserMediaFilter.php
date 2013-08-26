@@ -92,11 +92,15 @@ class UserMediaFilter
 		};
 	}
 
-	public static function creator($genreId, $list)
+	public static function creator($creatorIds, $list)
 	{
 		if (empty($list))
 		{
 			return [];
+		}
+		if (!is_array($creatorIds))
+		{
+			$creatorIds = [$creatorIds];
 		}
 		$media = reset($list)->media;
 		$query = 'CREATE TEMPORARY TABLE hurr (media_id INTEGER)';
@@ -117,8 +121,8 @@ class UserMediaFilter
 			default:
 				throw new BadMediaException();
 		}
-		$query = 'SELECT * FROM ' . $table . ' mc INNER JOIN hurr ON mc.media_id = hurr.media_id WHERE mc.mal_id = ?';
-		$data = R::getAll($query, [$genreId]);
+		$query = 'SELECT * FROM ' . $table . ' mc INNER JOIN hurr ON mc.media_id = hurr.media_id WHERE mc.mal_id IN (' . R::genSlots($creatorIds) . ')';
+		$data = R::getAll($query, $creatorIds);
 		$query = 'DROP TABLE hurr';
 		R::exec($query);
 
@@ -131,8 +135,16 @@ class UserMediaFilter
 	}
 
 
-	public static function genre($genreId, $list)
+	public static function genre($genreIds, $list)
 	{
+		if (empty($list))
+		{
+			return [];
+		}
+		if (!is_array($genreIds))
+		{
+			$genreIds = [$genreIds];
+		}
 		$query = 'CREATE TEMPORARY TABLE hurr (media_id INTEGER)';
 		R::exec($query);
 		foreach (array_chunk(array_map(function($entry) { return $entry->media_id; }, $list), Config::$maxDbBindings) as $chunk)
@@ -140,8 +152,8 @@ class UserMediaFilter
 			$query = 'INSERT INTO hurr VALUES ' . join(',', array_fill(0, count($chunk), '(?)'));
 			R::exec($query, $chunk);
 		}
-		$query = 'SELECT * FROM mediagenre mg INNER JOIN hurr ON mg.media_id = hurr.media_id WHERE mg.mal_id = ?';
-		$data = R::getAll($query, [$genreId]);
+		$query = 'SELECT * FROM mediagenre mg INNER JOIN hurr ON mg.media_id = hurr.media_id WHERE mg.mal_id IN (' . R::genSlots($genreIds) . ')';
+		$data = R::getAll($query, $genreIds);
 		$query = 'DROP TABLE hurr';
 		R::exec($query);
 
