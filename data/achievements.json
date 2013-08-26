@@ -1,8 +1,9 @@
 {
 	"manga":
 	{
-		"mahou shoujo":
+		"Mahou Shoujo":
 		{
+			"wiki-desc": "Awarded for reading manga about magical girls, because seeing them animated on TV isn't enough.",
 			"achievements":
 			[
 				{
@@ -168,8 +169,9 @@
 			}
 		},
 
-		"sports":
+		"Sports":
 		{
+			"wiki-desc": "Awarded for reading... well... sports manga. That wasn't particularly hard to figure out, eh?",
 			"achievements":
 			[
 				{
@@ -207,9 +209,51 @@
 				"genre": 30
 			}
 		},
-
-		"mystery":
+		
+		"Vampires and Demons":
 		{
+			"wiki-desc": "The tags on MAL may be somewhat lacking for this one, but hopefully it will reward you for reading vampire or demons manga.",
+			"achievements":
+			[
+				{
+					"threshold": "15-29",
+					"id": "manga-vampire-1",
+					"level": "Level 1 vampire/demon",
+					"title": "Sweet tooth",
+					"desc": "Donuts? Really? You lived for 500 years just to eat them?"
+				},
+				{
+					"threshold": "30-49",
+					"id": "manga-vampire-2",
+					"level": "Level 2 vampire/demon",
+					"title": "Vegetarian",
+					"desc": "Some creatures prefer juicy fruits instead of sucking blood or eating raw meat. Weaklings."
+				},
+				{
+					"threshold": "50-79",
+					"id": "manga-vampire-3",
+					"level": "Level 3 vampire/demon",
+					"title": "Carnivore",
+					"desc": "Don&rsquo;t mess with me if you want to keep your limbs attached to your body."
+				},
+				{
+					"threshold": "80+",
+					"id": "manga-vampire-4",
+					"level": "Vampires/Demons: level MAX",
+					"title": "Pure Evil",
+					"desc": ""
+				}
+			],
+			"requirement":
+			{
+				"type": "genre-titles",
+				"genre": [ 6, 32 ]
+			}
+		},
+
+		"Mystery":
+		{
+			"wiki-desc": "Awarded for reading manga with mysterious events, maybe some detective stuff.",
 			"achievements":
 			[
 				{
@@ -248,8 +292,9 @@
 			}
 		},
 
-		"no drop":
+		"No drop":
 		{
+			"wiki-desc": "Exactly the same as its anime counterpart. 50+ completed, zero dropped.",
 			"achievements":
 			[
 				{
@@ -265,8 +310,9 @@
 			}
 		},
 
-		"count":
+		"Total number completed":
 		{
+			"wiki-desc": "Basically, the same thing as anime... but for manga. Even harder to make, since we (the devs) haven't read much manga.",
 			"achievements":
 			[
 				{
@@ -365,8 +411,9 @@
 
 	"anime":
 	{
-		"mahou shoujo":
+		"Mahou Shoujo":
 		{
+			"wiki-desc": "Awarded for watching anime with magical girls. And transformations. Yeah.",
 			"achievements":
 			[
 				{
@@ -671,8 +718,9 @@
 			}
 		},
 
-		"slice of life":
+		"Slice of Life":
 		{
+			"wiki-desc": "Awarded for watching anime portraying daily life of a group of people. It *can* be entertaining.",
 			"achievements":
 			[
 				{
@@ -765,8 +813,9 @@
 			}
 		},
 
-		"gar":
+		"GAR":
 		{
+			"wiki-desc": "Awarded for watching anime containing manly men doing manly things.",
 			"achievements":
 			[
 				{
@@ -967,8 +1016,9 @@
 			}
 		},
 
-		"mecha":
+		"Mecha":
 		{
+			"wiki-desc": "Awarded for watching anime with humongous robots, mobile suits, etc. Matlab/LabVIEW skills are most welcome.",
 			"achievements":
 			[
 				{
@@ -1032,8 +1082,9 @@
 			}
 		},
 		
-		"romance":
+		"Romance":
 		{
+			"wiki-desc": "Awarded for watching shy/dense people getting close to each other, or having no idea what love is.",
 			"achievements":
 			[
 				{
@@ -1072,8 +1123,9 @@
 			}
 		},
 		
-		"historical":
+		"Historical":
 		{
+			"wiki-desc": "Awarded for watching anime set way in the past, e.g. Edo period, WWII, something like that.",
 			"achievements":
 			[
 				{
@@ -1190,8 +1242,9 @@
 			}
 		},
 
-		"boku no pico":
+		"Boku no Pico":
 		{
+			"wiki-desc": "This is worthy having a dedicated achievement. One level. Is it the highest, or the lowest possible level a person can achieve? You decide.",
 			"achievements":
 			[
 				{
@@ -1215,16 +1268,17 @@
 			}
 		},
 
-		"very low mean score":
+		"High mean score":
 		{
+			"wiki-desc": "Related to mean anime score. Instead of calling people retarded, we give them an award for treating 8/10 as a *meh* rating.",
 			"achievements":
 			[
 				{
-					"threshold": "0-2.99",
-					"id": "score-anime-lessthanthree",
-					"level": "0/10. Play next one.",
-					"title": "Less than three",
-					"desc": "Mean anime score lower than 3. Is it hate, or is it love?",
+					"threshold": "8.5-10",
+					"id": "score-anime-ilovethem",
+					"level": "10/10! EVERYTHING!",
+					"title": "I love Chinese cartoons",
+					"desc": "Mean anime score higher than 8.5. How about using the whole scale and re-rating stuff? That could make you look less like a fanboy&hellip;",
 					"tooltip": "Mean score: {progress-subject}"
 				}
 			],
@@ -1234,7 +1288,7 @@
 			}
 		},
 
-		"low mean score":
+		"Low mean score":
 		{
 			"achievements":
 			[
@@ -1253,16 +1307,16 @@
 			}
 		},
 
-		"high mean score":
+		"Very low mean score":
 		{
 			"achievements":
 			[
 				{
-					"threshold": "8.5-10",
-					"id": "score-anime-ilovethem",
-					"level": "10/10! EVERYTHING!",
-					"title": "I love Chinese cartoons",
-					"desc": "Mean anime score higher than 8.5. How about using the whole scale and re-rating stuff? That could make you look less like a fanboy&hellip;",
+					"threshold": "0-2.99",
+					"id": "score-anime-lessthanthree",
+					"level": "0/10. Play next one.",
+					"title": "Less than three",
+					"desc": "Mean anime score lower than 3. Is it hate, or is it love?",
 					"tooltip": "Mean score: {progress-subject}"
 				}
 			],
@@ -1272,8 +1326,9 @@
 			}
 		},
 
-		"no drop":
+		"No drop":
 		{
+			"wiki-desc": "You will get it if your stats are 50+ completed and zero dropped. Pretty hard to obtain and very easy to lose.",
 			"achievements":
 			[
 				{
@@ -1290,8 +1345,9 @@
 			}
 		},
 
-		"long runner":
+		"Long runner":
 		{
+			"wiki-desc": "Special achievement given for completing 10 or more series 150+ episodes long. There are 63 such anime.",
 			"achievements":
 			[
 				{
@@ -1374,8 +1430,9 @@
 			}
 		},
 
-		"count":
+		"Total number completed":
 		{
+			"wiki-desc": "Self-explanatory. Level thresholds designed in a way that, uh, I don't remember. No living being should be able to get to 10k.",
 			"achievements":
 			[
 				{
