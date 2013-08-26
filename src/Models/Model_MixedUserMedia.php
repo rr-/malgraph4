@@ -251,7 +251,7 @@ class Model_MixedUserMedia
 	}
 
 	private static $temporaryTables = [];
-	private static function createTemporaryTable(array $entries)
+	public static function createTemporaryTable(array $entries)
 	{
 		$ids = array_map(function($entry) { return $entry->media_id; }, $entries);
 		$uniqueId = md5(join(',', $ids));
@@ -272,7 +272,7 @@ class Model_MixedUserMedia
 		return $tblName;
 	}
 
-	private static function dropTemporaryTable($tblName)
+	public static function dropTemporaryTable($tblName)
 	{
 		#$query = 'DROP TABLE ' . $tblName;
 		#R::exec($query);
