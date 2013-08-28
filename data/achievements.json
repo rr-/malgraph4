@@ -241,7 +241,7 @@
 					"id": "manga-vampire-4",
 					"level": "Vampires/Demons: level MAX",
 					"title": "Pure Evil",
-					"desc": ""
+					"desc": "EVIL!!! FANGS! DEMONS!! BLOOD! Yeah. That&rsquo;s the stuff."
 				}
 			],
 			"requirement":
@@ -294,15 +294,15 @@
 		
 		"Romance":
 		{
-			"wiki-desc": "",
+			"wiki-desc": "Lovey-dovey stuff in printed media. You read a lot of them, we give you a medal for it. Simple.",
 			"achievements":
 			[
 				{
 					"threshold": "15-29",
 					"id": "manga-romance-1",
 					"level": "Romance: level 1",
-					"title": "",
-					"desc": ""
+					"title": "Mixed feelings",
+					"desc": "98% hatred, 2% love. Give it some time and these two will reverse."
 				},
 				{
 					"threshold": "30-49",
@@ -315,15 +315,15 @@
 					"threshold": "50-79",
 					"id": "manga-romance-3",
 					"level": "Romance: level 3",
-					"title": "",
-					"desc": ""
+					"title": "Breaking the chains",
+					"desc": "With love, nothing is impossible. You just have to let someone break you free of restrictions."
 				},
 				{
 					"threshold": "80+",
 					"id": "manga-romance-4",
-					"level": "Romance: level MAX",
-					"title": "",
-					"desc": ""
+					"level": "Romance: FULL LOVE",
+					"title": "Heart that never stops beating",
+					"desc": "When I see you, my kokoro goes doki-doki and the sekai starts to spin around. How could I live without you?"
 				}
 			],
 			"requirement":
@@ -417,7 +417,7 @@
 					"id": "numbers-manga-2500",
 					"level": "Passed 2500 mark",
 					"title": "Still not enough",
-					"desc": "Read 2500 manga. You&rsquo;ve read six lifetimes worth of words."
+					"desc": "Read 2500 manga. In search for the perfect story you&rsquo;ve read six lifetimes worth of words. Did you find it?"
 				},
 				{
 					"threshold": "5000-7499",
@@ -431,7 +431,7 @@
 					"id": "numbers-manga-7500",
 					"level": "Passed 7500 mark",
 					"title": "Reincarnation",
-					"desc": "Read 7500 manga. How, exactly? This is not possible within one lifetime."
+					"desc": "Read 7500 manga. How, exactly? This is not possible for normal humans."
 				},
 				{
 					"threshold": "10000+",
