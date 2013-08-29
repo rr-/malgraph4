@@ -1,5 +1,14 @@
 <?php
 require_once 'src/core.php';
+try
+{
+	SingleInstance::run();
+}
+catch (Exception $e)
+{
+	echo $e->getMessage() . PHP_EOL;
+	exit(1);
+}
 
 $userNames = [];
 $queue = new Queue(Config::$userQueuePath);
