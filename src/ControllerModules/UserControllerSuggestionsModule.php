@@ -101,7 +101,8 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 			}
 			if (!isset($selectedEntries[$key]))
 			{
-				$entry->hypothetical_score = $entry->average_score;
+				#$entry->hypothetical_score = $entry->average_score;
+				$entry->hypothetical_score = mt_rand() % 10;
 				$selectedEntries[$key] = $entry;
 			}
 		}
