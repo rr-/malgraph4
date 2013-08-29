@@ -18,6 +18,7 @@
 .missing table thead tr th {
 	padding: 0.5em 1em;
 	background: whitesmoke;
+	width: 50%;
 }
 /* multiple tbody are used for highlighting (more) link row along with proposition row */
 .missing table tbody:hover tr td {
