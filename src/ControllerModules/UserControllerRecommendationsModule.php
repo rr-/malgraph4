@@ -1,14 +1,18 @@
 <?php
-class UserControllerSuggestionsModule extends AbstractUserControllerModule
+class UserControllerRecommendationsModule extends AbstractUserControllerModule
 {
 	public static function getText(ViewContext $viewContext, $media)
 	{
-		return 'Suggestions';
+		return 'Recommended';
 	}
 
 	public static function getUrlParts()
 	{
-		return ['sug', 'sugg', 'suggestions', 'rec', 'recs', 'recommendations'];
+		return
+		[
+			'sug', 'sugg', 'sugs', 'suggestions',
+			'rec', 'recs', 'recommended', 'recommendations'
+		];
 	}
 
 	public static function getMediaAvailability()
@@ -268,10 +272,10 @@ class UserControllerSuggestionsModule extends AbstractUserControllerModule
 
 	public static function work(&$viewContext)
 	{
-		$viewContext->viewName = 'user-suggestions';
-		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . ' - suggestions (' . Media::toString($viewContext->media) . ')';
-		$viewContext->meta->description = $viewContext->user->name . '&rsquo;s ' . Media::toString($viewContext->media) . ' suggestions on MALgraph, an online tool that extends your MyAnimeList profile.';
-		$viewContext->meta->keywords = array_merge($viewContext->meta->keywords, ['profile', 'list', 'achievements', 'ratings', 'activity', 'favorites', 'suggestions', 'recommendations']);
+		$viewContext->viewName = 'user-recommendations';
+		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . ' - recommendations (' . Media::toString($viewContext->media) . ')';
+		$viewContext->meta->description = $viewContext->user->name . '&rsquo;s ' . Media::toString($viewContext->media) . ' recommendations on MALgraph, an online tool that extends your MyAnimeList profile.';
+		$viewContext->meta->keywords = array_merge($viewContext->meta->keywords, ['profile', 'list', 'achievements', 'ratings', 'activity', 'favorites', 'recommendations']);
 		WebMediaHelper::addCustom($viewContext);
 
 
