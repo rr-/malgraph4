@@ -3,8 +3,8 @@
 	font-size: 90%;
 }
 .entries-wrapper ul {
-	margin: 0 0 2em 0;
-	padding: 0 0 0 auto;
+	margin: 0;
+	padding: 0 0 2em auto;
 }
 .entries-wrapper .close {
 	float: right;
