@@ -1,8 +1,5 @@
 $(function()
 {
-	var num1 = 8;
-	var num2 = 5;
-
 	$('.missing tbody tr').each(function()
 	{
 		var tr = $(this);
@@ -22,8 +19,49 @@ $(function()
 		});
 		newTr.insertAfter(tr).find('td').append(link).hide();
 	});
+});
 
-	collapseUls = function()
+
+
+$(function()
+{
+	var userName = $('#user-name').val();
+	var num1 = 8;
+	var num2 = 5;
+
+	if (typeof(Storage) === 'undefined')
+	{
+		$('.missing .delete-trigger').hide();
+		return;
+	}
+
+	var readHidden = function(userName)
+	{
+		var storageHidden = typeof(localStorage.hidden) !== 'undefined'
+			? JSON.parse(localStorage.hidden)
+			: {};
+		if (userName in storageHidden)
+		{
+			return storageHidden[userName];
+		}
+		return [];
+	}
+
+	var writeHidden = function(userName, hidden)
+	{
+		//filter out duplicates
+		hidden = hidden.filter(function(el,index,arr)
+		{
+			return index == arr.indexOf(el);
+		});
+		var storageHidden = typeof(localStorage.hidden) !== 'undefined'
+			? JSON.parse(localStorage.hidden)
+			: {};
+		storageHidden[userName] = hidden;
+		localStorage.hidden = JSON.stringify(storageHidden);
+	}
+
+	var collapseUls = function()
 	{
 		$('.tooltip').fadeOut(function()
 		{
@@ -87,8 +125,6 @@ $(function()
 	$('.missing tbody').addClass('tainted');
 	collapseUls();
 
-
-
 	var hide = function(target, fast)
 	{
 		var prevState = $.fx.off;
@@ -110,9 +146,8 @@ $(function()
 			tr.parents('tbody').addClass('tainted');
 			collapseUls();
 		});
-		hidden = typeof(localStorage.hidden) !== 'undefined'
-			? JSON.parse(localStorage.hidden)
-			: [];
+
+		var hidden = readHidden(userName);
 		$('.missing .undelete-msg strong').text(hidden.length);
 		$('.missing .undelete-msg').slideDown();
 		$.fx.off = prevState;
@@ -121,61 +156,35 @@ $(function()
 	$('.missing .delete-trigger').click(function(e)
 	{
 		var key = $(this).parents('li').attr('id');
-		if (typeof(Storage) === 'undefined')
-		{
-			alert('Sorry, but local storage is disabled. Can\'t hide.');
-		}
-		else
-		{
-			hidden = typeof(localStorage.hidden) !== 'undefined'
-				? JSON.parse(localStorage.hidden)
-				: [];
-			hidden.push(key);
-			hidden = hidden.filter(function(el,index,arr)
-			{
-				return index == arr.indexOf(el);
-			});
-			localStorage.hidden = JSON.stringify(hidden);
-			hide($(this).parents('li'), false);
-		}
+		var hidden = readHidden(userName);
+		hidden.push(key);
+		writeHidden(userName, hidden);
+		hide($(this).parents('li'), false);
 		e.preventDefault();
 	});
 
 	$('.missing .undelete-trigger').click(function(e)
 	{
-		if (typeof(Storage) === 'undefined')
+		writeHidden(userName, []);
+		$('.missing .undelete-msg').slideUp(function()
 		{
-			alert('Sorry, but local storage is disabled. Can\'t hide.');
-		}
-		else
-		{
-			localStorage.removeItem('hidden');
-			$('.missing .undelete-msg').slideUp(function()
+			$('.missing li.hidden').each(function()
 			{
-				$('.missing li.hidden').each(function()
-				{
-					$(this).parents('tbody').addClass('tainted');
-					$(this).parents('tr').find('td').slideDown();
-					$(this).slideDown();
-				});
-				$('.missing li.hidden').removeClass('hidden');
-				collapseUls();
+				$(this).parents('tbody').addClass('tainted');
+				$(this).parents('tr').find('td').slideDown();
+				$(this).slideDown();
 			});
-		}
+			$('.missing li.hidden').removeClass('hidden');
+			collapseUls();
+		});
 		e.preventDefault();
 	});
 
-	if (typeof(Storage) !== 'undefined' && typeof(localStorage.hidden) !== 'undefined')
+	var hidden = readHidden(userName);
+	for (var i in hidden)
 	{
-		var hidden = JSON.parse(localStorage.hidden);
-		if (hidden.length)
-		{
-			for (var i in hidden)
-			{
-				var key = hidden[i];
-				var target = $('#' + key);
-				hide(target, true);
-			}
-		}
+		var key = hidden[i];
+		var target = $('#' + key);
+		hide(target, true);
 	}
 });
