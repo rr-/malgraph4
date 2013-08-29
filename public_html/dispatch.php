@@ -36,6 +36,13 @@ else
 	try
 	{
 		$url = $_SERVER['REQUEST_URI'];
+		if (!empty($_SERVER['HTTP_HOST']) and !empty(Config::$enforcedDomain) and $_SERVER['HTTP_HOST'] != Config::$enforcedDomain)
+		{
+			$fixedUrl = 'http://' . Config::$enforcedDomain . '/' . trim($_SERVER['REQUEST_URI'], '/');
+			HttpHeadersHelper::setCurrentHeader('Location', $fixedUrl);
+			exit(0);
+		}
+
 		$workingClassName = null;
 		foreach ($classNames as $className)
 		{

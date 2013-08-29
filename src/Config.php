@@ -28,6 +28,7 @@ class Config extends Singleton
 	static $transactionCommitFrequency;
 	static $adminPassword;
 	static $maintenanceMessage;
+	static $enforcedDomain;
 	static $version;
 
 	public static function doInit()
@@ -62,6 +63,7 @@ class Config extends Singleton
 		self::$transactionCommitFrequency = 20;
 		self::$adminPassword = 'supersaiyan';
 		self::$maintenanceMessage = null;
+		self::$enforcedDomain = null;
 		self::$version = '4.0.1';
 	}
 }
