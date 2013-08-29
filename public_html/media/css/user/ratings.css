@@ -34,31 +34,29 @@ ul.infobox .btn {
 	border-radius: 2px;
 	padding: 1em;
 }
-.popup .icon-close {
+.popup .header {
+	position: relative;
+}
+.popup .close {
 	cursor: pointer;
-	float: right;
+	display: block;
+	position: absolute;
+	z-index: 2;
+	right: 0;
+	top: -0.5em;
 	padding: 0.5em 0 0.5em 0.5em;
 }
 
-.export .title {
-	font-size: 1.1em;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-	margin-bottom: 1em;
-}
-.export .header {
+.export .combo-wrapper p {
 	display: inline-block;
-	margin: 0 auto;
-}
-.export .header p {
-	float: left;
 	margin: 0 1em 0 0;
 }
-.export .header {
+.export .combo-wrapper {
 	line-height: 2em;
 	vertical-align: middle;
 }
-.export .header select {
-	float: left;
+.export .combo-wrapper select {
+	display: inline-block;
 	margin: 0 1em 0 0;
 	width: auto;
 	max-width: 40%;
