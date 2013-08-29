@@ -10,8 +10,8 @@ class UserControllerRecommendationsModule extends AbstractUserControllerModule
 	{
 		return
 		[
-			'sug', 'sugg', 'sugs', 'suggestions',
-			'rec', 'recs', 'recommended', 'recommendations'
+			'recs', 'rec', 'recommended', 'recommendations',
+			'sugs', 'sug', 'sugg', 'suggestions'
 		];
 	}
 
