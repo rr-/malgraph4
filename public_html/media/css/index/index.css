@@ -1,3 +1,7 @@
+.main-wrapper {
+	max-width: 700px;
+}
+
 #start {
 	background: #f6f6f6;
 	position: relative;
