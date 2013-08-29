@@ -62,7 +62,7 @@ class Config extends Singleton
 		self::$transactionCommitFrequency = 20;
 		self::$adminPassword = 'supersaiyan';
 		self::$maintenanceMessage = null;
-		self::$version = '4.0.0';
+		self::$version = '4.0.1';
 	}
 }
 
