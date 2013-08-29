@@ -27,6 +27,7 @@ class Config extends Singleton
 	static $globalsCachePath;
 	static $transactionCommitFrequency;
 	static $adminPassword;
+	static $maintenanceMessage;
 
 	public static function doInit()
 	{
@@ -57,6 +58,7 @@ class Config extends Singleton
 		self::$usersPerCronRun = 5;
 		self::$transactionCommitFrequency = 20;
 		self::$adminPassword = 'supersaiyan';
+		self::$maintenanceMessage = null;
 	}
 }
 

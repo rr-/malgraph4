@@ -12,7 +12,13 @@ $bypassCache = !empty($_GET['bypass-cache']);
 $controllerContext = new ControllerContext();
 $viewContext = new ViewContext();
 
-if (isset($_GET['e']))
+if (!empty(Config::$maintenanceMessage))
+{
+	$viewContext->viewName = 'maintenance';
+	$viewContext->layoutName = 'layout-headerless';
+	View::render($viewContext);
+}
+elseif (isset($_GET['e']))
 {
 	try
 	{
