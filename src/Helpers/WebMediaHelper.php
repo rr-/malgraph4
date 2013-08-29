@@ -58,12 +58,12 @@ class WebMediaHelper
 
 	public static function addHeader($viewContext)
 	{
-		$viewContext->meta->styles []= '/media/css/header.css';
+		array_unshift($viewContext->meta->styles, '/media/css/header.css');
 	}
 
 	public static function addHeaderless($viewContext)
 	{
-		$viewContext->meta->styles []= '/media/css/headerless.css';
+		array_unshift($viewContext->meta->styles, '/media/css/headerless.css');
 	}
 
 	public static function addCustom($viewContext)
