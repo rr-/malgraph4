@@ -275,7 +275,7 @@ class UserControllerRecommendationsModule extends AbstractUserControllerModule
 		$viewContext->viewName = 'user-recommendations';
 		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . ' - recommendations (' . Media::toString($viewContext->media) . ')';
 		$viewContext->meta->description = $viewContext->user->name . '&rsquo;s ' . Media::toString($viewContext->media) . ' recommendations on MALgraph, an online tool that extends your MyAnimeList profile.';
-		$viewContext->meta->keywords = array_merge($viewContext->meta->keywords, ['profile', 'list', 'achievements', 'ratings', 'activity', 'favorites', 'recommendations']);
+		$viewContext->meta->keywords = array_merge($viewContext->meta->keywords, ['profile', 'list', 'achievements', 'ratings', 'history', 'favorites', 'recommendations']);
 		WebMediaHelper::addCustom($viewContext);
 
 

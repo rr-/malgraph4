@@ -26,7 +26,7 @@ class UserControllerFavoritesModule extends AbstractUserControllerModule
 		$viewContext->viewName = 'user-favorites';
 		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . ' - favorites (' . Media::toString($viewContext->media) . ')';
 		$viewContext->meta->description = $viewContext->user->name . '&rsquo;s ' . Media::toString($viewContext->media) . ' favorites on MALgraph, an online tool that extends your MyAnimeList profile.';
-		$viewContext->meta->keywords = array_merge($viewContext->meta->keywords, ['profile', 'list', 'achievements', 'ratings', 'activity', 'favorites', 'suggestions', 'recommendations']);
+		$viewContext->meta->keywords = array_merge($viewContext->meta->keywords, ['profile', 'list', 'achievements', 'ratings', 'history', 'favorites', 'suggestions', 'recommendations']);
 		WebMediaHelper::addHighcharts($viewContext);
 		WebMediaHelper::addTablesorter($viewContext);
 		WebMediaHelper::addInfobox($viewContext);
