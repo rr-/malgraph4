@@ -35,7 +35,10 @@ class Downloader
 		foreach ($urls as $url)
 		{
 			$path = self::urlToPath($url);
-			unlink($path);
+			if (file_exists($path))
+			{
+				unlink($path);
+			}
 		}
 	}
 
