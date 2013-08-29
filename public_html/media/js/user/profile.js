@@ -21,8 +21,7 @@ $(function()
 		}
 		else
 		{
-			//text = (diff / 86400).toFixed(1) + ' days ago';
-			text = 'update in progress';
+			text = (diff / 86400).toFixed(1) + ' days ago';
 		}
 		if ($(this).text() != '')
 		{
