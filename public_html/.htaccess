@@ -1,3 +1,7 @@
+<IfModule pagespeed_module>
+	ModPageSpeed Off
+</IfModule>
+
 DirectorySlash Off
 Options -Indexes
 
