@@ -25,6 +25,10 @@
 }
 #glider p {
 	margin-bottom: 0;
+	display: block;
+}
+#glider:after {
+	content: ''; /* fix for rendering resized box on IE */
 }
 #preloader {
 	background: url('../img/glider.png');

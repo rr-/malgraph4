@@ -13,7 +13,7 @@
 }
 #main {
 	margin-left: 200px;
-	overflow: auto; /* allow children to clear floats */
+	overflow: hidden; /* allow children to clear floats */
 }
 
 #menu {

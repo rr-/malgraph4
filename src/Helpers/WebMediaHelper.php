@@ -88,7 +88,7 @@ class WebMediaHelper
 				=> join(DIRECTORY_SEPARATOR, [Config::$mediaDirectory, 'js', 'jquery.tablesorter.js']),
 			'http://code.highcharts.com/highcharts.js'
 				=> join(DIRECTORY_SEPARATOR, [Config::$mediaDirectory, 'js', 'jquery.highcharts.js']),
-			'https://raw.github.com/mattfarina/farbtastic/master/src/farbtastic.js'
+			'https://raw.github.com/mattfarina/farbtastic/cf1c85ae79af05b6530b53a37b3aace8fa992ca7/src/farbtastic.js'
 				=> join(DIRECTORY_SEPARATOR, [Config::$mediaDirectory, 'js', 'jquery.farbtastic.js']),
 		];
 		$results = Downloader::downloadMulti(array_keys($urls));

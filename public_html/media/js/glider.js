@@ -118,6 +118,7 @@ var messages =
 //show glider
 function showGlider()
 {
+	$('#glider').data('start', new Date());
 	$('#glider').fadeIn('slow');
 	window.setInterval(animateGlider, 550);
 }
@@ -126,7 +127,6 @@ function showGlider()
 var timeout;
 function showGliderDelayed()
 {
-	$('#glider').data('start', new Date());
 	timeout = window.setTimeout(showGlider, 550);
 }
 
