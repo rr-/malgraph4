@@ -3,7 +3,7 @@
 		Ratings vs. <?php echo $viewContext->media == Media::Anime ? 'episode' : 'chapter' ?> count
 	</h2>
 	<div class="section-body">
-		<?php if ($viewContext->ratingDistribution->getLargestGroupSize() == 0): ?>
+		<?php if ($viewContext->lengthDistribution->getLargestGroupSize() == 0): ?>
 			<p>There is no information about any titles for this user.</p>
 			<p>Add a few titles and come back in 24 hours.<br>We'll be waiting for you.</p>
 		<?php else: ?>
