@@ -50,11 +50,20 @@ class WebMediaHelper
 		self::addJquery($viewContext);
 		$viewContext->meta->styles []= 'http://fonts.googleapis.com/css?family=Open+Sans|Ubuntu';
 		$viewContext->meta->styles []= '/media/css/core.css';
-		$viewContext->meta->styles []= '/media/css/header.css';
 		$viewContext->meta->styles []= '/media/css/icons.css';
 		$viewContext->meta->scripts []= '/media/js/misc.js';
 		$viewContext->meta->scripts []= '/media/js/tooltips.js';
 		self::addGlider($viewContext);
+	}
+
+	public static function addHeader($viewContext)
+	{
+		$viewContext->meta->styles []= '/media/css/header.css';
+	}
+
+	public static function addHeaderless($viewContext)
+	{
+		$viewContext->meta->styles []= '/media/css/headerless.css';
 	}
 
 	public static function addCustom($viewContext)

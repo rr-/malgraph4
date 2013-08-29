@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title><?php echo isset($viewContext->meta->title) ? $viewContext->meta->title : 'MALgraph' ?></title>
+	<meta charset="utf-8"/>
+	<?php if (isset($viewContext->meta->noIndex)): ?>
+		<meta name="robots" content="noindex, nofollow"/>
+	<?php endif ?>
+	<?php if (isset($viewContext->meta->keywords)): ?>
+		<meta name="keywords" content="<?php echo implode(',', $viewContext->meta->keywords) ?>">
+	<?php endif ?>
+	<?php if (isset($viewContext->meta->description)): ?>
+		<meta name="description" content="<?php echo $viewContext->meta->description ?>">
+	<?php endif ?>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+	<meta property="og:title" content="<?php echo isset($viewContext->meta->title) ? $viewContext->meta->title : 'MALgraph' ?>">
+	<?php if (isset($viewContext->meta->description)): ?>
+		<meta property="og:description" content="<?php echo $viewContext->meta->description ?>">
+	<?php endif ?>
+	<meta property="og:image" content="<?php echo UrlHelper::absoluteUrl('/media/img/logo-fb.png') ?>">
+	<meta property="og:url" content="<?php echo UrlHelper::currentUrl() ?>">
+	<meta property="og:site_name" content="MALgraph" />
+
+	<link rel="shortcut icon" href="<?php echo UrlHelper::absoluteUrl('/media/img/favicon.png') ?>" type="image/png">
+
+	<?php if (isset($viewContext->meta->styles)): ?>
+		<?php foreach ($viewContext->meta->styles as $style): ?>
+			<link rel="stylesheet" type="text/css" href="<?php echo UrlHelper::absoluteUrl($style) ?>">
+		<?php endforeach ?>
+	<?php endif ?>
+	<?php if (isset($viewContext->meta->scripts)): ?>
+		<?php foreach ($viewContext->meta->scripts as $script): ?>
+			<script type="text/javascript" src="<?php echo UrlHelper::absoluteUrl($script) ?>">
+			</script>
+		<?php endforeach ?>
+	<?php endif ?>
+</head>
+
+<body>
+	<?php if (!$viewContext->headerDisabled): ?>
+		<div id="header">
+			<div id="no-script">
+				JavaScript is disabled. Consider enabling it to get positive user experience.
+			</div>
+			<script type="text/javascript">
+				$('#no-script').hide()
+			</script>
+
+			<div class="main-wrapper">
+				<form class="waitable search" action="<?php echo IndexControllerSearchModule::url() ?>" method="post">
+					<div id="logo">
+						<a href="<?php echo IndexControllerIndexModule::url() ?>">
+							<span>MALgraph</span>
+						</a>
+						<div class="sep"></div>
+					</div>
+					<?php if (isset($viewContext->module)): ?>
+						<input type="hidden" name="module" value="<?php echo $viewContext->module ?>">
+					<?php endif ?>
+					<?php if (isset($viewContext->media)): ?>
+						<input type="hidden" name="media" value="<?php echo $viewContext->media ?>">
+					<?php endif ?>
+					<div class="control-group input-append">
+						<input type="search" name="user-name" placeholder="your MAL username">
+						<button data-tooltip="Search" name="submit" value="search" type="submit" class="btn"><i class="icon-search"></i></button>
+					</div>
+					<div id="top-nav">
+						<a class="waitable" href="<?php echo IndexControllerAboutModule::url() ?>">About</a>
+						<div class="sep"></div>
+						<a class="waitable" href="<?php echo IndexControllerPrivacyModule::url() ?>">Privacy</a>
+						<div class="sep"></div>
+						<a class="waitable" href="<?php echo IndexControllerGlobalsModule::url() ?>">Globals</a>
+					</div>
+					<div class="clear"></div>
+				</form>
+			</div>
+		</div>
+
+		<?php if (Config::$googleAdsEnabled): ?>
+			<div id="google-ads">
+				<script type="text/javascript">
+					google_ad_client = "ca-pub-4861833348203348"; /* malgraph3-header */
+					google_ad_slot = "3987532635";
+					google_ad_width = 728;
+					google_ad_height = 90;
+				</script>
+				<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+			</div>
+		<?php endif ?>
+	<?php endif ?>
+
+	<div class="main-wrapper">
+		<?php if (isset($viewContext->userMenu)): ?>
+			<div id="menu-wrapper">
+				<div id="menu">
+					<?php self::renderFile('user-menu', $viewContext) ?>
+				</div>
+			</div>
+		<?php endif ?>
+
+		<div id="main">
+			<?php self::renderView() ?>
+		</div>
+
+		<div class="clear"></div>
+	</div>
+
+	<div id="glider">
+		<div>
+			<div class="target"></div>
+			<p>loading&hellip;</p>
+		</div>
+	</div>
+
+	<span id="preloader"></span>
+	<?php if (Config::$googleAnalyticsEnabled): ?>
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-37915710-1']);
+			_gaq.push(['_setDomainName', 'oko.im']);
+			_gaq.push(['_trackPageview']);
+
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
+	<?php endif ?>
+</body>
+</html>
+<?php printf('<!-- generated in %.05fs at %s -->', microtime(true) - $viewContext->renderStart, date('Y-m-d H:i:s')) ?>

@@ -14,6 +14,7 @@ class IndexControllerIndexModule extends AbstractControllerModule
 	public static function work(&$viewContext)
 	{
 		$viewContext->viewName = 'index-index';
+		$viewContext->layoutName = 'layout-headerless';
 		$viewContext->meta->keywords = array_merge($viewContext->meta->keywords, ['myanimelist', 'mal', 'rating', 'favorites', 'score']);
 		WebMediaHelper::addCustom($viewContext);
 	}
