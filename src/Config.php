@@ -50,7 +50,7 @@ class Config extends Singleton
 		self::$mirrorEnabled = false;
 		self::$cacheEnabled = true;
 		self::$cacheTimeToLive = 24 * 60 * 60;
-		self::$baseUrl = 'http://mal.oko.im/';
+		self::$baseUrl = 'http://' . $_SERVER['HTTP_HOST'] . '/';
 		self::$googleAdsEnabled = true;
 		self::$googleAnalyticsEnabled = true;
 		self::$sendReferrer = true;
