@@ -13,7 +13,7 @@ class DataSorter
 			case self::Title:
 				$cb = function($a, $b)
 				{
-					return strcmp($a->title, $b->title);
+					return strnatcasecmp($a->title, $b->title);
 				};
 				break;
 			case self::Score:
