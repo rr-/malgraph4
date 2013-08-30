@@ -19,6 +19,11 @@ class UserControllerExportModule extends AbstractUserControllerModule
 	{
 	}
 
+	public static function getContentType()
+	{
+		return 'image/png';
+	}
+
 	const IMAGE_TYPE_ANIME = 1;
 	const IMAGE_TYPE_MANGA = 2;
 	const IMAGE_TYPE_ANIME_MANGA = 3;
@@ -394,7 +399,6 @@ class UserControllerExportModule extends AbstractUserControllerModule
 		imagesavealpha($img, true);
 
 		$viewContext->layoutName = null;
-		HttpHeadersHelper::setCurrentHeader('Content-type', 'image/png');
 		HttpHeadersHelper::setCurrentHeader('Cache-Control', 'no-cache, must-revalidate');
 		HttpHeadersHelper::setCurrentHeader('Expires', 'Sat, 26 Jul 1997 05:00:00 GMT');
 		imagepng($img);

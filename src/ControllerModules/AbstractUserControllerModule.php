@@ -42,4 +42,9 @@ abstract class AbstractUserControllerModule extends AbstractControllerModule
 		}
 		return UrlHelper::absoluteUrl($url);
 	}
+
+	public static function getContentType()
+	{
+		return 'text/html';
+	}
 }

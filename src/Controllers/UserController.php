@@ -42,18 +42,24 @@ class UserController extends AbstractController
 
 	public static function preWork(&$controllerContext, &$viewContext)
 	{
-		HttpHeadersHelper::setCurrentHeader('Content-Type', 'text/html');
-		$controllerContext->bypassCache = true;
-		$viewContext->media = $controllerContext->media;
-		$viewContext->module = $controllerContext->module;
-		$viewContext->meta->noIndex = true;
-
 		if (BanHelper::isUserBanned($controllerContext->userName))
 		{
 			$viewContext->userName = $controllerContext->userName;
 			$viewContext->viewName = 'error-user-blocked';
 			$viewContext->meta->title = 'MALgraph - user blocked';
 			return;
+		}
+
+		$module = $controllerContext->module;
+		HttpHeadersHelper::setCurrentHeader('Content-Type', $module::getContentType());
+		$controllerContext->bypassCache = true;
+		$viewContext->media = $controllerContext->media;
+		$viewContext->module = $controllerContext->module;
+		$viewContext->meta->noIndex = true;
+		$viewContext->contentType = $module::getContentType();
+		if ($viewContext->contentType != 'text/html')
+		{
+			$viewContext->layoutName = 'layout-raw';
 		}
 
 		$queue = new Queue(Config::$userQueuePath);

@@ -45,6 +45,12 @@ class View
 			ob_end_clean();
 		}
 
+		if (HttpHeadersHelper::getCurrentHeader('Content-Type') != 'text/html')
+		{
+			echo $html;
+			return;
+		}
+
 		$output = '';
 		$open = 0;
 		$i = 0;
