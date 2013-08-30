@@ -5,7 +5,7 @@ class SingleInstance
 
 	public static function run()
 	{
-		$fileName = $_SERVER['SCRIPT_FILENAME'] . '.lock';
+		$fileName = basename($_SERVER['SCRIPT_FILENAME']) . '.lock';
 		$lockFile = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $fileName;
 		self::$fileHandle = fopen($lockFile, 'wb');
 		if (!flock(self::$fileHandle, LOCK_EX | LOCK_NB))
