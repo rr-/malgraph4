@@ -17,9 +17,11 @@ label.aligned:after {
 	margin-right: 0.5em;
 }
 
-.control-group div {
+fieldset .control-group div {
 	position: relative;
 	left: 6em;
+}
+.control-group div {
 	margin-left: 0.5em;
 	margin-bottom: 1em;
 }

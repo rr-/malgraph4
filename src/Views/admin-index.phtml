@@ -65,6 +65,14 @@
 	</fieldset>
 </form>
 
+<form class="aligned" action="<?php echo AdminControllerMiscModule::url() ?>" method="post">
+	<div class="control-group">
+		<div>
+			<button class="btn btn-success" type="submit" name="action" value="wipe-cache">Wipe cache</button>
+		</div>
+	</div>
+</form>
+
 <script type="text/javascript">
 	var timeout = null;
 	$('.btn-danger').click(function(e)
