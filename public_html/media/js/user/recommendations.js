@@ -58,6 +58,14 @@ $(function()
 			? JSON.parse(localStorage.hidden)
 			: {};
 		storageHidden[userName] = hidden;
+		//filter out empty users
+		for (var key in storageHidden)
+		{
+			if (storageHidden[key].length == 0)
+			{
+				delete storageHidden[key]; //it's safe in js
+			}
+		}
 		localStorage.hidden = JSON.stringify(storageHidden);
 	}
 
