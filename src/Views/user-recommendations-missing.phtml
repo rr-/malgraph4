@@ -40,7 +40,7 @@
 							<td class="proposed">
 								<ul>
 									<?php foreach ($franchise->allEntries as $entry): ?>
-										<li id="<?php printf('mis-%s-%s%d', strtolower($viewContext->user->name), $entry->media, $entry->mal_id) ?>">
+										<li data-id="<?php printf('%s%d', Media::toString($entry->media), $entry->mal_id) ?>">
 											<a href="#" class="delete-trigger">
 												<i data-tooltip="Hide this recommendation" class="right icon-small-close"></i>
 											</a>

@@ -26,6 +26,7 @@ $(function()
 $(function()
 {
 	var userName = $('#user-name').val();
+	var media = $('#media').val();
 	var num1 = 8;
 	var num2 = 5;
 
@@ -34,6 +35,8 @@ $(function()
 		$('.missing .delete-trigger').hide();
 		return;
 	}
+
+
 
 	var readHidden = function(userName)
 	{
@@ -46,6 +49,8 @@ $(function()
 		}
 		return [];
 	}
+
+
 
 	var writeHidden = function(userName, hidden)
 	{
@@ -68,6 +73,8 @@ $(function()
 		}
 		localStorage.hidden = JSON.stringify(storageHidden);
 	}
+
+
 
 	var collapseUls = function()
 	{
@@ -133,6 +140,8 @@ $(function()
 	$('.missing tbody').addClass('tainted');
 	collapseUls();
 
+
+
 	var hide = function(target, fast)
 	{
 		var prevState = $.fx.off;
@@ -156,14 +165,20 @@ $(function()
 		});
 
 		var hidden = readHidden(userName);
-		$('.missing .undelete-msg strong').text(hidden.length);
+		var filtered = $.grep(hidden, function(item, index)
+		{
+			return item.indexOf(media) == 0;
+		});
+		$('.missing .undelete-msg strong').text(filtered.length);
 		$('.missing .undelete-msg').slideDown();
 		$.fx.off = prevState;
 	}
 
+
+
 	$('.missing .delete-trigger').click(function(e)
 	{
-		var key = $(this).parents('li').attr('id');
+		var key = $(this).parents('li').attr('data-id');
 		var hidden = readHidden(userName);
 		hidden.push(key);
 		writeHidden(userName, hidden);
@@ -171,9 +186,17 @@ $(function()
 		e.preventDefault();
 	});
 
+
+
 	$('.missing .undelete-trigger').click(function(e)
 	{
-		writeHidden(userName, []);
+		var hidden = readHidden(userName);
+		var filtered = $.grep(hidden, function(item, index)
+		{
+			return item.indexOf(media) != 0;
+		});
+		writeHidden(userName, filtered);
+
 		$('.missing .undelete-msg').slideUp(function()
 		{
 			$('.missing li.hidden').each(function()
@@ -188,11 +211,16 @@ $(function()
 		e.preventDefault();
 	});
 
+
+
 	var hidden = readHidden(userName);
 	for (var i in hidden)
 	{
 		var key = hidden[i];
-		var target = $('#' + key);
-		hide(target, true);
+		if (key.indexOf(media) == 0)
+		{
+			var target = $('[data-id=\'' + key + '\']');
+			hide(target, true);
+		}
 	}
 });
