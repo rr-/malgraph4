@@ -19,12 +19,6 @@ if (empty($userNames))
 }
 
 $userProcessor = new UserProcessor();
-$mediaProcessors =
-[
-	Media::Anime => new AnimeProcessor(),
-	Media::Manga => new MangaProcessor()
-];
-
 foreach ($userNames as $userName)
 {
 	try
@@ -37,18 +31,7 @@ foreach ($userNames as $userName)
 			echo 'Too soon' . PHP_EOL;
 			continue;
 		}
-		$context = $userProcessor->process($userName);
-
-		$query = 'SELECT um.mal_id, um.media FROM usermedia um' .
-			' LEFT OUTER JOIN media m ON um.mal_id = m.mal_id AND um.media = m.media' .
-			' WHERE um.user_id = ?' .
-			' AND (m.id IS NULL OR m.processed <= DATETIME("now", "-21 days"))';
-		foreach (R::getAll($query, [$context->user->id]) as $row)
-		{
-			$row = ReflectionHelper::arrayToClass($row);
-			printf('Processing %s #%d' . PHP_EOL, Media::toString($row->media), $row->mal_id);
-			$mediaProcessors[$row->media]->process($row->mal_id);
-		}
+		$userProcessor->process($userName);
 	}
 	catch (BadProcessorKeyException $e)
 	{
