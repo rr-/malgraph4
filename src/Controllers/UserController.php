@@ -57,7 +57,7 @@ class UserController extends AbstractController
 		}
 
 		$queue = new Queue(Config::$userQueuePath);
-		$queuePosition = $queue->enqueue($controllerContext->userName);
+		$queuePosition = $queue->enqueue(strtolower($controllerContext->userName));
 
 		$user = R::findOne('user', 'LOWER(name) = LOWER(?)', [$controllerContext->userName]);
 		if (empty($user))
