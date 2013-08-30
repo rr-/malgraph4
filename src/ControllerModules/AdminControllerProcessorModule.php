@@ -140,6 +140,26 @@ class AdminControllerProcessorModule extends AbstractControllerModule
 				$viewContext->message = sprintf('Successfully banned %d users and unbanned %d users', $numBanned, $numUnbanned);
 			}
 
+			elseif ($action == 'reset-franchise')
+			{
+				$num = 0;
+				$mediaProcessors =
+				[
+					Media::Anime => new AnimeProcessor(),
+					Media::Manga => new MangaProcessor(),
+				];
+
+				foreach ($chosenMedia as $media => $ids)
+				{
+					$query = 'UPDATE media SET franchise = NULL WHERE media = ? AND mal_id IN (' . R::genSlots($ids) . ')';
+					R::exec($query, array_merge([$media], $ids));
+					$num += count($ids);
+				}
+
+				$viewContext->messageType = 'info';
+				$viewContext->message = sprintf('Successfully reset franchise for %d entities. Don\'t forget to refresh them now!', $num);
+			}
+
 			else
 			{
 				throw new Exception('Unknown action: ' . $action);
