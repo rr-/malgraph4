@@ -10,17 +10,18 @@ catch (Exception $e)
 	exit(1);
 }
 
-$userNames = [];
-$queue = new Queue(Config::$userQueuePath);
-$userNames = $queue->dequeue(Config::$usersPerCronRun);
-if (empty($userNames))
-{
-	exit(0);
-}
-
 $userProcessor = new UserProcessor();
-foreach ($userNames as $userName)
+$queue = new Queue(Config::$userQueuePath);
+
+$processed = 0;
+while ($processed < Config::$usersPerCronRun)
 {
+	$userName = $queue->dequeue();
+	if ($userName === null)
+	{
+		exit(0);
+	}
+
 	try
 	{
 		printf('Processing user %s' . PHP_EOL, $userName);
@@ -31,6 +32,7 @@ foreach ($userNames as $userName)
 			echo 'Too soon' . PHP_EOL;
 			continue;
 		}
+		++ $processed;
 		$userProcessor->process($userName);
 	}
 	catch (BadProcessorKeyException $e)

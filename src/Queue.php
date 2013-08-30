@@ -71,9 +71,16 @@ class Queue
 			$this->writeLines($lines);
 		}
 		$this->close();
-		return $num !== null
-			? $return
-			: reset($return);
+
+		if ($num !== null)
+		{
+			return $return;
+		}
+		if (count($return))
+		{
+			return reset($return);
+		}
+		return null;
 	}
 
 	public function peek($num = null)
