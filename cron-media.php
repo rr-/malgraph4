@@ -2,7 +2,7 @@
 require_once 'src/core.php';
 try
 {
-	SingleInstance::run();
+	SingleInstance::run(__FILE__);
 }
 catch (Exception $e)
 {
