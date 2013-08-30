@@ -24,6 +24,10 @@ foreach ($argv as $key)
 	{
 		$processor->process($key);
 	}
+	catch (BadProcessorKeyException $e)
+	{
+		echo $e->getMessage() . PHP_EOL;
+	}
 	catch (Exception $e)
 	{
 		echo $e->getMessage() . PHP_EOL;
