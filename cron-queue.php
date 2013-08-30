@@ -56,6 +56,7 @@ foreach ($userNames as $userName)
 	}
 	catch (Exception $e)
 	{
+		$queue->enqueue($userName);
 		Logger::log(Config::$errorLogPath, $e);
 		echo $e . PHP_EOL;
 	}
