@@ -64,7 +64,7 @@ class Config extends Singleton
 		self::$adminPassword = 'supersaiyan';
 		self::$maintenanceMessage = null;
 		self::$enforcedDomain = null;
-		self::$version = '4.0.3';
+		self::$version = '4.0.4';
 	}
 }
 
