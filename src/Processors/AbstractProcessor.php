@@ -71,6 +71,10 @@ abstract class AbstractProcessor
 		}
 		catch (Exception $e)
 		{
+			if (isset($documents))
+			{
+				$e->documents = $documents;
+			}
 			Downloader::purgeCache($urls);
 			throw $e;
 		}
