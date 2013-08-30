@@ -18,8 +18,7 @@ class IndexController extends AbstractController
 
 	public static function preWork(&$controllerContext, &$viewContext)
 	{
-		$controllerContext->bypassCache =
-			$controllerContext->module != 'IndexControllerGlobalsModule';
+		$controllerContext->bypassCache = true;
 	}
 
 	public static function work(&$controllerContext, &$viewContext)
