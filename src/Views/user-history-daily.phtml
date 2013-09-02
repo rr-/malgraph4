@@ -65,7 +65,8 @@
 			for (var groupDate in dailyHistoryGroups)
 			{
 				var date1 = new Date();
-				var date2 = new Date(Date.parse(groupDate));
+				var tmp = groupDate.split(/[^0-9]/);
+				var date2 = new Date(tmp[0],tmp[1]-1,tmp[2]);
 				var key = Math.round((date1.getTime() - date2.getTime()) / oneDay);
 				if (key > 21 || key < 1)
 				{
