@@ -29,7 +29,7 @@ class MediaYearDistribution extends AbstractDistribution
 
 	public function getNullGroupKey()
 	{
-		return 0;
+		return null;
 	}
 
 	public static function getPublishedYear($entry)
