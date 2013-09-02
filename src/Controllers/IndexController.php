@@ -26,6 +26,6 @@ class IndexController extends AbstractController
 		HttpHeadersHelper::setCurrentHeader('Content-Type', 'text/html');
 		assert(!empty($controllerContext->module));
 		$module = $controllerContext->module;
-		$module::work($viewContext);
+		$module::work($controllerContext, $viewContext);
 	}
 }

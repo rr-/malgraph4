@@ -11,7 +11,7 @@ class AdminControllerMiscModule extends AbstractControllerModule
 		return '/a/misc';
 	}
 
-	public static function work(&$viewContext)
+	public static function work(&$controllerContext, &$viewContext)
 	{
 		try
 		{

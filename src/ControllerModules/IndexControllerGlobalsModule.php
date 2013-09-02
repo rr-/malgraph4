@@ -11,7 +11,7 @@ class IndexControllerGlobalsModule extends AbstractControllerModule
 		return '/s/globals';
 	}
 
-	public static function work(&$viewContext)
+	public static function work(&$controllerContext, &$viewContext)
 	{
 		$viewContext->viewName = 'index-globals';
 		$viewContext->meta->title = 'MALgraph - global statistics';

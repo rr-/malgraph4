@@ -11,7 +11,7 @@ class AdminControllerLoginModule extends AbstractControllerModule
 		return '/a/login';
 	}
 
-	public static function work(&$viewContext)
+	public static function work(&$controllerContext, &$viewContext)
 	{
 		$viewContext->viewName = 'admin-login';
 		$viewContext->meta->title = 'MALgraph - admin';

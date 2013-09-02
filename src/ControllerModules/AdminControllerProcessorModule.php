@@ -53,7 +53,7 @@ class AdminControllerProcessorModule extends AbstractControllerModule
 		return $chosenUsers;
 	}
 
-	public static function work(&$viewContext)
+	public static function work(&$controllerContext, &$viewContext)
 	{
 		try
 		{

@@ -269,7 +269,7 @@ class UserControllerRecommendationsModule extends AbstractUserControllerModule
 	}
 
 
-	public static function work(&$viewContext)
+	public static function work(&$controllerContext, &$viewContext)
 	{
 		$viewContext->viewName = 'user-recommendations';
 		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . ' - recommendations (' . Media::toString($viewContext->media) . ')';

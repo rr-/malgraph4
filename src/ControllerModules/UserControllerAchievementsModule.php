@@ -35,7 +35,7 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 		throw new Exception('Invalid threshold: ' . $threshold);
 	}
 
-	public static function work(&$viewContext)
+	public static function work(&$controllerContext, &$viewContext)
 	{
 		$viewContext->viewName = 'user-achievements';
 		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . ' - achievements (' . Media::toString($viewContext->media) . ')';

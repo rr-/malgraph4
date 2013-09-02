@@ -11,7 +11,7 @@ class IndexControllerSearchModule extends AbstractControllerModule
 		return '/s/search';
 	}
 
-	public static function work(&$viewContext)
+	public static function work(&$controllerContext, &$viewContext)
 	{
 		$userName = !empty($_POST['user-name']) ? $_POST['user-name'] : '';
 		$userName = trim($userName);

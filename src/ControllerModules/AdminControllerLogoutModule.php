@@ -11,7 +11,7 @@ class AdminControllerLogoutModule extends AbstractControllerModule
 		return '/a/logout';
 	}
 
-	public static function work(&$viewContext)
+	public static function work(&$controllerContext, &$viewContext)
 	{
 		$viewContext->viewName = null;
 		unset($_SESSION['logged-in']);

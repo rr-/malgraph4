@@ -281,7 +281,7 @@ class UserControllerExportModule extends AbstractUserControllerModule
 
 
 
-	public static function work(&$viewContext)
+	public static function work(&$controllerContext, &$viewContext)
 	{
 		$ratingDistribution = [];
 		foreach (Media::getConstList() as $media)

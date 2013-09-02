@@ -11,7 +11,7 @@ class AdminControllerIndexModule extends AbstractControllerModule
 		return '/a';
 	}
 
-	public static function work(&$viewContext)
+	public static function work(&$controllerContext, &$viewContext)
 	{
 		$viewContext->viewName = 'admin-index';
 		$viewContext->meta->title = 'MALgraph - admin';

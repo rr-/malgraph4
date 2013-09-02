@@ -16,7 +16,7 @@ class IndexControllerPrivacyModule extends AbstractControllerModule
 		return 'privacy';
 	}
 
-	public static function work(&$viewContext)
+	public static function work(&$controllerContext, &$viewContext)
 	{
 		$viewContext->viewName = 'index-privacy';
 		$viewContext->meta->title = 'MALgraph - privacy policy';

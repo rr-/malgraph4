@@ -5,7 +5,7 @@ abstract class AbstractControllerModule
 	* This method contains all code that is executed whenver user visits
 	* specific module.
 	**/
-	public static function work(&$viewContext)
+	public static function work(&$controllerContext, &$viewContext)
 	{
 		throw new UnimplementedException();
 	}

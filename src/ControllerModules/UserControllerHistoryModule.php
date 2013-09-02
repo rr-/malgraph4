@@ -21,7 +21,7 @@ class UserControllerHistoryModule extends AbstractUserControllerModule
 		return 3;
 	}
 
-	public static function work(&$viewContext)
+	public static function work(&$controllerContext, &$viewContext)
 	{
 		$viewContext->viewName = 'user-history';
 		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . ' - history (' . Media::toString($viewContext->media) . ')';

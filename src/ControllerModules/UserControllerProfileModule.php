@@ -16,7 +16,7 @@ class UserControllerProfileModule extends AbstractUserControllerModule
 		return [];
 	}
 
-	public static function work(&$viewContext)
+	public static function work(&$controllerContext, &$viewContext)
 	{
 		$viewContext->viewName = 'user-profile';
 		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . '&rsquo;s profile';

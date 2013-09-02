@@ -11,7 +11,7 @@ class UserControllerEntriesModule extends AbstractUserControllerModule
 		return [];
 	}
 
-	public static function work(&$viewContext)
+	public static function work(&$controllerContext, &$viewContext)
 	{
 		$sender = $_GET['sender'];
 		$filterParam = isset($_GET['filter-param']) ? $_GET['filter-param'] : null;

@@ -21,7 +21,7 @@ class UserControllerListsModule extends AbstractUserControllerModule
 		return 1;
 	}
 
-	public static function work(&$viewContext)
+	public static function work(&$controllerContext, &$viewContext)
 	{
 		$viewContext->viewName = 'user-list';
 		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . ' - list (' . Media::toString($viewContext->media) . ')';

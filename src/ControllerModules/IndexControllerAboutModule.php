@@ -11,7 +11,7 @@ class IndexControllerAboutModule extends AbstractControllerModule
 		return '/s/about';
 	}
 
-	public static function work(&$viewContext)
+	public static function work(&$controllerContext, &$viewContext)
 	{
 		$viewContext->viewName = 'index-about';
 		$viewContext->meta->title = 'MALgraph - about';

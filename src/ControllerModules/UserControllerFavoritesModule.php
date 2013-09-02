@@ -21,7 +21,7 @@ class UserControllerFavoritesModule extends AbstractUserControllerModule
 		return 4;
 	}
 
-	public static function work(&$viewContext)
+	public static function work(&$controllerContext, &$viewContext)
 	{
 		$viewContext->viewName = 'user-favorites';
 		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . ' - favorites (' . Media::toString($viewContext->media) . ')';

@@ -11,7 +11,7 @@ class IndexControllerIndexModule extends AbstractControllerModule
 		return '/';
 	}
 
-	public static function work(&$viewContext)
+	public static function work(&$controllerContext, &$viewContext)
 	{
 		$viewContext->viewName = 'index-index';
 		$viewContext->layoutName = 'layout-headerless';

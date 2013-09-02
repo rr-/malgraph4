@@ -21,7 +21,7 @@ class UserControllerRatingsModule extends AbstractUserControllerModule
 		return 2;
 	}
 
-	public static function work(&$viewContext)
+	public static function work(&$controllerContext, &$viewContext)
 	{
 		$viewContext->viewName = 'user-ratings';
 		$viewContext->meta->title = 'MALgraph - ' . $viewContext->user->name . ' - rating statistics (' . Media::toString($viewContext->media) . ')';
