@@ -6,7 +6,7 @@ class MediaSubProcessorRecommendations extends MediaSubProcessor
 		$doc = self::getDOM($documents[self::URL_RECS]);
 		$xpath = new DOMXPath($doc);
 
-		$this->delete('mediarec', ['media_id' => $context->media->id]);
+		Database::delete('mediarec', ['media_id' => $context->media->id]);
 		$data = [];
 		foreach ($xpath->query('//h2[starts-with(text(), \'Recommendations\')]/following-sibling::node()[@class=\'borderClass\']') as $node)
 		{
@@ -19,6 +19,6 @@ class MediaSubProcessorRecommendations extends MediaSubProcessor
 				'count' => $recommendationCount
 			];
 		}
-		$this->insert('mediarec', $data);
+		Database::insert('mediarec', $data);
 	}
 }

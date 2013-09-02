@@ -27,4 +27,21 @@ class MangaProcessor extends AbstractProcessor
 		$subProcessors []= new MangaSubProcessorAuthors();
 		return $subProcessors;
 	}
+
+	public function onProcessingError(&$context)
+	{
+		if ($context->exception instanceof BadProcessorKeyException)
+		{
+			Database::delete('mediagenre', ['media_id' => $context->media->id]);
+			Database::delete('mediatag', ['media_id' => $context->media->id]);
+			Database::delete('mediarelation', ['media_id' => $context->media->id]);
+			Database::delete('mediarec', ['media_id' => $context->media->id]);
+			Database::delete('mangaauthor', ['media_id' => $context->media->id]);
+			Database::delete('media', ['id' => $context->media->id]);
+		}
+		else
+		{
+			throw $context->exception;
+		}
+	}
 }

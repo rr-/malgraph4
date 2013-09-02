@@ -19,7 +19,7 @@ class UserSubProcessorUserMedia extends UserSubProcessor
 
 	public function process(array $documents, &$context)
 	{
-		$this->delete('usermedia', ['user_id' => $context->user->id]);
+		Database::delete('usermedia', ['user_id' => $context->user->id]);
 
 		$context->user->cool = false;
 		foreach (Media::getConstList() as $media)
@@ -84,7 +84,7 @@ class UserSubProcessorUserMedia extends UserSubProcessor
 					'status' => $status,
 				];
 			}
-			$this->insert('usermedia', $data);
+			Database::insert('usermedia', $data);
 
 			$dist = RatingDistribution::fromEntries(ReflectionHelper::arraysToClasses($data));
 

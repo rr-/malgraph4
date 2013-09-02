@@ -23,4 +23,20 @@ class UserProcessor extends AbstractProcessor
 		$subProcessors []= new UserSubProcessorUserMedia();
 		return $subProcessors;
 	}
+
+	public function onProcessingError(&$context)
+	{
+		if ($context->exception instanceof BadProcessorKeyException)
+		{
+			Database::delete('userclub', ['user_id' => $context->user->id]);
+			Database::delete('userfriend', ['user_id' => $context->user->id]);
+			Database::delete('userhistory', ['user_id' => $context->user->id]);
+			Database::delete('usermedia', ['user_id' => $context->user->id]);
+			Database::delete('user', ['id' => $context->user->id]);
+		}
+		else
+		{
+			throw $context->exception;
+		}
+	}
 }

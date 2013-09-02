@@ -6,7 +6,7 @@ class MediaSubProcessorRelations extends MediaSubProcessor
 		$doc = self::getDOM($documents[self::URL_MEDIA]);
 		$xpath = new DOMXPath($doc);
 
-		$this->delete('mediarelation', ['media_id' => $context->media->id]);
+		Database::delete('mediarelation', ['media_id' => $context->media->id]);
 		$data = [];
 		$lastType = '';
 		foreach ($xpath->query('//h2[starts-with(text(), \'Related\')]/../*') as $node)
@@ -79,7 +79,7 @@ class MediaSubProcessorRelations extends MediaSubProcessor
 				'type' => $type
 			];
 		}
-		$this->insert('mediarelation', $data);
+		Database::insert('mediarelation', $data);
 		$context->relationData = $data;
 	}
 }

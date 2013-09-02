@@ -11,6 +11,11 @@ abstract class AbstractProcessor
 	{
 	}
 
+	public function onProcessingError(&$context)
+	{
+		throw $context->exception;
+	}
+
 	public function process($key)
 	{
 		if (empty($key))
@@ -51,20 +56,28 @@ abstract class AbstractProcessor
 
 			$f = function() use ($subProcessors, $context, $urlMap, $documents)
 			{
-				$this->beforeProcessing($context);
-				foreach ($subProcessors as $subProcessor)
+				try
 				{
-					$subDocuments = [];
-					foreach ($urlMap as $url => $urlProcessors)
+					$this->beforeProcessing($context);
+					foreach ($subProcessors as $subProcessor)
 					{
-						if (in_array($subProcessor, $urlProcessors))
+						$subDocuments = [];
+						foreach ($urlMap as $url => $urlProcessors)
 						{
-							$subDocuments []= $documents[$url];
+							if (in_array($subProcessor, $urlProcessors))
+							{
+								$subDocuments []= $documents[$url];
+							}
 						}
+						$subProcessor->process($subDocuments, $context);
 					}
-					$subProcessor->process($subDocuments, $context);
+					$this->afterProcessing($context);
 				}
-				$this->afterProcessing($context);
+				catch (Exception $e)
+				{
+					$context->exception = $e;
+					$this->onProcessingError($context);
+				}
 			};
 
 			R::transaction($f);

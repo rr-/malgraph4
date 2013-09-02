@@ -16,7 +16,7 @@ class UserSubProcessorFriends extends UserSubProcessor
 		$doc = self::getDOM($documents[self::URL_FRIENDS]);
 		$xpath = new DOMXPath($doc);
 
-		$this->delete('userfriend', ['user_id' => $context->user->id]);
+		Database::delete('userfriend', ['user_id' => $context->user->id]);
 		$data = [];
 		foreach ($xpath->query('//a[contains(@href, \'profile\')]/strong') as $node)
 		{
@@ -26,6 +26,6 @@ class UserSubProcessorFriends extends UserSubProcessor
 				'name' => $friendName
 			];
 		}
-		$this->insert('userfriend', $data);
+		Database::insert('userfriend', $data);
 	}
 }

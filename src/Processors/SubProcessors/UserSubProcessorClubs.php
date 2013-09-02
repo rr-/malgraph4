@@ -16,7 +16,7 @@ class UserSubProcessorClubs extends UserSubProcessor
 		$doc = self::getDOM($documents[self::URL_CLUBS]);
 		$xpath = new DOMXPath($doc);
 
-		$this->delete('userclub', ['user_id' => $context->user->id]);
+		Database::delete('userclub', ['user_id' => $context->user->id]);
 		$data = [];
 		foreach ($xpath->query('//ol/li/a[contains(@href, \'/club\')]') as $node)
 		{
@@ -29,6 +29,6 @@ class UserSubProcessorClubs extends UserSubProcessor
 				'name' => $clubName
 			];
 		}
-		$this->insert('userclub', $data);
+		Database::insert('userclub', $data);
 	}
 }

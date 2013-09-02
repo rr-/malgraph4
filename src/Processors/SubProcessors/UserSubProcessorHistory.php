@@ -16,7 +16,7 @@ class UserSubProcessorHistory extends UserSubProcessor
 		$doc = self::getDOM($documents[self::URL_HISTORY]);
 		$xpath = new DOMXPath($doc);
 
-		$this->delete('userhistory', ['user_id' => $context->user->id]);
+		Database::delete('userhistory', ['user_id' => $context->user->id]);
 
 		$data = [];
 		$nodes = $xpath->query('//table//td[@class = \'borderClass\']/..');
@@ -93,6 +93,6 @@ class UserSubProcessorHistory extends UserSubProcessor
 				'timestamp' => date('Y-m-d H:i:s', $timestamp)
 			];
 		}
-		$this->insert('userhistory', $data);
+		Database::insert('userhistory', $data);
 	}
 }
