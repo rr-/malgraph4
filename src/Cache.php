@@ -76,4 +76,25 @@ class Cache
 
 		echo $contents;
 	}
+
+	public function getAllFiles()
+	{
+		return glob(Config::$cachePath . DIRECTORY_SEPARATOR . '*');
+	}
+
+	public function getUsedFiles()
+	{
+		$ttl = Config::$cacheTimeToLive;
+		$allFiles = $this->getAllFiles();
+		$usedFiles = [];
+		foreach ($allFiles as $path)
+		{
+			$age = time() - filemtime($path);
+			if ($age <= $ttl)
+			{
+				$usedFiles []= $path;
+			}
+		}
+		return $usedFiles;
+	}
 }

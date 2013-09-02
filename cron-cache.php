@@ -10,20 +10,12 @@ catch (Exception $e)
 	exit(1);
 }
 
-$deleted = 0;
-$left = 0;
-foreach (glob(Config::$cachePath . DIRECTORY_SEPARATOR . '*') as $path)
+$cache = new Cache();
+$allFiles = $cache->getAllFiles();
+$usedFiles = $cache->getUsedFiles();
+$unusedFiles = array_diff($allFiles, $usedFiles);
+foreach ($unusedFiles as $path)
 {
-	$age = time() - filemtime($path);
-	if ($age > Config::$cacheTimeToLive)
-	{
-		printf('%s - %.02fh' . PHP_EOL, $path, $age / 3600);
-		$deleted ++;
-		unlink($path);
-	}
-	else
-	{
-		$left ++;
-	}
+	unlink($path);
 }
-printf('Deleted: %d, left: %d' . PHP_EOL, $deleted, $left);
+printf('Deleted: %d, left: %d' . PHP_EOL, count($unusedFiles), count($usedFiles));

@@ -25,7 +25,7 @@ class AdminControllerMiscModule extends AbstractControllerModule
 			if ($action == 'wipe-cache')
 			{
 				$deleted = 0;
-				foreach (glob(Config::$cachePath . DIRECTORY_SEPARATOR . '*') as $path)
+				foreach ($controllerContext->cache->getAllFiles() as $path)
 				{
 					$deleted ++;
 					unlink($path);
