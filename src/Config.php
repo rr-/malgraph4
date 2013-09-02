@@ -1,6 +1,7 @@
 <?php
 class Config extends Singleton
 {
+	static $usersPerCronRun;
 	static $userQueuePath;
 	static $mirrorPath;
 	static $mirrorEnabled;
@@ -8,24 +9,22 @@ class Config extends Singleton
 	static $cacheEnabled;
 	static $cacheTimeToLive;
 	static $dbPath;
-	static $baseUrl;
-	static $googleAdsEnabled;
-	static $googleAnalyticsEnabled;
+	static $maxDbBindings;
+	static $transactionCommitFrequency;
 	static $bannedUsersListPath;
 	static $bannedGenresListPath;
 	static $bannedCreatorsListPath;
 	static $bannedGenresForRecsListPath;
 	static $bannedFranchiseCouplingListPath;
+	static $achievementsDefinitionPath;
 	static $staticRecommendationListPath;
 	static $errorLogPath;
-	static $achievementsDefinitionPath;
-	static $sendReferrer;
-	static $maxDbBindings;
-	static $usersPerCronRun;
+	static $globalsCachePath;
 	static $mediaDirectory;
 	static $mediaUrl;
-	static $globalsCachePath;
-	static $transactionCommitFrequency;
+	static $baseUrl;
+	static $googleAdsEnabled;
+	static $googleAnalyticsEnabled;
 	static $adminPassword;
 	static $maintenanceMessage;
 	static $enforcedDomain;
@@ -33,37 +32,45 @@ class Config extends Singleton
 
 	public static function doInit()
 	{
-		$rootDir = join(DIRECTORY_SEPARATOR, [__DIR__, '..', 'data', '']);
-		self::$userQueuePath = $rootDir . 'users.lst';
-		self::$mirrorPath = $rootDir . 'mirror';
-		self::$cachePath = $rootDir . 'cache';
-		self::$dbPath = $rootDir . 'db.sqlite';
-		self::$bannedUsersListPath = $rootDir . 'banned-users.lst';
-		self::$bannedGenresListPath = $rootDir . 'banned-genres.lst';
-		self::$bannedCreatorsListPath = $rootDir . 'banned-creators.lst';
-		self::$bannedGenresForRecsListPath = $rootDir . 'recs-banned-genres.lst';
-		self::$bannedFranchiseCouplingListPath = $rootDir . 'banned-franchise-coupling.lst';
-		self::$errorLogPath = $rootDir . 'errors.log';
-		self::$achievementsDefinitionPath = $rootDir . 'achievements.json';
-		self::$staticRecommendationListPath = $rootDir . 'static-recommendations.lst';
-		self::$globalsCachePath = $rootDir . 'globals-cache.json';
-		self::$mediaDirectory = join(DIRECTORY_SEPARATOR, [$rootDir, '..', 'public_html', 'media']);
-		self::$mediaUrl = '/media/';
+		$dataRootDir = join(DIRECTORY_SEPARATOR, [__DIR__, '..', 'data', '']);
+		$htmlRootDir = join(DIRECTORY_SEPARATOR, [__DIR__, '..', 'public_html']);
+
+		self::$usersPerCronRun = 5;
+		self::$userQueuePath = $dataRootDir . 'users.lst';
+
 		self::$mirrorEnabled = false;
+		self::$mirrorPath = $dataRootDir . 'mirror';
 		self::$cacheEnabled = true;
+		self::$cachePath = $dataRootDir . 'cache';
 		self::$cacheTimeToLive = 24 * 60 * 60;
+
+		self::$dbPath = $dataRootDir . 'db.sqlite';
+		self::$transactionCommitFrequency = 20;
+		self::$maxDbBindings = 50;
+
+		self::$bannedUsersListPath = $dataRootDir . 'banned-users.lst';
+		self::$bannedGenresListPath = $dataRootDir . 'banned-genres.lst';
+		self::$bannedCreatorsListPath = $dataRootDir . 'banned-creators.lst';
+		self::$bannedGenresForRecsListPath = $dataRootDir . 'recs-banned-genres.lst';
+		self::$bannedFranchiseCouplingListPath = $dataRootDir . 'banned-franchise-coupling.lst';
+		self::$achievementsDefinitionPath = $dataRootDir . 'achievements.json';
+		self::$staticRecommendationListPath = $dataRootDir . 'static-recommendations.lst';
+
+		self::$errorLogPath = $dataRootDir . 'errors.log';
+		self::$globalsCachePath = $dataRootDir . 'globals-cache.json';
+
+		self::$mediaDirectory = $htmlRootDir . DIRECTORY_SEPARATOR . 'media';
+		self::$mediaUrl = '/media/';
 		self::$baseUrl = isset($_SERVER['HTTP_HOST'])
 			? 'http://' . $_SERVER['HTTP_HOST'] . '/'
 			: 'http://mal.oko.im/';
+
 		self::$googleAdsEnabled = true;
 		self::$googleAnalyticsEnabled = true;
-		self::$sendReferrer = true;
-		self::$maxDbBindings = 50;
-		self::$usersPerCronRun = 5;
-		self::$transactionCommitFrequency = 20;
 		self::$adminPassword = 'supersaiyan';
 		self::$maintenanceMessage = null;
 		self::$enforcedDomain = null;
+
 		self::$version = '4.0.4';
 	}
 }
