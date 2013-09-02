@@ -7,7 +7,7 @@ $(function()
 		var diff = now - then;
 		diff /= 1000.0;
 		var text = '';
-		if (diff < 300)
+		if (diff < 60)
 		{
 			text = 'just now';
 		}

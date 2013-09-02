@@ -118,6 +118,25 @@ class AdminControllerProcessorModule extends AbstractControllerModule
 				$viewContext->message = sprintf('Successfully processed %d entities in %.02fs', $num, microtime(true) - $startTime);
 			}
 
+			elseif ($action == 'wipe-cache')
+			{
+				$deleted = 0;
+				foreach ($chosenUsers as $userName)
+				{
+					$cache = new Cache();
+					$cache->setPrefix($userName);
+
+					foreach ($controllerContext->cache->getAllFiles() as $path)
+					{
+						$deleted ++;
+						unlink($path);
+					}
+				}
+
+				$viewContext->messageType = 'info';
+				$viewContext->message = 'Deleted ' . $deleted . ' files';
+			}
+
 			elseif ($action == 'toggle-block')
 			{
 				$numBanned = 0;

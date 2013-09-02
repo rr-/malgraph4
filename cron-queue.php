@@ -12,6 +12,7 @@ catch (Exception $e)
 
 $userProcessor = new UserProcessor();
 $queue = new Queue(Config::$userQueuePath);
+$cache = new Cache();
 
 $processed = 0;
 while ($processed < Config::$usersPerCronRun)
@@ -34,6 +35,12 @@ while ($processed < Config::$usersPerCronRun)
 		}
 		++ $processed;
 		$userProcessor->process($userName);
+
+		$cache->setPrefix($userName);
+		foreach ($cache->getAllFiles() as $path)
+		{
+			unlink($path);
+		}
 	}
 	catch (BadProcessorKeyException $e)
 	{

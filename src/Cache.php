@@ -2,6 +2,13 @@
 class Cache
 {
 	private $bypassCache;
+	private $prefix = null;
+
+	//warning: affects getAllFiles() and getUsedFiles()
+	public function setPrefix($prefix)
+	{
+		$this->prefix = md5(strtolower($prefix));
+	}
 
 	public function bypass($doBypass)
 	{
@@ -15,7 +22,9 @@ class Cache
 
 	private function urlToPath($url)
 	{
-		$name = md5($url) . sha1($url);
+		$url = strtolower($url);
+		$url = rtrim($url, '/');
+		$name = $this->prefix . md5($url) . sha1($url);
 		return Config::$cachePath . DIRECTORY_SEPARATOR . $name;
 	}
 
@@ -79,7 +88,7 @@ class Cache
 
 	public function getAllFiles()
 	{
-		return glob(Config::$cachePath . DIRECTORY_SEPARATOR . '*');
+		return glob(Config::$cachePath . DIRECTORY_SEPARATOR . $this->prefix . '*');
 	}
 
 	public function getUsedFiles()
