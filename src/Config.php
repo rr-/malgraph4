@@ -46,7 +46,7 @@ class Config extends Singleton
 		self::$errorLogPath = $rootDir . 'errors.log';
 		self::$achievementsDefinitionPath = $rootDir . 'achievements.json';
 		self::$staticRecommendationListPath = $rootDir . 'static-recommendations.lst';
-		self::$globalsCachePath = $rootDir . 'globals-cache.dat';
+		self::$globalsCachePath = $rootDir . 'globals-cache.json';
 		self::$mediaDirectory = join(DIRECTORY_SEPARATOR, [$rootDir, '..', 'public_html', 'media']);
 		self::$mediaUrl = '/media/';
 		self::$mirrorEnabled = false;
