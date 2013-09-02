@@ -16,3 +16,15 @@ $(function()
 		}
 	});
 });
+
+function getProcessedDate()
+{
+	return new Date(Date.parse($('#processed').val()));
+}
+
+function ucfirst(str)
+{
+	str += '';
+	var f = str.charAt(0).toUpperCase();
+	return f + str.substr(1);
+}

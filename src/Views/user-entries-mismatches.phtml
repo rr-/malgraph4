@@ -1,10 +1,6 @@
 <p>
 	<a class="close"><i class="icon-close"></i></a>
-	<?php if ($viewContext->media == Media::Anime): ?>
-		Titles that have mismatching episode count
-	<?php elseif ($viewContext->media == Media::Manga): ?>
-		Titles that have mismatching chapter count
-	<?php endif ?>:
+	Titles that have mismatching <?php echo TextHelper::getMediaUnitText($viewContext->media) ?> count:
 
 	<?php if (!empty($viewContext->entries)): ?>
 		&nbsp;(<?php echo count($viewContext->entries) ?>)
@@ -28,14 +24,14 @@
 						<?php if ($entry->publishing_status == MediaStatus::Publishing): ?>
 							but it&rsquo;s still airing
 						<?php else: ?>
-							should be  <?php echo TextHelper::getEpisodesText($entry->episodes) ?>
+							should be <?php echo TextHelper::getNumberedMediaUnitText($viewContext->media, $entry->episodes) ?>
 						<?php endif ?>
 					<?php elseif ($entry->media == Media::Manga): ?>
 						on your list: <?php echo $entry->finished_chapters ?>,&nbsp;
 						<?php if ($entry->publishing_status == MediaStatus::Publishing): ?>
 							but it&rsquo;s still publishing
 						<?php else: ?>
-							should be <?php echo TextHelper::getChaptersText($entry->chapters) ?>
+							should be <?php echo TextHelper::getNumberedMediaUnitText($viewContext->media, $entry->chapters) ?>
 						<?php endif ?>
 					<?php endif ?>)
 				</span>

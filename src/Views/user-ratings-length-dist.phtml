@@ -1,6 +1,6 @@
 <div class="section rating-length-dist">
 	<h2>
-		Ratings vs. <?php echo $viewContext->media == Media::Anime ? 'episode' : 'chapter' ?> count
+		Ratings vs. <?php echo TextHelper::getMediaUnitText($viewContext->media) ?> count
 	</h2>
 	<div class="section-body">
 		<?php if ($viewContext->lengthDistribution->getLargestGroupSize() == 0): ?>
@@ -12,11 +12,6 @@
 					<div>
 						<?php $scores = array_map(function($entries) { return RatingDistribution::fromEntries($entries)->getMeanScore(); }, $viewContext->lengthDistribution->getGroupsEntries()) ?>
 						<?php $key = array_search(max($scores), $scores) ?>
-						<?php if ($viewContext->media == Media::Anime): ?>
-							<?php list($num, $txt) = explode(' ', TextHelper::getEpisodesText(str_replace('-', '&nbsp;to&nbsp;', $key))) ?>
-						<?php elseif ($viewContext->media == Media::Manga): ?>
-							<?php list($num, $txt) = explode(' ', TextHelper::getChaptersText(str_replace('-', '&nbsp;to&nbsp;', $key))) ?>
-						<?php endif ?>
 						<span class="prefix">Highest mean</span>
 						<span class="subject"><?php printf('%.2f', $scores[$key]) ?></span>
 					</div>
@@ -25,11 +20,7 @@
 				<li>
 					<div>
 						<?php $key = $viewContext->lengthDistribution->getLargestGroupKey() ?>
-						<?php if ($viewContext->media == Media::Anime): ?>
-							<?php list($num, $txt) = explode(' ', TextHelper::getEpisodesText($key)) ?>
-						<?php elseif ($viewContext->media == Media::Manga): ?>
-							<?php list($num, $txt) = explode(' ', TextHelper::getChaptersText($key)) ?>
-						<?php endif ?>
+						<?php list($num, $txt) = explode(' ', TextHelper::getNumberedMediaUnitText($viewContext->media, $key)) ?>
 						<span class="prefix">Most common</span>
 						<span class="subject"><?php echo $num ?></span>
 						<span class="suffix"><?php echo $txt ?></span>
@@ -65,7 +56,7 @@
 						},
 						title:
 						{
-							text: '<?php echo $viewContext->media == Media::Anime ? 'Episode' : 'Chapter' ?> count',
+							text: '<?php echo ucfirst(TextHelper::getMediaUnitText($viewContext->media, false)) ?> count',
 							margin: 15
 						}
 					},

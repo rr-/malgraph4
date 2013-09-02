@@ -20,11 +20,9 @@
 						<?php echo htmlspecialchars($entry->title) ?>
 					</a>
 					<span class="details">&nbsp;
-						(<?php if ($viewContext->media == Media::Anime): ?>
-							<?php echo TextHelper::getEpisodesText($entry->episodes ?: $entry->finished_episodes . '+', true) ?>
-						<?php elseif ($viewContext->media == Media::Manga): ?>
-							<?php echo TextHelper::getChaptersText($entry->chapters ?: $entry->finished_chapters . '+', true) ?>
-						<?php endif ?>,&nbsp;
+						(<?php echo TextHelper::getNumberedMediaUnitText($viewContext->media, $viewContext->media == Media::Anime
+							? ($entry->episodes ?: $entry->finished_episodes . '+')
+							: ($entry->chapters ?: $entry->finished_chapters . '+'), true) ?>,&nbsp;
 						<?php echo $entry->score ? 'rated with ' . $entry->score : 'unrated' ?>)
 					</span><br>
 				<?php endforeach ?>

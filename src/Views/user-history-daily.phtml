@@ -4,24 +4,19 @@
 	</h2>
 	<div class="section-body">
 		<ul class="infobox">
-			<li>
+			<li class="total-eps">
 				<div>
-					<?php $eps = array_sum(array_map(function($p) { return count($p); }, array_values($viewContext->dayPeriods))) ?>
 					<span class="prefix">Last 3 weeks</span>
-					<span class="subject"><?php echo $eps ?></span>
+					<span class="subject">?</span>
 					<span class="suffix">
-						<?php if ($viewContext->media == Media::Anime): ?>
-							<?php echo TextHelper::getEpisodesText($eps, false, '%2$s') ?>
-						<?php else: ?>
-							<?php echo TextHelper::getChaptersText($eps, false, '%2$s') ?>
-						<?php endif ?>
+						<?php echo TextHelper::getMediaUnitText($viewContext->media, true) ?>
 					</span>
 				</div>
 			</li>
-			<li>
+			<li class="different-titles">
 				<div>
 					<span class="prefix">Different titles</span>
-					<span class="subject"><?php echo count($viewContext->dailyTitles) ?></span>
+					<span class="subject">?</span>
 				</div>
 			</li>
 		</ul>
@@ -32,11 +27,11 @@
 		</div>
 
 		<div class="entries-wrapper">
-			<?php foreach ($viewContext->dayPeriods as $daysAgo => $entries): ?>
-				<div class="entries-sub-wrapper" id="days-ago-<?php echo $daysAgo ?>">
+			<?php foreach ($viewContext->dailyHistoryGroups as $date => $entries): ?>
+				<div class="entries-sub-wrapper" id="date-<?php echo $date ?>">
 					<p>
 						<a class="close"><i class="icon-close"></i></a>
-						<?php echo $viewContext->media == Media::Manga ? 'Chapters' : 'Episodes' ?> from <?php echo $daysAgo ?> days ago: (<?php echo count($entries) ?>)
+						<?php echo ucfirst(TextHelper::getMediaUnitText($viewContext->media, true)) ?> from <span class="days-ago">?</span> days ago: (<?php echo count($entries) ?>)
 					</p>
 					<?php if ($viewContext->isPrivate): ?>
 						<p>Can&rsquo;t show you titles from a private list.</p>
@@ -62,6 +57,75 @@
 		</div>
 
 		<script type="text/javascript">
+			var dailyHistoryGroups = <?php echo json_encode($viewContext->dailyHistoryGroups) ?>;
+
+			/* preprocess data */
+			var dayPeriods = {};
+			var oneDay = 1000 * 60 * 60 * 24;
+			for (var groupDate in dailyHistoryGroups)
+			{
+				var date1 = new Date();
+				var date2 = new Date(Date.parse(groupDate));
+				var key = Math.round((date1.getTime() - date2.getTime()) / oneDay);
+				if (key > 21 || key < 1)
+				{
+					continue;
+				}
+				dayPeriods[key] =
+				{
+					key: groupDate,
+					entries: dailyHistoryGroups[groupDate]
+				};
+			}
+
+			for (var i = 1; i <= 21; i ++)
+			{
+				if (typeof dayPeriods[i] == 'undefined')
+				{
+					dayPeriods[i] =
+					{
+						key: null,
+						entries: []
+					};
+				}
+			}
+
+			var keys = Object.keys(dayPeriods);
+			keys.sort(function(a, b) { return b - a; });
+			var values = [];
+			var dates = [];
+			for (var i in keys)
+			{
+				var key = keys[i];
+				var period = dayPeriods[key];
+				dates.push(period.key);
+				values.push(period.entries);
+			}
+
+
+			/* count different titles and total episodes */
+			var differentTitles = {};
+			var differentTitlesCount = 0;
+			var totalEpisodeCount = 0;
+			for (var i in values)
+			{
+				for (var j in values[i])
+				{
+					var key = values[i][j]['media'] + values[i][j]['mal_id'];
+					if (!(key in differentTitles))
+					{
+						differentTitles[key] = true;
+						differentTitlesCount ++;
+					}
+					totalEpisodeCount ++;
+				}
+			}
+			$('.different-titles .subject').text(differentTitlesCount);
+			$('.total-eps .subject').text(totalEpisodeCount);
+
+			var missingDays = Math.floor((new Date() - getProcessedDate()) / oneDay);
+
+
 			var opt =
 			{
 				chart:
@@ -73,7 +137,7 @@
 
 				xAxis:
 				{
-					categories: <?php echo json_encode(array_map(function($x) { return $x % 1 == 0 ? $x : ''; }, array_keys($viewContext->dayPeriods))) ?>,
+					categories: keys,
 					title:
 					{
 						text: 'Days ago',
@@ -87,19 +151,27 @@
 						}
 					},
 					plotBands:
-					{
-						'from': 6.5,
-						'to': 6.5 + 7,
-						'zIndex': 3,
-						'color': 'rgba(200, 230, 255, 0.2)'
-					}
+					[
+						{
+							from: 6.5,
+							to: 6.5 + 7,
+							zIndex: 3,
+							color: 'rgba(200, 230, 255, 0.2)'
+						},
+						{
+							from: 21 - 0.5,
+							to: 21 - 0.5 - missingDays,
+							zIndex: 3,
+							color: 'rgba(255, 200, 200, 0.2)'
+						}
+					]
 				},
 
 				yAxis:
 				{
 					title:
 					{
-						text: '<?php echo $viewContext->media == Media::Manga ? 'Chapter' : 'Episode' ?> count'
+						text: '<?php echo ucfirst(TextHelper::getMediaUnitText($viewContext->media, false)) ?> count'
 					},
 					min: 0
 				},
@@ -108,7 +180,7 @@
 				{
 					formatter: function()
 					{
-						var text = '<?php echo $viewContext->media == Media::Manga ? 'Chapters' : 'Episodes' ?> completed ';
+						var text = '<?php echo ucfirst(TextHelper::getMediaUnitText($viewContext->media, true)) ?> completed ';
 						if (this.x == 0)
 						{
 							text += 'today';
@@ -129,18 +201,29 @@
 				series:
 				[
 					{
-						data: <?php echo json_encode(array_map(function($p) { return count($p); }, array_values($viewContext->dayPeriods))) ?>,
+						data: $.map(values, function(a, index)
+						{
+							var ret =
+							{
+								name: keys[index],
+								groupDate: dates[index],
+								y: a.length
+							};
+							return ret;
+						}),
 						point:
 						{
 							events:
 							{
 								click: function(e)
 								{
-									var category = this.category;
-									toggleEntries($('.history-daily .entries-wrapper'), {'sender': 'daily-history', 'filter-param': category}, false, function()
+									var groupDate = this.groupDate;
+									var daysAgo = this.name;
+									toggleEntries($('.history-daily .entries-wrapper'), {'sender': 'daily-history', 'filter-param': groupDate}, false, function()
 									{
 										$('.history-daily .entries-wrapper .entries-sub-wrapper').hide();
-										$('.history-daily .entries-wrapper #days-ago-' + category).show();
+										$('.history-daily .entries-wrapper #date-' + groupDate).show();
+										$('.history-daily .entries-wrapper #date-' + groupDate + ' .days-ago').text(daysAgo);
 									});
 								}
 							}

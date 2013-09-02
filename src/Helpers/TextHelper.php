@@ -32,34 +32,48 @@ class TextHelper
 		file_put_contents($path, $contents);
 	}
 
-	private static function getNumberText($number, $short, $fmt, $shortForm, $longForm)
+	public static function getVolumesText($plural, $short = false)
 	{
-		$txt = $short ? $shortForm : $longForm;
-		if ($number == 0)
+		return self::getMediaCustomUnitText('vol', 'volume', $plural, $short);
+	}
+
+	public static function getMediaUnitText($media, $plural = false, $short = false)
+	{
+		switch ($media)
 		{
-			$number = '?';
-			$txt .= 's';
+			case Media::Anime:
+				return self::getMediaCustomUnitText('ep', 'episode', $plural, $short);
+			case Media::Manga:
+				return self::getMediaCustomUnitText('chap', 'chapter', $plural, $short);
 		}
-		elseif ($number > 1)
+		throw new BadMediaException();
+	}
+
+	public static function getNumberedMediaUnitText($media, $number, $short = false)
+	{
+		$plural = false;
+		$prefix = $number;
+		if ($prefix == 0)
 		{
-			$txt .= 's';
+			$prefix = '?';
+			$plural = true;
 		}
-		return sprintf($fmt, $number, $txt);
+		elseif ($prefix > 1)
+		{
+			$plural = true;
+		}
+		$suffix = self::getMediaUnitText($media, $plural, $short);
+		return $prefix . ' ' . $suffix;
 	}
 
-	public static function getVolumesText($number, $short = false, $fmt = '%s %s')
+	public static function getMediaCustomUnitText($shortForm, $longForm, $plural, $short)
 	{
-		return self::getNumberText($number, $short, $fmt, 'vol', 'volume');
-	}
-
-	public static function getChaptersText($number, $short = false, $fmt = '%s %s')
-	{
-		return self::getNumberText($number, $short, $fmt, 'chap', 'chapter');
-	}
-
-	public static function getEpisodesText($number, $short = false, $fmt = '%s %s')
-	{
-		return self::getNumberText($number, $short, $fmt, 'ep', 'episode');
+		$text = $short ? $shortForm : $longForm;
+		if ($plural)
+		{
+			$text .= 's';
+		}
+		return $text;
 	}
 
 	public static function replaceTokens($input, array $tokens)

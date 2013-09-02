@@ -47,13 +47,14 @@
 
 		<div class="right mini-section">
 			<p class="big-number">
-				<?php if ($media == Media::Anime): ?>
-					<span class="desc">Episodes:</span>
-					<span class="value"><?php echo $viewContext->episodes ?></span>
-				<?php elseif ($media == Media::Manga): ?>
-					<span class="desc">Chapters:</span>
-					<span class="value"><?php echo $viewContext->chapters ?></span>
-				<?php endif ?>
+				<span class="desc"><?php echo ucfirst(TextHelper::getMediaUnitText($media, true)) ?>:</span>
+				<span class="value">
+					<?php if ($media == Media::Anime): ?>
+						<?php echo $viewContext->episodes ?>
+					<?php elseif ($media == Media::Manga): ?>
+						<?php echo $viewContext->chapters ?>
+					<?php endif ?>
+				</span>
 			</p>
 			<?php if ($viewContext->mismatchedCount[$media]): ?>
 				<a href="javascript:toggleEntries($('.<?php echo Media::toString($media) ?>-summary .entries-wrapper'), {'sender': 'mismatches', 'media': '<?php echo $media ?>'})">

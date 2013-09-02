@@ -29,12 +29,12 @@
 								<?php $localSize = 0 ?>
 								<?php if ($entry->media == Media::Anime): ?>
 									<?php if ($entry->sub_type != AnimeMediaType::Movie): ?>
-										<?php echo TextHelper::getEpisodesText($localSize = $entry->episodes, true) ?>
+										<?php echo TextHelper::getNumberedMediaUnitText($viewContext->media, $localSize = $entry->episodes, true) ?>
 									<?php else: ?>
 										<?php echo ucfirst(MediaType::toString($entry->sub_type, $entry->media)) ?>
 									<?php endif ?>
 								<?php elseif ($entry->media == Media::Manga): ?>
-									<?php echo TextHelper::getChaptersText($localSize = $entry->chapters, true) ?>
+									<?php echo TextHelper::getNumberedMediaUnitText($viewContext->media, $localSize = $entry->chapters, true) ?>
 								<?php endif ?>
 
 								<?php if ($localSize > 0 and !empty($entry->franchiseSize) and $localSize != $entry->franchiseSize): ?>

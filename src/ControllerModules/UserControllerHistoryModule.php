@@ -80,24 +80,8 @@ class UserControllerHistoryModule extends AbstractUserControllerModule
 			$dailyHistoryGroups[$key] []= $historyEntry;
 		}
 		krsort($dailyHistoryGroups);
-
-		$days = 21;
-		$dayPeriods = [];
-		$dailyTitles = [];
-		for ($i = - $days; $i < 0; $i ++)
-		{
-			$date = date('Y-m-d', mktime(24 * $i));
-			$dayPeriods[-$i] = isset($dailyHistoryGroups[$date])
-				? $dailyHistoryGroups[$date]
-				: [];
-			foreach ($dayPeriods[-$i] as $historyEntry)
-			{
-				$dailyTitles[$historyEntry->media . $historyEntry->mal_id] = $historyEntry;
-			}
-		}
+		$viewContext->dailyHistoryGroups = $dailyHistoryGroups;
 
 		$viewContext->isPrivate = $viewContext->user->isUserMediaPrivate($viewContext->media);
-		$viewContext->dayPeriods = $dayPeriods;
-		$viewContext->dailyTitles = $dailyTitles;
 	}
 }
