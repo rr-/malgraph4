@@ -126,7 +126,7 @@ class AdminControllerProcessorModule extends AbstractControllerModule
 					$cache = new Cache();
 					$cache->setPrefix($userName);
 
-					foreach ($controllerContext->cache->getAllFiles() as $path)
+					foreach ($cache->getAllFiles() as $path)
 					{
 						$deleted ++;
 						unlink($path);
