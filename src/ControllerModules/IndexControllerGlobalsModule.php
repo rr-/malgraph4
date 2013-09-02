@@ -30,5 +30,6 @@ class IndexControllerGlobalsModule extends AbstractControllerModule
 			$viewContext->mediaCount[$media] = Model_Media::getCount($media);
 			$viewContext->ratingDistribution[$media] = Model_MixedUserMedia::getRatingDistribution($media);
 		}
+		$viewContext->queueSizes = TextHelper::loadJson(Config::$userQueueSizesPath, true);
 	}
 }

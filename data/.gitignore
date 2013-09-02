@@ -3,4 +3,5 @@ banned-users.lst
 errors.log
 db.sqlite
 db.sqlite-journal
-globals-cache.dat
+globals-cache.json
+queue-sizes.json

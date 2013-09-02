@@ -129,5 +129,88 @@
 				</div>
 			</div>
 		<?php endforeach ?>
+
+		<div class="section queue-sizes">
+			<h2>Queue size through time</h2>
+			<div class="section-body">
+				<div class="target-wrapper">
+					<div class="target"></div>
+					<div class="clear"></div>
+				</div>
+
+				<script type="text/javascript">
+					var queueSizes = <?php echo json_encode($viewContext->queueSizes) ?>;
+
+					var opt =
+					{
+						chart:
+						{
+							renderTo: $('.queue-sizes .target')[0],
+							type: 'line',
+							marginTop: 10,
+							marginRight: 35
+						},
+
+						xAxis:
+						{
+							title:
+							{
+								text: 'Hours ago',
+								margin: 15
+							},
+							tickInterval: 4 * (60 / 5),
+							labels:
+							{
+								formatter: function()
+								{
+									return Math.round((Object.keys(queueSizes).length - this.value) * 5 / 60);
+								}
+							}
+						},
+
+						yAxis:
+						{
+							min: 0,
+							title:
+							{
+								text: 'Queue size',
+								margin: 15
+							}
+						},
+
+						tooltip:
+						{
+							formatter: function()
+							{
+								var d = this.point.key;
+								var text = d.getFullYear() + '-' +
+									lpad(d.getMonth() + 1, 2) + '-' +
+									lpad(d.getDate(), 2) + ' ' +
+									lpad(d.getHours(), 2) + ':' +
+									lpad(d.getMinutes(), 2) + ':' +
+									lpad(d.getSeconds(), 2);
+								return 'Queue size at ' + text + ': ' + this.y;
+							}
+						},
+
+						series:
+						[
+							{
+								data: $.map(queueSizes, function(a, b)
+								{
+									return {y: a, key: new Date(Date.parse(b))};
+								}),
+								marker:
+								{
+									enabled: false
+								}
+							}
+						]
+					};
+
+					new Highcharts.Chart(opt);
+				</script>
+			</div>
+		</div>
 	</div>
 </div>

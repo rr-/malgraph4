@@ -10,13 +10,17 @@ catch (Exception $e)
 	exit(1);
 }
 
-$queueSizes = TextHelper::loadJson(Config::$userQueueSizesPath);
+$limit = 2*24*60/5;
+
+$queueSizes = TextHelper::loadJson(Config::$userQueueSizesPath, true);
 $queue = new Queue(Config::$userQueuePath);
-$key = date('Y-m-d H:i');
+
+$key = date('c');
 $queueSizes[$key] = $queue->size();
-$limit = 2*24*60;
+ksort($queueSizes, SORT_NATURAL | SORT_FLAG_CASE);
 while (count($queueSizes) > $limit)
 {
 	array_shift($queueSizes);
 }
+
 TextHelper::putJson(Config::$userQueueSizesPath, $queueSizes);

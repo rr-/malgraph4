@@ -28,3 +28,11 @@ function ucfirst(str)
 	var f = str.charAt(0).toUpperCase();
 	return f + str.substr(1);
 }
+
+function lpad(str, width)
+{
+	str += '';
+	return str.length >= width
+		? str
+		: new Array(width - str.length + 1).join('0') + str;
+}

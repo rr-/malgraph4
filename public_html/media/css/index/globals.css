@@ -8,3 +8,8 @@ ul.infobox {
 .section-body {
 	margin-bottom: 2em;
 }
+
+.queue-sizes .target-wrapper,
+.queue-sizes .target {
+	width: 100%;
+}
