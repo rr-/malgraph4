@@ -75,7 +75,7 @@ class Config extends Singleton
 		self::$sendReferrer = true;
 		self::$enforcedDomain = null;
 
-		self::$version = '4.0.4';
+		self::$version = '4.0.5';
 	}
 }
 
