@@ -1,15 +1,27 @@
 <?php
 class Cache
 {
-	private static function urlToPath($url)
+	private $bypassCache;
+
+	public function bypass($doBypass)
+	{
+		$this->bypassCache = $doBypass;
+	}
+
+	public function isBypassed()
+	{
+		return $this->bypassCache;
+	}
+
+	private function urlToPath($url)
 	{
 		$name = md5($url) . sha1($url);
 		return Config::$cachePath . DIRECTORY_SEPARATOR . $name;
 	}
 
-	public static function load($url)
+	public function load($url)
 	{
-		$path = self::urlToPath($url);
+		$path = $this->urlToPath($url);
 		$data = file_get_contents($path);
 		$pos = strpos($data, "\n\n");
 		$headers = unserialize(substr($data, 0, $pos));
@@ -21,9 +33,13 @@ class Cache
 		echo $contents;
 	}
 
-	public static function isFresh($url)
+	public function isFresh($url)
 	{
-		$path = self::urlToPath($url);
+		$path = $this->urlToPath($url);
+		if ($this->isBypassed())
+		{
+			return false;
+		}
 		if (!Config::$cacheEnabled)
 		{
 			return false;
@@ -39,32 +55,19 @@ class Cache
 		return true;
 	}
 
-	private static $state = 0;
-	private static $path = null;
-	public static function beginSave($url)
+	public function save($url, $renderFunction)
 	{
-		if (self::$state != 0)
-		{
-			throw new BadCacheSaveStateException();
-		}
-		self::$state = 1;
-		self::$path = self::urlToPath($url);
+		$path = $this->urlToPath($url);
 		ob_start();
-	}
 
-	public static function endSave()
-	{
-		if (self::$state != 1)
-		{
-			throw new BadCacheSaveStateException();
-		}
-		self::$state = 0;
+		$renderFunction();
+		flush();
 
 		$headers = HttpHeadersHelper::getCurrentHeaders();
 		$contents = ob_get_contents();
 		ob_end_clean();
 
-		$handle = fopen(self::$path, 'wb');
+		$handle = fopen($path, 'wb');
 		flock($handle, LOCK_EX);
 		fwrite($handle, serialize($headers));
 		fwrite($handle, "\n\n");

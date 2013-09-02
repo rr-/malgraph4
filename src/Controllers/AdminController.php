@@ -12,7 +12,7 @@ class AdminController extends AbstractController
 		$rawModule = trim($matches[1], '/');
 		$controllerContext->rawModule = $rawModule;
 		$controllerContext->module = self::getModuleByUrlPart($rawModule);
-		$controllerContext->bypassCache = true;
+		$controllerContext->cache->bypass(true);
 		assert(!empty($controllerContext->module));
 		return true;
 	}

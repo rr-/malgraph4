@@ -7,9 +7,9 @@ $classNames = ReflectionHelper::loadClasses($dir);
 $classNames = array_filter($classNames, function($className) {
 	return substr_compare($className, 'Controller', -10, 10) === 0;
 });
-$bypassCache = !empty($_GET['bypass-cache']);
 
 $controllerContext = new ControllerContext();
+$controllerContext->cache->bypass(!empty($_GET['bypass-cache']));
 $viewContext = new ViewContext();
 
 if (!empty(Config::$maintenanceMessage))
@@ -56,24 +56,25 @@ else
 		if (!empty($workingClassName))
 		{
 			$workingClassName::preWork($controllerContext, $viewContext);
-			$bypassCache |= $controllerContext->bypassCache;
-			if (Cache::isFresh($url) and !$bypassCache)
+			if ($controllerContext->cache->isFresh($url))
 			{
-				Cache::load($url);
+				$controllerContext->cache->load($url);
 				flush();
 			}
 			else
 			{
-				if (!$bypassCache)
+				$f = function() use ($workingClassName, $controllerContext, $viewContext)
 				{
-					Cache::beginSave($url);
+					$workingClassName::work($controllerContext, $viewContext);
+					View::render($viewContext);
+				};
+				if (!$controllerContext->cache->isBypassed())
+				{
+					$controllerContext->cache->save($url, $f);
 				}
-				$workingClassName::work($controllerContext, $viewContext);
-				View::render($viewContext);
-				if (!$bypassCache)
+				else
 				{
-					flush();
-					Cache::endSave();
+					$f();
 				}
 			}
 			$workingClassName::postWork($controllerContext, $viewContext);

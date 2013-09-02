@@ -44,6 +44,7 @@ class UserController extends AbstractController
 	{
 		if (BanHelper::isUserBanned($controllerContext->userName))
 		{
+			$controllerContext->cache->bypass(true);
 			$viewContext->userName = $controllerContext->userName;
 			$viewContext->viewName = 'error-user-blocked';
 			$viewContext->meta->title = 'MALgraph - user blocked';
@@ -52,7 +53,6 @@ class UserController extends AbstractController
 
 		$module = $controllerContext->module;
 		HttpHeadersHelper::setCurrentHeader('Content-Type', $module::getContentType());
-		$controllerContext->bypassCache = true;
 		$viewContext->media = $controllerContext->media;
 		$viewContext->module = $controllerContext->module;
 		$viewContext->meta->noIndex = true;
@@ -68,6 +68,7 @@ class UserController extends AbstractController
 		$user = R::findOne('user', 'LOWER(name) = LOWER(?)', [$controllerContext->userName]);
 		if (empty($user))
 		{
+			$controllerContext->cache->bypass(true);
 			$viewContext->queuePosition = $queuePosition;
 			$viewContext->userName = $controllerContext->userName;
 			$viewContext->viewName = 'error-user-enqueued';
@@ -75,7 +76,6 @@ class UserController extends AbstractController
 			return;
 		}
 
-		$controllerContext->bypassCache = false;
 		$viewContext->user = $user;
 		$viewContext->meta->styles []= '/media/css/menu.css';
 	}
