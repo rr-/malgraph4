@@ -14,7 +14,7 @@
 * see at a glance how your scores compare to **global stats**
 
 #### List
-* all your anime or manga, sorted by score by default
+* all your anime or manga, by default sorted by score
 * use filters to quickly search for titles you're interested in
 * see how your scores **compare with MAL's community**
 
@@ -41,7 +41,7 @@
 * favorite anime studios and manga authors, with counters, mean score and total time
 
 
-#### Suggestions
+#### Recommendations
 * recommendations engine **for anime and manga**
 * take a quick glance what looks interesting, see how big its franchise is
 * list of titles related to those you've already completed: sequels, summaries, etc.
@@ -54,7 +54,7 @@
 
 #### Other pages
 * **about** with short description, version history in images, and list of libraries used
-* **privacy policy** explaining that we aren't evil, and that you can even block your Mg profile
+* **privacy policy** explaining that we're not evil, and that you can even block your Mg profile
 * **global stats** with basic info based on all MALgraph users
 
 
@@ -66,6 +66,6 @@ This is the fourth version of Mg. The first one only showed the rating distribut
 
 All user's data is downloaded once a day at most. After a successful download, the HTML version of all pages is cached. This ensures that MALgraph won't be a huge threat to MAL's servers - we only download the data once per 24 hours, which is a tiny fraction of an average user's browsing activity. Anime and manga data is cached too, with its lifespan depending on airing state - whether it's airing, has finished airing or isn't out yet.
 
-We prefer to maintain the issues tan on GitHub ourselves. If you have any bug to report, please do so in our club on MAL. **[Click here to visit the club.](http://myanimelist.net/clubs.php?cid=30017)**
+We prefer to maintain the issues tab on GitHub ourselves. If you have any bug to report, please do so in our club on MAL. **[Click here to visit the club.](http://myanimelist.net/clubs.php?cid=30017)**
 
 Feature requests can be posted on our Moderator page. **[Click here to post and vote on suggestions.](http://www.google.com/moderator/#15/e=20db62&t=20db62.40)**
