@@ -34,6 +34,7 @@ class UserControllerHistoryModule extends AbstractUserControllerModule
 
 		$list = $viewContext->user->getMixedUserMedia($viewContext->media);
 		$listFinished = UserMediaFilter::doFilter($list, UserMediaFilter::finished());
+
 		$monthlyHistoryGroups = [];
 		$unknownEntries = [];
 		$max = 0;
@@ -58,6 +59,7 @@ class UserControllerHistoryModule extends AbstractUserControllerModule
 			$monthlyHistoryGroups[$year][$month] []= $entry;
 			$max = max($max, count($monthlyHistoryGroups[$year][$month]));
 		}
+
 		krsort($monthlyHistoryGroups, SORT_NUMERIC);
 		foreach ($monthlyHistoryGroups as &$group)
 		{
