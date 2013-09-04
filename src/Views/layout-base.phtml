@@ -38,15 +38,24 @@
 </head>
 
 <body>
+	<div id="notice-wrapper">
+		<div class="notice" id="no-script">
+			JavaScript is disabled. Consider enabling it to get positive user experience.
+		</div>
+
+		<script type="text/javascript">
+			$('#no-script').hide()
+		</script>
+
+		<?php if (Config::$noticeMessage): ?>
+			<div class="notice" id="notice-message">
+				<?php echo Config::$noticeMessage ?>
+			</div>
+		<?php endif ?>
+	</div>
+
 	<?php if (!$viewContext->headerDisabled): ?>
 		<div id="header">
-			<div id="no-script">
-				JavaScript is disabled. Consider enabling it to get positive user experience.
-			</div>
-			<script type="text/javascript">
-				$('#no-script').hide()
-			</script>
-
 			<div class="main-wrapper">
 				<form class="waitable search" action="<?php echo IndexControllerSearchModule::url() ?>" method="post">
 					<div id="logo">

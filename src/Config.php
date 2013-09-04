@@ -28,6 +28,7 @@ class Config extends Singleton
 	static $googleAnalyticsEnabled;
 	static $adminPassword;
 	static $maintenanceMessage;
+	static $noticeMessage;
 	static $sendReferrer;
 	static $enforcedDomain;
 	static $version;
@@ -72,6 +73,7 @@ class Config extends Singleton
 		self::$googleAnalyticsEnabled = true;
 		self::$adminPassword = 'supersaiyan';
 		self::$maintenanceMessage = null;
+		self::$noticeMessage = null;
 		self::$sendReferrer = true;
 		self::$enforcedDomain = null;
 
