@@ -38,7 +38,7 @@ class View
 		try
 		{
 			include $path;
-			$html = ob_get_contents();
+			$output = ob_get_contents();
 		}
 		finally
 		{
@@ -47,71 +47,18 @@ class View
 
 		if (HttpHeadersHelper::getCurrentHeader('Content-Type') != 'text/html')
 		{
-			echo $html;
+			echo $output;
 			return;
 		}
 
-		$output = '';
-		$open = 0;
-		$i = 0;
-		while ($i < strlen($html))
+		$output = str_replace(' />', '/>', $output);
+		$output = str_replace(' >', '>', $output);
+		$output = str_replace(["\t", "\r", "\n"], '', $output);
+		$i = strpos($output, '  ');
+		while ($i !== false)
 		{
-			$c = $html{$i};
-			if ($c == '<')
-			{
-				//process tag
-				$tag = '';
-				$j = strpos($html, '>', $i);
-				if ($j === false)
-				{
-					throw new Exception('Unclosed tag');
-				}
-				$tag = substr($html, $i, $j + 1 - $i);
-				$i = $j + 1;
-
-				$tag = str_replace(["\t", "\r", "\n"], ' ', $tag);
-				$j = strpos($tag, '  ');
-				while ($j !== false)
-				{
-					$tag = substr_replace($tag, '', $j, 1);
-					$j = strpos($tag, '  ', $j);
-				}
-
-				$tag = str_replace(' />', '/>', $tag);
-				$tag = str_replace(' >', '>', $tag);
-				$output .= $tag;
-
-				$open += ((strncmp($tag, '<pre', 4) == 0) or (strncmp($tag, '<textarea', 9) == 0));
-				$open -= ((strncmp($tag, '</pre', 5) == 0) or (strncmp($tag, '</textarea', 10) == 0));
-				continue;
-			}
-			else
-			{
-				//process space between tags
-				$j = strpos($html, '<', $i);
-				if ($j === false)
-				{
-					$j = strlen($html);
-				}
-				$text = substr($html, $i, $j - $i);
-				$i = $j;
-
-				if ($open > 0)
-				{
-					$output .= $text;
-					continue;
-				}
-				$text = str_replace(["\t", "\r", "\n"], '', $text);
-
-				$j = strpos($text, '  ');
-				while ($j !== false)
-				{
-					$text = substr_replace($text, '', $j, 1);
-					$j = strpos($text, '  ', $j);
-				}
-
-				$output .= $text;
-			}
+			$output = substr_replace($output, '', $i, 1);
+			$i = strpos($output, '  ', $i);
 		}
 		echo $output;
 	}
