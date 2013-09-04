@@ -1,29 +1,41 @@
 <?php
-function __autoload($className)
+class AutoLoader
 {
-	$name = $className . '.php';
+	static $dirs;
 
-	$directoryIterator = new RecursiveDirectoryIterator(__DIR__);
-	$iterator = new RecursiveIteratorIterator($directoryIterator);
-	$dirs = [];
-	foreach ($iterator as $file)
+	public static function init()
 	{
-		if ($file->isDir())
+		$directoryIterator = new RecursiveDirectoryIterator(__DIR__);
+		$iterator = new RecursiveIteratorIterator($directoryIterator);
+		$dirs = [];
+		foreach ($iterator as $file)
 		{
-			$dirs []= $file->getRealPath();
+			if ($file->isDir())
+			{
+				$dirs []= $file->getRealPath();
+			}
 		}
+		$dirs = array_unique($dirs);
+		self::$dirs = $dirs;
 	}
-	$dirs = array_unique($dirs);
 
-	foreach ($dirs as $dir)
+	public static function load($className)
 	{
-		$path = $dir . DIRECTORY_SEPARATOR . $name;
-		if (file_exists($path))
+		$name = $className . '.php';
+
+		foreach (self::$dirs as $dir)
 		{
-			include $path;
+			$path = $dir . DIRECTORY_SEPARATOR . $name;
+			if (file_exists($path))
+			{
+				include $path;
+			}
 		}
 	}
 }
+
+AutoLoader::init();
+spl_autoload_register(['AutoLoader', 'load']);
 
 date_default_timezone_set('UTC');
 ini_set('memory_limit', '128M');
@@ -35,3 +47,5 @@ if (file_exists($localCore))
 {
 	include $localCore;
 }
+
+BenchmarkHelper::init();
