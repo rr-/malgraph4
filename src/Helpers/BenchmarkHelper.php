@@ -2,16 +2,22 @@
 class BenchmarkHelper extends Singleton
 {
 	private static $start;
+	private static $prev;
 
-	public static function benchmark($message)
+	public static function benchmark($message = 'ping')
 	{
-		$delta = microtime(true) - self::$start;
-		printf('%.05f: %s' . PHP_EOL, $delta, $message);
+		$now = microtime(true);
+		$delta = $now - self::$prev;
+		$deltaBig = $now - self::$start;
+		self::$prev = $now;
+
+		HttpHeadersHelper::setCurrentHeader('Content-Type', 'text/plain');
+		printf('%.05f/%.05f: %s' . PHP_EOL, $delta, $deltaBig, $message);
 	}
 
 	public static function doInit()
 	{
-		self::$start = microtime(true);
+		self::$prev = self::$start = microtime(true);
 	}
 }
 
