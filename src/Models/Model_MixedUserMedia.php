@@ -232,7 +232,6 @@ class Model_MixedUserMedia
 		$rows = R::getAll($query);
 		self::dropTemporaryTable($tblName);
 
-		$data = ReflectionHelper::arraysToClasses($rows);
 		$map = [];
 		foreach ($entries as $entry)
 		{
@@ -240,13 +239,9 @@ class Model_MixedUserMedia
 			$map[$entry->media_id] = $entry;
 		}
 
-		foreach ($data as $row)
+		foreach ($rows as $row)
 		{
-			if (!isset($map[$row->media_id]))
-			{
-				continue;
-			}
-			$map[$row->media_id]->recommendations []= $row;
+			$map[$row['media_id']]->recommendations []= $row;
 		}
 	}
 

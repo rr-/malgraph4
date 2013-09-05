@@ -34,32 +34,40 @@ class RecommendationsEngine
 		}
 		$meanScore /= max(1, $count);
 
-		$weights = [];
+		$weightsMax = [];
+		$weightsSum = [];
+		$weightsCount = [];
 		foreach ($list as $entry)
 		{
-			$key1 = $entry->media . $entry->mal_id;
 			foreach ($entry->recommendations as $rec)
 			{
-				$key2 = $entry->media . $rec->mal_id;
-				if (!isset($weights[$key2]))
+				$key = $entry->media . $rec['mal_id'];
+				$score = $entry->score ?: $entry->average_score;
+				$count = $rec['count'];
+				if (!isset($weightsMax[$key]))
 				{
-					$weights[$key2] = [];
+					$weightsSum[$key] = $score * $count;
+					$weightsCount[$key] = $count;
+					$weightsMax[$key] = $count;
 				}
-				$weights[$key2] []= [$entry, $rec->count];
+				else
+				{
+					$weightsSum[$key] += $score * $count;
+					$weightsCount[$key] += $count;
+					if ($count > $weightsMax[$key])
+					{
+						$weightsMax[$key] = $count;
+					}
+				}
 			}
 		}
 
-		foreach ($weights as $key => $items)
+		$weights = [];
+		foreach (array_keys($weightsSum) as $key)
 		{
-			$maxWeight = max(array_map(function($item) { return $item[1]; }, $items));
-			$sum = 0;
-			$count = 0;
-			foreach ($items as $item)
-			{
-				list ($sourceEntry, $weight) = $item;
-				$sum += ($sourceEntry->score ?: $sourceEntry->average_score) * $weight;
-				$count += $weight;
-			}
+			$maxWeight = $weightsMax[$key];
+			$sum = $weightsSum[$key];
+			$count = $weightsCount[$key];
 			#the more recommendations, the more close it will be to source scores (log scale)
 			$const = 1.2;
 			$weight = pow($const, - $count);
@@ -184,27 +192,24 @@ class RecommendationsEngine
 					$franchiseSize += $entry->chapters;
 				}
 
-				$key = $entry->media . $entry->mal_id;
-				if (isset($dontRecommend[$key]))
-				{
-					$entryToAdd = null;
-					break;
-				}
 				if ($entryToAdd === null)
 				{
 					$entryToAdd = $entry;
 				}
 			}
 
-			if ($entryToAdd !== null)
+			if ($entryToAdd === null)
 			{
-				$entryToAdd->franchiseSize = $franchiseSize;
-				if (!isset($entryToAdd->hypothetical_score))
-				{
-					$entryToAdd->hypothetical_score = reset($franchise->ownEntries)->hypothetical_score;
-				}
-				$finalEntries[$key] = $entryToAdd;
+				continue;
 			}
+
+			$key = $entryToAdd->media . $entryToAdd->mal_id;
+			$entryToAdd->franchiseSize = $franchiseSize;
+			if (!isset($entryToAdd->hypothetical_score))
+			{
+				$entryToAdd->hypothetical_score = reset($franchise->ownEntries)->hypothetical_score;
+			}
+			$finalEntries[$key] = $entryToAdd;
 		}
 		return $finalEntries;
 	}
@@ -238,6 +243,7 @@ class RecommendationsEngine
 		$selectedEntries = self::trimByScore($selectedEntries, $goal * 10);
 		$selectedEntries = self::filterBannedGenres($selectedEntries);
 
+		$selectedEntries = self::trimByScore($selectedEntries, $goal * 3);
 		$selectedEntries = self::filterFranchises($selectedEntries);
 
 		$selectedEntries = self::trimByScore($selectedEntries, $goal);

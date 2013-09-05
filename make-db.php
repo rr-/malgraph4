@@ -153,6 +153,7 @@ try
 		count INTEGER,
 		FOREIGN KEY(media_id) REFERENCES media(id) ON DELETE CASCADE
 	)');
+	R::exec('CREATE INDEX IF NOT EXISTS ind_mediarec_mediaid ON mediarec (media_id)');
 }
 catch (Exception $e)
 {
