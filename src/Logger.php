@@ -1,46 +1,43 @@
 <?php
 class Logger
 {
+	private $path;
+
+	public function __construct($name)
+	{
+		$fileName = basename($name) . '.log';
+		$this->path = Config::$logsPath . DIRECTORY_SEPARATOR . $fileName;
+	}
+
+	public function purge()
+	{
+		$handle = fopen($this->path, 'wb');
+		fclose($handle);
+	}
+
+	public function log($data)
+	{
+		$data = call_user_func_array('sprintf', func_get_args());
+		$header = sprintf('[%s] ', self::getTimestamp());
+		$footer = PHP_EOL;
+		$handle = fopen($this->path, 'ab');
+		flock($handle, LOCK_EX);
+		fwrite($handle, $header);
+		fwrite($handle, $data);
+		fwrite($handle, $footer);
+		fclose($handle);
+
+		if (!isset($_SERVER['HTTP_HOST']))
+		{
+			echo $header;
+			echo $data;
+			echo $footer;
+			flush();
+		}
+	}
+
 	private static function getTimestamp()
 	{
 		return date('Y-m-d H:i:s');
-	}
-
-	private static function getRequestUri()
-	{
-		return isset($_SERVER['REQUEST_URI'])
-			? $_SERVER['REQUEST_URI']
-			: 'cron';
-	}
-
-	public static function purge($logPath)
-	{
-		$handle = fopen($logPath, 'wb');
-		fclose($handle);
-	}
-
-	public static function logLine($logPath, $line = null)
-	{
-		$handle = fopen($logPath, 'ab');
-		flock($handle, LOCK_EX);
-		$data = sprintf('%s %s %s' . PHP_EOL,
-			self::getTimestamp(),
-			self::getRequestUri(),
-			$line !== null ? $line : '---');
-		fwrite($handle, $data);
-		fclose($handle);
-	}
-
-	public static function log($logPath, $data)
-	{
-		$handle = fopen($logPath, 'ab');
-		flock($handle, LOCK_EX);
-		$header = sprintf('--- %s %s ---' . PHP_EOL,
-			self::getTimestamp(),
-			self::getRequestUri());
-		fwrite($handle, $header);
-		fwrite($handle, $data);
-		fwrite($handle, str_repeat(PHP_EOL, 3));
-		fclose($handle);
 	}
 }

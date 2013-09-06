@@ -1,55 +1,48 @@
 <?php
 require_once 'src/core.php';
-try
+CronRunner::run(__FILE__, function($logger)
 {
-	SingleInstance::run(__FILE__);
-}
-catch (Exception $e)
-{
-	echo $e->getMessage() . PHP_EOL;
-	exit(1);
-}
+	$userProcessor = new UserProcessor();
+	$queue = new Queue(Config::$userQueuePath);
+	$cache = new Cache();
 
-$userProcessor = new UserProcessor();
-$queue = new Queue(Config::$userQueuePath);
-$cache = new Cache();
-
-$processed = 0;
-while ($processed < Config::$usersPerCronRun)
-{
-	$userName = $queue->dequeue();
-	if ($userName === null)
+	$processed = 0;
+	while ($processed < Config::$usersPerCronRun)
 	{
-		exit(0);
-	}
-
-	try
-	{
-		printf('Processing user %s' . PHP_EOL, $userName);
-		$query = 'SELECT 0 FROM user WHERE LOWER(name) = LOWER(?)' .
-			' AND processed >= DATETIME("now", "-1 days")';
-		if (R::getAll($query, [$userName]))
+		$userName = $queue->dequeue();
+		if ($userName === null)
 		{
-			echo 'Too soon' . PHP_EOL;
-			continue;
+			exit(0);
 		}
-		++ $processed;
-		$userProcessor->process($userName);
 
-		$cache->setPrefix($userName);
-		foreach ($cache->getAllFiles() as $path)
+		try
 		{
-			unlink($path);
+			$logger->log('Processing user %s', $userName);
+
+			$query = 'SELECT 0 FROM user WHERE LOWER(name) = LOWER(?)' .
+				' AND processed >= DATETIME("now", "-1 days")';
+			if (R::getAll($query, [$userName]))
+			{
+				$logger->log('Too soon');
+				continue;
+			}
+			++ $processed;
+			$userProcessor->process($userName);
+
+			$cache->setPrefix($userName);
+			foreach ($cache->getAllFiles() as $path)
+			{
+				unlink($path);
+			}
+		}
+		catch (BadProcessorKeyException $e)
+		{
+			$logger->log($e->getMessage());
+		}
+		catch (Exception $e)
+		{
+			$logger->log($e);
+			$queue->enqueue($userName);
 		}
 	}
-	catch (BadProcessorKeyException $e)
-	{
-		echo $e->getMessage() . PHP_EOL;
-	}
-	catch (Exception $e)
-	{
-		$queue->enqueue($userName);
-		Logger::log(Config::$errorLogPath, $e);
-		echo $e . PHP_EOL;
-	}
-}
+});

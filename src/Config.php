@@ -18,7 +18,7 @@ class Config extends Singleton
 	static $bannedFranchiseCouplingListPath;
 	static $achievementsDefinitionPath;
 	static $staticRecommendationListPath;
-	static $errorLogPath;
+	static $logsPath;
 	static $globalsCachePath;
 	static $userQueueSizesPath;
 	static $mediaDirectory;
@@ -59,7 +59,7 @@ class Config extends Singleton
 		self::$achievementsDefinitionPath = $dataRootDir . 'achievements.json';
 		self::$staticRecommendationListPath = $dataRootDir . 'static-recommendations.lst';
 
-		self::$errorLogPath = $dataRootDir . 'errors.log';
+		self::$logsPath = $dataRootDir . 'logs';
 		self::$globalsCachePath = $dataRootDir . 'globals-cache.json';
 		self::$userQueueSizesPath = $dataRootDir . 'queue-sizes.json';
 

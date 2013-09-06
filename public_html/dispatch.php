@@ -11,6 +11,7 @@ $classNames = array_filter($classNames, function($className) {
 $controllerContext = new ControllerContext();
 $controllerContext->cache->bypass(!empty($_GET['bypass-cache']));
 $viewContext = new ViewContext();
+$logger = new Logger(__FILE__);
 
 if (!empty(Config::$maintenanceMessage))
 {
@@ -92,9 +93,9 @@ else
 	catch (Exception $e)
 	{
 		#log error information
+		$logger->log($e);
 		$viewContext->viewName = 'error';
 		$viewContext->exception = $e;
-		Logger::log(Config::$errorLogPath, $e);
 		View::render($viewContext);
 	}
 	exit(1);
