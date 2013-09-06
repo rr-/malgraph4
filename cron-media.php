@@ -33,6 +33,10 @@ CronRunner::run(__FILE__, function($logger)
 		{
 			$logger->log($e->getMessage());
 		}
+		catch (DownloadFailureException $e)
+		{
+			$logger->log($e->getMessage());
+		}
 		catch (Exception $e)
 		{
 			$logger->log($e);

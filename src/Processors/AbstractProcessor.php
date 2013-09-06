@@ -45,6 +45,14 @@ abstract class AbstractProcessor
 			}
 
 			$documents = Downloader::downloadMulti($urls);
+			foreach ($documents as $document)
+			{
+				if ($document->code == 403)
+				{
+					Downloader::purgeCache($urls);
+					throw new DownloadFailureException($document);
+				}
+			}
 
 			foreach ($documents as &$document)
 			{
@@ -84,10 +92,6 @@ abstract class AbstractProcessor
 		}
 		catch (Exception $e)
 		{
-			if (isset($documents))
-			{
-				$e->documents = $documents;
-			}
 			Downloader::purgeCache($urls);
 			throw $e;
 		}
