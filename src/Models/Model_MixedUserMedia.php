@@ -15,8 +15,8 @@ class Model_MixedUserMedia
 
 		$this->finished_duration = $this->duration;
 		$this->finished_duration *= $this->media == Media::Anime
-			? $this->finished_episodes
-			: $this->finished_chapters;
+			? $this->episodes
+			: $this->chapters;
 
 		if (empty($this->title))
 		{
