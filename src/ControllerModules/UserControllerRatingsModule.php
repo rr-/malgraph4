@@ -45,7 +45,7 @@ class UserControllerRatingsModule extends AbstractUserControllerModule
 		$totalTime = 0;
 		foreach ($list as $mixedUserMedia)
 		{
-			$totalTime += $mixedUserMedia->completed_duration;
+			$totalTime += $mixedUserMedia->finished_duration;
 			foreach ([$mixedUserMedia->start_date, $mixedUserMedia->end_date] as $k)
 			{
 				$f = explode('-', $k);

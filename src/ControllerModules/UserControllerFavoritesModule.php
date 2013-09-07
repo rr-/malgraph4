@@ -61,7 +61,7 @@ class UserControllerFavoritesModule extends AbstractUserControllerModule
 				$scoreCount = 0;
 				foreach ($subEntries as $entry)
 				{
-					$timeSpent[$safeKey] += $entry->completed_duration;
+					$timeSpent[$safeKey] += $entry->finished_duration;
 					$meanScore[$safeKey] += $entry->score;
 					$scoreCount += $entry->score > 0;
 				}
