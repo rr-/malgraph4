@@ -24,6 +24,13 @@ class CronRunner
 			SingleInstance::run($fileName);
 			$callback($logger);
 		}
+		catch (InstanceAlreadyRunningException $e)
+		{
+			$logger->log('Instance already running');
+			$logger->log('Finished with errors');
+			self::$finished = true;
+			exit(1);
+		}
 		catch (Exception $e)
 		{
 			$logger->log($e);
