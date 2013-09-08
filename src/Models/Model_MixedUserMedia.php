@@ -13,10 +13,14 @@ class Model_MixedUserMedia
 			$this->duration = 10;
 		}
 
-		$this->finished_duration = $this->duration;
-		$this->finished_duration *= $this->media == Media::Anime
-			? $this->episodes
-			: $this->chapters;
+		if (isset($this->finished_episodes) and $this->media == Media::Anime)
+		{
+			$this->finished_duration = $this->duration * $this->finished_episodes;
+		}
+		elseif (isset($this->finished_chapters) and $this->media == Media::Manga)
+		{
+			$this->finished_duration = $this->duration * $this->finished_chapters;
+		}
 
 		if (empty($this->title))
 		{
