@@ -12,7 +12,7 @@ CronRunner::run(__FILE__, function($logger)
 		$userName = $queue->dequeue();
 		if ($userName === null)
 		{
-			exit(0);
+			break;
 		}
 
 		try
