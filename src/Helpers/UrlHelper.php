@@ -1,13 +1,13 @@
 <?php
 class UrlHelper
 {
-	public static function absoluteUrl($relativeUrl = null)
+	public static function absoluteUrl($relativeUrl = null, $params = [])
 	{
 		if ($relativeUrl === null)
 		{
 			$relativeUrl = '/' . ltrim($_SERVER['REQUEST_URI'], '/');
 		}
-		if (strpos($relativeUrl, '://') !== false)
+		if (strpos($relativeUrl, ':') !== false)
 		{
 			$absoluteUrl = $relativeUrl;
 		}
@@ -19,9 +19,9 @@ class UrlHelper
 			$absoluteUrl = rtrim($absoluteUrl, '/') . '/';
 			$absoluteUrl .= ltrim($relativeUrl, '/');
 		}
-		if (!empty($p))
+		if (!empty($params))
 		{
-			$absoluteUrl .= '?' . http_build_query($p);
+			$absoluteUrl .= '?' . http_build_query($params);
 		}
 		$absoluteUrl = preg_replace('/(?<!:)\/\//', '/', $absoluteUrl);
 		return $absoluteUrl;
