@@ -37,6 +37,7 @@ class WebMediaHelper
 	{
 		$viewContext->meta->scripts []= 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js';
 		$viewContext->meta->scripts []= 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/ui/jquery.ui.position.min.js';
+		$viewContext->meta->scripts []= '/media/js/jquery.cookie.js';
 	}
 
 	public static function addGlider($viewContext)
@@ -90,6 +91,8 @@ class WebMediaHelper
 				=> join(DIRECTORY_SEPARATOR, [Config::$mediaDirectory, 'js', 'jquery.highcharts.js']),
 			'https://raw.github.com/mattfarina/farbtastic/cf1c85ae79af05b6530b53a37b3aace8fa992ca7/src/farbtastic.js'
 				=> join(DIRECTORY_SEPARATOR, [Config::$mediaDirectory, 'js', 'jquery.farbtastic.js']),
+			'https://raw.github.com/carhartl/jquery-cookie/master/jquery.cookie.js'
+				=> join(DIRECTORY_SEPARATOR, [Config::$mediaDirectory, 'js', 'jquery.cookie.js']),
 		];
 		$results = Downloader::downloadMulti(array_keys($urls));
 		foreach ($results as $url => $result)
