@@ -194,13 +194,42 @@ table.tablesorter thead tr .headerSortUp { background: #2D7DE0 url('../img/asc.g
 table.tablesorter thead tr .headerSortDown { background: #2D7De0 url('../img/desc.gif') no-repeat center left; color: white; }
 
 /* misc */
-#google-ads {
-	border: 1px solid pink;
-	margin: 0 auto;
+.ad {
+	margin: 1em auto;
 	width: 728px;
+}
+#adblock-enabled {
+	display: none;
+	background: #f5f5f5;
+	padding: 0.5em;
+}
+#adblock-enabled p {
+	margin-bottom: 0;
+}
+#adblock-enabled ul {
+	margin-top: 1em;
+}
+#adblock-enabled li {
+	font-size: 90%;
+}
+#google-ads {
+	border: 1px solid silver;
 	height: 90px;
-	margin-bottom: 1em;
 	overflow: hidden;
+}
+
+ul.horizontal {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+ul.horizontal li {
+	display: inline-block;
+}
+ul.horizontal li:not(:last-child):after {
+	content: '·';
+	display: inline-block;
+	margin: 0 0.75em;
 }
 
 /* form controls */

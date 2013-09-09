@@ -87,15 +87,7 @@
 		</div>
 
 		<?php if (Config::$googleAdsEnabled): ?>
-			<div id="google-ads">
-				<script type="text/javascript">
-					google_ad_client = "ca-pub-4861833348203348"; /* malgraph3-header */
-					google_ad_slot = "3987532635";
-					google_ad_width = 728;
-					google_ad_height = 90;
-				</script>
-				<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
-			</div>
+			<?php self::renderFile('ads', $viewContext) ?>
 		<?php endif ?>
 	<?php endif ?>
 

@@ -60,6 +60,7 @@ class WebMediaHelper
 	public static function addHeader($viewContext)
 	{
 		array_unshift($viewContext->meta->styles, '/media/css/header.css');
+		$viewContext->meta->scripts []= '/media/js/starving-devs.js';
 	}
 
 	public static function addHeaderless($viewContext)

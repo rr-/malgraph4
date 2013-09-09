@@ -1,0 +1,8 @@
+[Adblock]
+! Title: MALgraph
+! MALgraph Whitelist
+! Expires: 21 days
+! Homepage: http://mal.oko.im
+@@||mal.oko.im^$document
+@@||mal-dev.sakuya.pl^$document
+

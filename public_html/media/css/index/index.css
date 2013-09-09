@@ -51,17 +51,6 @@ footer {
 	margin-top: 1em;
 	font-size: 95%;
 }
-footer ul {
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
-}
-footer li {
-	display: inline;
-}
-footer li:not(:last-child):after {
-	content: ' · ';
-}
 footer a {
 	color: silver;
 }
