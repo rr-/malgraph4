@@ -2,7 +2,9 @@
 class Config extends Singleton
 {
 	static $usersPerCronRun;
+	static $mediaPerCronRun;
 	static $userQueuePath;
+	static $mediaQueuePath;
 	static $mirrorPath;
 	static $mirrorEnabled;
 	static $cachePath;
@@ -39,7 +41,9 @@ class Config extends Singleton
 		$htmlRootDir = join(DIRECTORY_SEPARATOR, [__DIR__, '..', 'public_html']);
 
 		self::$usersPerCronRun = 5;
-		self::$userQueuePath = $dataRootDir . 'users.lst';
+		self::$userQueuePath = $dataRootDir . 'queue-users.lst';
+		self::$mediaPerCronRun = 5;
+		self::$mediaQueuePath = $dataRootDir . 'queue-media.lst';
 
 		self::$mirrorEnabled = false;
 		self::$mirrorPath = $dataRootDir . 'mirror';

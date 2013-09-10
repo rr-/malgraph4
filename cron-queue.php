@@ -1,53 +1,120 @@
 <?php
 require_once 'src/core.php';
-CronRunner::run(__FILE__, function($logger)
-{
-	$userProcessor = new UserProcessor();
-	$queue = new Queue(Config::$userQueuePath);
-	$cache = new Cache();
 
+function processQueue($queue, $count, $logger, $callback)
+{
 	$processed = 0;
-	while ($processed < Config::$usersPerCronRun)
+	while ($processed < $count)
 	{
-		$userName = $queue->dequeue();
-		if ($userName === null)
+		$key = $queue->dequeue();
+		if ($key === null)
 		{
 			break;
 		}
 
 		try
 		{
-			$logger->log('Processing user %s', $userName);
+			$okay = $callback($key);
+			if ($okay)
+			{
+				++ $processed;
+			}
+		}
+		catch (BadProcessorKeyException $e)
+		{
+			$logger->log('error: ' . $e->getMessage());
+		}
+		catch (DownloadFailureException $e)
+		{
+			$logger->log('error: ' . $e->getMessage());
+			$queue->enqueue($key);
+		}
+		catch (Exception $e)
+		{
+			$logger->log('error');
+			$logger->log($e);
+			$queue->enqueue($key);
+		}
+	}
+}
 
+CronRunner::run(__FILE__, function($logger)
+{
+	$userProcessor = new UserProcessor();
+	$mediaProcessors =
+	[
+		Media::Anime => new AnimeProcessor(),
+		Media::Manga => new MangaProcessor()
+	];
+
+	$userQueue = new Queue(Config::$userQueuePath);
+	$mediaQueue = new Queue(Config::$mediaQueuePath);
+
+	#process users
+	processQueue(
+		$userQueue,
+		Config::$usersPerCronRun,
+		$logger,
+		function($userName) use ($userProcessor, $mediaQueue, $logger)
+		{
+			$logger->logFragment('Processing user %s... ', $userName);
+
+			#check if processed too soon
 			$query = 'SELECT 0 FROM user WHERE LOWER(name) = LOWER(?)' .
 				' AND processed >= DATETIME("now", "-1 days")';
 			if (R::getAll($query, [$userName]))
 			{
-				$logger->log('Too soon');
-				continue;
+				$logger->log('too soon');
+				return false;
 			}
-			++ $processed;
-			$userProcessor->process($userName);
 
+			#process the user
+			$userContext = $userProcessor->process($userName);
+
+			#remove associated cache
+			$cache = new Cache();
 			$cache->setPrefix($userName);
 			foreach ($cache->getAllFiles() as $path)
 			{
 				unlink($path);
 			}
-		}
-		catch (BadProcessorKeyException $e)
+
+			#append media to queue
+			foreach (Media::getConstList() as $media)
+			{
+				foreach ($userContext->user->getMixedUserMedia($media) as $entry)
+				{
+					$mediaQueue->enqueue(TextHelper::serializeMediaId($entry));
+				}
+			}
+
+			$logger->log('ok');
+			return true;
+		});
+
+	#process media
+	processQueue(
+		$mediaQueue,
+		Config::$mediaPerCronRun,
+		$logger,
+		function($key) use ($mediaProcessors, $logger)
 		{
-			$logger->log($e->getMessage());
-		}
-		catch (DownloadFailureException $e)
-		{
-			$logger->log($e->getMessage());
-			$queue->enqueue($userName);
-		}
-		catch (Exception $e)
-		{
-			$logger->log($e);
-			$queue->enqueue($userName);
-		}
-	}
+			list ($media, $malId) = TextHelper::deserializeMediaId($key);
+			$logger->logFragment('Processing %s #%d... ', Media::toString($media), $malId);
+
+			#check if processed too soon
+			$query = 'SELECT 0 FROM media WHERE media = ? AND mal_id = ?' .
+				' AND processed >= DATETIME("now", "-7 days")';
+			if (R::getAll($query, [$media, $malId]))
+			{
+				$logger->log('too soon');
+				return false;
+			}
+
+			#process the media
+			$mediaProcessors[$media]->process($malId);
+
+			$logger->log('ok');
+			return true;
+		});
 });

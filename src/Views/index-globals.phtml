@@ -147,8 +147,7 @@
 						{
 							renderTo: $('.queue-sizes .target')[0],
 							type: 'line',
-							marginTop: 10,
-							marginRight: 35
+							marginTop: 10
 						},
 
 						xAxis:
@@ -169,36 +168,64 @@
 						},
 
 						yAxis:
-						{
-							min: 0,
-							title:
+						[
 							{
-								text: 'Queue size',
-								margin: 15
+								min: 0,
+								title:
+								{
+									text: 'User queue size'
+								}
+							},
+							{
+								min: 0,
+								title:
+								{
+									text: 'Media queue size'
+								},
+								gridLineWidth: 0,
+								minorGridLineWidth: 0,
+								opposite: true
 							}
-						},
+						],
 
 						tooltip:
 						{
+							shared: true,
 							formatter: function()
 							{
-								var d = this.point.key;
+								console.log(this);
+								var d = this.points[0].point.key;
 								var text = d.getFullYear() + '-' +
 									lpad(d.getMonth() + 1, 2) + '-' +
 									lpad(d.getDate(), 2) + ' ' +
 									lpad(d.getHours(), 2) + ':' +
 									lpad(d.getMinutes(), 2) + ':' +
 									lpad(d.getSeconds(), 2);
-								return 'Queue size at ' + text + ': ' + this.y;
+								return 'Queue size at ' + text + ': users - ' + this.points[0].y + ', media - ' + this.points[1].y;
 							}
 						},
 
 						series:
 						[
 							{
+								yAxis: 0,
+								name: 'User queue size',
 								data: $.map(queueSizes, function(a, b)
 								{
-									return {y: a, key: new Date(Date.parse(b))};
+									return {y: a[0], key: new Date(Date.parse(b))};
+								}),
+								marker:
+								{
+									enabled: false
+								}
+							},
+
+							{
+								yAxis: 1,
+								name: 'Media queue size',
+								data: $.map(queueSizes, function(a, b)
+								{
+									return {y: a[1], key: new Date(Date.parse(b))};
 								}),
 								marker:
 								{

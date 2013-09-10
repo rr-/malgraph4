@@ -20,7 +20,7 @@ abstract class AbstractProcessor
 	{
 		if (empty($key))
 		{
-			return;
+			return null;
 		}
 
 		$urls = [];

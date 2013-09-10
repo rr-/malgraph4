@@ -119,4 +119,15 @@ class TextHelper
 		return $percentagesRounded;
 	}
 
+	public static function serializeMediaId($entry)
+	{
+		return $entry->media . $entry->mal_id;
+	}
+
+	public static function deserializeMediaId($id)
+	{
+		$media = substr($id, 0, 1);
+		$malId = intval(substr($id, 1));
+		return [$media, $malId];
+	}
 }

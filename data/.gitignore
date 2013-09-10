@@ -1,4 +1,5 @@
-users.lst
+queue-users.lst
+queue-media.lst
 banned-users.lst
 errors.log
 db.sqlite
