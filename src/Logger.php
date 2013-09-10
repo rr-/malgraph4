@@ -2,6 +2,8 @@
 class Logger
 {
 	private $path;
+	private $fragmentOpen = false;
+	private $handle = null;
 
 	public function __construct($name)
 	{
@@ -9,35 +11,77 @@ class Logger
 		$this->path = Config::$logsPath . DIRECTORY_SEPARATOR . $fileName;
 	}
 
+	public function __destruct()
+	{
+		$this->closefile();
+	}
+
+	private function openFile()
+	{
+		if ($this->handle === null)
+		{
+			$this->handle = fopen($this->path, 'ab');
+			flock($this->handle, LOCK_EX);
+		}
+	}
+
+	private function write($string)
+	{
+		assert($this->handle !== null);
+		fwrite($this->handle, $string);
+		$this->fragmentOpen = true;
+
+		if (!isset($_SERVER['HTTP_HOST']))
+		{
+			echo $string;
+			flush();
+		}
+	}
+
+	private function closeFile()
+	{
+		$this->fragmentOpen = false;
+		if ($this->handle !== null)
+		{
+			fclose($this->handle);
+			$this->handle = null;
+		}
+	}
+
+	private function decorateTimestamp($data)
+	{
+		if ($this->fragmentOpen)
+		{
+			return $data;
+		}
+		return sprintf('[%s] %s', date('Y-m-d H:i:s'), $data);
+	}
+
+
+
 	public function purge()
 	{
 		$handle = fopen($this->path, 'wb');
 		fclose($handle);
 	}
 
-	public function log($data)
+	public function logFragment($data)
 	{
+		$this->openFile();
 		$data = call_user_func_array('sprintf', func_get_args());
-		$header = sprintf('[%s] ', self::getTimestamp());
-		$footer = PHP_EOL;
-		$handle = fopen($this->path, 'ab');
-		flock($handle, LOCK_EX);
-		fwrite($handle, $header);
-		fwrite($handle, $data);
-		fwrite($handle, $footer);
-		fclose($handle);
-
-		if (!isset($_SERVER['HTTP_HOST']))
-		{
-			echo $header;
-			echo $data;
-			echo $footer;
-			flush();
-		}
+		$data = $this->decorateTimestamp($data);
+		$this->write($data);
+		#do not close the file handle
+		#prevents lines from breaking when multiple instances are run
 	}
 
-	private static function getTimestamp()
+	public function log($data)
 	{
-		return date('Y-m-d H:i:s');
+		$this->openFile();
+		$data = call_user_func_array('sprintf', func_get_args());
+		$data = $this->decorateTimestamp($data);
+		$data .= PHP_EOL;
+		$this->write($data);
+		$this->closeFile();
 	}
 }
