@@ -48,13 +48,13 @@ class Logger
 		}
 	}
 
-	private function decorateTimestamp($data)
+	private function decorate($data)
 	{
 		if ($this->fragmentOpen)
 		{
 			return $data;
 		}
-		return sprintf('[%s] %s', date('Y-m-d H:i:s'), $data);
+		return sprintf('[%s|%04x] %s', date('Y-m-d H:i:s'), getmypid(), $data);
 	}
 
 
@@ -69,7 +69,7 @@ class Logger
 	{
 		$this->openFile();
 		$data = call_user_func_array('sprintf', func_get_args());
-		$data = $this->decorateTimestamp($data);
+		$data = $this->decorate($data);
 		$this->write($data);
 		#do not close the file handle
 		#prevents lines from breaking when multiple instances are run
@@ -79,7 +79,7 @@ class Logger
 	{
 		$this->openFile();
 		$data = call_user_func_array('sprintf', func_get_args());
-		$data = $this->decorateTimestamp($data);
+		$data = $this->decorate($data);
 		$data .= PHP_EOL;
 		$this->write($data);
 		$this->closeFile();
