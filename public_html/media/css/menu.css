@@ -13,7 +13,7 @@
 }
 #main {
 	margin-left: 200px;
-	width: 600px;
+	max-width: 600px;
 	overflow: hidden; /* allow children to clear floats */
 }
 
@@ -69,14 +69,15 @@
 	white-space: nowrap;
 	overflow: hidden;
 	position: relative;
+	float: right;
+	min-width: 180px;
 }
 #menu ul li a {
 	display: block;
 	color: dimgray;
-	padding: 4px 9px 4px 8px;
+	padding: 4px 12px 4px 8px;
 	text-align: right;
 	text-decoration: none;
-	border-right: 3px solid transparent;
 	margin: 1px 0;
 }
 #menu ul li.active a {
@@ -84,13 +85,13 @@
 	border-left: 3px solid #1969CB;
 	border-top: 1px solid #ddd;
 	border-bottom: 1px solid #ddd;
-	margin: 0;
 	border-radius: 2px 0 0 2px;
 	color: black;
 }
 #menu ul li:not(.active) a:focus,
 #menu ul li:not(.active) a:hover {
-	border-right-color: #ddd;
+	border-right: 3px solid #ddd;
+	padding-right: 9px;
 	color: black;
 	text-decoration: none;
 }
@@ -119,6 +120,10 @@
 @media (max-width: 599px), (max-device-width: 599px) {
 	#menu-wrapper {
 		width: 40px;
+	}
+	#menu ul li {
+		float: none;
+		min-width: 0;
 	}
 	#main {
 		margin-left: 60px;
