@@ -180,7 +180,18 @@
 								min: 0,
 								title:
 								{
-									text: 'Media queue size'
+									text: 'Media queue size',
+									style:
+									{
+										color: Highcharts.theme.colors[1]
+									}
+								},
+								labels:
+								{
+									style:
+									{
+										color: Highcharts.theme.colors[1]
+									}
 								},
 								gridLineWidth: 0,
 								minorGridLineWidth: 0,
@@ -208,6 +219,7 @@
 						series:
 						[
 							{
+								lineWidth: 1.25,
 								yAxis: 0,
 								name: 'User queue size',
 								data: $.map(queueSizes, function(a, b)
@@ -221,6 +233,7 @@
 							},
 
 							{
+								lineWidth: 1.5,
 								yAxis: 1,
 								name: 'Media queue size',
 								data: $.map(queueSizes, function(a, b)
