@@ -30,8 +30,7 @@
 								<?php $class = ($year == date('Y') and $month == date('m')) ? 'box-cell now' : 'box-cell' ?>
 								<?php $entries = isset($yearGroup[$month]) ? $yearGroup[$month] : [] ?>
 								<?php if (count($entries)): ?>
-									<td class="<?php echo $class ?> entries-trigger" data-key="<?php printf('month-%04d-%02d', $year, $month) ?>"
-									data-tooltip="<?php printf('%s completed in %s %s: %d', ucfirst(Media::toString($viewContext->media)), $longMonthNames[$month - 1], $year, count($entries)) ?>">
+									<td class="<?php echo $class ?> entries-trigger" data-key="<?php printf('month-%04d-%02d', $year, $month) ?>" data-tooltip="<?php printf('%s completed in %s %s: %d', ucfirst(Media::toString($viewContext->media)), $longMonthNames[$month - 1], $year, count($entries)) ?>">
 								<?php else: ?>
 									<td class="<?php echo $class ?>">
 								<?php endif ?>

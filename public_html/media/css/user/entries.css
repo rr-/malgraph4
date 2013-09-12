@@ -4,7 +4,9 @@
 }
 .entries-wrapper ul {
 	margin: 0;
-	padding: 0 0 2em auto;
+	padding-top: 0;
+	padding-right: 0;
+	padding-bottom: 2em;
 }
 .entries-wrapper .close {
 	float: right;

@@ -46,7 +46,7 @@ h3 {
 .achi-entry h3,
 .achi-entry h3:after,
 .achi-entry h3:before {
-	box-shadow: 0;
+	box-shadow: none;
 	border: 0;
 	background: 0;
 }

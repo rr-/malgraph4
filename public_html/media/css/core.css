@@ -56,7 +56,6 @@ h1, h2, h3 {
 	box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);
 	opacity: .85;
 	text-align: center;
-	pointer-events: none;
 }
 #no-script {
 	background: orangered;
@@ -175,7 +174,7 @@ h3 .icon-tooltip {
 		.tooltip,
 		.tooltip span,
 		.highcharts-tooltip,
-		.highcharts-tooltip span { pointer-events: none !important; }
+		.highcharts-tooltip span { cursor: default !important; }
 		.highcharts-tooltip span { white-space: normal !important; }
 		g.highcharts-tooltip { display: none !important }
 

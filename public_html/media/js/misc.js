@@ -10,11 +10,21 @@ $(function()
 		var userName = $(this).find('[name=user-name]').val();
 		if (userName.replace(/^\s+|\s+$/, '') == '')
 		{
-			$(this).find('[name=user-name]').val('');
 			e.preventDefault();
 			e.stopPropagation();
+			$(this).find('[name=user-name]').val('');
 		}
 	});
+
+	$('.tooltip, .tooltip span, .highcharts-tooltip, .highcharts-tooltip span')
+		.click(function(e)
+		{
+			e.preventDefault();
+			e.stopPropagation();
+			$(this).hide();
+			$(document.elementFromPoint(e.clientX,e.clientY)).trigger("click");
+			$(this).show();
+		});
 });
 
 function getProcessedDate()
