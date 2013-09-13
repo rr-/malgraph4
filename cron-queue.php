@@ -22,15 +22,18 @@ function processQueue($queue, $count, $logger, $callback)
 		}
 		catch (BadProcessorKeyException $e)
 		{
+			++ $processed;
 			$logger->log('error: ' . $e->getMessage());
 		}
 		catch (DownloadFailureException $e)
 		{
+			++ $processed;
 			$logger->log('error: ' . $e->getMessage());
 			$queue->enqueue($key);
 		}
 		catch (Exception $e)
 		{
+			++ $processed;
 			$logger->log('error');
 			$logger->log($e);
 			$queue->enqueue($key);
