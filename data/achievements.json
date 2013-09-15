@@ -1385,14 +1385,33 @@
 				"type": "no-drop"
 			}
 		},
-
-		"Long runner":
+		
+		"Old anime":
 		{
-			"wiki-desc": "Special achievement given for completing 10 or more series 150+ episodes long. There are 63 such anime.",
+			"wiki-desc": "Awarded for watching 10+ old anime - that is, titles that finished airing in 1980 at most.",
 			"achievements":
 			[
 				{
-					"threshold": "10+",
+					"threshold": "10",
+					"id": "old-anime",
+					"level": "Pre-1980 anime",
+					"title": "VHS master race",
+					"desc": "You overwrote my cartoons with The Karate Kid?! MOOOM!"
+				}
+			],
+			"requirement":
+			{
+				"type": "old-titles"
+			}
+		},
+
+		"Long runner":
+		{
+			"wiki-desc": "Special achievement given for completing 15 or more series 150+ episodes long. There are 63 such anime.",
+			"achievements":
+			[
+				{
+					"threshold": "15+",
 					"id": "long-runner-anime",
 					"level": "Anime, that is.",
 					"title": "I like them long",
