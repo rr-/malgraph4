@@ -95,6 +95,16 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 				}
 				return [count($listFinished), null];
 			},
+
+			'old-titles' => function($groupData) use ($listFinished)
+			{
+				$entriesOwned = UserMediaFilter::doFilter($listFinished, function($row)
+				{
+					$year = substr($row->published_to, 0, 4);
+					return $year != '????' and intval($year) <= 1980;
+				});
+				return [count($entriesOwned), $entriesOwned];
+			}
 		];
 
 		$achievements = [];
