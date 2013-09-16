@@ -1,0 +1,42 @@
+{
+	"media": "A",
+	"order": 5,
+	"wiki-title": "Romance",
+	"wiki-desc": "Awarded for watching shy/dense people getting close to each other, or having no idea what love is.",
+	"achievements":
+	[
+		{
+			"threshold": "40-69",
+			"id": "anime-romance-1",
+			"level": "Romance: level 1",
+			"title": "Stalker",
+			"desc": "I&rsquo;ll stalk you so hard you won&rsquo;t notice me for 24 episodes. Why don&rsquo;t you love me yet?"
+		},
+		{
+			"threshold": "70-99",
+			"id": "anime-romance-2",
+			"level": "Romance: level 2",
+			"title": "Unrequited love",
+			"desc": "If you won&rsquo;t confess, they&rsquo;ll never know how you feel. But don&rsquo;t bother if you&rsquo;re the best girl - these never win."
+		},
+		{
+			"threshold": "100-149",
+			"id": "anime-romance-3",
+			"level": "Romance: level 3",
+			"title": "Sparkles and bubbles",
+			"desc": "Every time you two get close you feel butterflies in your stomach. Now kiss."
+		},
+		{
+			"threshold": "150+",
+			"id": "anime-romance-4",
+			"level": "Romance: level MAX",
+			"title": "Heart full of love",
+			"desc": "So many romance anime! You surely are an expert in relationships already."
+		}
+	],
+	"requirement":
+	{
+		"type": "genre-titles",
+		"genre": 22
+	}
+}

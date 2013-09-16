@@ -1,0 +1,86 @@
+{
+	"media": "A",
+	"order": 13,
+	"wiki-title": "Long runner",
+	"wiki-desc": "Special achievement given for completing 15 or more series 150+ episodes long. There are 63 such anime.",
+	"achievements":
+	[
+		{
+			"threshold": "15+",
+			"id": "long-runner-anime",
+			"level": "Anime, that is.",
+			"title": "I like them long",
+			"desc": "Didn&rsquo;t fall asleep while watching long anime series. 150 episodes isn&rsquo;t a big deal to you."
+		}
+	],
+	"requirement":
+	{
+		"type": "given-titles",
+		"titles":
+		[
+			"A2747",  #Astro Boy (1963) (193 episodes long)
+			"A3006",  #Atashin'chi (330)
+			"A12145", #Backkom (156)
+			"A269",   #Bleach (366)
+			"A8182",  #Bouken Shounen Shadar (156)
+			"A6131",  #Charady no Joke na Mainichi (365)
+			"A9868",  #Chinese Idiom Anime (180)
+			"A9119",  #Chirorin Mura Monogatari (170)
+			"A5189",  #Chou Tokkyuu Hikarian (156)
+			"A6119",  #Cookin' Idol Ai! Mai! Main! (305)
+			"A8123",  #Cooking Papa (151)
+			"A3825",  #Dokaben (163)
+			"A2471",  #Doraemon (1979) (1787)
+			"A2222",  #Dr. Slump: Arale-chan (243)
+			"A223",   #Dragon Ball (153)
+			"A813",   #Dragon Ball Z (291)
+			"A6702",  #Fairy Tail (175)
+			"A918",   #Gintama (201)
+			"A5534",  #Hai! Akko Desu (164)
+			"A508",   #Hamtaro (296)
+			"A7605",  #Henbe (200)
+			"A8213",  #Hoka Hoka Kazoku (1428)
+			"A11213", #Hoshi no Ko Poron (260)
+			"A249",   #InuYasha (167)
+			"A4935",  #Ikkyuu-san (296)
+			"A14211", #Instant History (312)
+			"A3683",  #Kabatotto (300)
+			"A19087", #Kaiketsu Tamagon (195)
+			"A1604",  #Katekyo Hitman Reborn! (203)
+			"A516",   #Keroro Gunsou (358)
+			"A1516",  #Kirarin Revolution (153)
+			"A6509",  #Kiteretsu Daihyakka (331)
+			"A3545",  #Kochira Katsushikaku Kameari Kouenmae Hashutsujo (TV) (367)
+			"A250",   #Konjiki no Gash Bell!! (150)
+			"A5834",  #Kyojin no Hoshi (182)
+			"A1425",  #Lupin III: Part II (155)
+			"A10135", #Manga Hajimete Monogatari (305)
+			"A6277",  #Manga Nippon Mukashibanashi (1976) (1471)
+			"A5374",  #Miracle! Mimika (225)
+			"A20",    #Naruto (220)
+			"A4936",  #Ninja Hattori-kun (694)
+			"A17601", #Nontan to Issho (263)
+			"A5202",  #Nutsberry Town (170)
+			"A9015",  #O-bake no... Holly (200)
+			"A7981",  #Obake no Q-taro (1985) (510)
+			"A9070",  #Oden-kun (156)
+			"A17467", #Otoko Ippiki Gaki Daishou (156)
+			"A11595", #Paaman (1983) (526)
+			"A527",   #Pokemon (276)
+			"A1564",  #Pokemon Advanced Generation (192)
+			"A1565",  #Pokemon Diamond & Pearl (191)
+			"A6779",  #Pokonyan! (170)
+			"A22",    #Prince of Tennis (178)
+			"A210",   #Ranma 1/2 (161)
+			"A10241", #Sekai Monoshiri Ryoko (1006)
+			"A9768",  #Shima Shima Tora no Shimajirou (726)
+			"A4598",  #Urikupen Kyuujotai (156)
+			"A1293",  #Urusei Yatsura (195)
+			"A1744",  #Wagamama Fairy Mirumo de Pon! (172)
+			"A2806",  #Yadamon (170)
+			"A3972",  #Yu-Gi-Oh! 5D's (154)
+			"A481",   #Yu-Gi-Oh! Duel Monsters (224)
+			"A482"    #Yu-Gi-Oh! Duel Monsters GX (180)
+		]
+	}
+}

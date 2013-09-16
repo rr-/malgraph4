@@ -35,6 +35,54 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 		throw new Exception('Invalid threshold: ' . $threshold);
 	}
 
+	public static function getAchievementsDefinitions()
+	{
+		$dir = Config::$achievementsDefinitionsDirectory;
+		$imgFiles = scandir(Config::$mediaDirectory . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . 'ach');
+		$definitions = array_fill_keys(Media::getConstList(), []);
+		foreach (glob($dir . DIRECTORY_SEPARATOR . '*.json') as $file)
+		{
+			$definition = TextHelper::loadJson($file);
+
+			$prevAch = null;
+			foreach ($definition->achievements as &$ach)
+			{
+				foreach ($imgFiles as $f)
+				{
+					if (preg_match('/' . $ach->id . '[^0-9a-zA-Z_-]/', $f))
+					{
+						$ach->path = $f;
+					}
+				}
+				$ach->next = null;
+			}
+
+			foreach ($definition->achievements as &$ach)
+			{
+				if ($prevAch !== null)
+				{
+					$prevAch->next = $ach;
+				}
+				$ach->prev = $prevAch;
+				$prevAch = &$ach;
+			}
+			unset($ach);
+			unset($prevAch);
+
+			$definition->achievements = array_reverse($definition->achievements);
+
+			$definitions[$definition->media] []= $definition;
+		}
+		foreach (Media::getConstList() as $key)
+		{
+			uasort($definitions[$key], function($a, $b)
+			{
+				return $a->order - $b->order;
+			});
+		}
+		return $definitions;
+	}
+
 	public static function work(&$controllerContext, &$viewContext)
 	{
 		$viewContext->viewName = 'user-achievements';
@@ -44,8 +92,7 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 		WebMediaHelper::addEntries($viewContext);
 		WebMediaHelper::addCustom($viewContext);
 
-		$achList = TextHelper::loadJson(Config::$achievementsDefinitionPath);
-		$imgFiles = scandir(Config::$mediaDirectory . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . 'ach');
+		$achList = self::getAchievementsDefinitions();
 
 		$list = $viewContext->user->getMixedUserMedia($viewContext->media);
 		$listFinished = UserMediaFilter::doFilter($list, UserMediaFilter::finished());
@@ -109,7 +156,7 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 
 		$achievements = [];
 		$hiddenCount = 0;
-		foreach ($achList->{Media::toString($viewContext->media)} as $group => $groupData)
+		foreach ($achList[$viewContext->media] as $group => $groupData)
 		{
 			//get subject and entries basing on requirement type
 			$evaluator = $evaluators[$groupData->requirement->type];
@@ -119,24 +166,6 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 			{
 				continue;
 			}
-
-			$prevAch = null;
-			foreach ($groupData->achievements as &$ach)
-			{
-				$ach->next = null;
-			}
-			foreach ($groupData->achievements as &$ach)
-			{
-				if ($prevAch !== null)
-				{
-					$prevAch->next = $ach;
-				}
-				$ach->prev = $prevAch;
-				$prevAch = &$ach;
-			}
-			unset($ach);
-			unset($prevAch);
-			$groupData->achievements = array_reverse($groupData->achievements);
 
 			//give first achievement for which the subject fits into its threshold
 			$localAchievements = [];
@@ -164,13 +193,6 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 					{
 						DataSorter::sort($entriesOwned, DataSorter::Title);
 						$ach->entries = $entriesOwned;
-					}
-					foreach ($imgFiles as $f)
-					{
-						if (preg_match('/' . $ach->id . '[^0-9a-zA-Z_-]/', $f))
-						{
-							$ach->path = $f;
-						}
 					}
 					$ach->progress = 100;
 					$ach->subject = round($subject, 2);

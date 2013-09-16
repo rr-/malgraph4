@@ -1,9 +1,8 @@
 <?php
 require_once 'src/core.php';
-$achList = TextHelper::loadJson(Config::$achievementsDefinitionPath, true);
-$imgFiles = scandir(Config::$mediaDirectory . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . 'ach');
+$achList = UserControllerAchievementsModule::getAchievementsDefinitions();
 
-$keys =
+$titles =
 	[
 		Media::Anime =>
 		[
@@ -21,22 +20,28 @@ $keys =
 
 foreach (Media::getConstList() as $media)
 {
-	foreach ($keys[$media] as $group => $keysToMerge)
+	foreach ($titles[$media] as $title => $titlesToMerge)
 	{
 		$itemsToMerge = [];
-		foreach ($keysToMerge as $keyToMerge)
+		foreach ($titlesToMerge as $titleToMerge)
 		{
-			$itemsToMerge []= $achList[Media::toString($media)][$keyToMerge];
-			unset($achList[Media::toString($media)][$keyToMerge]);
+			foreach ($achList[$media] as $key => $definition)
+			{
+				if ($definition->{'wiki-title'} == $titleToMerge)
+				{
+					$itemsToMerge []= $definition;
+					unset($achList[$media][$key]);
+				}
+			}
 		}
 
-		$finalItem = reset($itemsToMerge);
-		$finalItem['achievements'] = [];
+		$finalItem = array_shift($itemsToMerge);
+		$finalItem->{'wiki-title'} = $title;
 		foreach ($itemsToMerge as $itemToMerge)
 		{
-			$finalItem['achievements'] = array_merge($finalItem['achievements'], $itemToMerge['achievements']);
+			$finalItem->achievements = array_merge($finalItem->achievements, $itemToMerge->achievements);
 		}
-		$achList[Media::toString($media)][$group] = $finalItem;
+		$achList[$media] []= $finalItem;
 	}
 }
 ?>
@@ -62,23 +67,23 @@ anime-mahoushoujo) are 15, 30, 50 and 80.
 ---
 # <?php echo ucfirst(Media::toString($media)) ?> achievements
 
-<?php foreach ($achList[Media::toString($media)] as $groupName => $groupData): ?>
-## <?php echo $groupName ?>  
-<?php if (isset($groupData['wiki-desc'])): ?>
-<?php echo $groupData['wiki-desc'] ?>
+<?php foreach ($achList[$media] as $groupData): ?>
+<?php if (isset($groupData->{'wiki-desc'})): ?>
+## <?php echo $groupData->{'wiki-title'} ?>  
+<?php else: ?>
+## Unknown group? ?>  
+<?php endif ?>
+<?php if (isset($groupData->{'wiki-desc'})): ?>
+<?php echo $groupData->{'wiki-desc'} ?>
 <?php endif ?>
 
-<?php foreach ($groupData['achievements'] as $achievement): ?>
-<?php $path = null ?>
-<?php foreach ($imgFiles as $f): ?>
-<?php if (preg_match('/' . $achievement['id'] . '[^0-9a-zA-Z_-]/', $f)): ?>
-<?php $path = $f; ?>
-<?php endif ?>
-<?php endforeach ?>
+<?php foreach ($groupData->achievements as $achievement): ?>
 
-1. **<?php echo $achievement['title'] ?>**  
-![<?php echo $achievement['id'] ?>](<?php echo UrlHelper::absoluteUrl('/media/img/ach/' . $path) ?>)  
-<?php echo $achievement['desc'] ?>
+1. **<?php echo $achievement->title ?>**  
+<?php if (isset($achievement->path)): ?>
+![<?php echo $achievement->id ?>](<?php echo UrlHelper::absoluteUrl('/media/img/ach/' . $achievement->path) ?>)  
+<?php endif ?>
+<?php echo $achievement->desc ?>
 
 <?php endforeach ?>
 

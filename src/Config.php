@@ -18,8 +18,8 @@ class Config extends Singleton
 	static $bannedCreatorsListPath;
 	static $bannedGenresForRecsListPath;
 	static $bannedFranchiseCouplingListPath;
-	static $achievementsDefinitionPath;
 	static $staticRecommendationListPath;
+	static $achievementsDefinitionsDirectory;
 	static $logsPath;
 	static $globalsCachePath;
 	static $userQueueSizesPath;
@@ -60,8 +60,8 @@ class Config extends Singleton
 		self::$bannedCreatorsListPath = $dataRootDir . 'banned-creators.lst';
 		self::$bannedGenresForRecsListPath = $dataRootDir . 'recs-banned-genres.lst';
 		self::$bannedFranchiseCouplingListPath = $dataRootDir . 'banned-franchise-coupling.lst';
-		self::$achievementsDefinitionPath = $dataRootDir . 'achievements.json';
 		self::$staticRecommendationListPath = $dataRootDir . 'static-recommendations.lst';
+		self::$achievementsDefinitionsDirectory = $dataRootDir . 'achievements';
 
 		self::$logsPath = $dataRootDir . 'logs';
 		self::$globalsCachePath = $dataRootDir . 'globals-cache.json';

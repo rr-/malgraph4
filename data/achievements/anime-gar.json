@@ -1,0 +1,204 @@
+{
+	"media": "A",
+	"order": 3,
+	"wiki-title": "GAR",
+	"wiki-desc": "Awarded for watching anime containing manly men doing manly things.",
+	"achievements":
+	[
+		{
+			"threshold": "25-39",
+			"id": "anime-gar-1",
+			"level": "GAR: level 1",
+			"title": "So manly I can&rsquo;t breathe",
+			"desc": "Watching all those men made you feel like a little girl&hellip; and you liked it."
+		},
+		{
+			"threshold": "40-59",
+			"id": "anime-gar-2",
+			"level": "GAR: level 2",
+			"title": "Testosterone storm",
+			"desc": "Your body has adapted into GAR anime. You can hear your muscles growing."
+		},
+		{
+			"threshold": "60-99",
+			"id": "anime-gar-3",
+			"level": "GAR: level 3",
+			"title": "You are already man.",
+			"desc": "Resistance is futile. People are simply no match for you."
+		},
+		{
+			"threshold": "100+",
+			"id": "anime-gar-4",
+			"level": "GAR: level MAKSHIMUM",
+			"title": "Alpha Male",
+			"desc": "You aren&rsquo;t made out of testosterone. Testosterone is made out of you."
+		}
+	],
+	"requirement":
+	{
+		"type": "given-titles",
+		"titles":
+		[
+			"A1292",  #Afro Samurai
+			"A4970",  #Afro Samurai: Resurrection
+			"A658",   #Akagi
+			"A47",    #Akira
+			"A2356",  #Amon: The Apocalypse of Devilman
+			"A2202",  #Arcadia of My Youth
+			"A2203",  #Arcadia of My Youth: Endless Orbit SSX
+			"A2582",  #Armored Trooper Votoms
+			"A2251",  #Baccano!
+			"A3901",  #Baccano! Specials
+			"A1468",  #Baoh Raihousha
+			"A67",    #Basilisk: Kouga Ninpou Chou
+			"A404",   #Bastard!!
+			"A4094",  #Batman: Gotham Knight
+			"A9513",  #Beelzebub
+			"A33",    #Berserk
+			"A10218", #Berserk Ougon Jidaihen I: Haou no Tamago
+			"A12113", #Berserk Ougon Jidaihen II: Doldrey Kouryaku
+			"A12115", #Berserk Ougon Jidaihen III: Kourin
+			"A889",   #Black Lagoon
+			"A4901",  #Black Lagoon: Robertas Blood Trail
+			"A1519",  #Black Lagoon: The Second Barrage
+			"A3389",  #Bus Gamer
+			"A1470",  #City Hunter
+			"A1471",  #City Hunter 2
+			"A1472",  #City Hunter 3
+			"A1473",  #City Hunter 91
+			"A1474",  #City Hunter: .357 Magnum
+			"A1475",  #City Hunter: Bay City Wars
+			"A1479",  #City Hunter: Death of the Vicious Criminal Ryo Saeba
+			"A1478",  #City Hunter: Goodbye My Sweetheart
+			"A1476",  #City Hunter: Million Dollar Conspiracy
+			"A1477",  #City Hunter: The Secret Service
+			"A5032",  #Cobra the Animation
+			"A4646",  #Cobra the Animation: The Psycho-Gun
+			"A5031",  #Cobra the Animation: Time Drive
+			"A1",     #Cowboy Bebop
+			"A5",     #Cowboy Bebop: Tengoku no Tobira
+			"A114",   #Cromartie High School
+			"A6721",  #Dark Side Cat
+			"A499",   #Demon City Shinjuku
+			"A1178",  #Detonator Orgun
+			"A3702",  #Detroit Metal City
+			"A1726",  #Devil May Cry
+			"A2354",  #Devilman: The Birth
+			"A2355",  #Devilman: The Demon Bird
+			"A12885", #Dynamic Super Robots Grand Battle
+			"A12565", #Fate/Prototype
+			"A356",   #Fate/stay night
+			"A7559",  #Fate/stay night TV Reproduction
+			"A6922",  #Fate/stay night: Unlimited Blade Works
+			"A10087", #Fate/Zero
+			"A11741", #Fate/Zero 2nd Season
+			"A13183", #Fate/Zero Remix
+			"A384",   #Gantz
+			"A395",   #Gantz 2nd Stage
+			"A890",   #GaoGaiGar
+			"A1382",  #GaoGaiGar Final
+			"A4416",  #GaoGaiGar Final Grand Glorious Gathering
+			"A5776",  #GaoGaiGar: Blockaded Numbers Special
+			"A3579",  #Getter Robo
+			"A8252",  #Getter Robo (Movie)
+			"A4486",  #Getter Robo G
+			"A5292",  #Getter Robo Go
+			"A978",   #Getter Robo: Armageddon
+			"A18771", #Gifuu Doudou!!: Kanetsugu to Keiji
+			"A4039",  #Golgo 13
+			"A1761",  #Golgo 13: Queen Bee
+			"A1760",  #Golgo 13: The Professional
+			"A4385",  #Great Mazinger vs. Getter Robo
+			"A4386",  #Great Mazinger vs. Getter Robo G: Kuuchuu Dai-Gekitotsu
+			"A3481",  #Grendizer: Getter Robo G - Great Mazinger Kessen! Daikaijuu
+			"A411",   #Gun x Sword
+			"A267",   #Gungrave
+			"A263",   #Hajime no Ippo
+			"A12069", #Hajime no Ippo Special
+			"A264",   #Hajime no Ippo: Champion Road
+			"A265",   #Hajime no Ippo: Mashiba vs. Kimura
+			"A5258",  #Hajime no Ippo: New Challenger
+			"A1645",  #Harlock Saga
+			"A967",   #Hokuto no Ken
+			"A1356",  #Hokuto no Ken 2
+			"A1358",  #Hokuto no Ken Movie
+			"A7363",  #Hokuto No Ken: Legend of Heroes
+			"A2174",  #Hokuto no Ken: Raoh Gaiden Gekitou-hen
+			"A1773",  #Hokuto no Ken: Raoh Gaiden Junai-hen
+			"A4549",  #Hokuto no Ken: Raoh Gaiden Ten no Haoh
+			"A4312",  #Hokuto no Ken: Toki-den
+			"A3027",  #Hokuto no Ken: Yuria-den
+			"A5291",  #Hokuto no Ken: Zero Kenshiro Den
+			"A16774", #Inferno Cop
+			"A666",   #JoJo"s Bizarre Adventure
+			"A665",   #JoJo"s Bizarre Adventure (2000)
+			"A14719", #Jojo"s Bizarre Adventure (2012)
+			"A3603",  #JoJo"s Bizarre Adventure: Phantom Blood
+			"A3002",  #Kaiji
+			"A10271", #Kaiji: Hakairoku Hen
+			"A6293",  #Koukou Butouden Crows
+			"A820",   #Legend of the Galactic Heroes
+			"A2253",  #Mazinger Z
+			"A10625", #Mazinger Z (Movie)
+			"A3898",  #Mazinger Z vs. Devilman
+			"A4388",  #Mazinger Z vs. Dr. Hell
+			"A4406",  #Mazinger Z vs. General Dark
+			"A1064",  #Mazinkaiser
+			"A8666",  #Mazinkaiser SKL
+			"A2734",  #Mazinkaiser: Shitou! Ankoku Dai Shogun
+			"A1285",  #MD Geist
+			"A1286",  #MD Geist II: Death Force
+			"A96",    #Mobile Fighter G Gundam
+			"A6946",  #Mudazumo Naki Kaikaku: The Legend of Koizumi
+			"A1357",  #New Fist of the North Star
+			"A2978",  #New Getter Robo
+			"A1455",  #Ninja Resurrection
+			"A5040",  #One Outs
+			"A400",   #Outlaw Star
+			"A6675",  #Redline
+			"A917",   #Riding Bean
+			"A45",    #Rurouni Kenshin
+			"A46",    #Rurouni Kenshin: Ishinshishi e no Requiem
+			"A44",    #Rurouni Kenshin: Tsuiokuhen
+			"A2903",  #Sakigake!! Otokojuku
+			"A4031",  #Sakigake!! Otokojuku Movie
+			"A1608",  #Salaryman Kintarou
+			"A166",   #Samurai 7
+			"A205",   #Samurai Champloo
+			"A5355",  #Sengoku Basara
+			"A6634",  #Sengoku Basara Two
+			"A10483", #Sengoku Basara Two: Ryuko
+			"A6581",  #Sengoku Basara: Setonai no Gekitotsu! Hi wo Fuku Umi no Daiyousai - Fugaku!!
+			"A9745",  #Sengoku Basara: The Last Party
+			"A938",   #Shin Getter Robo vs. Neo Getter Robo
+			"A5485",  #Shin Mazinger Shougeki! Z-Hen
+			"A1913",  #Shonan Junai Gumi
+			"A1541",  #Souten no Ken
+			"A3864",  #Souten no Ken Specials
+			"A2451",  #Space Adventure Cobra
+			"A5742",  #Space Adventure Cobra Pilot
+			"A2452",  #Space Adventure Cobra: The Movie
+			"A1000",  #Space Pirate Captain Harlock
+			"A2470",  #Space Pirate Captain Harlock: The Mystery of Arcadia
+			"A1081",  #Space Pirate Captain Herlock: The Endless Odyssey
+			"A876",   #Street Fighter II V
+			"A1362",  #Street Fighter II: The Movie
+			"A3252",  #Super Express Mazinger 7
+			"A2418",  #Sword of the Stranger
+			"A2001",  #Tengen Toppa Gurren Lagann
+			"A5947",  #Tengen Toppa Gurren Lagann Gekijouban Zenyasai Special: Virals Sweet Dream
+			"A4107",  #Tengen Toppa Gurren Lagann Movie: Gurren-hen
+			"A4565",  #Tengen Toppa Gurren Lagann Movie: Lagann-hen
+			"A10622", #Tengen Toppa Gurren Lagann OVA
+			"A4705",  #Tengen Toppa Gurren Lagann Parallel Works
+			"A8348",  #Tengen Toppa Gurren Lagann Parallel Works 2
+			"A3352",  #Tengen Toppa Gurren Lagann Special
+			"A6",     #Trigun
+			"A4106",  #Trigun: Badlands Rumble
+			"A4387",  #UFO Robo Grendizer tai Great Mazinger
+			"A1341",  #Violence Jack
+			"A1342",  #Violence Jack 2
+			"A1343"   #Violence Jack 3
+		]
+	}
+}

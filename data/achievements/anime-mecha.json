@@ -1,0 +1,67 @@
+{
+	"media": "A",
+	"order": 4,
+	"wiki-title": "Mecha",
+	"wiki-desc": "Awarded for watching anime with humongous robots, mobile suits, etc. Matlab/LabVIEW skills are most welcome.",
+	"achievements":
+	[
+		{
+			"threshold": "25-39",
+			"id": "anime-mecha-1",
+			"level": "Mecha: level 1",
+			"title": "Me? PILOT this thing?!",
+			"desc": "A secret organization wants you to pilot a huge mecha. Can you do it?"
+		},
+		{
+			"threshold": "40-59",
+			"id": "anime-mecha-2",
+			"level": "Mecha: level 2",
+			"title": "Engineer",
+			"desc": "After watching over 40 mecha anime you should be able to build your own mobile suit. Remember not to kill the rest of us."
+		},
+		{
+			"threshold": "60-99",
+			"id": "anime-mecha-3",
+			"level": "Mecha: level 3",
+			"title": "Mechazawa",
+			"desc": "Having watched over 60 mecha anime, you&rsquo;ve probably became a robot already. Nice job, hero."
+		},
+		{
+			"threshold": "100+",
+			"id": "anime-mecha-4",
+			"level": "Mecha: level MAX",
+			"title": "Pierce the H E A V E N S !",
+			"desc": "Do the impossible. See the invisible. ROW ROW FIGHT THE POWAH! &hellip;You just sang that in your head, didn&rsquo;t you?"
+		}
+	],
+	"requirement":
+	{
+		"type": "genre-titles",
+		"genre": 18,
+		"titles":
+		[
+			"A5289",  #Beast Wars Second: LioConvoy in Imminent Danger!
+			#"A8728",  #Code Geass: Hangyaku no Lelouch - Kiseki no Birthday Picture Drama
+			"A9591",  #Code Geass: Hangyaku no Lelouch R2: Flash Specials
+			"A10534", #Doraemon: Nobita and the New Steel Troops - Angel Wings
+			"A2665",  #Doraemon: Nobita and the Platoon of Iron Men
+			"A72",    #Full Metal Panic Fumoffu
+			"A1015",  #Full Metal Panic! The Second Raid OVA
+			"A10050", #Macross Frontier Music Clip Shuu: Nyankuri
+			"A4939",  #Macross Fufonfia
+			"A1954",  #Magic Knight Rayearth OVA
+			"A2733",  #Mobile Police Patlabor Minimum
+			"A2743",  #Mobile Suit Gundam Seed: Seed Supernova - Tanekyara Gekijo
+			"A4130",  #Petit Eva: Evangelion@School
+			"A559",   #RahXephon Interlude: Her and Herself // Thatness and Thereness
+			"A2168",  #Sakura Taisen: New York
+			"A3252",  #Super Express Mazinger 7
+			"A5947",  #Tengen Toppa Gurren Lagann Gekijouban Zenyasai Special: Virals Sweet Dream
+			"A10622", #Tengen Toppa Gurren Lagann OVA
+			"A4705",  #Tengen Toppa Gurren Lagann Parallel Works
+			"A1762",  #The Heroic Legend of Arslan
+			"A14401", #Titan Rain
+			"A5462"   #Top wo Nerae! Science Lesson
+		]
+	}
+}
