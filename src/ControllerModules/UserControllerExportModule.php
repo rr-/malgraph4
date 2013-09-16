@@ -75,9 +75,14 @@ class UserControllerExportModule extends AbstractUserControllerModule
 	{
 		$bbox = imagettfbbox($fontSize, 0, $fontPath, $text);
 		$ret = new StdClass;
-		$ret->width = abs($bbox[4] - $bbox[0]);
-		$ret->height = abs($bbox[5] - $bbox[1]);
-		$ret->bbox = $bbox;
+		$ret->x1 = $bbox[6];
+		$ret->x2 = $bbox[2];
+		$ret->y1 = $bbox[5];
+		$ret->y2 = $bbox[1];
+		$ret->x = $ret->x1;
+		$ret->y = -$ret->y1;
+		$ret->width = abs($ret->x2 - $ret->x1);
+		$ret->height = abs($ret->y2 - $ret->y1);
 		return $ret;
 	}
 
@@ -160,7 +165,6 @@ class UserControllerExportModule extends AbstractUserControllerModule
 		$i = 0;
 		foreach ($texts as $text)
 		{
-			++ $i;
 			$bbox = self::getBoundingBox($settings->fontSizeNormal, $settings->font, $text);
 			if ($center)
 			{
@@ -171,8 +175,11 @@ class UserControllerExportModule extends AbstractUserControllerModule
 				$x = $w - $bbox->width - $margin;
 			}
 			$y = $i * ($settings->barHeight + $settings->barPadding);
-			$y -= ($settings->barHeight + $settings->barPadding - $bbox->height) >> 1;
+			$y += ($settings->barHeight + $settings->barPadding - $bbox->height) >> 1;
+			$x += $bbox->x;
+			$y += $bbox->y;
 			imagettftext($img, $settings->fontSizeNormal, 0, $x, $y, $settings->colors[self::COLOR_FONT_DARK], $settings->font, $text);
+			++ $i;
 		}
 		return $img;
 	}
@@ -212,22 +219,28 @@ class UserControllerExportModule extends AbstractUserControllerModule
 		$i = 0;
 		foreach (array_keys($texts1) as $key)
 		{
-			$i ++;
 			$text1 = $texts1[$key];
 			$text2 = $texts2[$key];
 			$x = $mirror
 				? $bbox2max + $bbox1max - $bbox1[$key]->width
 				: $margin + $bbox1max - $bbox1[$key]->width;
+			$x += $bbox1[$key]->x;
 			$yb = $i * ($settings->barHeight + $settings->barPadding);
 			$y = $yb;
-			$y -= ($settings->barHeight + $settings->barPadding - $bbox1[$key]->height) >> 1;
+			$y += ($settings->barHeight + $settings->barPadding - $bbox1[$key]->height) >> 1;
+			$y += $bbox1[$key]->y;
 			imagettftext($img, $settings->fontSizeNormal, 0, $x, $y, $settings->colors[self::COLOR_FONT_DARK], $settings->font, $text1);
+
 			$x = $mirror
 				? $bbox2max - $bbox2[$key]->width
 				: $margin + $bbox1max;
+			$x += $bbox2[$key]->x;
 			$y = $yb;
-			$y -= ($settings->barHeight + $settings->barPadding - $bbox2[$key]->height) >> 1;
+			$y += ($settings->barHeight + $settings->barPadding - $bbox2[$key]->height) >> 1;
+			$y += $bbox2[$key]->y;
 			imagettftext($img, $settings->fontSizeSmall, 0, $x, $y, $settings->colors[self::COLOR_FONT_LIGHT], $settings->font, $text2);
+
+			++ $i;
 		}
 		return $img;
 	}
@@ -236,45 +249,46 @@ class UserControllerExportModule extends AbstractUserControllerModule
 
 	private static function getFooterImage($settings, $distribution, $media, $mirror = false)
 	{
+		$text = 'mean rated:';
+		$bboxSmall = self::getBoundingBox($settings->fontSizeNormal, $settings->font, $text);
+		$text = join(' ', array_map(function($x) { return ucfirst(Media::toString($x)); }, Media::getConstList()));
+		$bboxBig = self::getBoundingBox($settings->fontSizeBig, $settings->font, $text);
+
 		$w = $settings->barWidth;
-		$h = self::getBoundingBox($settings->fontSizeBig, $settings->font, join(' ', array_map(['Media', 'toString'], Media::getConstList())))->height;
+		$h = $bboxBig->height;
 		$img = imagecreatetruecolor($w, $h);
 		imagealphablending($img, false);
 		imagefilledrectangle($img, 0, 0, $w, $h, $settings->colors[self::COLOR_BACKGROUND]);
 		imagealphablending($img, true);
 
 		$text = ucfirst(Media::toString($media));
-		$bbox = self::getBoundingBox($settings->fontSizeBig, $settings->font, $text);
-		$x = $mirror
-			? $w - $bbox->width
-			: 0;
-		$lx = $mirror
-			? $w - $bbox->width
-			: $bbox->width;
-		$y = $h - 3;
+		$bbox = self::getBoundingBox($settings->fontSizeBig, $settings->font, 'Anime');
+		$x = $bbox->x + ($mirror ? $w - $bbox->width : 0);
+		$y = $bbox->y + (($h - $bboxBig->height) >> 1);
 		imagettftext($img, $settings->fontSizeBig, 0, $x, $y, $settings->colors[self::COLOR_TITLE], $settings->font, $text);
+		$lx = $mirror ? $w - $bbox->width : $bbox->width;
 
 		$text1 = 'mean:  ';
 		$text2 = sprintf('%.02f', $distribution->getMeanScore());
 		$bbox1 = self::getBoundingBox($settings->fontSizeNormal, $settings->font, $text1);
 		$bbox2 = self::getBoundingBox($settings->fontSizeBig, $settings->font, $text2);
-		$x = $mirror
-			? 0
-			: ($w - $bbox1->width - $bbox2->width);
-		$rx = $mirror
-			? $bbox1->width + $bbox2->width
-			: $w - $bbox1->width - $bbox2->width;
+		$x = $bbox1->x + ($mirror ? 0 : ($w - $bbox1->width - $bbox2->width));
+		$y = $bbox2->y/*ugly but works*/ + (($bbox2->height - $bboxSmall->height) >> 1);
 		imagettftext($img, $settings->fontSizeNormal, 0, $x, $y, $settings->colors[self::COLOR_FONT_LIGHT], $settings->font, $text1);
-		$x += $bbox1->width;
+		$x += $bbox1->width + $bbox2->x;
+		$y = $bboxBig->y + (($h - $bboxBig->height) >> 1);
 		imagettftext($img, $settings->fontSizeBig, 0, $x, $y, $settings->colors[self::COLOR_FONT_DARK], $settings->font, $text2);
+		$rx = $mirror ? $bbox1->width + $bbox2->width : $w - $bbox1->width - $bbox2->width;
 
 		$text1 = 'rated:  ';
 		$text2 = $distribution->getRatedCount();
 		$bbox1 = self::getBoundingBox($settings->fontSizeNormal, $settings->font, $text1);
 		$bbox2 = self::getBoundingBox($settings->fontSizeBig, $settings->font, $text2);
-		$x = $lx + ($rx - $bbox1->width - $bbox2->width) >> 1;
+		$x = $bbox1->x + $lx + (($rx - $lx - $bbox1->width - $bbox2->width) >> 1);
+		$y = $bbox2->y/*ugly but works*/ + (($bbox2->height - $bboxSmall->height) >> 1);
 		imagettftext($img, $settings->fontSizeNormal, 0, $x, $y, $settings->colors[self::COLOR_FONT_LIGHT], $settings->font, $text1);
-		$x += $bbox1->width;
+		$x += $bbox1->width + $bbox2->x;
+		$y = $bboxBig->y + (($h - $bboxBig->height) >> 1);
 		imagettftext($img, $settings->fontSizeBig, 0, $x, $y, $settings->colors[self::COLOR_FONT_DARK], $settings->font, $text2);
 		return $img;
 	}
