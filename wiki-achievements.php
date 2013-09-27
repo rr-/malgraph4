@@ -39,12 +39,15 @@ foreach (Media::getConstList() as $media)
 		$finalItem->{'wiki-title'} = $title;
 		foreach ($itemsToMerge as $itemToMerge)
 		{
-			$finalItem->achievements = array_merge($finalItem->achievements, $itemToMerge->achievements);
+			$finalItem->achievements = array_merge(
+				$finalItem->achievements,
+				$itemToMerge->achievements);
 		}
 		$achList[$media] []= $finalItem;
 	}
 }
-?>
+
+echo <<<EOF
 All genre-based achievements have four levels. Max level images for these are
 similar to each other - black background, white glow, and a simple symbol at
 the center. Count-based badges have 12 levels, and score-based have three
@@ -59,34 +62,65 @@ automatically from genres on MAL. These can also have additional titles added
 manually, to fill up genre holes left by MAL (e.g. sequel to a historical anime
 isn&rsquo;t tagged as such).
 
-Thresholds for (most) anime genres are 25 titles for level one, 40 for
-lvl2, 60 for lvl3 and 100 for the maximum level. Manga thresholds (and
+Thresholds for (most) anime genres are 25 titles for level one, 40 for lvl2, 60
+for lvl3 and 100 for the maximum level. Manga thresholds (and
 anime-mahoushoujo) are 15, 30, 50 and 80.
 
-<?php foreach (Media::getConstList() as $media): ?>
----
-# <?php echo ucfirst(Media::toString($media)) ?> achievements
+## Table of contents
+EOF;
+printf(PHP_EOL);
 
-<?php foreach ($achList[$media] as $groupData): ?>
-<?php if (isset($groupData->{'wiki-desc'})): ?>
-## <?php echo $groupData->{'wiki-title'} ?>  
-<?php else: ?>
-## Unknown group? ?>  
-<?php endif ?>
-<?php if (isset($groupData->{'wiki-desc'})): ?>
-<?php echo $groupData->{'wiki-desc'} ?>
-<?php endif ?>
+foreach (Media::getConstList() as $media)
+{
+	printf('### %s  ' . PHP_EOL, ucfirst(Media::toString($media)));
+	foreach ($achList[$media] as $groupData)
+	{
+		printf('* [%s / %s](#%s)' . PHP_EOL,
+			ucfirst(Media::toString($media)),
+			$groupData->{'wiki-title'},
+			md5($media . $groupData->{'wiki-title'}));
+	}
+	printf(PHP_EOL);
+}
+printf(PHP_EOL);
 
-<?php foreach ($groupData->achievements as $achievement): ?>
+foreach (Media::getConstList() as $media)
+{
+	printf('## %s achievements' . PHP_EOL, ucfirst(Media::toString($media)));
 
-1. **<?php echo $achievement->title ?>**  
-<?php if (isset($achievement->path)): ?>
-![<?php echo $achievement->id ?>](<?php echo UrlHelper::absoluteUrl('/media/img/ach/' . $achievement->path) ?>)  
-<?php endif ?>
-<?php echo $achievement->desc ?>
+	foreach ($achList[$media] as $groupData)
+	{
+		printf('<div id="%s"></div>' . PHP_EOL,
+			md5($media . $groupData->{'wiki-title'}));
 
-<?php endforeach ?>
+		printf('### %s / %s  ' . PHP_EOL,
+			ucfirst(Media::toString($media)),
+			$groupData->{'wiki-title'});
 
+		if (isset($groupData->{'wiki-desc'}))
+		{
+			printf($groupData->{'wiki-desc'});
+		}
+		printf(PHP_EOL);
+		printf(PHP_EOL);
 
-<?php endforeach ?>
-<?php endforeach ?>
+		printf('<table>');
+		foreach ($groupData->achievements as $achievement)
+		{
+			printf('<tr><td>');
+			if (isset($achievement->path))
+			{
+				$url = '/media/img/ach/' . $achievement->path;
+				printf('![%s](%s)' . PHP_EOL,
+					$achievement->id,
+					UrlHelper::absoluteUrl($url));
+			}
+			printf('</td><td>');
+			printf('**%s**  ' . PHP_EOL, $achievement->title);
+			printf('%s' . PHP_EOL, $achievement->desc);
+			printf('</td></tr>' . PHP_EOL);
+		}
+		printf('</table>' . '&nbsp;'/*markdown bug*/ . PHP_EOL);
+	}
+	printf(PHP_EOL);
+}

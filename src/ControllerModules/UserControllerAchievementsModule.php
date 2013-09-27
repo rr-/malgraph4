@@ -44,6 +44,11 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 		{
 			$definition = TextHelper::loadJson($file);
 
+			if ($definition->{'wiki-title'} === null)
+			{
+				$definition->{'wiki-title'} = 'Unknown group';
+			}
+
 			$prevAch = null;
 			foreach ($definition->achievements as &$ach)
 			{
@@ -68,8 +73,6 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 			}
 			unset($ach);
 			unset($prevAch);
-
-			$definition->achievements = array_reverse($definition->achievements);
 
 			$definitions[$definition->media] []= $definition;
 		}
@@ -161,6 +164,8 @@ class UserControllerAchievementsModule extends AbstractUserControllerModule
 			//get subject and entries basing on requirement type
 			$evaluator = $evaluators[$groupData->requirement->type];
 			list ($subject, $entriesOwned) = $evaluator($groupData);
+
+			$groupData->achievements = array_reverse($groupData->achievements);
 
 			if ($subject === null)
 			{
