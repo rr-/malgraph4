@@ -1,0 +1,42 @@
+{
+	"media": "M",
+	"order": 6,
+	"wiki-title": "Horror",
+	"wiki-desc": "Horrors in anime are a joke, but at least in manga they're somewhat decent.",
+	"achievements":
+	[
+		{
+			"threshold": "40-69",
+			"id": "manga-horror-1",
+			"level": "Horror: level 1",
+			"title": "HONEY, I&rsquo;M HOME",
+			"desc": "WHAT IS FOR DINNER TODAY"
+		},
+		{
+			"threshold": "70-99",
+			"id": "manga-horror-2",
+			"level": "Horror: level 2",
+			"title": "Lovely smile of a psychopath",
+			"desc": "You can&rsquo;t spell slaughter without laughter."
+		},
+		{
+			"threshold": "100-149",
+			"id": "manga-horror-3",
+			"level": "Horror: level 3",
+			"title": "What have I become?",
+			"desc": "Sweetheart, something&rsquo;s wrong with your make up&hellip;"
+		},
+		{
+			"threshold": "150+",
+			"id": "manga-horror-4",
+			"level": "Horror: level MAX",
+			"title": "Heart attack",
+			"desc": "Not all surprises are pleasant, but it looks like you love being scared."
+		}
+	],
+	"requirement":
+	{
+		"type": "genre-titles",
+		"genre": 14
+	}
+}
