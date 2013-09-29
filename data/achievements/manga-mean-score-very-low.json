@@ -1,15 +1,15 @@
 {
-	"media": "A",
+	"media": "M",
 	"order": 19,
 	"wiki-title": "Very low mean score",
 	"achievements":
 	[
 		{
 			"threshold": "0-2.99",
-			"id": "score-anime-lessthanthree",
-			"level": "0/10. Play next one.",
-			"title": "Less than three",
-			"desc": "Mean anime score lower than 3. Is it hate, or is it love?",
+			"id": "score-manga-lowest",
+			"level": "Lowest of the low",
+			"title": "Best I can do is 2",
+			"desc": "Mean manga score below 3.0. Aren&rsquo;t you a bit too harsh?",
 			"tooltip": "Mean score: {progress-subject}"
 		}
 	],
