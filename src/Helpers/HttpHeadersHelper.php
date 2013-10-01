@@ -46,6 +46,9 @@ class HttpHeadersHelper
 
 	public static function setCurrentHeader($key, $value)
 	{
-		header("$key: $value");
+		if (isset($_SERVER['HTTP_HOST']))
+		{
+			header("$key: $value");
+		}
 	}
 }
