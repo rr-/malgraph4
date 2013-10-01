@@ -14,6 +14,16 @@ class CronRunner
 
 	public static function run($fileName, $callback)
 	{
+		try
+		{
+			SingleInstance::run($fileName);
+		}
+		catch (InstanceAlreadyRunningException $e)
+		{
+			self::$finished = true;
+			exit(1);
+		}
+
 		$logger = new Logger($fileName);
 		$logger->log('Working');
 
@@ -21,15 +31,7 @@ class CronRunner
 
 		try
 		{
-			SingleInstance::run($fileName);
 			$callback($logger);
-		}
-		catch (InstanceAlreadyRunningException $e)
-		{
-			$logger->log('Instance already running');
-			$logger->log('Finished with errors');
-			self::$finished = true;
-			exit(1);
 		}
 		catch (Exception $e)
 		{
