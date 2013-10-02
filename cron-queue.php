@@ -83,13 +83,15 @@ CronRunner::run(__FILE__, function($logger)
 			}
 
 			#append media to queue
+			$mediaIds = [];
 			foreach (Media::getConstList() as $media)
 			{
 				foreach ($userContext->user->getMixedUserMedia($media) as $entry)
 				{
-					$mediaQueue->enqueue(TextHelper::serializeMediaId($entry));
+					$mediaIds []= TextHelper::serializeMediaId($entry);
 				}
 			}
+			$mediaQueue->enqueue($mediaIds);
 
 			$logger->log('ok');
 			return true;
