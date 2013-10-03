@@ -4,30 +4,40 @@ require_once 'src/core.php';
 $limit = 500;
 $userProcessor = new UserProcessor();
 
-$query = 'SELECT uf.name FROM userfriend uf' .
-	' LEFT JOIN user u ON u.name = uf.name' .
-	' WHERE u.id IS NULL' .
-	' GROUP BY uf.name' .
-	' ORDER BY RANDOM()' .
-	' LIMIT ?';
-$rows = R::getAll($query, [$limit]);
-$rows = ReflectionHelper::arraysToClasses($rows);
-$done = 0;
+$oldNames = [];
+$newNames = [];
+foreach (Database::getAllDbNames() as $dbName)
+{
+	Database::attachDatabase($dbName);
+	$query = 'SELECT name FROM userfriend' .
+		' GROUP BY name' .
+		' ORDER BY RANDOM()' .
+		' LIMIT ?';
+	$localNewNames = array_map(function($x) { return $x['name']; },
+		R::getAll($query, [$limit]));
 
+	$query = 'SELECT name FROM user ORDER BY name LIMIT ?';
+	$localOldNames = array_map(function($x) { return $x['name']; },
+		R::getAll($query, [$limit]));
+
+	$oldNames = array_merge($oldNames, $localOldNames);
+	$newNames = array_merge($newNames, $localNewNames);
+}
+$newNames = array_diff($newNames, $oldNames);
+$newNames = array_slice($newNames, 0, $limit);
+
+$pad = strlen(count($newNames));
+$done = 0;
 $exitCode = 0;
-foreach ($rows as $row)
+foreach ($newNames as $name)
 {
 	try
 	{
-		R::transaction(function() use ($userProcessor, $row, &$done, $rows)
-		{
-			$length = strlen(count($rows));
-			++ $done;
-			printf("(%0${length}d/%d) Processing user %s" . PHP_EOL,
-				$done, count($rows), $row->name);
+		++ $done;
+		printf("(%0{$pad}d/%d) Processing user %s" . PHP_EOL,
+			$done, count($newNames), $name);
 
-			$userProcessor->process($row->name);
-		});
+		$userProcessor->process($name);
 	}
 	catch (Exception $e)
 	{

@@ -1,16 +1,55 @@
 <?php
+
 class Database extends Singleton
 {
 	public static function doInit()
 	{
 		include implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'lib', 'redbean', 'RedBean', 'redbean.inc.php']);
+		ReflectionHelper::loadClasses(__DIR__ . DIRECTORY_SEPARATOR . 'Models');
+		self::loadDatabase('media.sqlite');
+	}
 
-		R::setup('sqlite:' . Config::$dbPath);
+	public static function userNameToDbName($userName)
+	{
+		$names = self::getAllDbNames();
+		mt_srand(crc32(strtolower($userName)));
+		return $names[mt_rand(0, count($names) - 1)];
+	}
+
+	public static function getAllDbNames()
+	{
+		$ret = [];
+		foreach (range(0, Config::$dbCount - 1) as $i)
+		{
+			$ret []= sprintf('user-%02x.sqlite', $i);
+		}
+		return $ret;
+	}
+
+	public static function selectUser($userName)
+	{
+		return self::attachDatabase(self::userNameToDbName($userName));
+	}
+
+	public static function loadDatabase($dbFile)
+	{
+		$path = Config::$dbPath . DIRECTORY_SEPARATOR . $dbFile;
+		R::setup('sqlite:' . $path);
 		R::freeze(true);
 		R::exec('PRAGMA foreign_keys=ON');
 		R::exec('PRAGMA temp_store=MEMORY');
+	}
 
-		ReflectionHelper::loadClasses(__DIR__ . DIRECTORY_SEPARATOR . 'Models');
+	private static $attached = false;
+	public static function attachDatabase($dbFile)
+	{
+		if (self::$attached)
+		{
+			R::exec('DETACH DATABASE userdb');
+		}
+		$path = Config::$dbPath . DIRECTORY_SEPARATOR . $dbFile;
+		R::exec('ATTACH DATABASE ? AS userdb', [$path]);
+		self::$attached = true;
 	}
 
 	public static function insert($tableName, $allRows)

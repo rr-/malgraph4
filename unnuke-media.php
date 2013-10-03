@@ -7,34 +7,40 @@ $mediaProcessors =
 	Media::Manga => new MangaProcessor()
 ];
 
-$query = 'SELECT um.mal_id, um.media FROM usermedia um' .
-	' GROUP BY um.media, um.mal_id' .
-	' HAVING NOT EXISTS(' .
-		'SELECT null FROM media m' .
-		' WHERE m.mal_id = um.mal_id AND m.media = um.media' .
-	') ORDER BY um.mal_id';
-$rows = R::getAll($query);
-$rows = ReflectionHelper::arraysToClasses($rows);
-$done = 0;
+$mediaIds = [];
+foreach (Database::getAllDbNames() as $dbName)
+{
+	Database::attachDatabase($dbName);
+	$query = 'SELECT um.mal_id, um.media FROM usermedia um' .
+		' GROUP BY um.media, um.mal_id' .
+		' HAVING NOT EXISTS(' .
+			'SELECT null FROM media m' .
+			' WHERE m.mal_id = um.mal_id AND m.media = um.media' .
+		') ORDER BY um.mal_id';
+	$localMediaIds = array_map(function($row)
+		{
+			$row =ReflectionHelper::arrayToClass($row);
+			return TextHelper::serializeMediaId($row);
+		},
+		R::getAll($query));
+	$mediaIds = array_merge($mediaIds, $localMediaIds);
+}
+$mediaIds = array_unique($mediaIds);
 
+$pad = strlen(count($mediaIds));
+$done = 0;
 $exitCode = 0;
-foreach (array_chunk($rows, Config::$transactionCommitFrequency) as $chunk)
+foreach ($mediaIds as $mediaId)
 {
 	try
 	{
-		R::transaction(function() use ($mediaProcessors, $chunk, &$done, $rows)
-		{
-			$length = strlen(count($rows));
-			foreach ($chunk as $row)
-			{
-				++ $done;
-				printf("(%0${length}d/%d) Processing %s #%d" . PHP_EOL,
-					$done, count($rows),
-					Media::toString($row->media), $row->mal_id);
+		++ $done;
+		list($media, $malId) = TextHelper::deserializeMediaId($mediaId);
+		printf("(%0{$pad}d/%d) Processing %s #%d" . PHP_EOL,
+			$done, count($mediaIds),
+			Media::toString($media), $malId);
 
-				$mediaProcessors[$row->media]->process($row->mal_id);
-			}
-		});
+		$mediaProcessors[$media]->process($malId);
 	}
 	catch (Exception $e)
 	{
@@ -42,5 +48,4 @@ foreach (array_chunk($rows, Config::$transactionCommitFrequency) as $chunk)
 		$exitCode = 1;
 	}
 }
-
 exit($exitCode);

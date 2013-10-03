@@ -11,6 +11,7 @@ class Config extends Singleton
 	static $cacheEnabled;
 	static $cacheTimeToLive;
 	static $dbPath;
+	static $dbCount;
 	static $maxDbBindings;
 	static $transactionCommitFrequency;
 	static $bannedUsersListPath;
@@ -51,7 +52,8 @@ class Config extends Singleton
 		self::$cachePath = $dataRootDir . 'cache';
 		self::$cacheTimeToLive = 24 * 60 * 60;
 
-		self::$dbPath = $dataRootDir . 'db.sqlite';
+		self::$dbPath = $dataRootDir . 'db';
+		self::$dbCount = 64;
 		self::$transactionCommitFrequency = 20;
 		self::$maxDbBindings = 50;
 

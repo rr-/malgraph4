@@ -1,8 +1,15 @@
 <?php
 require_once 'src/core.php';
-$tables = ['userfriend', 'userclub', 'usermedia', 'userhistory', 'user'];
-foreach ($tables as $table)
+
+foreach (Database::getAllDbNames() as $dbName)
 {
-	echo 'Deleting from ' . $table . PHP_EOL;
-	R::exec('DELETE FROM ' . $table);
+	echo $dbName . ': ';
+	Database::attachDatabase($dbName);
+	$tables = ['userfriend', 'userclub', 'usermedia', 'userhistory', 'user'];
+	foreach ($tables as $table)
+	{
+		echo $table . '... ';
+		R::exec('DELETE FROM ' . $table);
+	}
+	echo PHP_EOL;
 }

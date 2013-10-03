@@ -86,22 +86,14 @@ class Model_MixedUserMedia
 
 	public static function getRatingDistribution($media, $doRecompute = false)
 	{
-		$dist = file_exists(Config::$globalsCachePath)
-			? TextHelper::loadJson(Config::$globalsCachePath, true)
-			: [];
-
-		if (empty($dist) or $doRecompute)
+		$query = 'SELECT score, COUNT(score) AS count FROM usermedia WHERE media = ? GROUP BY score';
+		$result = R::getAll($query, [$media]);
+		$dist[$media] = [];
+		foreach ($result as $row)
 		{
-			$query = 'SELECT score, COUNT(score) AS count FROM usermedia WHERE media = ? GROUP BY score';
-			$result = R::getAll($query, [$media]);
-			$dist[$media] = [];
-			foreach ($result as $row)
-			{
-				$count = $row['count'];
-				$score = $row['score'];
-				$dist[$media][$score] = $count;
-			}
-			TextHelper::putJson(Config::$globalsCachePath, $dist);
+			$count = $row['count'];
+			$score = $row['score'];
+			$dist[$media][$score] = $count;
 		}
 		return RatingDistribution::fromArray($dist[$media]);
 	}

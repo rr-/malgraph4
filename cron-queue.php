@@ -60,6 +60,7 @@ CronRunner::run(__FILE__, function($logger)
 		$logger,
 		function($userName) use ($userProcessor, $mediaQueue, $logger)
 		{
+			Database::selectUser($userName);
 			$logger->logFragment('Processing user %s... ', $userName);
 
 			#check if processed too soon

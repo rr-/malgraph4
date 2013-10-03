@@ -1,11 +1,4 @@
 <?php
-R::dependencies([
-	'userfriend' => ['user'],
-	'userclub' => ['user'],
-	'usermedia' => ['user'],
-	'userhistory' => ['user'],
-]);
-
 class Model_User extends RedBean_SimpleModel
 {
 	public function getMixedUserMedia($media)
@@ -55,7 +48,7 @@ class Model_User extends RedBean_SimpleModel
 	public static function getCount()
 	{
 		$query = 'SELECT COUNT(*) AS count FROM user';
-		return R::getAll($query)[0]['count'];
+		return intval(R::getAll($query)[0]['count']);
 	}
 
 	public static function getCoolUsers($goal)

@@ -3,6 +3,7 @@ class UserProcessor extends AbstractProcessor
 {
 	public function beforeProcessing(&$context)
 	{
+		Database::selectUser($context->key);
 		$user = R::findOne('user', 'LOWER(name) = LOWER(?)', [$context->key]);
 		if (empty($user))
 		{

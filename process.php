@@ -20,6 +20,10 @@ $exitCode = 0;
 foreach ($argv as $key)
 {
 	printf('Processing %s %s' . PHP_EOL, $pkey, is_numeric($key) ? '#' . $key : $key);
+	if ($pkey === 'user')
+	{
+		Database::selectUser($key);
+	}
 	try
 	{
 		$processor->process($key);

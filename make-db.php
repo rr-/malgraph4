@@ -3,6 +3,7 @@ require_once 'src/core.php';
 
 try
 {
+	Database::loadDatabase('user.sqlite');
 	R::freeze(false);
 	R::nuke();
 	R::exec('CREATE TABLE IF NOT EXISTS user (
@@ -32,8 +33,7 @@ try
 		id INTEGER PRIMARY KEY,
 		user_id INTEGER,
 		name VARCHAR(32),
-		UNIQUE (user_id, name),
-		FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE CASCADE
+		UNIQUE (user_id, name)
 	)');
 
 	R::exec('CREATE TABLE IF NOT EXISTS userclub (
@@ -41,8 +41,7 @@ try
 		user_id INTEGER,
 		mal_id INTEGER,
 		name VARCHAR(96),
-		UNIQUE (user_id, mal_id),
-		FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE CASCADE
+		UNIQUE (user_id, mal_id)
 	)');
 
 	R::exec('CREATE TABLE IF NOT EXISTS userhistory (
@@ -51,9 +50,9 @@ try
 		mal_id INTEGER,
 		media VARCHAR(1),
 		progress INTEGER,
-		timestamp TIMESTAMP,
-		FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE CASCADE
+		timestamp TIMESTAMP
 	)');
+	R::exec('CREATE INDEX IF NOT EXISTS ind_userhistory_user ON userhistory (user_id)');
 
 	R::exec('CREATE TABLE IF NOT EXISTS usermedia (
 		id INTEGER PRIMARY KEY,
@@ -67,15 +66,26 @@ try
 
 		finished_episodes INTEGER,
 		finished_chapters INTEGER,
-		finished_volumes INTEGER,
-
-		UNIQUE (user_id, mal_id, media),
-		FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE CASCADE
+		finished_volumes INTEGER
 	)');
-	R::exec('CREATE INDEX IF NOT EXISTS ind_usermedia_score ON usermedia (score)');
+	R::exec('CREATE INDEX IF NOT EXISTS ind_usermedia_uesr ON usermedia (user_id);');
+	#R::exec('CREATE INDEX IF NOT EXISTS ind_usermedia_score ON usermedia (score)');
 	R::exec('CREATE INDEX IF NOT EXISTS ind_usermedia_mediascore ON usermedia(media,score)');
 	R::exec('CREATE INDEX IF NOT EXISTS ind_usermedia_mediamalid ON usermedia(media,mal_id)');
 
+	$path1 = Config::$dbPath . DIRECTORY_SEPARATOR . 'user.sqlite';
+	foreach (Database::getAllDbNames() as $dbName)
+	{
+		$path2 = Config::$dbPath . DIRECTORY_SEPARATOR . $dbName;
+		copy($path1, $path2);
+	}
+	unlink($path1);
+
+
+
+	Database::loadDatabase('media.sqlite');
+	R::freeze(false);
+	R::nuke();
 	R::exec('CREATE TABLE IF NOT EXISTS media (
 		id INTEGER PRIMARY KEY,
 		mal_id INTEGER,
@@ -101,7 +111,7 @@ try
 		serialization_id INTEGER,
 		serialization_name VARCHAR(32),
 
-		UNIQUE (mal_id, media)
+		UNIQUE (media, mal_id)
 	)');
 	#R::exec('CREATE INDEX IF NOT EXISTS ind_media_mediamalid ON media(media,mal_id)');
 
@@ -109,16 +119,14 @@ try
 		id INTEGER PRIMARY KEY,
 		media_id INTEGER,
 		mal_id INTEGER,
-		name VARCHAR(30),
-		FOREIGN KEY(media_id) REFERENCES media(id) ON DELETE CASCADE
+		name VARCHAR(30)
 	)');
 
 	R::exec('CREATE TABLE IF NOT EXISTS mediatag (
 		id INTEGER PRIMARY KEY,
 		media_id INTEGER,
 		name INTEGER,
-		count VARCHAR(30),
-		FOREIGN KEY(media_id) REFERENCES media(id) ON DELETE CASCADE
+		count VARCHAR(30)
 	)');
 
 	R::exec('CREATE TABLE IF NOT EXISTS mediarelation (
@@ -126,32 +134,28 @@ try
 		media_id INTEGER,
 		mal_id INTEGER,
 		media VARCHAR(1),
-		type INTEGER,
-		FOREIGN KEY(media_id) REFERENCES media(id) ON DELETE CASCADE
+		type INTEGER
 	)');
 
 	R::exec('CREATE TABLE IF NOT EXISTS animeproducer (
 		id INTEGER PRIMARY KEY,
 		media_id INTEGER,
 		mal_id INTEGER,
-		name VARCHAR(32),
-		FOREIGN KEY(media_id) REFERENCES media(id) ON DELETE CASCADE
+		name VARCHAR(32)
 	)');
 
 	R::exec('CREATE TABLE IF NOT EXISTS mangaauthor (
 		id INTEGER PRIMARY KEY,
 		media_id INTEGER,
 		mal_id INTEGER,
-		name VARCHAR(32),
-		FOREIGN KEY(media_id) REFERENCES media(id) ON DELETE CASCADE
+		name VARCHAR(32)
 	)');
 
 	R::exec('CREATE TABLE IF NOT EXISTS mediarec (
 		id INTEGER PRIMARY KEY,
 		media_id INTEGER,
 		mal_id INTEGER,
-		count INTEGER,
-		FOREIGN KEY(media_id) REFERENCES media(id) ON DELETE CASCADE
+		count INTEGER
 	)');
 	R::exec('CREATE INDEX IF NOT EXISTS ind_mediarec_mediaid ON mediarec (media_id)');
 }

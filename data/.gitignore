@@ -2,7 +2,5 @@ queue-users.lst
 queue-media.lst
 banned-users.lst
 errors.log
-db.sqlite
-db.sqlite-journal
 globals-cache.json
 queue-sizes.json

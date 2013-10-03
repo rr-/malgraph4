@@ -21,15 +21,14 @@ class IndexControllerGlobalsModule extends AbstractControllerModule
 		WebMediaHelper::addMiniSections($viewContext);
 		WebMediaHelper::addCustom($viewContext);
 
-		$viewContext->userCount = Model_User::getCount();
+		$globalsCache = file_exists(Config::$globalsCachePath)
+			? TextHelper::loadJson(Config::$globalsCachePath, true)
+			: [];
+
+		$viewContext->userCount = $globalsCache['user-count'];
+		$viewContext->mediaCount = $globalsCache['media-count'];
+		$viewContext->ratingDistribution = array_map(function($v) { return RatingDistribution::fromArray($v); }, $globalsCache['rating-dist']);
 		$viewContext->queuedUserCount = (new Queue(Config::$userQueuePath))->size();
-		$viewContext->mediaCount = [];
-		$viewContext->ratingDistribution = [];
-		foreach (Media::getConstList() as $media)
-		{
-			$viewContext->mediaCount[$media] = Model_Media::getCount($media);
-			$viewContext->ratingDistribution[$media] = Model_MixedUserMedia::getRatingDistribution($media);
-		}
 		$viewContext->queueSizes = TextHelper::loadJson(Config::$userQueueSizesPath, true);
 	}
 }
