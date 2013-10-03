@@ -43,6 +43,7 @@ else
 			HttpHeadersHelper::setCurrentHeader('Location', $fixedUrl);
 			exit(0);
 		}
+		$controllerContext->url = $url;
 
 		$workingClassName = null;
 		foreach ($classNames as $className)

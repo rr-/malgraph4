@@ -71,6 +71,16 @@ class UserController extends AbstractController
 		if (empty($user))
 		{
 			$controllerContext->cache->bypass(true);
+			//try to load cache, if it exists
+			$url = $controllerContext->url;
+			if ($controllerContext->cache->exists($url))
+			{
+				$controllerContext->cache->load($url);
+				flush();
+				$viewContext->layoutName  = null;
+				$viewContext->viewName = null;
+				return;
+			}
 			$viewContext->queuePosition = $queuePosition;
 			$viewContext->userName = $controllerContext->userName;
 			$viewContext->viewName = 'error-user-enqueued';

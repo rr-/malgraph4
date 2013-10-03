@@ -42,18 +42,24 @@ class Cache
 		echo $contents;
 	}
 
+	public function exists($url)
+	{
+		$path = $this->urlToPath($url);
+		return file_exists($path);
+	}
+
 	public function isFresh($url)
 	{
 		$path = $this->urlToPath($url);
+		if (!$this->exists($url))
+		{
+			return false;
+		}
 		if ($this->isBypassed())
 		{
 			return false;
 		}
 		if (!Config::$cacheEnabled)
-		{
-			return false;
-		}
-		if (!file_exists($path))
 		{
 			return false;
 		}
