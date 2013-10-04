@@ -35,6 +35,7 @@ try
 		name VARCHAR(32),
 		UNIQUE (user_id, name)
 	)');
+	R::exec('CREATE INDEX IF NOT EXISTS idx_userfriend_user_id ON userfriend (user_id)');
 
 	R::exec('CREATE TABLE IF NOT EXISTS userclub (
 		id INTEGER PRIMARY KEY,
@@ -43,6 +44,7 @@ try
 		name VARCHAR(96),
 		UNIQUE (user_id, mal_id)
 	)');
+	R::exec('CREATE INDEX IF NOT EXISTS idx_userclub_user_id ON userclub (user_id)');
 
 	R::exec('CREATE TABLE IF NOT EXISTS userhistory (
 		id INTEGER PRIMARY KEY,
@@ -52,7 +54,7 @@ try
 		progress INTEGER,
 		timestamp TIMESTAMP
 	)');
-	R::exec('CREATE INDEX IF NOT EXISTS ind_userhistory_user ON userhistory (user_id)');
+	R::exec('CREATE INDEX IF NOT EXISTS idx_userhistory_user_id ON userhistory (user_id)');
 
 	R::exec('CREATE TABLE IF NOT EXISTS usermedia (
 		id INTEGER PRIMARY KEY,
@@ -68,10 +70,9 @@ try
 		finished_chapters INTEGER,
 		finished_volumes INTEGER
 	)');
-	R::exec('CREATE INDEX IF NOT EXISTS ind_usermedia_uesr ON usermedia (user_id);');
-	#R::exec('CREATE INDEX IF NOT EXISTS ind_usermedia_score ON usermedia (score)');
-	R::exec('CREATE INDEX IF NOT EXISTS ind_usermedia_mediascore ON usermedia(media,score)');
-	R::exec('CREATE INDEX IF NOT EXISTS ind_usermedia_mediamalid ON usermedia(media,mal_id)');
+	R::exec('CREATE INDEX IF NOT EXISTS idx_usermedia_user_id ON usermedia (user_id)');
+	R::exec('CREATE INDEX IF NOT EXISTS idx_usermedia_media_score ON usermedia(media,score)');
+	R::exec('CREATE INDEX IF NOT EXISTS idx_usermedia_media_mal_id ON usermedia(media,mal_id)');
 
 	foreach (Database::getAllDbNames() as $dbName)
 	{
@@ -111,7 +112,6 @@ try
 
 		UNIQUE (media, mal_id)
 	)');
-	#R::exec('CREATE INDEX IF NOT EXISTS ind_media_mediamalid ON media(media,mal_id)');
 
 	R::exec('CREATE TABLE IF NOT EXISTS mediagenre (
 		id INTEGER PRIMARY KEY,
@@ -119,6 +119,7 @@ try
 		mal_id INTEGER,
 		name VARCHAR(30)
 	)');
+	R::exec('CREATE INDEX IF NOT EXISTS idx_mediagenre_media_id ON mediagenre (media_id)');
 
 	R::exec('CREATE TABLE IF NOT EXISTS mediatag (
 		id INTEGER PRIMARY KEY,
@@ -126,6 +127,7 @@ try
 		name INTEGER,
 		count VARCHAR(30)
 	)');
+	R::exec('CREATE INDEX IF NOT EXISTS idx_mediatag_media_id ON mediatag (media_id)');
 
 	R::exec('CREATE TABLE IF NOT EXISTS mediarelation (
 		id INTEGER PRIMARY KEY,
@@ -134,6 +136,7 @@ try
 		media VARCHAR(1),
 		type INTEGER
 	)');
+	R::exec('CREATE INDEX IF NOT EXISTS idx_mediarelation_media_id ON mediarelation (media_id)');
 
 	R::exec('CREATE TABLE IF NOT EXISTS animeproducer (
 		id INTEGER PRIMARY KEY,
@@ -141,6 +144,7 @@ try
 		mal_id INTEGER,
 		name VARCHAR(32)
 	)');
+	R::exec('CREATE INDEX IF NOT EXISTS idx_animeproducer_media_id ON animeproducer (media_id)');
 
 	R::exec('CREATE TABLE IF NOT EXISTS mangaauthor (
 		id INTEGER PRIMARY KEY,
@@ -148,6 +152,7 @@ try
 		mal_id INTEGER,
 		name VARCHAR(32)
 	)');
+	R::exec('CREATE INDEX IF NOT EXISTS idx_mangaauthor_media_id ON mangaauthor (media_id)');
 
 	R::exec('CREATE TABLE IF NOT EXISTS mediarec (
 		id INTEGER PRIMARY KEY,
@@ -155,7 +160,7 @@ try
 		mal_id INTEGER,
 		count INTEGER
 	)');
-	R::exec('CREATE INDEX IF NOT EXISTS ind_mediarec_mediaid ON mediarec (media_id)');
+	R::exec('CREATE INDEX IF NOT EXISTS idx_mediarec_mediaid ON mediarec (media_id)');
 }
 catch (Exception $e)
 {
