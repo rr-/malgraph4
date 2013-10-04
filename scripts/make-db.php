@@ -71,6 +71,7 @@ try
 		finished_volumes INTEGER
 	)');
 	R::exec('CREATE INDEX IF NOT EXISTS idx_usermedia_user_id ON usermedia (user_id)');
+	R::exec('CREATE INDEX IF NOT EXISTS idx_usermedia_score ON usermedia(score)');
 	R::exec('CREATE INDEX IF NOT EXISTS idx_usermedia_media_score ON usermedia(media,score)');
 	R::exec('CREATE INDEX IF NOT EXISTS idx_usermedia_media_mal_id ON usermedia(media,mal_id)');
 
