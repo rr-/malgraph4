@@ -102,7 +102,7 @@ class Queue
 		$lines = array_values(array_flip(array_flip($lines))); //faster alternative to array_unique
 		$indexes = [];
 		$flipped = array_flip($lines);
-		foreach ($newLines as $newLine)
+		foreach ((array) $newLines as $newLine)
 		{
 			$indexes []= $flipped[$newLine] + 1;
 		}
