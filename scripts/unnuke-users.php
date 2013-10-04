@@ -1,5 +1,5 @@
 <?php
-require_once 'src/core.php';
+require_once __DIR__ . '/../src/core.php';
 
 $limit = 500;
 $userProcessor = new UserProcessor();

@@ -1,5 +1,6 @@
 <?php
-require_once 'src/core.php';
+require_once __DIR__ . '/../src/core.php';
+
 CronRunner::run(__FILE__, function($logger)
 {
 	$userCount = 0;

@@ -1,5 +1,6 @@
 <?php
-require_once 'src/core.php';
+require_once __DIR__ . '/../src/core.php';
+
 $achList = UserControllerAchievementsModule::getAchievementsDefinitions();
 
 $titles =
