@@ -99,19 +99,19 @@ class Queue
 		$lines = $this->readLines();
 
 		$lines = array_values($lines);
-		$newLines = array_values((array) $newLines);
-		$flipped = array_flip($lines);
-		$x = count($flipped);
+		$linesToAdd = array_values((array) $newLines);
+		$linesFlipped = array_flip($lines);
+		$x = count($linesFlipped);
 		$indexes = [];
-		foreach ((array) $newLines as $newLine)
+		foreach ($linesToAdd as $lineToAdd)
 		{
-			if (isset($flipped[$newLine]))
+			if (isset($linesFlipped[$lineToAdd]))
 			{
-				$indexes []= $flipped[$newLine] + 1;
+				$indexes []= $linesFlipped[$lineToAdd] + 1;
 			}
 			else
 			{
-				$lines []= $newLine;
+				$lines []= $lineToAdd;
 				$x ++;
 				$indexes []= $x;
 			}
