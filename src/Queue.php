@@ -97,15 +97,26 @@ class Queue
 	{
 		$this->open();
 		$lines = $this->readLines();
-		$lines = array_merge($lines, (array) $newLines);
-		#$lines = array_unique($lines);
-		$lines = array_values(array_flip(array_flip($lines))); //faster alternative to array_unique
-		$indexes = [];
+
+		$lines = array_values($lines);
+		$newLines = array_values((array) $newLines);
 		$flipped = array_flip($lines);
+		$x = count($flipped);
+		$indexes = [];
 		foreach ((array) $newLines as $newLine)
 		{
-			$indexes []= $flipped[$newLine] + 1;
+			if (isset($flipped[$newLine]))
+			{
+				$indexes []= $flipped[$newLine] + 1;
+			}
+			else
+			{
+				$lines []= $newLine;
+				$x ++;
+				$indexes []= $x;
+			}
 		}
+
 		$this->writeLines($lines);
 		$this->close();
 		return is_array($newLines)
