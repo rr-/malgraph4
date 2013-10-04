@@ -62,7 +62,6 @@ abstract class AbstractProcessor
 				$document->content = '<?xml encoding="utf-8" ?'.'>' . $document->content;
 			}
 
-			$this->beforeProcessing($context);
 			$f = function() use ($subProcessors, $context, $urlMap, $documents)
 			{
 				try
@@ -86,9 +85,10 @@ abstract class AbstractProcessor
 					$this->onProcessingError($context);
 				}
 			};
-			$this->afterProcessing($context);
 
+			$this->beforeProcessing($context);
 			R::transaction($f);
+			$this->afterProcessing($context);
 		}
 		catch (Exception $e)
 		{
