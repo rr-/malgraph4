@@ -12,6 +12,7 @@ CronRunner::run(__FILE__, function($logger)
 	}
 	foreach (Database::getAllDbNames() as $dbName)
 	{
+		$logger->log($dbName);
 		Database::attachDatabase($dbName);
 		foreach (Media::getConstList() as $media)
 		{
