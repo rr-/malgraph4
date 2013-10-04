@@ -3,9 +3,9 @@ require_once 'src/core.php';
 
 try
 {
-	Database::loadDatabase('user.sqlite');
+	$path1 = tempnam(sys_get_temp_dir(), '');
+	Database::loadDatabase($path1);
 	R::freeze(false);
-	R::nuke();
 	R::exec('CREATE TABLE IF NOT EXISTS user (
 		id INTEGER PRIMARY KEY,
 		name VARCHAR(32) UNIQUE,
@@ -73,7 +73,6 @@ try
 	R::exec('CREATE INDEX IF NOT EXISTS ind_usermedia_mediascore ON usermedia(media,score)');
 	R::exec('CREATE INDEX IF NOT EXISTS ind_usermedia_mediamalid ON usermedia(media,mal_id)');
 
-	$path1 = Config::$dbPath . DIRECTORY_SEPARATOR . 'user.sqlite';
 	foreach (Database::getAllDbNames() as $dbName)
 	{
 		$path2 = Config::$dbPath . DIRECTORY_SEPARATOR . $dbName;
@@ -85,7 +84,6 @@ try
 
 	Database::loadDatabase('media.sqlite');
 	R::freeze(false);
-	R::nuke();
 	R::exec('CREATE TABLE IF NOT EXISTS media (
 		id INTEGER PRIMARY KEY,
 		mal_id INTEGER,

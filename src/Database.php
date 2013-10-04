@@ -33,9 +33,13 @@ class Database extends Singleton
 
 	public static function loadDatabase($dbFile)
 	{
-		$path = Config::$dbPath . DIRECTORY_SEPARATOR . $dbFile;
-		R::setup('sqlite:' . $path);
-		R::freeze(true);
+		$path = strpos($dbFile, DIRECTORY_SEPARATOR) === false
+			? Config::$dbPath . DIRECTORY_SEPARATOR . $dbFile
+			: $dbFile;
+		$dsn = 'sqlite:' . $path;
+		$key = basename($path);
+		R::addDatabase($key, $dsn, null, null, true);
+		R::selectDatabase($key);
 		R::exec('PRAGMA foreign_keys=ON');
 		R::exec('PRAGMA temp_store=MEMORY');
 	}
