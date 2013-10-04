@@ -98,7 +98,8 @@ class Queue
 		$this->open();
 		$lines = $this->readLines();
 		$lines = array_merge($lines, (array) $newLines);
-		$lines = array_unique($lines);
+		#$lines = array_unique($lines);
+		$lines = array_values(array_flip(array_flip($lines))); //faster alternative to array_unique
 		$indexes = [];
 		$flipped = array_flip($lines);
 		foreach ($newLines as $newLine)
