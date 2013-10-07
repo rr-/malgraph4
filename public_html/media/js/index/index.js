@@ -2,8 +2,8 @@ var lastNum = 0;
 
 function switchShowcaseTab(num)
 {
-	$('#showcase menu li').removeClass('active');
-	$('#showcase menu li').eq(num).addClass('active');
+	$('#showcase nav li').removeClass('active');
+	$('#showcase nav li').eq(num).addClass('active');
 	if (lastNum == num)
 	{
 		return;
@@ -17,7 +17,7 @@ $(function()
 {
 	$('#main .search input').focus();
 
-	$('#showcase menu li').each(function(i, index)
+	$('#showcase nav li').each(function(i, index)
 	{
 		$(this).click(function(e)
 		{
@@ -25,6 +25,16 @@ $(function()
 			e.preventDefault();
 		});
 	});
+
+	function nextShowcaseTab()
+	{
+		var num = $('#showcase nav li.active').index();
+		num ++;
+		num %= $('#showcase nav li').length;
+		switchShowcaseTab(num);
+	}
+
+	window.setInterval(nextShowcaseTab, 5000);
 
 	switchShowcaseTab(0);
 });
