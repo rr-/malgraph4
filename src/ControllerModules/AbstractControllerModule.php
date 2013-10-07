@@ -38,4 +38,19 @@ abstract class AbstractControllerModule
 	{
 		return - 1;
 	}
+
+	/**
+	* This method contains all code that is executed before cache engine kicks
+	* in.
+	*/
+	public static function preWork(&$controllerContext, &$viewContext)
+	{
+	}
+
+	/**
+	* This method is executed after everything is rendered in view.
+	*/
+	public static function postWork(&$controllerContext, &$viewContext)
+	{
+	}
 }

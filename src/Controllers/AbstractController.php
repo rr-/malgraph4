@@ -8,10 +8,14 @@ abstract class AbstractController
 
 	public static function preWork(&$controllerContext, &$viewContext)
 	{
+		$module = $controllerContext->module;
+		$module::preWork($controllerContext, $viewContext);
 	}
 
 	public static function postWork(&$controllerContext, &$viewContext)
 	{
+		$module = $controllerContext->module;
+		$module::postWork($controllerContext, $viewContext);
 	}
 
 	public static function work(&$controllerContext, &$viewContext)

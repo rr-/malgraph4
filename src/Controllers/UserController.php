@@ -64,7 +64,7 @@ class UserController extends AbstractController
 		}
 
 		$queue = new Queue(Config::$userQueuePath);
-		$queuePosition = $queue->enqueue(strtolower($controllerContext->userName));
+		$viewContext->queuePosition = $queue->enqueue(strtolower($controllerContext->userName));
 
 		Database::selectUser($controllerContext->userName);
 		$user = R::findOne('user', 'LOWER(name) = LOWER(?)', [$controllerContext->userName]);
@@ -81,7 +81,6 @@ class UserController extends AbstractController
 				$viewContext->viewName = null;
 				return;
 			}
-			$viewContext->queuePosition = $queuePosition;
 			$viewContext->userName = $controllerContext->userName;
 			$viewContext->viewName = 'error-user-enqueued';
 			$viewContext->meta->title = 'MALgraph - user enqueued';
@@ -90,6 +89,9 @@ class UserController extends AbstractController
 
 		$viewContext->user = $user;
 		$viewContext->meta->styles []= '/media/css/menu.css';
+
+		$module = $controllerContext->module;
+		$module::preWork($controllerContext, $viewContext);
 	}
 
 	public static function work(&$controllerContext, &$viewContext)
