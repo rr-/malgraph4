@@ -13,28 +13,29 @@ function switchShowcaseTab(num)
 	$('#showcase .tab').eq(num).slideDown('fast');
 }
 
+function nextShowcaseTab()
+{
+	var num = $('#showcase nav li.active').index();
+	num ++;
+	num %= $('#showcase nav li').length;
+	switchShowcaseTab(num);
+}
+
 $(function()
 {
 	$('#main .search input').focus();
+
+	var timeout = window.setInterval(nextShowcaseTab, 5000);
 
 	$('#showcase nav li').each(function(i, index)
 	{
 		$(this).click(function(e)
 		{
+			window.clearTimeout(timeout);
 			switchShowcaseTab(i);
 			e.preventDefault();
 		});
 	});
-
-	function nextShowcaseTab()
-	{
-		var num = $('#showcase nav li.active').index();
-		num ++;
-		num %= $('#showcase nav li').length;
-		switchShowcaseTab(num);
-	}
-
-	window.setInterval(nextShowcaseTab, 5000);
 
 	switchShowcaseTab(0);
 });
