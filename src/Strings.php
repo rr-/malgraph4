@@ -9,6 +9,7 @@ class Strings
 		{
 			$subject = str_replace('  ', ' ', $subject);
 		}
+		$subject = trim($subject);
 		return $subject;
 	}
 

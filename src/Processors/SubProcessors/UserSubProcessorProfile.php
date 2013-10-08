@@ -23,6 +23,7 @@ class UserSubProcessorProfile extends UserSubProcessor
 
 		$userName       = Strings::removeSpaces(self::getNodeValue($xpath, '//title'));
 		$userName       = substr($userName, 0, strpos($userName, '\'s Profile'));
+		$userName       = Strings::removeSpaces($userName);
 		$pictureUrl     = self::getNodeValue($xpath, '//td[@class = \'profile_leftcell\']//img', null, 'src');
 		$joinDate       = Strings::makeDate(self::getNodeValue($xpath, '//td[text() = \'Join Date\']/following-sibling::td'));
 		$malId          = Strings::makeInteger(Strings::parseURL(self::getNodeValue($xpath, '//a[text() = \'All Comments\']', null, 'href'))['query']['id']);
