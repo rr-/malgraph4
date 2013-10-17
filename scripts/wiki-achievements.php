@@ -53,11 +53,11 @@ All genre-based achievements have four levels. Max level images for these are
 similar to each other - black background, white glow, and a simple symbol at
 the center. Count-based badges have 12 levels, and score-based have three
 pseudo-levels (anime only for now). There are some other special badges awarded
-for achieving something big. In total, we have 71 images that make you want to
-read more manga or watch more anime. Or so we think.
+for achieving something big. In total, we have over 80 images that make you want
+to read more manga or watch more anime. Or so we think.
 
 If you&rsquo;re curious about titles that count towards certain badges, read
-[this file](https://github.com/rr-/malgraph4/blob/master/data/achievements.json),
+[these files](https://github.com/rr-/malgraph4/tree/master/data/achievements),
 but note that some genre-based achievements have their title list generated
 automatically from genres on MAL. These can also have additional titles added
 manually, to fill up genre holes left by MAL (e.g. sequel to a historical anime
@@ -65,7 +65,8 @@ isn&rsquo;t tagged as such).
 
 Thresholds for (most) anime genres are 25 titles for level one, 40 for lvl2, 60
 for lvl3 and 100 for the maximum level. Manga thresholds (and
-anime-mahoushoujo) are 15, 30, 50 and 80.
+anime-mahoushoujo) are 15, 30, 50 and 80. The romance badges have increased
+thresholds, since this genre tag is ubiquitous.
 
 ## Table of contents
 EOF;
