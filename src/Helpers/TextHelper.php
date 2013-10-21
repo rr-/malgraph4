@@ -87,6 +87,7 @@ class TextHelper
 			}
 			$output = str_replace('{' . $key . '}', $val, $output);
 		}
+		$output = preg_replace('/\{[\w_-]+\}/', '[unknown]', $output);
 		return $output;
 	}
 

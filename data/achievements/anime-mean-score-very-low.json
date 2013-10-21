@@ -10,7 +10,7 @@
 			"level": "0/10. Play next one.",
 			"title": "Less than three",
 			"desc": "Mean anime score lower than 3. Is it hate, or is it love?",
-			"tooltip": "Mean score: {progress-subject}"
+			"tooltip": "Mean score: {subject}"
 		}
 	],
 	"requirement":
