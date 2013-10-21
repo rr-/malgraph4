@@ -2,18 +2,21 @@
 class Logger
 {
 	private $path;
+	private $baseName;
 	private $fragmentOpen = false;
 	private $handle = null;
 
 	public function __construct($name)
 	{
 		$fileName = basename($name) . '.log';
+		$this->baseName = $name;
 		$this->path = Config::$logsPath . DIRECTORY_SEPARATOR . $fileName;
 	}
 
 	public function __destruct()
 	{
 		$this->closefile();
+		$this->rotateIfNeeded();
 	}
 
 	private function openFile()
@@ -83,5 +86,42 @@ class Logger
 		$data .= PHP_EOL;
 		$this->write($data);
 		$this->closeFile();
+	}
+
+
+
+	private function getAllFiles()
+	{
+		$files = glob(dirname($this->path) . DIRECTORY_SEPARATOR . '*');
+		$files = array_filter($files, function($x)
+		{
+			return basename($x) != basename($this->path)
+				and strpos($x, $this->baseName) !== false;
+		});
+		natcasesort($files);
+		array_unshift($files, $this->path);
+		return $files;
+	}
+
+	private function rotateIfNeeded()
+	{
+		if (filesize($this->path) > Config::$maxLogSize)
+			$this->rotate();
+	}
+
+	private function rotate()
+	{
+		$files = $this->getAllFiles();
+		$lastFile = end($files);
+		if (preg_match('{^.*\.(\d+)(\.log)?$}', $lastFile, $matches))
+		{
+			$newLogNumber = intval($matches[1]) + 1;
+		}
+		else
+		{
+			$newLogNumber = 1;
+		}
+		$newPath = dirname($this->path) . DIRECTORY_SEPARATOR . $this->baseName . '.' . $newLogNumber . '.log';
+		rename($this->path, $newPath);
 	}
 }
