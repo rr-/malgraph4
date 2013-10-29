@@ -11,7 +11,7 @@
 			"level": "10/10! EVERYTHING!",
 			"title": "I love Chinese cartoons",
 			"desc": "Mean anime score higher than 8.5. How about using the whole scale and re-rating stuff? That could make you look less like a fanboy&hellip;",
-			"tooltip": "Mean score: {progress-subject}"
+			"tooltip": "Mean score: {subject}"
 		}
 	],
 	"requirement":

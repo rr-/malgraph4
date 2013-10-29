@@ -16,6 +16,12 @@ $titles =
 		],
 		Media::Manga =>
 		[
+			'Mean score' =>
+			[
+				'High mean score',
+				'Low mean score',
+				'Very low mean score'
+			]
 		]
 	];
 
@@ -24,6 +30,7 @@ foreach (Media::getConstList() as $media)
 	foreach ($titles[$media] as $title => $titlesToMerge)
 	{
 		$itemsToMerge = [];
+		$keysToMerge = [];
 		foreach ($titlesToMerge as $titleToMerge)
 		{
 			foreach ($achList[$media] as $key => $definition)
@@ -31,7 +38,7 @@ foreach (Media::getConstList() as $media)
 				if ($definition->{'wiki-title'} == $titleToMerge)
 				{
 					$itemsToMerge []= $definition;
-					unset($achList[$media][$key]);
+					$keysToMerge []= $key;
 				}
 			}
 		}
@@ -44,7 +51,10 @@ foreach (Media::getConstList() as $media)
 				$finalItem->achievements,
 				$itemToMerge->achievements);
 		}
-		$achList[$media] []= $finalItem;
+
+		array_shift($keysToMerge);
+		foreach ($keysToMerge as $key)
+			unset($achList[$media][$key]);
 	}
 }
 

@@ -11,7 +11,7 @@
 			"level": "Dat plot",
 			"title": "So good I can&rsquo;t handle it",
 			"desc": "Mean manga score above 8.5. Looks like you only pick the best titles to read.",
-			"tooltip": "Mean score: {progress-subject}"
+			"tooltip": "Mean score: {subject}"
 		}
 	],
 	"requirement":
