@@ -9,7 +9,7 @@ class Logger
 	public function __construct($name)
 	{
 		$fileName = basename($name) . '.log';
-		$this->baseName = $name;
+		$this->baseName = $fileName;
 		$this->path = Config::$logsPath . DIRECTORY_SEPARATOR . $fileName;
 	}
 
@@ -105,7 +105,7 @@ class Logger
 
 	private function rotateIfNeeded()
 	{
-		if (filesize($this->path) > Config::$maxLogSize)
+		if (file_exists($this->path) and filesize($this->path) > Config::$maxLogSize)
 			$this->rotate();
 	}
 
