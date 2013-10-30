@@ -9,6 +9,7 @@ class Downloader
 		curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($handle, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
 		curl_setopt($handle, CURLOPT_ENCODING, '');
+		curl_setopt($handle, CURLOPT_USERAGENT, 'MALgraph');
 		return $handle;
 	}
 
