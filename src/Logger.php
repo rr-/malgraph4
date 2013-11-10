@@ -6,11 +6,14 @@ class Logger
 	private $fragmentOpen = false;
 	private $handle = null;
 
-	public function __construct($name)
+	public function __construct($name = null)
 	{
-		$fileName = basename($name) . '.log';
-		$this->baseName = $fileName;
-		$this->path = Config::$logsPath . DIRECTORY_SEPARATOR . $fileName;
+		if ($name)
+		{
+			$fileName = basename($name) . '.log';
+			$this->baseName = $fileName;
+			$this->path = Config::$logsPath . DIRECTORY_SEPARATOR . $fileName;
+		}
 	}
 
 	public function __destruct()
@@ -21,7 +24,7 @@ class Logger
 
 	private function openFile()
 	{
-		if ($this->handle === null)
+		if ($this->handle === null and $this->path)
 		{
 			$this->handle = fopen($this->path, 'ab');
 			flock($this->handle, LOCK_EX);
@@ -30,8 +33,9 @@ class Logger
 
 	private function write($string)
 	{
-		assert($this->handle !== null);
-		fwrite($this->handle, $string);
+		if ($this->handle !== null)
+			fwrite($this->handle, $string);
+
 		$this->fragmentOpen = true;
 
 		if (!isset($_SERVER['HTTP_HOST']))
@@ -44,19 +48,17 @@ class Logger
 	private function closeFile()
 	{
 		$this->fragmentOpen = false;
-		if ($this->handle !== null)
-		{
+
+		if ($this->handle !== null and $this->path)
 			fclose($this->handle);
-			$this->handle = null;
-		}
+
+		$this->handle = null;
 	}
 
 	private function decorate($data)
 	{
 		if ($this->fragmentOpen)
-		{
 			return $data;
-		}
 		return sprintf('[%s|%04x] %s', date('Y-m-d H:i:s'), getmypid(), $data);
 	}
 
@@ -64,8 +66,11 @@ class Logger
 
 	public function purge()
 	{
-		$handle = fopen($this->path, 'wb');
-		fclose($handle);
+		if ($this->path)
+		{
+			$handle = fopen($this->path, 'wb');
+			fclose($handle);
+		}
 	}
 
 	public function logFragment($data)
@@ -92,6 +97,9 @@ class Logger
 
 	private function getAllFiles()
 	{
+		if (!$this->path)
+			return [];
+
 		$files = glob(dirname($this->path) . DIRECTORY_SEPARATOR . '*');
 		$files = array_filter($files, function($x)
 		{
@@ -105,22 +113,23 @@ class Logger
 
 	private function rotateIfNeeded()
 	{
-		if (file_exists($this->path) and filesize($this->path) > Config::$maxLogSize)
+		if ($this->path and file_exists($this->path) and filesize($this->path) > Config::$maxLogSize)
 			$this->rotate();
 	}
 
 	private function rotate()
 	{
+		if (!$this->path)
+			return;
+
 		$files = $this->getAllFiles();
 		$lastFile = end($files);
+
 		if (preg_match('{^.*\.(\d+)(\.log)?$}', $lastFile, $matches))
-		{
 			$newLogNumber = intval($matches[1]) + 1;
-		}
 		else
-		{
 			$newLogNumber = 1;
-		}
+
 		$newPath = dirname($this->path) . DIRECTORY_SEPARATOR . $this->baseName . '.' . $newLogNumber . '.log';
 		rename($this->path, $newPath);
 	}
