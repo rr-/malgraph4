@@ -9,9 +9,9 @@ class Downloader
 		curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($handle, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
 		curl_setopt($handle, CURLOPT_ENCODING, '');
-		curl_setopt($handle, CURLOPT_COOKIEJAR, Config::$cookieFilePath);
-		curl_setopt($handle, CURLOPT_COOKIEFILE, Config::$cookieFilePath);
-		curl_setopt($handle, CURLOPT_USERAGENT, 'MALgraph');
+		curl_setopt($handle, CURLOPT_COOKIEJAR, Config::$downloaderCookieFilePath);
+		curl_setopt($handle, CURLOPT_COOKIEFILE, Config::$downloaderCookieFilePath);
+		curl_setopt($handle, CURLOPT_USERAGENT, Config::$downloaderUserAgent);
 		return $handle;
 	}
 
@@ -24,7 +24,6 @@ class Downloader
 		preg_match('/\d{3}/', array_shift($headerLines), $matches);
 		$code = intval($matches[0]);
 		$headers = HttpHeadersHelper::parseHeaderLines($headerLines);
-
 		return new Document($url, $code, $headers, $content);
 	}
 

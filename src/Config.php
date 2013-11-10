@@ -7,7 +7,8 @@ class Config extends Singleton
 	static $mediaPerCronRun;
 	static $mediaQueuePath;
 	static $mediaQueueMinWait;
-	static $cookieFilePath;
+	static $downloaderUserAgent;
+	static $downloaderCookieFilePath;
 	static $mirrorPath;
 	static $mirrorPurgeFailures;
 	static $mirrorEnabled;
@@ -46,6 +47,8 @@ class Config extends Singleton
 		$dataRootDir = join(DIRECTORY_SEPARATOR, [__DIR__, '..', 'data', '']);
 		$htmlRootDir = join(DIRECTORY_SEPARATOR, [__DIR__, '..', 'public_html']);
 
+		self::$version = '4.1.2';
+
 		self::$usersPerCronRun = 5;
 		self::$userQueuePath = $dataRootDir . 'queue-users.lst';
 		self::$userQueueMinWait = 24 * 60;
@@ -53,7 +56,9 @@ class Config extends Singleton
 		self::$mediaQueuePath = $dataRootDir . 'queue-media.lst';
 		self::$mediaQueueMinWait = 7 * 24 * 60;
 
-		self::$cookieFilePath = $dataRootDir . 'cookies.dat';
+		self::$downloaderUserAgent = 'MALgraph v' . self::$version;
+		self::$downloaderCookieFilePath = $dataRootDir . 'cookies.dat';
+
 		self::$mirrorEnabled = false;
 		self::$mirrorPath = $dataRootDir . 'mirror';
 		self::$mirrorPurgeFailures = true;
@@ -92,8 +97,6 @@ class Config extends Singleton
 		self::$noticeMessage = null;
 		self::$sendReferrer = true;
 		self::$enforcedDomain = null;
-
-		self::$version = '4.1.2';
 	}
 }
 
