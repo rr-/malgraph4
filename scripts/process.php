@@ -19,32 +19,32 @@ if (!isset($processors[$pkey]))
 }
 $processor = $processors[$pkey];
 
+$logger = new Logger();
+Downloader::setLogger($logger);
 $exitCode = 0;
 foreach ($argv as $key)
 {
-	printf('Processing %s %s' . PHP_EOL,
-		$pkey, is_numeric($key) ? '#' . $key : $key);
+	$logger->log('Processing %s %s', $pkey, is_numeric($key) ? '#' . $key : $key);
 
 	try
 	{
 		if ($pkey === 'user')
-		{
 			Database::selectUser($key);
-		}
+
 		$processor->process($key);
 	}
 	catch (BadProcessorKeyException $e)
 	{
-		echo $e->getMessage() . PHP_EOL;
+		$logger->log($e->getMessage());
 	}
 	catch (DocumentException $e)
 	{
-		echo $e->getMessage() . PHP_EOL;
+		$logger->log($e->getMessage());
 		$exitCode = 1;
 	}
 	catch (Exception $e)
 	{
-		echo $e . PHP_EOL;
+		$logger->log($e);
 		$exitCode = 1;
 	}
 }

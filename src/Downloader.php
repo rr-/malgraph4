@@ -1,6 +1,13 @@
 <?php
 class Downloader
 {
+	protected static $logger;
+
+	public static function setLogger(Logger $logger)
+	{
+		self::$logger = $logger;
+	}
+
 	private static function prepareHandle($url)
 	{
 		$handle = curl_init();
@@ -73,6 +80,12 @@ class Downloader
 
 		foreach (array_chunk($allUrls, Config::$downloaderMaxParallelJobs) as $urls)
 		{
+			if (self::$logger)
+			{
+				foreach ($urls as $url)
+					self::$logger->log('Downloading ' . $url);
+			}
+
 			//prepare curl handles
 			$multiHandle = curl_multi_init();
 			foreach ($urls as $url)

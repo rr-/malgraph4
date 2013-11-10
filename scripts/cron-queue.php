@@ -47,6 +47,8 @@ CronRunner::run(__FILE__, function($logger)
 	$userQueue = new Queue(Config::$userQueuePath);
 	$mediaQueue = new Queue(Config::$mediaQueuePath);
 
+	Downloader::setLogger($logger);
+
 	#process users
 	processQueue(
 		$userQueue,
@@ -55,7 +57,7 @@ CronRunner::run(__FILE__, function($logger)
 		function($userName) use ($userProcessor, $mediaQueue, $logger)
 		{
 			Database::selectUser($userName);
-			$logger->logFragment('Processing user %s... ', $userName);
+			$logger->log('Processing user %s... ', $userName);
 
 			#check if processed too soon
 			$query = 'SELECT 0 FROM user WHERE LOWER(name) = LOWER(?)' .
@@ -100,7 +102,7 @@ CronRunner::run(__FILE__, function($logger)
 		function($key) use ($mediaProcessors, $logger)
 		{
 			list ($media, $malId) = TextHelper::deserializeMediaId($key);
-			$logger->logFragment('Processing %s #%d... ', Media::toString($media), $malId);
+			$logger->log('Processing %s #%d... ', Media::toString($media), $malId);
 
 			#check if processed too soon
 			$query = 'SELECT 0 FROM media WHERE media = ? AND mal_id = ?' .
