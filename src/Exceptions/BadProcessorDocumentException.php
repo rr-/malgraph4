@@ -1,8 +1,8 @@
 <?php
-class BadProcessorDocumentException extends Exception
+class BadProcessorDocumentException extends DocumentException
 {
 	public function __construct(Document $document, $message)
 	{
-		parent::__construct('Bad document (' . $message . ') in ' . $document->url);
+		parent::__construct($document, 'Bad document (' . $message . ') in ' . $document->url);
 	}
 }

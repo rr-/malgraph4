@@ -44,6 +44,12 @@ class Downloader
 		}
 	}
 
+	public static function download($url)
+	{
+		$downloaded = self::downloadMulti([$url]);
+		return array_shift($downloaded);
+	}
+
 	public static function downloadMulti(array $urls)
 	{
 		$handles = [];

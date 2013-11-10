@@ -19,9 +19,7 @@ abstract class AbstractProcessor
 	public function process($key)
 	{
 		if (empty($key))
-		{
 			return null;
-		}
 
 		$urls = [];
 		try
@@ -36,9 +34,7 @@ abstract class AbstractProcessor
 				foreach ($processor->getURLs($key) as $url)
 				{
 					if (!isset($urlMap[$url]))
-					{
 						$urlMap[$url] = [];
-					}
 					$urlMap[$url] []= $processor;
 					$urls[$url] = $url;
 				}
@@ -65,15 +61,41 @@ abstract class AbstractProcessor
 				{
 					foreach ($subProcessors as $subProcessor)
 					{
-						$subDocuments = [];
+						$sourceDocuments = $documents;
+
+						$subUrls = [];
 						foreach ($urlMap as $url => $urlProcessors)
-						{
 							if (in_array($subProcessor, $urlProcessors))
+								$subUrls []= $url;
+
+						$attempts = 0;
+						while (true)
+						{
+							try
 							{
-								$subDocuments []= $documents[$url];
+								$subDocuments = [];
+								foreach ($subUrls as $url)
+									$subDocuments []= $sourceDocuments[$url];
+								$subProcessor->process($subDocuments, $context);
+								break;
 							}
+							catch (DocumentException $e)
+							{
+								$sourceDocuments[$e->getDocument()->url] = Downloader::download($e->getDocument()->url);
+							}
+							catch (Exception $e)
+							{
+								$sourceDocuments = Downloader::downloadMulti($subUrls);
+							}
+
+							++ $attempts;
+							if ($attempts > Config::$maxProcessingAttempts)
+								if (isset($e))
+									throw $e;
+								else
+									throw new Exception('Too many attempts');
 						}
-						$subProcessor->process($subDocuments, $context);
+
 					}
 				}
 				catch (Exception $e)

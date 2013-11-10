@@ -8,37 +8,30 @@ function processQueue($queue, $count, $logger, $callback)
 	{
 		$key = $queue->dequeue();
 		if ($key === null)
-		{
 			break;
-		}
 
 		try
 		{
 			$okay = $callback($key);
-			if ($okay)
-			{
-				++ $processed;
-			}
+			if (!$okay)
+				continue;
 		}
 		catch (BadProcessorKeyException $e)
 		{
-			++ $processed;
 			$logger->log('error: ' . $e->getMessage());
+		}
+		catch (DocumentException $e)
+		{
+			$logger->log('error: ' . $e->getMessage());
+			$queue->enqueue($key);
 		}
 		catch (Exception $e)
 		{
-			++ $processed;
-			if ($e instanceof DownloadFailureException or $e instanceof BadProcessorDocumentException)
-			{
-				$logger->log('error: ' . $e->getMessage());
-			}
-			else
-			{
-				$logger->log('error');
-				$logger->log($e);
-			}
+			$logger->log('error');
+			$logger->log($e);
 			$queue->enqueue($key);
 		}
+		++ $processed;
 	}
 }
 

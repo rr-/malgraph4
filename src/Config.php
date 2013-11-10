@@ -19,6 +19,7 @@ class Config extends Singleton
 	static $dbPath;
 	static $dbCount;
 	static $maxDbBindings;
+	static $maxProcessingAttempts;
 	static $transactionCommitFrequency;
 	static $bannedUsersListPath;
 	static $bannedGenresListPath;
@@ -72,6 +73,7 @@ class Config extends Singleton
 		self::$dbCount = 64;
 		self::$transactionCommitFrequency = 20;
 		self::$maxDbBindings = 50;
+		self::$maxProcessingAttempts = 1;
 
 		self::$bannedUsersListPath = $dataRootDir . 'banned-users.lst';
 		self::$bannedGenresListPath = $dataRootDir . 'banned-genres.lst';

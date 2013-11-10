@@ -37,12 +37,14 @@ foreach ($argv as $key)
 	{
 		echo $e->getMessage() . PHP_EOL;
 	}
+	catch (DocumentException $e)
+	{
+		echo $e->getMessage() . PHP_EOL;
+		$exitCode = 1;
+	}
 	catch (Exception $e)
 	{
-		echo ($e instanceof DownloadFailureException or $e instanceof BadProcessorDocumentException)
-			? $e->getMessage()
-			: $e;
-		echo PHP_EOL;
+		echo $e . PHP_EOL;
 		$exitCode = 1;
 	}
 }
