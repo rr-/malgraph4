@@ -5,6 +5,7 @@ class Config extends Singleton
 	static $mediaPerCronRun;
 	static $userQueuePath;
 	static $mediaQueuePath;
+	static $cookieFilePath;
 	static $mirrorPath;
 	static $mirrorEnabled;
 	static $cachePath;
@@ -47,6 +48,7 @@ class Config extends Singleton
 		self::$mediaPerCronRun = 5;
 		self::$mediaQueuePath = $dataRootDir . 'queue-media.lst';
 
+		self::$cookieFilePath = $dataRootDir . 'cookies.dat';
 		self::$mirrorEnabled = false;
 		self::$mirrorPath = $dataRootDir . 'mirror';
 		self::$cacheEnabled = true;
