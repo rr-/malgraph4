@@ -32,12 +32,13 @@ class UserSubProcessorUserMedia extends UserSubProcessor
 			$key = $media == Media::Anime
 				? self::URL_ANIMEINFO
 				: self::URL_MANGAINFO;
-			$doc = self::getDOM($documents[$key]);
-			$xpath = new DOMXPath($doc);
+			$doc = $documents[$key];
+			$dom = self::getDOM($doc);
+			$xpath = new DOMXPath($dom);
 			if ($xpath->query('//myinfo')->length == 0)
-			{
-				throw new BadDocumentNodeException($documents[$key], 'myinfo', '');
-			}
+				throw new BadProcessorDocumentException($doc, 'myinfo block is missing');
+			if (strpos($doc->content, '</myanimelist>') === false)
+				throw new BadProcessorDocumentException($doc, 'list is only partially downloaded');
 
 			$nodes = $xpath->query('//anime | //manga');
 			$data = [];

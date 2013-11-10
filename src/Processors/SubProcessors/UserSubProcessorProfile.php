@@ -13,17 +13,19 @@ class UserSubProcessorProfile extends UserSubProcessor
 
 	public function process(array $documents, &$context)
 	{
-		$doc = self::getDOM($documents[self::URL_PROFILE]);
-		$xpath = new DOMXPath($doc);
+		$doc = $documents[self::URL_PROFILE];
+		$dom = self::getDOM($doc);
+		$xpath = new DOMXPath($dom);
 
 		if ($xpath->query('//title[text() = \'Invalid User\']')->length >= 1)
-		{
-			throw new BadProcessorKeyException($context->key);
-		}
+			throw new BadProcessorKeyException($doc, $context->key);
 
-		$userName       = Strings::removeSpaces(self::getNodeValue($xpath, '//title'));
-		$userName       = substr($userName, 0, strpos($userName, '\'s Profile'));
-		$userName       = Strings::removeSpaces($userName);
+		$userName = Strings::removeSpaces(self::getNodeValue($xpath, '//title'));
+		$userName = substr($userName, 0, strpos($userName, '\'s Profile'));
+		$userName = Strings::removeSpaces($userName);
+		if (empty($userName))
+			throw new BadProcessorDocumentException($doc, 'User name missing');
+
 		$pictureUrl     = self::getNodeValue($xpath, '//td[@class = \'profile_leftcell\']//img', null, 'src');
 		$joinDate       = Strings::makeDate(self::getNodeValue($xpath, '//td[text() = \'Join Date\']/following-sibling::td'));
 		$malId          = Strings::makeInteger(Strings::parseURL(self::getNodeValue($xpath, '//a[text() = \'All Comments\']', null, 'href'))['query']['id']);

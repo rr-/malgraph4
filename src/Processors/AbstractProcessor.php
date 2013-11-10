@@ -48,14 +48,11 @@ abstract class AbstractProcessor
 			foreach ($documents as $document)
 			{
 				if ($document->code == 403)
-				{
-					Downloader::purgeCache($urls);
 					throw new DownloadFailureException($document);
-				}
-			}
 
-			foreach ($documents as &$document)
-			{
+				if (empty($document->content))
+					throw new DownloadFailureException($document);
+
 				//別ハックは、	Another hack
 				//私は静かに	makes me
 				//泣きます		quietly weep

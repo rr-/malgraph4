@@ -3,8 +3,9 @@ class MediaSubProcessorRelations extends MediaSubProcessor
 {
 	public function process(array $documents, &$context)
 	{
-		$doc = self::getDOM($documents[self::URL_MEDIA]);
-		$xpath = new DOMXPath($doc);
+		$doc = $documents[self::URL_MEDIA];
+		$dom = self::getDOM($doc);
+		$xpath = new DOMXPath($dom);
 
 		Database::delete('mediarelation', ['media_id' => $context->media->id]);
 		$data = [];
@@ -44,9 +45,7 @@ class MediaSubProcessorRelations extends MediaSubProcessor
 					'full story'          => MediaRelation::FullStory,
 				], null);
 				if ($type === null)
-				{
-					throw new BadDocumentNodeException($documents[self::URL_MEDIA], 'relation-type', $malType);
-				}
+					throw new BadProcessorDocumentException($doc, 'unknown relation type: ' . $malType);
 				$lastType = $type;
 			}
 

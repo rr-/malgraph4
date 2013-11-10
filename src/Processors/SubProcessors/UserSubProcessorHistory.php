@@ -13,8 +13,9 @@ class UserSubProcessorHistory extends UserSubProcessor
 
 	public function process(array $documents, &$context)
 	{
-		$doc = self::getDOM($documents[self::URL_HISTORY]);
-		$xpath = new DOMXPath($doc);
+		$doc = $documents[self::URL_HISTORY];
+		$dom = self::getDOM($doc);
+		$xpath = new DOMXPath($dom);
 
 		Database::delete('userhistory', ['user_id' => $context->user->id]);
 
@@ -31,10 +32,10 @@ class UserSubProcessorHistory extends UserSubProcessor
 
 			//parse time
 			//That's what MAL servers output for MG client
-			if (isset($documents[self::URL_HISTORY]->headers['Date']))
+			if (isset($doc->headers['Date']))
 			{
 				date_default_timezone_set('UTC');
-				$now = strtotime($documents[self::URL_HISTORY]->headers['Date']);
+				$now = strtotime($doc->headers['Date']);
 			}
 			else
 			{

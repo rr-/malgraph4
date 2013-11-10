@@ -13,8 +13,9 @@ class UserSubProcessorClubs extends UserSubProcessor
 
 	public function process(array $documents, &$context)
 	{
-		$doc = self::getDOM($documents[self::URL_CLUBS]);
-		$xpath = new DOMXPath($doc);
+		$doc = $documents[self::URL_CLUBS];
+		$dom = self::getDOM($doc);
+		$xpath = new DOMXPath($dom);
 
 		Database::delete('userclub', ['user_id' => $context->user->id]);
 		$data = [];

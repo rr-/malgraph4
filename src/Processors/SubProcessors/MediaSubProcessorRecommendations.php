@@ -3,8 +3,9 @@ class MediaSubProcessorRecommendations extends MediaSubProcessor
 {
 	public function process(array $documents, &$context)
 	{
-		$doc = self::getDOM($documents[self::URL_RECS]);
-		$xpath = new DOMXPath($doc);
+		$doc = $documents[self::URL_RECS];
+		$dom = self::getDOM($doc);
+		$xpath = new DOMXPath($dom);
 
 		Database::delete('mediarec', ['media_id' => $context->media->id]);
 		$data = [];

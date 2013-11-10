@@ -8,8 +8,9 @@ class MangaSubProcessorAuthors extends MediaSubProcessor
 
 	public function process(array $documents, &$context)
 	{
-		$doc = self::getDOM($documents[self::URL_MEDIA]);
-		$xpath = new DOMXPath($doc);
+		$doc = $documents[self::URL_MEDIA];
+		$dom = self::getDOM($doc);
+		$xpath = new DOMXPath($dom);
 
 		Database::delete('mangaauthor', ['media_id' => $context->media->id]);
 		$data = [];

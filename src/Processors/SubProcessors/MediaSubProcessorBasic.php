@@ -3,19 +3,16 @@ class MediaSubProcessorBasic extends MediaSubProcessor
 {
 	public function process(array $documents, &$context)
 	{
-		$doc = self::getDOM($documents[self::URL_MEDIA]);
-		$xpath = new DOMXPath($doc);
+		$doc = $documents[self::URL_MEDIA];
+		$dom = self::getDOM($doc);
+		$xpath = new DOMXPath($dom);
 
 		if ($xpath->query('//div[@class = \'badresult\']')->length >= 1)
-		{
 			throw new BadProcessorKeyException($context->key);
-		}
 
 		$title = Strings::removeSpaces(self::getNodeValue($xpath, '//h1/*/following-sibling::node()[1][self::text()]'));
 		if (empty($title))
-		{
-			throw new BadDocumentNodeException($documents[self::URL_MEDIA], 'title', '');
-		}
+			throw new BadProcessorDocumentException($doc, 'empty title');
 
 		//sub type
 		$malSubType = strtolower(Strings::removeSpaces(self::getNodeValue($xpath, '//span[starts-with(text(), \'Type\')]/following-sibling::node()[self::text()]')));
@@ -36,9 +33,7 @@ class MediaSubProcessorBasic extends MediaSubProcessor
 			''         => $this->media == Media::Manga ? MangaMediaType::Unknown : AnimeMediaType::Unknown,
 		], null);
 		if ($subType === null)
-		{
-			throw new BadDocumentNodeException($documents[self::URL_MEDIA], 'sub-type', $malSubType);
-		}
+			throw new BadProcessorDocumentException($doc, 'empty sub type');
 
 		//mal id
 		$malId  = self::getNodeValue($xpath, '//input[starts-with(@id, \'myinfo_\')]', null, 'value');
@@ -64,9 +59,7 @@ class MediaSubProcessorBasic extends MediaSubProcessor
 			'finished airing'   => MediaStatus::Finished,
 		], null);
 		if ($status === null)
-		{
-			throw new BadDocumentNodeException($documents[self::URL_MEDIA], 'status', $malStatus);
-		}
+			throw new BadProcessorDocumentException($doc, 'unknown status: ' . $malStatus);
 
 		//air dates
 		$publishedString = Strings::removeSpaces(self::getNodeValue($xpath, '//span[starts-with(text(), \'Aired\') or starts-with(text(), \'Published\')]/following-sibling::node()[self::text()]'));

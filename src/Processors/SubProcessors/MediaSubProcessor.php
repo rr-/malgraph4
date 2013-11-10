@@ -14,9 +14,8 @@ abstract class MediaSubProcessor extends AbstractSubProcessor
 	{
 		$infix = Media::toString($this->media);
 		if ($infix === null)
-		{
 			throw new BadMediaException();
-		}
+
 		return
 		[
 			self::URL_MEDIA => 'http://myanimelist.net/' . $infix . '/' . $id,

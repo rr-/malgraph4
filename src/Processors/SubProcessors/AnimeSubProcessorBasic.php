@@ -8,8 +8,9 @@ class AnimeSubProcessorBasic extends MediaSubProcessor
 
 	public function process(array $documents, &$context)
 	{
-		$doc = self::getDOM($documents[self::URL_MEDIA]);
-		$xpath = new DOMXPath($doc);
+		$doc = $documents[self::URL_MEDIA];
+		$dom = self::getDOM($doc);
+		$xpath = new DOMXPath($dom);
 
 		//duration
 		preg_match_all('/([0-9]+)/', self::getNodeValue($xpath, '//span[starts-with(text(), \'Duration\')]/following-sibling::node()[self::text()]'), $matches);

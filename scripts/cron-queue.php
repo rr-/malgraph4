@@ -25,17 +25,18 @@ function processQueue($queue, $count, $logger, $callback)
 			++ $processed;
 			$logger->log('error: ' . $e->getMessage());
 		}
-		catch (DownloadFailureException $e)
-		{
-			++ $processed;
-			$logger->log('error: ' . $e->getMessage());
-			$queue->enqueue($key);
-		}
 		catch (Exception $e)
 		{
 			++ $processed;
-			$logger->log('error');
-			$logger->log($e);
+			if ($e instanceof DownloadFailureException or $e instanceof BadProcessorDocumentException)
+			{
+				$logger->log('error: ' . $e->getMessage());
+			}
+			else
+			{
+				$logger->log('error');
+				$logger->log($e);
+			}
 			$queue->enqueue($key);
 		}
 	}

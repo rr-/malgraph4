@@ -6,22 +6,18 @@ abstract class AbstractSubProcessor
 	protected static function getDOM(Document $document)
 	{
 		if (isset(self::$domCache[$document->url]))
-		{
 			return self::$domCache[$document->url];
-		}
 
-		$doc = new DOMDocument;
-		$doc->preserveWhiteSpace = false;
+		$dom = new DOMDocument;
+		$dom->preserveWhiteSpace = false;
 		ErrorHandler::suppress();
-		$doc->loadHTML($document->content);
+		$dom->loadHTML($document->content);
 		ErrorHandler::restore();
 
 		if (count(self::$domCache) > 20)
-		{
 			self::$domCache = [];
-		}
-		self::$domCache[$document->url] = $doc;
-		return $doc;
+		self::$domCache[$document->url] = $dom;
+		return $dom;
 	}
 
 	protected static function getNodeValue(DOMXPath $xpath, $query, DOMNode $parentNode = null, $attrib = null)

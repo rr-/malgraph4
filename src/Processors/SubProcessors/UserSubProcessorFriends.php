@@ -13,8 +13,9 @@ class UserSubProcessorFriends extends UserSubProcessor
 
 	public function process(array $documents, &$context)
 	{
-		$doc = self::getDOM($documents[self::URL_FRIENDS]);
-		$xpath = new DOMXPath($doc);
+		$doc = $documents[self::URL_FRIENDS];
+		$dom = self::getDOM($doc);
+		$xpath = new DOMXPath($dom);
 
 		Database::delete('userfriend', ['user_id' => $context->user->id]);
 		$data = [];
