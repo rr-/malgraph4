@@ -9,6 +9,7 @@ class Config extends Singleton
 	static $mediaQueueMinWait;
 	static $cookieFilePath;
 	static $mirrorPath;
+	static $mirrorPurgeFailures;
 	static $mirrorEnabled;
 	static $cachePath;
 	static $cacheEnabled;
@@ -55,6 +56,7 @@ class Config extends Singleton
 		self::$cookieFilePath = $dataRootDir . 'cookies.dat';
 		self::$mirrorEnabled = false;
 		self::$mirrorPath = $dataRootDir . 'mirror';
+		self::$mirrorPurgeFailures = true;
 		self::$cacheEnabled = true;
 		self::$cachePath = $dataRootDir . 'cache';
 		self::$cacheTimeToLive = 24 * 60 * 60;

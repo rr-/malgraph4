@@ -89,7 +89,8 @@ abstract class AbstractProcessor
 		}
 		catch (Exception $e)
 		{
-			Downloader::purgeCache($urls);
+			if (Config::$mirrorPurgeFailures)
+				Downloader::purgeCache($urls);
 			throw $e;
 		}
 
