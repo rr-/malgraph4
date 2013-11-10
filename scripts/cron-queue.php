@@ -66,7 +66,7 @@ CronRunner::run(__FILE__, function($logger)
 
 			#check if processed too soon
 			$query = 'SELECT 0 FROM user WHERE LOWER(name) = LOWER(?)' .
-				' AND processed >= DATETIME("now", "-1 days")';
+				' AND processed >= DATETIME("now", "-' . Config::$userQueueMinWait . ' minutes")';
 			if (R::getAll($query, [$userName]))
 			{
 				$logger->log('too soon');
@@ -111,7 +111,7 @@ CronRunner::run(__FILE__, function($logger)
 
 			#check if processed too soon
 			$query = 'SELECT 0 FROM media WHERE media = ? AND mal_id = ?' .
-				' AND processed >= DATETIME("now", "-7 days")';
+				' AND processed >= DATETIME("now", "-' . Config::$mediaQueueMinWait . ' minutes")';
 			if (R::getAll($query, [$media, $malId]))
 			{
 				$logger->log('too soon');

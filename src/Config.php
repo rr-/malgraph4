@@ -2,9 +2,11 @@
 class Config extends Singleton
 {
 	static $usersPerCronRun;
-	static $mediaPerCronRun;
 	static $userQueuePath;
+	static $userQueueMinWait;
+	static $mediaPerCronRun;
 	static $mediaQueuePath;
+	static $mediaQueueMinWait;
 	static $cookieFilePath;
 	static $mirrorPath;
 	static $mirrorEnabled;
@@ -45,8 +47,10 @@ class Config extends Singleton
 
 		self::$usersPerCronRun = 5;
 		self::$userQueuePath = $dataRootDir . 'queue-users.lst';
+		self::$userQueueMinWait = 24 * 60;
 		self::$mediaPerCronRun = 5;
 		self::$mediaQueuePath = $dataRootDir . 'queue-media.lst';
+		self::$mediaQueueMinWait = 7 * 24 * 60;
 
 		self::$cookieFilePath = $dataRootDir . 'cookies.dat';
 		self::$mirrorEnabled = false;
