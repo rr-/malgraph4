@@ -30,6 +30,7 @@ class Config extends Singleton
 	static $achievementsDefinitionsDirectory;
 	static $maxLogSize;
 	static $logsPath;
+	static $keepOldLogs;
 	static $globalsCachePath;
 	static $userQueueSizesPath;
 	static $mediaDirectory;
@@ -83,7 +84,8 @@ class Config extends Singleton
 		self::$staticRecommendationListPath = $dataRootDir . 'static-recommendations.lst';
 		self::$achievementsDefinitionsDirectory = $dataRootDir . 'achievements';
 
-		self::$maxLogSize = 1024 * 1024;
+		self::$maxLogSize = 1024 * 1024 * 12;
+		self::$keepOldLogs = false;
 		self::$logsPath = $dataRootDir . 'logs';
 		self::$globalsCachePath = $dataRootDir . 'globals-cache.json';
 		self::$userQueueSizesPath = $dataRootDir . 'queue-sizes.json';

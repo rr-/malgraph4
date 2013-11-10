@@ -122,13 +122,15 @@ class Logger
 		if (!$this->path)
 			return;
 
-		$files = $this->getAllFiles();
-		$lastFile = end($files);
+		$newLogNumber = 1;
+		if (Config::$keepOldLogs)
+		{
+			$files = $this->getAllFiles();
+			$lastFile = end($files);
 
-		if (preg_match('{^.*\.(\d+)(\.log)?$}', $lastFile, $matches))
-			$newLogNumber = intval($matches[1]) + 1;
-		else
-			$newLogNumber = 1;
+			if (preg_match('{^.*\.(\d+)(\.log)?$}', $lastFile, $matches))
+				$newLogNumber = intval($matches[1]) + 1;
+		}
 
 		$newPath = dirname($this->path) . DIRECTORY_SEPARATOR . $this->baseName . '.' . $newLogNumber . '.log';
 		rename($this->path, $newPath);
