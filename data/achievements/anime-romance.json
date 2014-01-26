@@ -37,6 +37,11 @@
 	"requirement":
 	{
 		"type": "genre-titles",
-		"genre": 22
+		"genre": 22,
+		"titles":
+		[
+			"A4551",  #Hakushaku to Yousei
+			"A7083"   #Hakushaku to Yousei Specials
+		]
 	}
 }

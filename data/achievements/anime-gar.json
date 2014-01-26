@@ -49,10 +49,13 @@
 			"A2582",  #Armored Trooper Votoms
 			"A2251",  #Baccano!
 			"A3901",  #Baccano! Specials
+			"A287",   #Baki the Grappler
+			"A551",   #Baki the Grappler II
 			"A1468",  #Baoh Raihousha
 			"A67",    #Basilisk: Kouga Ninpou Chou
 			"A404",   #Bastard!!
 			"A4094",  #Batman: Gotham Knight
+			"A3625",  #Battle Royal High School
 			"A9513",  #Beelzebub
 			"A33",    #Berserk
 			"A10218", #Berserk Ougon Jidaihen I: Haou no Tamago
@@ -77,7 +80,9 @@
 			"A5031",  #Cobra the Animation: Time Drive
 			"A1",     #Cowboy Bebop
 			"A5",     #Cowboy Bebop: Tengoku no Tobira
+			"A4037",  #Cowboy Bebop Session XX: Mish-Mash Blues
 			"A114",   #Cromartie High School
+			"A1153",  #Crying Freeman
 			"A6721",  #Dark Side Cat
 			"A499",   #Demon City Shinjuku
 			"A1178",  #Detonator Orgun
@@ -85,6 +90,7 @@
 			"A1726",  #Devil May Cry
 			"A2354",  #Devilman: The Birth
 			"A2355",  #Devilman: The Demon Bird
+			"A2318",  #Dog Soldier
 			"A12885", #Dynamic Super Robots Grand Battle
 			"A12565", #Fate/Prototype
 			"A356",   #Fate/stay night
@@ -104,12 +110,15 @@
 			"A4486",  #Getter Robo G
 			"A5292",  #Getter Robo Go
 			"A978",   #Getter Robo: Armageddon
+			"A7661",  #Giant Killing
 			"A18771", #Gifuu Doudou!!: Kanetsugu to Keiji
 			"A4039",  #Golgo 13
 			"A1761",  #Golgo 13: Queen Bee
 			"A1760",  #Golgo 13: The Professional
+			"A1859",  #Grappler Baki The Ultimate Fighter
 			"A4385",  #Great Mazinger vs. Getter Robo
 			"A4386",  #Great Mazinger vs. Getter Robo G: Kuuchuu Dai-Gekitotsu
+			"A245",   #Great Teacher Onizuka
 			"A3481",  #Grendizer: Getter Robo G - Great Mazinger Kessen! Daikaijuu
 			"A411",   #Gun x Sword
 			"A267",   #Gungrave
@@ -119,6 +128,7 @@
 			"A265",   #Hajime no Ippo: Mashiba vs. Kimura
 			"A5258",  #Hajime no Ippo: New Challenger
 			"A1645",  #Harlock Saga
+			"A2178",  #Highlander: Vengeance
 			"A967",   #Hokuto no Ken
 			"A1356",  #Hokuto no Ken 2
 			"A1358",  #Hokuto no Ken Movie
@@ -130,14 +140,27 @@
 			"A3027",  #Hokuto no Ken: Yuria-den
 			"A5291",  #Hokuto no Ken: Zero Kenshiro Den
 			"A16774", #Inferno Cop
+			"A17843", #Inferno Cop: Fact Files
+			"A1759",  #Jigen Sengokushi: Kuro no Shishi - Jinnai Hen
 			"A666",   #JoJo"s Bizarre Adventure
 			"A665",   #JoJo"s Bizarre Adventure (2000)
 			"A14719", #Jojo"s Bizarre Adventure (2012)
 			"A3603",  #JoJo"s Bizarre Adventure: Phantom Blood
+			"A617",   #Juubee Ninpuuchou
+			"A618",   #Juubee Ninpuuchou: Ryuuhougyoku-hen
 			"A3002",  #Kaiji
 			"A10271", #Kaiji: Hakairoku Hen
+			"A2048",  #Kikou Ryohei Mellowlink
+			"A5967",  #Kinnikuman II Sei: Ultimate Muscle
+			"A5968",  #Kinnikuman II Sei: Ultimate Muscle 2
+			"A12279", #Kinnikuman II Sei Muscle: Ninjin Soudatsu sen! Choujin Daisensou
+			"A1707",  #Kinnikuman Nisei
+			"A6310",  #Kinnikuman Nisei: Second Generations
+			"A3064",  #Kizuoibito
 			"A6293",  #Koukou Butouden Crows
+			"A851",   #Kyou kara Ore wa!!
 			"A820",   #Legend of the Galactic Heroes
+			"A3448",  #Mad Bull 34
 			"A2253",  #Mazinger Z
 			"A10625", #Mazinger Z (Movie)
 			"A3898",  #Mazinger Z vs. Devilman
@@ -155,8 +178,11 @@
 			"A1455",  #Ninja Resurrection
 			"A5040",  #One Outs
 			"A400",   #Outlaw Star
+			"A6114",  #Rainbow: Nisha Rokubou no Shichinin
 			"A6675",  #Redline
 			"A917",   #Riding Bean
+			"A3509",  #Riki-Oh: The Wall of Hell
+			"A3511",  #Riki-Oh 2: Child of Destruction
 			"A45",    #Rurouni Kenshin
 			"A46",    #Rurouni Kenshin: Ishinshishi e no Requiem
 			"A44",    #Rurouni Kenshin: Tsuiokuhen
@@ -173,6 +199,7 @@
 			"A938",   #Shin Getter Robo vs. Neo Getter Robo
 			"A5485",  #Shin Mazinger Shougeki! Z-Hen
 			"A1913",  #Shonan Junai Gumi
+			"A5226",  #Souten Kouro
 			"A1541",  #Souten no Ken
 			"A3864",  #Souten no Ken Specials
 			"A2451",  #Space Adventure Cobra
@@ -185,6 +212,9 @@
 			"A1362",  #Street Fighter II: The Movie
 			"A3252",  #Super Express Mazinger 7
 			"A2418",  #Sword of the Stranger
+			"A14617", #Sword of the Stranger: Mukou Hadan Pilot
+			"A537",   #Tekken
+			"A10702", #Tekken: Blood Vengeance
 			"A2001",  #Tengen Toppa Gurren Lagann
 			"A5947",  #Tengen Toppa Gurren Lagann Gekijouban Zenyasai Special: Virals Sweet Dream
 			"A4107",  #Tengen Toppa Gurren Lagann Movie: Gurren-hen
@@ -193,12 +223,21 @@
 			"A4705",  #Tengen Toppa Gurren Lagann Parallel Works
 			"A8348",  #Tengen Toppa Gurren Lagann Parallel Works 2
 			"A3352",  #Tengen Toppa Gurren Lagann Special
+			"A10033", #Toriko
+			"A11787", #Toriko: Barbarian Ivy wo Hokaku Seyo!
+			"A6941",  #Toriko: Jump Super Anime Tour 2009 Special
+			"A10074", #Toriko 3D: Kaimaku Gourmet Adventure!!
+			"A17699", #Toriko Movie: Bishokushin no Special Menu
 			"A6",     #Trigun
 			"A4106",  #Trigun: Badlands Rumble
 			"A4387",  #UFO Robo Grendizer tai Great Mazinger
+			"A543",   #Vampire Hunter D: Bloodlust
 			"A1341",  #Violence Jack
 			"A1342",  #Violence Jack 2
-			"A1343"   #Violence Jack 3
+			"A1343",  #Violence Jack 3
+			"A1107",  #Wicked City
+			"A1959",  #Wild 7
+			"A1745"   #Wild 7 Another Bouryaku Unga
 		]
 	}
 }
