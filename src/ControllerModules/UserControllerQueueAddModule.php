@@ -1,9 +1,9 @@
 <?php
-class UserControllerQueuePositionModule extends AbstractUserControllerModule
+class UserControllerQueueAddModule extends AbstractUserControllerModule
 {
 	public static function getUrlParts()
 	{
-		return ['queue-pos'];
+		return ['queue-add'];
 	}
 
 	public static function getMediaAvailability()
@@ -21,7 +21,7 @@ class UserControllerQueuePositionModule extends AbstractUserControllerModule
 	{
 		$queue = new Queue(Config::$userQueuePath);
 		$j['user'] = $controllerContext->userName;
-		$j['pos'] = $queue->seek(strtolower($controllerContext->userName));
+		$j['pos'] = $queue->enqueue(strtolower($controllerContext->userName));
 
 		$viewContext->layoutName = 'layout-json';
 		$viewContext->json = $j;

@@ -63,13 +63,13 @@ class UserController extends AbstractController
 			$viewContext->layoutName = 'layout-raw';
 		}
 
-		$queue = new Queue(Config::$userQueuePath);
-		$viewContext->queuePosition = $queue->enqueue(strtolower($controllerContext->userName));
-
 		Database::selectUser($controllerContext->userName);
 		$user = R::findOne('user', 'LOWER(name) = LOWER(?)', [$controllerContext->userName]);
 		if (empty($user))
 		{
+			$queue = new Queue(Config::$userQueuePath);
+			$viewContext->queuePosition = $queue->enqueue(strtolower($controllerContext->userName));
+
 			$controllerContext->cache->bypass(true);
 			//try to load cache, if it exists
 			$url = $controllerContext->url;

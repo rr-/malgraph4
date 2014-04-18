@@ -1,4 +1,33 @@
-$(function()
+function updatePosition()
+{
+	var target = $('.queue-pos');
+	var positionUrl = target.attr('data-queue-pos-url');
+	var enqueueUrl = target.attr('data-queue-add-url');
+	var oldTooltip = target.attr('data-tooltip');
+	$.get(positionUrl, function(data)
+	{
+		text = '#' + data.pos;
+		if (data.pos)
+			target.text(text).wrapInner('<span>');
+		else
+		{
+			target.removeAttr('data-tooltip');
+			var updateLink = $('<a href="#">Add to queue</a>');
+			updateLink.click(function(e)
+				{
+					e.preventDefault();
+					$.get(enqueueUrl, function(data)
+					{
+						target.attr('data-tooltip', oldTooltip);
+						updatePosition();
+					});
+				});
+			target.html(updateLink);
+		}
+	});
+}
+
+function updateTime()
 {
 	var target = $('.updated');
 	var now = new Date();
@@ -23,10 +52,11 @@ $(function()
 		text = (diff / 86400).toFixed(1) + ' days ago';
 	}
 
-	var url = target.attr('data-queue-pos-url');
-	$.get(url, function(data)
-	{
-		text += ', #' + data.pos;
-		target.text(text);
-	});
+	target.text(text).wrapInner('<span>');
+}
+
+$(function()
+{
+	updatePosition();
+	updateTime();
 });
