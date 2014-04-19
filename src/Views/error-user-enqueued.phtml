@@ -9,8 +9,8 @@
 		<div style="text-align: center">
 		<p>Successfully added <?php echo $viewContext->userName ?> to queue at position <?php echo $viewContext->queuePosition ?>.</p>
 
-		<?php $min = ceil($viewContext->queuePosition / Config::$usersPerCronRun) ?>
-		<p>Since MALgraph processes about <?php echo Config::$usersPerCronRun ?>  users per minute,<br>
+		<?php $min = ceil($viewContext->queuePosition * 5 / Config::$usersPerCronRun) ?>
+		<p>Since MALgraph processes about <?php echo Config::$usersPerCronRun ?>  users every five minutes,<br>
 		this shouldn&rsquo;t take more than <?php printf('%d %s', $min, $min > 1 ? 'minutes' : 'minute') ?>.</p>
 		<p>This page will refresh automatically once your stats are ready.</p>
 		</div>
