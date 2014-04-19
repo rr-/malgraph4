@@ -23,13 +23,13 @@ function processQueue($queue, $count, $logger, $callback)
 		catch (DocumentException $e)
 		{
 			$logger->log('error: ' . $e->getMessage());
-			$queue->enqueue($key);
+			$queue->enqueue($key, true);
 		}
 		catch (Exception $e)
 		{
 			$logger->log('error');
 			$logger->log($e);
-			$queue->enqueue($key);
+			$queue->enqueue($key, true);
 		}
 		++ $processed;
 	}

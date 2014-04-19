@@ -93,7 +93,7 @@ class Queue
 		return $this->_dequeue($num, true);
 	}
 
-	public function enqueue($newLines)
+	public function enqueue($newLines, $enqueueAtStart = false)
 	{
 		$this->open();
 		$lines = $this->readLines();
@@ -101,9 +101,8 @@ class Queue
 		$lines = array_values($lines);
 		$linesToAdd = array_values((array) $newLines);
 		$linesFlipped = array_flip($lines);
-		$x = count($linesFlipped);
 		$indexes = [];
-		foreach ($linesToAdd as $lineToAdd)
+		foreach ($linesToAdd as $x => $lineToAdd)
 		{
 			if (isset($linesFlipped[$lineToAdd]))
 			{
@@ -111,9 +110,16 @@ class Queue
 			}
 			else
 			{
-				$lines []= $lineToAdd;
-				$x ++;
-				$indexes []= $x;
+				if ($enqueueAtStart)
+				{
+					array_splice($lines, $x, 0, [$lineToAdd]);
+					$indexes []= $x;
+				}
+				else
+				{
+					$lines []= $lineToAdd;
+					$indexes []= count($lines);
+				}
 			}
 		}
 
