@@ -1,3 +1,7 @@
+<Files *.php>
+	ForceType application/x-httpd-php55
+</Files>
+
 <IfModule pagespeed_module>
 	ModPageSpeed Off
 </IfModule>
