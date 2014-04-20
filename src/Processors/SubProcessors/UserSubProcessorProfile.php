@@ -18,7 +18,7 @@ class UserSubProcessorProfile extends UserSubProcessor
 		$xpath = new DOMXPath($dom);
 
 		if ($xpath->query('//title[text() = \'Invalid User\']')->length >= 1)
-			throw new BadProcessorKeyException($doc, $context->key);
+			throw new BadProcessorKeyException($context->key);
 
 		$userName = Strings::removeSpaces(self::getNodeValue($xpath, '//title'));
 		$userName = substr($userName, 0, strpos($userName, '\'s Profile'));
