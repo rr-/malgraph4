@@ -40,33 +40,42 @@ class UserControllerRatingsModule extends AbstractUserControllerModule
 		$listNoMovies = UserMediaFilter::doFilter($list, UserMediaFilter::nonMovie());
 		$viewContext->lengthDistribution = MediaLengthDistribution::fromEntries($listNoMovies);
 
-		list($year, $month, $day) = explode('-', $viewContext->user->join_date);
-		$earliest = mktime(0, 0, 0, $month, $day, $year);
-		$totalTime = 0;
-		foreach ($list as $mixedUserMedia)
+		$f = explode('-', $viewContext->user->join_date);
+		if (count($f) != 3)
 		{
-			$totalTime += $mixedUserMedia->finished_duration;
-			foreach ([$mixedUserMedia->start_date, $mixedUserMedia->end_date] as $k)
+			$viewContext->earliestTimeKnown = null;
+			$viewContext->meanTime = null;
+		}
+		else
+		{
+			list($year, $month, $day) = $f;
+			$earliest = mktime(0, 0, 0, $month, $day, $year);
+			$totalTime = 0;
+			foreach ($list as $mixedUserMedia)
 			{
-				$f = explode('-', $k);
-				if (count($f) != 3) {
-					continue;
-				}
-				$year = intval($f[0]);
-				$month = intval($f[1]);
-				$day = intval($f[2]);
-				if (!$year or !$month or !$day)
+				$totalTime += $mixedUserMedia->finished_duration;
+				foreach ([$mixedUserMedia->start_date, $mixedUserMedia->end_date] as $k)
 				{
-					continue;
-				}
-				$time = mktime(0, 0, 0, $month, $day, $year);
-				if ($time < $earliest) {
-					$earliest = $time;
+					$f = explode('-', $k);
+					if (count($f) != 3) {
+						continue;
+					}
+					$year = intval($f[0]);
+					$month = intval($f[1]);
+					$day = intval($f[2]);
+					if (!$year or !$month or !$day)
+					{
+						continue;
+					}
+					$time = mktime(0, 0, 0, $month, $day, $year);
+					if ($time < $earliest) {
+						$earliest = $time;
+					}
 				}
 			}
-		}
 
-		$viewContext->earliestTimeKnown = $earliest;
-		$viewContext->meanTime = $totalTime / max(1, (time() - $earliest) / (24. * 3600.0));
+			$viewContext->earliestTimeKnown = $earliest;
+			$viewContext->meanTime = $totalTime / max(1, (time() - $earliest) / (24. * 3600.0));
+		}
 	}
 }
