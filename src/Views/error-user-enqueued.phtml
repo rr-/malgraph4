@@ -9,9 +9,27 @@
 		<div style="text-align: center">
 		<p>Successfully added <?php echo $viewContext->userName ?> to queue at position <?php echo $viewContext->queuePosition ?>.</p>
 
-		<?php $min = ceil($viewContext->queuePosition * 5 / Config::$usersPerCronRun) ?>
+		<?php
+			$totalMinutes = ceil($viewContext->queuePosition * 5 / Config::$usersPerCronRun);
+			$hours = floor($totalMinutes / 60.);
+			$minutes = $totalMinutes % 60;
+
+			$wait = '';
+			if ($hours > 0)
+			{
+				$wait .= $hours . ' hour';
+				if ($hours != 1)
+					$wait .= 's';
+				$wait .= ' ';
+			}
+
+			$wait .= $minutes . ' minute';
+			if ($minutes != 1)
+				$wait .= 's';
+		?>
+
 		<p>Since MALgraph processes about <?php echo Config::$usersPerCronRun ?>  users every five minutes,<br>
-		this shouldn&rsquo;t take more than <?php printf('%d %s', $min, $min > 1 ? 'minutes' : 'minute') ?>.</p>
+		this shouldn&rsquo;t take more than <?php echo $wait ?>.</p>
 		<p>This page will refresh automatically once your stats are ready.</p>
 		</div>
 
@@ -19,7 +37,7 @@
 		window.setTimeout(function()
 		{
 			window.location.reload();
-		}, <?php echo $min * 60000 ?>);
+		}, <?php echo $totalMinutes * 60000 ?>);
 		</script>
 	</div>
 </div>
