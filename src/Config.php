@@ -8,6 +8,7 @@ class Config extends Singleton
 	static $mediaQueuePath;
 	static $mediaQueueMinWait;
 	static $downloaderUserAgent;
+	static $downloaderProxy;
 	static $downloaderCookieFilePath;
 	static $downloaderMaxParallelJobs;
 	static $mirrorPath;
@@ -60,6 +61,7 @@ class Config extends Singleton
 		self::$mediaQueueMinWait = 7 * 24 * 60;
 
 		self::$downloaderUserAgent = 'MALgraph v' . self::$version;
+		self::$downloaderProxy = null;
 		self::$downloaderCookieFilePath = $dataRootDir . 'cookies.dat';
 		self::$downloaderMaxParallelJobs = 10;
 

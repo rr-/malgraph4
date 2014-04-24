@@ -19,6 +19,8 @@ class Downloader
 		curl_setopt($handle, CURLOPT_COOKIEJAR, Config::$downloaderCookieFilePath);
 		curl_setopt($handle, CURLOPT_COOKIEFILE, Config::$downloaderCookieFilePath);
 		curl_setopt($handle, CURLOPT_USERAGENT, Config::$downloaderUserAgent);
+		if (Config::$downloaderProxy != '')
+			curl_setopt($handle, CURLOPT_PROXY, Config::$downloaderProxy);
 		return $handle;
 	}
 
