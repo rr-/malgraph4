@@ -10,7 +10,7 @@
 		<p>Successfully added <?php echo $viewContext->userName ?> to queue at position <?php echo $viewContext->queuePosition ?>.</p>
 
 		<?php
-			$totalMinutes = ceil($viewContext->queuePosition * 5 / Config::$usersPerCronRun);
+			$totalMinutes = ceil($viewContext->queuePosition * 5 / max(1, Config::$usersPerCronRun));
 			$hours = floor($totalMinutes / 60.);
 			$minutes = $totalMinutes % 60;
 
@@ -37,7 +37,7 @@
 		window.setTimeout(function()
 		{
 			window.location.reload();
-		}, <?php echo $totalMinutes * 60000 ?>);
+		}, <?php echo 60000 ?>);
 		</script>
 	</div>
 </div>
