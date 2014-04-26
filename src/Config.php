@@ -1,6 +1,7 @@
 <?php
 class Config extends Singleton
 {
+	static $cronInterval;
 	static $usersPerCronRun;
 	static $userQueuePath;
 	static $userQueueMinWait;
@@ -55,13 +56,14 @@ class Config extends Singleton
 
 		self::$version = '4.1.2';
 
+		self::$cronInterval = 5; //minutes
 		self::$usersPerCronRun = 5;
 		self::$userQueuePath = $dataRootDir . 'queue-users.lst';
-		self::$userQueueMinWait = 24 * 60 * 60;
+		self::$userQueueMinWait = 24 * 60 * 60; //seconds
 		self::$userQueueMaxAttempts = 20;
 		self::$mediaPerCronRun = 5;
 		self::$mediaQueuePath = $dataRootDir . 'queue-media.lst';
-		self::$mediaQueueMinWait = 7 * 24 * 60 * 60;
+		self::$mediaQueueMinWait = 7 * 24 * 60 * 60; //seconds
 		self::$mediaQueueMaxAttempts = 2;
 
 		self::$downloaderUserAgent = 'MALgraph v' . self::$version;

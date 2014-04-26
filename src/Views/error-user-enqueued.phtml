@@ -7,10 +7,14 @@
 	<h2>Okay!</h2>
 	<div class="section-body">
 		<div style="text-align: center">
-		<p>Successfully added <?php echo $viewContext->userName ?> to queue at position <?php echo $viewContext->queuePosition ?>.</p>
+		<p style="margin-bottom: 1.5em">
+			Successfully added <a href="//myanimelist.net/profile/<?= $viewContext->userName ?>"><?php echo $viewContext->userName ?></a> to queue at position <?php echo $viewContext->queuePosition ?>.<br/>
+			<small>Click your username above to make sure you typed it right.</small>
+		</p>
 
 		<?php
-			$totalMinutes = ceil($viewContext->queuePosition * 5 / max(1, Config::$usersPerCronRun));
+			$totalMinutes = ceil($viewContext->queuePosition * Config::$cronInterval / max(1, Config::$usersPerCronRun));
+			$totalMinutes = Config::$cronInterval * ceil($totalMinutes / Config::$cronInterval);
 			$hours = floor($totalMinutes / 60.);
 			$minutes = $totalMinutes % 60;
 
@@ -28,9 +32,11 @@
 				$wait .= 's';
 		?>
 
-		<p>Since MALgraph processes about <?php echo Config::$usersPerCronRun ?>  users every five minutes,<br>
-		this shouldn&rsquo;t take more than <?php echo $wait ?>.</p>
-		<p>This page will refresh automatically once your stats are ready.</p>
+		<p>
+			Based on the queue size, looks like it&rsquo;ll take about <?= $wait ?>.</p>
+			<p>
+			This page will refresh automatically once your stats are ready.
+		</p>
 		</div>
 
 		<script type="text/javascript">
