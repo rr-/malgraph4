@@ -1,8 +1,18 @@
+function getProfileAge()
+{
+	var now = new Date();
+	var then = new Date($('#profile-details').attr('data-date'));
+	var diff = now - then;
+	diff /= 1000.0;
+	return diff;
+}
+
 function updatePosition()
 {
 	var target = $('.queue-pos');
-	var positionUrl = target.attr('data-queue-pos-url');
-	var enqueueUrl = target.attr('data-queue-add-url');
+	var positionUrl = $('#profile-details').attr('data-queue-pos-url');
+	var enqueueUrl = $('#profile-details').attr('data-queue-add-url');
+	var queueMinWait = parseInt($('#profile-details').attr('data-queue-min-wait'));
 	var oldTooltip = target.attr('data-tooltip');
 	$.get(positionUrl, function(data)
 	{
@@ -12,44 +22,49 @@ function updatePosition()
 		else
 		{
 			target.removeAttr('data-tooltip');
-			var updateLink = $('<a href="#">Add to queue</a>');
-			updateLink.click(function(e)
-				{
-					e.preventDefault();
-					$.get(enqueueUrl, function(data)
+			var profileAge = getProfileAge();
+			if (profileAge < queueMinWait)
+			{
+				target.text('Using fresh data').wrapInner('<span>');
+			}
+			else
+			{
+				var updateLink = $('<a href="#">Add to queue</a>');
+				updateLink.click(function(e)
 					{
-						target.attr('data-tooltip', oldTooltip);
-						updatePosition();
+						e.preventDefault();
+						$.get(enqueueUrl, function(data)
+						{
+							target.attr('data-tooltip', oldTooltip);
+							updatePosition();
+						});
 					});
-				});
-			target.html(updateLink);
+				target.html(updateLink);
+			}
 		}
 	});
 }
 
 function updateTime()
 {
+	var profileAge = getProfileAge();
 	var target = $('.updated');
-	var now = new Date();
-	var then = new Date(target.attr('data-date'));
-	var diff = now - then;
-	diff /= 1000.0;
 	var text = '';
-	if (diff < 60)
+	if (profileAge < 60)
 	{
 		text = 'just now';
 	}
-	else if (diff < 3600)
+	else if (profileAge < 60 * 60)
 	{
-		text = (diff / 60).toFixed(0) + ' minutes ago';
+		text = (profileAge / 60).toFixed(0) + ' minutes ago';
 	}
-	else if (diff < 86400)
+	else if (profileAge < 24 * 60 * 60)
 	{
-		text = (diff / 3600).toFixed(1) + ' hours ago';
+		text = (profileAge / 3600).toFixed(1) + ' hours ago';
 	}
 	else
 	{
-		text = (diff / 86400).toFixed(1) + ' days ago';
+		text = (profileAge / 86400).toFixed(1) + ' days ago';
 	}
 
 	target.text(text).wrapInner('<span>');

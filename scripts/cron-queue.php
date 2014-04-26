@@ -12,11 +12,10 @@ function processQueue($queue, $count, $maxAttempts, $logger, $callback)
 
 		$key = $queueItem->item;
 		$errors = false;
-		$countAsProcessed = true;
 
 		try
 		{
-			$countAsProcessed = $callback($key);
+			$callback($key);
 		}
 		catch (BadProcessorKeyException $e)
 		{
@@ -49,8 +48,7 @@ function processQueue($queue, $count, $maxAttempts, $logger, $callback)
 			$queue->enqueue($queueItem, $enqueueAtStart);
 		}
 
-		if ($countAsProcessed)
-			++ $processed;
+		++ $processed;
 	}
 }
 
@@ -79,15 +77,6 @@ CronRunner::run(__FILE__, function($logger)
 			Database::selectUser($userName);
 			$logger->log('Processing user %s... ', $userName);
 
-			#check if processed too soon
-			$query = 'SELECT 0 FROM user WHERE LOWER(name) = LOWER(?)' .
-				' AND processed >= DATETIME("now", "-' . Config::$userQueueMinWait . ' minutes")';
-			if (R::getAll($query, [$userName]))
-			{
-				$logger->log('too soon');
-				return false;
-			}
-
 			#process the user
 			$userContext = $userProcessor->process($userName);
 
@@ -95,9 +84,7 @@ CronRunner::run(__FILE__, function($logger)
 			$cache = new Cache();
 			$cache->setPrefix($userName);
 			foreach ($cache->getAllFiles() as $path)
-			{
 				unlink($path);
-			}
 
 			#append media to queue
 			$mediaIds = [];
@@ -105,7 +92,9 @@ CronRunner::run(__FILE__, function($logger)
 			{
 				foreach ($userContext->user->getMixedUserMedia($media) as $entry)
 				{
-					$mediaIds []= TextHelper::serializeMediaId($entry);
+					$mediaAge = time() - strtotime($entry->processed);
+					if ($mediaAge > Config::$mediaQueueMinWait)
+						$mediaIds []= TextHelper::serializeMediaId($entry);
 				}
 			}
 
@@ -115,7 +104,6 @@ CronRunner::run(__FILE__, function($logger)
 				}, $mediaIds));
 
 			$logger->log('ok');
-			return true;
 		});
 
 	#process media
@@ -129,19 +117,9 @@ CronRunner::run(__FILE__, function($logger)
 			list ($media, $malId) = TextHelper::deserializeMediaId($key);
 			$logger->log('Processing %s #%d... ', Media::toString($media), $malId);
 
-			#check if processed too soon
-			$query = 'SELECT 0 FROM media WHERE media = ? AND mal_id = ?' .
-				' AND processed >= DATETIME("now", "-' . Config::$mediaQueueMinWait . ' minutes")';
-			if (R::getAll($query, [$media, $malId]))
-			{
-				$logger->log('too soon');
-				return false;
-			}
-
 			#process the media
 			$mediaProcessors[$media]->process($malId);
 
 			$logger->log('ok');
-			return true;
 		});
 });

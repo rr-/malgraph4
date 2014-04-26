@@ -21,7 +21,10 @@ class UserControllerQueueAddModule extends AbstractUserControllerModule
 	{
 		$queue = new Queue(Config::$userQueuePath);
 		$queueItem = new QueueItem(strtolower($controllerContext->userName));
-		$queue->enqueue($queueItem);
+		$user = R::findOne('user', 'LOWER(name) = LOWER(?)', [$controllerContext->userName]);
+		$profileAge = (time() - strtotime($user->processed));
+		if ($profileAge > Config::$userQueueMinWait)
+			$queue->enqueue($queueItem);
 		$j['user'] = $controllerContext->userName;
 		$j['pos'] = $queue->seek($queueItem);
 

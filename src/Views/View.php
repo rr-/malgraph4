@@ -53,6 +53,10 @@ class View
 
 		$output = str_replace(' />', '/>', $output);
 		$output = str_replace(' >', '>', $output);
+		$output = preg_replace_callback('/<[^>]+>/', function($m)
+		{
+			return str_replace("\t", ' ', $m[0]);
+		}, $output);
 		$output = str_replace(["\t", "\r", "\n"], '', $output);
 		$i = strpos($output, '  ');
 		while ($i !== false)
