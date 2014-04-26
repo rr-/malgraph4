@@ -16,8 +16,6 @@ function processQueue($queue, $count, $maxAttempts, $logger, $callback)
 		try
 		{
 			$countAsProcessed = $callback($key);
-			if (!$countAsProcessed)
-				continue;
 		}
 		catch (BadProcessorKeyException $e)
 		{
@@ -50,7 +48,8 @@ function processQueue($queue, $count, $maxAttempts, $logger, $callback)
 			$queue->enqueue($queueItem, $enqueueAtStart);
 		}
 
-		++ $processed;
+		if ($countAsProcessed)
+			++ $processed;
 	}
 }
 
