@@ -68,7 +68,9 @@ class UserController extends AbstractController
 		if (empty($user))
 		{
 			$queue = new Queue(Config::$userQueuePath);
-			$viewContext->queuePosition = $queue->enqueue(strtolower($controllerContext->userName));
+			$queueItem = new QueueItem(strtolower($controllerContext->userName));
+			$queue->enqueue($queueItem);
+			$viewContext->queuePosition = $queue->seek($queueItem);
 
 			$controllerContext->cache->bypass(true);
 			//try to load cache, if it exists

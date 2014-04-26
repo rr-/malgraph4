@@ -1,9 +1,82 @@
 <?php
 class Queue
 {
-	private $lines = [];
 	private $file = null;
 	private $handle = null;
+
+	public function __construct($file)
+	{
+		$this->file = $file;
+	}
+
+	public function seek(QueueItem $item)
+	{
+		$this->open();
+		$items = $this->readItems();
+		$this->close();
+		foreach ($items as $index => $otherItem)
+		{
+			if ($otherItem->item == $item->item)
+				return $index + 1;
+		}
+		return false;
+	}
+
+	public function peek()
+	{
+		$this->open();
+		$items = $this->readItems();
+		if (count($items) > 0)
+			$item = array_shift($items);
+		else
+			$item = null;
+		$this->close();
+		return $item;
+	}
+
+	public function dequeue()
+	{
+		$this->open();
+		$items = $this->readItems();
+		if (count($items) > 0)
+			$item = array_shift($items);
+		else
+			$item = null;
+		$this->writeItems($items);
+		$this->close();
+		return $item;
+	}
+
+	public function enqueue(QueueItem $newItem, $enqueueAtStart = false)
+	{
+		$this->enqueueMultiple([$newItem], $enqueueAtStart);
+	}
+
+	public function enqueueMultiple(array $newItems, $enqueueAtStart = false)
+	{
+		$this->open();
+		$items = $this->readItems();
+		if ($enqueueAtStart)
+		{
+			array_splice($items, 0, 0, $newItems);
+		}
+		else
+		{
+			array_splice($items, count($items), 0, $newItems);
+		}
+		$this->writeItems($items);
+		$this->close();
+	}
+
+	public function size()
+	{
+		$this->open();
+		$items = $this->readItems();
+		$this->close();
+		return count($items);
+	}
+
+
 
 	private function open()
 	{
@@ -11,7 +84,27 @@ class Queue
 		flock($this->handle, LOCK_EX);
 	}
 
-	private function readLines()
+	private function itemFromLine($line)
+	{
+		if (strpos($line, "\t") === false)
+		{
+			$item = $line;
+			$attempts = 0;
+		}
+		else
+		{
+			list ($item, $attempts) = explode("\t", $line);
+			$attempts = intval($attempts);
+		}
+		return new QueueItem($item, $attempts);
+	}
+
+	private function lineFromItem(QueueItem $item)
+	{
+		return $item->item . "\t" . $item->attempts;
+	}
+
+	private function readItems()
 	{
 		assert($this->handle != null);
 		fseek($this->handle, 0, SEEK_END);
@@ -22,11 +115,12 @@ class Queue
 			: null;
 		$lines = explode("\n", $data);
 		$lines = array_filter($lines);
-		return $lines;
+		return array_map([__CLASS__, 'itemFromLine'], $lines);
 	}
 
-	private function writeLines($lines)
+	private function writeItems($items)
 	{
+		$lines = array_map([__CLASS__, 'lineFromItem'], $items);
 		$data = join("\n", $lines);
 		fseek($this->handle, 0, SEEK_SET);
 		ftruncate($this->handle, strlen($data));
@@ -39,102 +133,4 @@ class Queue
 		$this->handle = null;
 	}
 
-	public function __construct($file)
-	{
-		$this->file = $file;
-	}
-
-	public function seek($string)
-	{
-		$this->open();
-		$lines = $this->readLines();
-		$this->close();
-		$index = array_search($string, $lines);
-		return $index !== false ? $index + 1 : false;
-	}
-
-	private function _dequeue($num, $doWrite)
-	{
-		$this->open();
-		$lines = $this->readLines();
-		$return = [];
-		foreach (range(1, $num === null ? 1 : $num) as $i)
-		{
-			$line = array_shift($lines);
-			if ($line)
-			{
-				$return []= $line;
-			}
-		}
-		if ($doWrite)
-		{
-			$this->writeLines($lines);
-		}
-		$this->close();
-
-		if ($num !== null)
-		{
-			return $return;
-		}
-		if (count($return))
-		{
-			return reset($return);
-		}
-		return null;
-	}
-
-	public function peek($num = null)
-	{
-		return $this->_dequeue($num, false);
-	}
-
-	public function dequeue($num = null)
-	{
-		return $this->_dequeue($num, true);
-	}
-
-	public function enqueue($newLines, $enqueueAtStart = false)
-	{
-		$this->open();
-		$lines = $this->readLines();
-
-		$lines = array_values($lines);
-		$linesToAdd = array_values((array) $newLines);
-		$linesFlipped = array_flip($lines);
-		$indexes = [];
-		foreach ($linesToAdd as $x => $lineToAdd)
-		{
-			if (isset($linesFlipped[$lineToAdd]))
-			{
-				$indexes []= $linesFlipped[$lineToAdd] + 1;
-			}
-			else
-			{
-				if ($enqueueAtStart)
-				{
-					array_splice($lines, $x, 0, [$lineToAdd]);
-					$indexes []= $x;
-				}
-				else
-				{
-					$lines []= $lineToAdd;
-					$indexes []= count($lines);
-				}
-			}
-		}
-
-		$this->writeLines($lines);
-		$this->close();
-		return is_array($newLines)
-			? $indexes
-			: reset($indexes);
-	}
-
-	public function size()
-	{
-		$this->open();
-		$lines = $this->readLines();
-		$this->close();
-		return count($lines);
-	}
 }

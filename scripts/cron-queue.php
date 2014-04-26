@@ -1,19 +1,22 @@
 <?php
 require_once __DIR__ . '/../src/core.php';
 
-function processQueue($queue, $count, $logger, $callback)
+function processQueue($queue, $count, $maxAttempts, $logger, $callback)
 {
 	$processed = 0;
 	while ($processed < $count)
 	{
-		$key = $queue->dequeue();
-		if ($key === null)
+		$queueItem = $queue->peek();
+		if ($queueItem === null)
 			break;
+
+		$key = $queueItem->item;
+		$errors = false;
 
 		try
 		{
-			$okay = $callback($key);
-			if (!$okay)
+			$countAsProcessed = $callback($key);
+			if (!$countAsProcessed)
 				continue;
 		}
 		catch (BadProcessorKeyException $e)
@@ -23,14 +26,30 @@ function processQueue($queue, $count, $logger, $callback)
 		catch (DocumentException $e)
 		{
 			$logger->log('error: ' . $e->getMessage());
-			$queue->enqueue($key, true);
+			$errors = true;
 		}
 		catch (Exception $e)
 		{
 			$logger->log('error');
 			$logger->log($e);
-			$queue->enqueue($key, true);
+			$errors = true;
 		}
+
+		if (!$errors)
+		{
+			$queue->dequeue();
+		}
+		else
+		{
+			$queue->dequeue();
+			$enqueueAtStart = $queueItem->attempts < $maxAttempts;
+			if ($enqueueAtStart)
+				$queueItem->attempts ++;
+			else
+				$queueItem->attempts = 0;
+			$queue->enqueue($queueItem, $enqueueAtStart);
+		}
+
 		++ $processed;
 	}
 }
@@ -53,6 +72,7 @@ CronRunner::run(__FILE__, function($logger)
 	processQueue(
 		$userQueue,
 		Config::$usersPerCronRun,
+		Config::$userQueueMaxAttempts,
 		$logger,
 		function($userName) use ($userProcessor, $mediaQueue, $logger)
 		{
@@ -88,7 +108,11 @@ CronRunner::run(__FILE__, function($logger)
 					$mediaIds []= TextHelper::serializeMediaId($entry);
 				}
 			}
-			$mediaQueue->enqueue($mediaIds);
+
+			$mediaQueue->enqueueMultiple(array_map(function($mediaId)
+				{
+					return new QueueItem($mediaId);
+				}, $mediaIds));
 
 			$logger->log('ok');
 			return true;
@@ -98,6 +122,7 @@ CronRunner::run(__FILE__, function($logger)
 	processQueue(
 		$mediaQueue,
 		Config::$mediaPerCronRun,
+		Config::$mediaQueueMaxAttempts,
 		$logger,
 		function($key) use ($mediaProcessors, $logger)
 		{

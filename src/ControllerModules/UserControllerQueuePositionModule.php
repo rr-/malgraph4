@@ -20,8 +20,9 @@ class UserControllerQueuePositionModule extends AbstractUserControllerModule
 	public static function work(&$controllerContext, &$viewContext)
 	{
 		$queue = new Queue(Config::$userQueuePath);
+		$queueItem = new QueueItem(strtolower($controllerContext->userName));
 		$j['user'] = $controllerContext->userName;
-		$j['pos'] = $queue->seek(strtolower($controllerContext->userName));
+		$j['pos'] = $queue->seek($queueItem);
 
 		$viewContext->layoutName = 'layout-json';
 		$viewContext->json = $j;

@@ -20,8 +20,10 @@ class UserControllerQueueAddModule extends AbstractUserControllerModule
 	public static function work(&$controllerContext, &$viewContext)
 	{
 		$queue = new Queue(Config::$userQueuePath);
+		$queueItem = new QueueItem(strtolower($controllerContext->userName));
+		$queue->enqueue($queueItem);
 		$j['user'] = $controllerContext->userName;
-		$j['pos'] = $queue->enqueue(strtolower($controllerContext->userName));
+		$j['pos'] = $queue->seek($queueItem);
 
 		$viewContext->layoutName = 'layout-json';
 		$viewContext->json = $j;
