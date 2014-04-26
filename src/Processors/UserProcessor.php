@@ -35,9 +35,6 @@ class UserProcessor extends AbstractProcessor
 			Database::delete('usermedia', ['user_id' => $context->user->id]);
 			Database::delete('user', ['id' => $context->user->id]);
 		}
-		else
-		{
-			throw $context->exception;
-		}
+		throw $context->exception;
 	}
 }

@@ -79,6 +79,10 @@ abstract class AbstractProcessor
 								$subProcessor->process($subDocuments, $context);
 								break;
 							}
+							catch (BadProcessorKeyException $e)
+							{
+								throw $e;
+							}
 							catch (DocumentException $e)
 							{
 								$sourceDocuments[$e->getDocument()->url] = Downloader::download($e->getDocument()->url);
@@ -90,10 +94,11 @@ abstract class AbstractProcessor
 
 							++ $attempts;
 							if ($attempts > Config::$maxProcessingAttempts)
-								if (isset($e))
-									throw $e;
-								else
-									throw new Exception('Too many attempts');
+							{
+								throw !isset($e)
+									? new Exception('Too many attempts')
+									: $e;
+							}
 						}
 
 					}
