@@ -56,6 +56,17 @@ class Queue
 	{
 		$this->open();
 		$items = $this->readItems();
+
+		$oldItemKeys = array_flip(array_map(function($oldItem)
+		{
+			return $oldItem->item;
+		}, $items));
+		var_dump($oldItemKeys);
+		$newItems = array_filter($newItems, function($newItem) use ($oldItemKeys)
+		{
+			return !isset($oldItemKeys[$newItem->item]);
+		});
+
 		if ($enqueueAtStart)
 		{
 			array_splice($items, 0, 0, $newItems);
