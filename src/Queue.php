@@ -61,7 +61,6 @@ class Queue
 		{
 			return $oldItem->item;
 		}, $items));
-		var_dump($oldItemKeys);
 		$newItems = array_filter($newItems, function($newItem) use ($oldItemKeys)
 		{
 			return !isset($oldItemKeys[$newItem->item]);
