@@ -12,6 +12,7 @@ function processQueue($queue, $count, $maxAttempts, $logger, $callback)
 
 		$key = $queueItem->item;
 		$errors = false;
+		$countAsProcessed = true;
 
 		try
 		{
