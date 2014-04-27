@@ -23,7 +23,8 @@ class UserControllerQueueAddModule extends AbstractUserControllerModule
 		$queueItem = new QueueItem(strtolower($controllerContext->userName));
 		$user = R::findOne('user', 'LOWER(name) = LOWER(?)', [$controllerContext->userName]);
 		$profileAge = (time() - strtotime($user->processed));
-		if ($profileAge > Config::$userQueueMinWait)
+		$banned = BanHelper::getUserBanState($controllerContext->userName) != BanHelper::USER_BAN_NONE;
+		if ($profileAge > Config::$userQueueMinWait and !$banned)
 			$queue->enqueue($queueItem);
 		$j['user'] = $controllerContext->userName;
 		$j['pos'] = $queue->seek($queueItem);

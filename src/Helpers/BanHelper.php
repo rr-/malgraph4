@@ -1,6 +1,10 @@
 <?php
 class BanHelper extends Singleton
 {
+	const USER_BAN_NONE = 0;
+	const USER_BAN_QUEUE_ONLY = 1;
+	const USER_BAN_TOTAL = 2;
+
 	private static $bannedUsers;
 	private static $bannedGenres;
 	private static $bannedCreators;
@@ -9,7 +13,16 @@ class BanHelper extends Singleton
 
 	public static function doInit()
 	{
-		self::$bannedUsers = array_map('strtolower', TextHelper::loadSimpleList(Config::$bannedUsersListPath));
+		$list = TextHelper::loadSimpleList(Config::$bannedUsersListPath);
+		foreach ($list as $line)
+		{
+			$tmp = strpos($line, "\t") === false
+				? [$line, self::USER_BAN_TOTAL]
+				: explode("\t", $line);
+			list ($userName, $banType) = $tmp;
+			self::$bannedUsers[strtolower($userName)] = $banType;
+		}
+
 		self::$bannedGenres = TextHelper::loadSimpleList(Config::$bannedGenresListPath);
 		self::$bannedCreators = TextHelper::loadSimpleList(Config::$bannedCreatorsListPath);
 		self::$bannedGenresForRecs = TextHelper::loadSimpleList(Config::$bannedGenresForRecsListPath);
@@ -53,26 +66,30 @@ class BanHelper extends Singleton
 		return $ret;
 	}
 
-	public static function isUserBanned($userName)
+	public static function getUserBanState($userName)
 	{
-		return in_array(strtolower($userName), self::$bannedUsers);
+		return isset(self::$bannedUsers[strtolower($userName)])
+			? self::$bannedUsers[strtolower($userName)]
+			: self::USER_BAN_NONE;
 	}
 
-	public static function banUser($userName, $ban = true)
+	public static function setUserBanState($userName, $banState)
 	{
-		if ($ban)
+		if ($banState != self::USER_BAN_NONE)
 		{
-			self::$bannedUsers []= strtolower($userName);
-			self::$bannedUsers = array_unique(self::$bannedUsers);
+			self::$bannedUsers[strtolower($userName)] = $banState;
 		}
 		else
 		{
-			self::$bannedUsers = array_filter(self::$bannedUsers, function($bannedUserName) use ($userName)
-			{
-				return $bannedUserName != $userName;
-			});
+			unset(self::$bannedUsers[strtolower($userName)]);
 		}
-		TextHelper::putSimpleList(Config::$bannedUsersListPath, self::$bannedUsers);
+
+		$list = [];
+		foreach (self::$bannedUsers as $user => $banState)
+		{
+			$list []= $user . "\t" . $banState;
+		}
+		TextHelper::putSimpleList(Config::$bannedUsersListPath, $list);
 	}
 
 	public static function isGenreBanned($media, $genreId)

@@ -43,7 +43,7 @@ class UserController extends AbstractController
 	public static function preWork(&$controllerContext, &$viewContext)
 	{
 		$controllerContext->cache->setPrefix($controllerContext->userName);
-		if (BanHelper::isUserBanned($controllerContext->userName))
+		if (BanHelper::getUserBanState($controllerContext->userName) == BanHelper::USER_BAN_TOTAL)
 		{
 			$controllerContext->cache->bypass(true);
 			$viewContext->userName = $controllerContext->userName;

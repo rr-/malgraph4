@@ -137,26 +137,31 @@ class AdminControllerProcessorModule extends AbstractControllerModule
 				$viewContext->message = 'Deleted ' . $deleted . ' files';
 			}
 
-			elseif ($action == 'toggle-block')
+			elseif ($action == 'unban' or $action == 'soft-ban' or $action == 'hard-ban')
 			{
-				$numBanned = 0;
-				$numUnbanned = 0;
+				switch ($action)
+				{
+					case 'unban':
+						$banState = BanHelper::USER_BAN_NONE;
+						break;
+					case 'soft-ban':
+						$banState = BanHelper::USER_BAN_QUEUE_ONLY;
+						break;
+					case 'hard-ban':
+						$banState = BanHelper::USER_BAN_TOTAL;
+						break;
+					default:
+						throw new Exception('Wrong ban state');
+				}
+				$changed = 0;
 				foreach ($chosenUsers as $userName)
 				{
-					$isBanned = BanHelper::isUserBanned($userName);
-					if ($isBanned)
-					{
-						$numUnbanned ++;
-					}
-					else
-					{
-						$numBanned ++;
-					}
-					BanHelper::banUser($userName, !$isBanned);
+					BanHelper::setUserBanState($userName, $banState);
+					++ $changed;
 				}
 
 				$viewContext->messageType = 'info';
-				$viewContext->message = sprintf('Successfully banned %d users and unbanned %d users', $numBanned, $numUnbanned);
+				$viewContext->message = sprintf('Successfully updated %d users', $changed);
 			}
 
 			elseif ($action == 'reset-franchise')

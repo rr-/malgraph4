@@ -1,6 +1,7 @@
 <div class="section basic">
 	<div id="profile-details"
 		data-date="<?php echo date('c', strtotime($viewContext->user->processed)) ?>"
+		data-ban-state="<?php echo BanHelper::getUserBanState($viewContext->user->name) ?>"
 		data-queue-min-wait="<?php echo Config::$userQueueMinWait ?>"
 		data-queue-add-url="<?php echo UserControllerQueueAddModule::url($viewContext->user->name) ?>"
 		data-queue-pos-url="<?php echo UserControllerQueuePositionModule::url($viewContext->user->name) ?>">

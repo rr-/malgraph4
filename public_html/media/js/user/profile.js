@@ -14,6 +14,7 @@ function updatePosition()
 	var enqueueUrl = $('#profile-details').attr('data-queue-add-url');
 	var queueMinWait = parseInt($('#profile-details').attr('data-queue-min-wait'));
 	var oldTooltip = target.attr('data-tooltip');
+	var updatingBanned = $('#profile-details').attr('data-ban-state') == '1';
 	$.get(positionUrl, function(data)
 	{
 		text = '#' + data.pos;
@@ -26,6 +27,10 @@ function updatePosition()
 			if (profileAge < queueMinWait)
 			{
 				target.text('Using fresh data').wrapInner('<span>');
+			}
+			else if (updatingBanned)
+			{
+				target.text('Cannot update').wrapInner('<span>');
 			}
 			else
 			{
