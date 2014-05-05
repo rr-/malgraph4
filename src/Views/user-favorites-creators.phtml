@@ -11,7 +11,7 @@
 	<div class="section-body">
 		<?php if ($viewContext->favCreators->getLargestGroupSize() == 0): ?>
 			<p>Looks like there are no known creators for this user.</p>
-			<p>Add a few titles and come back in 24 hours.<br>We'll be waiting for you.</p>
+			<p>Add a few titles and come back in <?php echo TextHelper::getTimeText($viewContext->updateWait, TextHelper::TIME_HOURS) ?>.<br>We'll be waiting for you.</p>
 		<?php else: ?>
 			<div class="scrollable">
 				<table class="tablesorter">

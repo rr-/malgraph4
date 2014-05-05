@@ -15,21 +15,8 @@
 		<?php
 			$totalMinutes = ceil($viewContext->queuePosition * Config::$cronInterval / max(1, Config::$usersPerCronRun));
 			$totalMinutes = Config::$cronInterval * ceil($totalMinutes / Config::$cronInterval);
-			$hours = floor($totalMinutes / 60.);
-			$minutes = $totalMinutes % 60;
 
-			$wait = '';
-			if ($hours > 0)
-			{
-				$wait .= $hours . ' hour';
-				if ($hours != 1)
-					$wait .= 's';
-				$wait .= ' ';
-			}
-
-			$wait .= $minutes . ' minute';
-			if ($minutes != 1)
-				$wait .= 's';
+			$wait = TextHelper::getTimeText($totalMinutes * 60, TextHelper::TIME_MINUTES);
 		?>
 
 		<p>

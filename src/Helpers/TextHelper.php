@@ -1,6 +1,9 @@
 <?php
 class TextHelper
 {
+	const TIME_MINUTES = 1;
+	const TIME_HOURS = 2;
+
 	public static function loadJson($path, $fetchAsArray = false)
 	{
 		$contents = file_get_contents($path);
@@ -30,6 +33,32 @@ class TextHelper
 	{
 		$contents = json_encode($json);
 		file_put_contents($path, $contents);
+	}
+
+	public static function getTimeText($totalSeconds, $precision)
+	{
+		$totalMinutes = $totalSeconds / 60.;
+
+		$hours = floor($totalMinutes / 60.);
+		$minutes = $totalMinutes % 60;
+
+		$wait = '';
+		if ($hours > 0 or $precision == self::TIME_HOURS)
+		{
+			$wait .= $hours . ' hour';
+			if ($hours != 1)
+				$wait .= 's';
+			$wait .= ' ';
+		}
+
+		if ($precision != selF::TIME_HOURS)
+		{
+			$wait .= $minutes . ' minute';
+			if ($minutes != 1)
+				$wait .= 's';
+		}
+
+		return trim($wait);
 	}
 
 	public static function getVolumesText($plural, $short = false)

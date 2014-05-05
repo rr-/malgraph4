@@ -5,7 +5,7 @@
 	<div class="section-body">
 		<?php if ($viewContext->favYears->getLargestGroupSize() == 0): ?>
 			<p>There is no information about any completion dates for this user.</p>
-			<p>Add a few titles and come back in 24 hours.<br>We'll be waiting for you.</p>
+			<p>Add a few titles and come back in <?php echo TextHelper::getTimeText($viewContext->updateWait, TextHelper::TIME_HOURS) ?>.<br>We'll be waiting for you.</p>
 		<?php else: ?>
 			<p class="toggle-decades-msg"><a href="#">Toggle decades/years visibility</a></p>
 

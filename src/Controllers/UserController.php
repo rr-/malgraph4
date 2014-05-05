@@ -91,6 +91,7 @@ class UserController extends AbstractController
 
 		$viewContext->user = $user;
 		$viewContext->meta->styles []= '/media/css/menu.css';
+		$viewContext->updateWait = Config::$userQueueMinWait;
 
 		$module = $controllerContext->module;
 		$module::preWork($controllerContext, $viewContext);
