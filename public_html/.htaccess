@@ -13,6 +13,7 @@ ErrorDocument 404 /dispatch.php?e=404
 ErrorDocument 403 /dispatch.php?e=403
 
 RewriteEngine On
+RewriteRule ^/?export/([^/]*)/(.*)\/.*\.png$ /$1/export?settings=$2 [QSA,R,L]
 RewriteRule ^/?export/(.*)$ /$1/export [R,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f

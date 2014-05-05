@@ -10,6 +10,17 @@ class UserControllerExportModule extends AbstractUserControllerModule
 		return ['export'];
 	}
 
+	public static function url()
+	{
+		$args = func_get_args();
+		$userName = array_shift($args);
+		$media = array_shift($args);
+		$settings = array_shift($args);
+
+		$url = '/export/' . $userName . '/' . base64_encode($settings) . '/image.png';
+		return UrlHelper::absoluteUrl($url);
+	}
+
 	public static function getMediaAvailability()
 	{
 		return [];
@@ -306,8 +317,9 @@ class UserControllerExportModule extends AbstractUserControllerModule
 		}
 
 		//get input data from GET
-		$imageType = !empty($_GET['type'])
-			? $_GET['type']
+		$userSettings = !empty($_GET['settings']) ? json_decode(base64_decode($_GET['settings']), true) : [];
+		$imageType = !empty($userSettings['type'])
+			? $userSettings['type']
 			: null;
 		if (!in_array($imageType, [self::IMAGE_TYPE_ANIME, self::IMAGE_TYPE_MANGA, self::IMAGE_TYPE_ANIME_MANGA]))
 		{
@@ -336,9 +348,9 @@ class UserControllerExportModule extends AbstractUserControllerModule
 		];
 		foreach (array_keys($settings->colors) as $key)
 		{
-			if (isset($_GET[$key]))
+			if (isset($userSettings[$key]))
 			{
-				$value = $_GET[$key];
+				$value = $userSettings[$key];
 				assert(in_array(strlen($value), [6, 8]));
 				$settings->colors[$key] = $value;
 			}

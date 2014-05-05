@@ -1,3 +1,5 @@
+var _params = {};
+
 $(function()
 {
 	$('.export-trigger').click(function(e)
@@ -11,8 +13,8 @@ $(function()
 	function updatePreview(target)
 	{
 		var img = $(target).find('img');
-		var matches = $(target).find('textarea').val().match(/\[img\]([^\[]*)\[\/img]/);
-		var newSrc = matches[1] + '&bypass-cache=1';
+		var matches = $(target).find('textarea').val().match(/\[img\](.*)\[\/img]/);
+		var newSrc = matches[1] + '?bypass-cache=1';
 		if (img.attr('src') != newSrc)
 		{
 			img.attr('src', newSrc);
@@ -36,10 +38,22 @@ $(function()
 		{
 			var textarea = $(this).parents('.export').find('textarea');
 			var type = $(this).find('option:selected').data('type');
-			textarea.val(textarea.val().replace(/(type=[0-9]*)/, 'type=' + type));
+			updateParams({type: type});
 			updatePreview($(this).parents('.export'));
 		});
 	});
+
+	updateParams({type: 1});
+
+	function updateParams(params)
+	{
+		var textarea = $('.export.popup textarea');
+		for (var k in params)
+			_params[k] = params[k];
+
+		var newText = btoa(JSON.stringify(_params)).replace('=', '');
+		textarea.val(textarea.val().replace(/\/([^\/]*)(?=\/[^\/]*\.png)/, '/' + newText));
+	}
 
 	/* prepare theme selecton */
 	var themes =
@@ -62,14 +76,8 @@ $(function()
 		$(this).change(function()
 		{
 			var target = $(this).parents('.export');
-			var textarea = target.find('textarea');
 			var params = $(this).find('option:selected').data('params');
-			var merged = '';
-			for (key in params)
-			{
-				merged += '&' + key + '=' + params[key];
-			}
-			textarea.val(textarea.val().replace(/(type=[0-9]*).*?\[/, '$1' + merged + '['));
+			updateParams(params);
 			updatePreview(target);
 			if ($(this).find('option:selected').text() == 'Custom')
 			{
