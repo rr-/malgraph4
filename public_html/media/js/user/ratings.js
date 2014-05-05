@@ -51,7 +51,7 @@ $(function()
 		for (var k in params)
 			_params[k] = params[k];
 
-		var newText = btoa(JSON.stringify(_params)).replace('=', '');
+		var newText = btoa(JSON.stringify(_params)).replace(/=/g, '');
 		textarea.val(textarea.val().replace(/\/([^\/]*)(?=\/[^\/]*\.png)/, '/' + newText));
 	}
 
@@ -77,6 +77,7 @@ $(function()
 		{
 			var target = $(this).parents('.export');
 			var params = $(this).find('option:selected').data('params');
+			_params = {type: _params.type}; //it's late and i'm tired
 			updateParams(params);
 			updatePreview(target);
 			if ($(this).find('option:selected').text() == 'Custom')
