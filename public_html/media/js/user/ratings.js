@@ -43,7 +43,10 @@ $(function()
 		});
 	});
 
-	updateParams({type: 1});
+	function resetParams()
+	{
+		_params = {type: _params.type};
+	}
 
 	function updateParams(params)
 	{
@@ -53,7 +56,10 @@ $(function()
 
 		var newText = btoa(JSON.stringify(_params)).replace(/=/g, '');
 		textarea.val(textarea.val().replace(/\/([^\/]*)(?=\/[^\/]*\.png)/, '/' + newText));
+		return _params;
 	}
+
+	var defaultParams = { 'bar1': 'a4c0f4', 'bar2': '13459a', 'line1': 'f8fafe', 'line2': 'eff2f8', 'back': 'ffffff', 'font1': '000000', 'font2': 'aaaaaa', 'title': '577fc2', 'logo': '577fc2' };
 
 	/* prepare theme selecton */
 	var themes =
@@ -65,8 +71,9 @@ $(function()
 		{ 'params': { 'bar1': 'aa000000', 'bar2': '33000000', 'line1': 'ff000000', 'line2': 'dd000000', 'back': 'ffffffff', 'font1': '20000000', 'font2': '90000000', 'title': '20000000', 'logo': '20000000' }, 'name': 'Gray' },
 		{ 'params': { 'bar1': '0084a0d4', 'bar2': '0003359a', 'line1': '00446084', 'line2': '0001156a', 'back': '00000000', 'font1': '00779fe2', 'font2': '50779fe2', 'title': '00779fe2', 'logo': '00779fe2' }, 'name': 'unBlue (blue on black)' },
 		{ 'params': { 'bar1': '0044ff44', 'bar2': '00008800', 'line1': '00004400', 'line2': '00008800', 'back': '00000000', 'font1': '2044ff44', 'font2': '00008800', 'title': '0033aa33', 'logo': '0033aa33' }, 'name': 'Matrix (green on black)' },
-		{ 'params': { 'bar1': 'a4c0f4', 'bar2': '13459a', 'line1': 'f8fafe', 'line2': 'eff2f8', 'back': 'ffffff', 'font1': '000000', 'font2': 'aaaaaa', 'title': '577fc2', 'logo': '577fc2' }, 'name': 'Custom' },
+		{ 'params': { }, 'name': 'Custom' },
 	];
+
 	$('select[name=\'theme\']').each(function()
 	{
 		for (var i in themes)
@@ -77,11 +84,14 @@ $(function()
 		{
 			var target = $(this).parents('.export');
 			var params = $(this).find('option:selected').data('params');
-			_params = {type: _params.type}; //it's late and i'm tired
-			updateParams(params);
-			updatePreview(target);
+			if ($(this).find('option:selected').text() == 'Blue (default)')
+			{
+				resetParams();
+			}
+
 			if ($(this).find('option:selected').text() == 'Custom')
 			{
+				updateParams(defaultParams);
 				target.find('select.color').trigger('change'); /*update colorpicker on theme change*/
 				target.data('interval', window.setInterval(function()
 				{
@@ -93,6 +103,8 @@ $(function()
 			{
 				target.find('.custom-theme').animate({width: 'hide'});
 				window.clearInterval(target.data('interval'));
+				updateParams(params);
+				updatePreview(target);
 			}
 		});
 	});
@@ -105,10 +117,14 @@ $(function()
 
 	function changedColor(color)
 	{
+		if (!$('.export .colorpicker').is(':visible'))
+			return;
 		var target = $('.export');
 		var key = target.find('select.color').val();
-		var textarea = target.find('textarea');
-		textarea.val(textarea.val().replace(new RegExp(key + '=([a-f0-9]+)'), key + '=' + color.substr(1)));
+		var value = color.substr(1);
+		var newParams = {};
+		newParams[key] = value;
+		updateParams(newParams);
 	}
 
 	/* custom theme editing */
@@ -125,8 +141,8 @@ $(function()
 		var textarea = $(this).parents('.export').find('textarea');
 		var colorpicker = $(this).parents('.export').find('.colorpicker');
 		var key = $(this).val();
-		var matches = textarea.val().match(new RegExp(key + '=([a-f0-9]{2})?([a-f0-9]{6})'));
-		$.farbtastic(colorpicker).setColor('#' + matches[2]);
+		var params = updateParams({});
+		$.farbtastic(colorpicker).setColor('#' + params[key]);
 	});
 
 	$('.export .close').click(function(e)
@@ -135,4 +151,5 @@ $(function()
 		e.preventDefault();
 	});
 
+	updateParams({type: 1});
 });
