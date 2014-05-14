@@ -1,11 +1,11 @@
 <?php
-class DownloadFailureException extends DocumentException
+class DownloadFailureException extends Exception
 {
-	public function __construct(Document $document, $reason = null)
+	public function __construct($url, $reason = null)
 	{
 		$msg = $reason
-			? sprintf('Download failure: %s (%d; reason=%s)', $document->url, $document->code, $reason)
-			: sprintf('Download failure: %s (%d)', $document->url, $document->code);
-		parent::__construct($document, $msg);
+			? sprintf('Download failure: %s (%s)', $url, $reason)
+			: sprintf('Download failure: %s', $url);
+		parent::__construct($msg);
 	}
 }

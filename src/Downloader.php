@@ -19,6 +19,7 @@ class Downloader
 		curl_setopt($handle, CURLOPT_COOKIEJAR, Config::$downloaderCookieFilePath);
 		curl_setopt($handle, CURLOPT_COOKIEFILE, Config::$downloaderCookieFilePath);
 		curl_setopt($handle, CURLOPT_USERAGENT, Config::$downloaderUserAgent);
+		curl_setopt($handle, CURLOPT_TIMEOUT_MS, Config::$downloaderMaxTimeout);
 		if (Config::$downloaderProxy != '')
 			curl_setopt($handle, CURLOPT_PROXY, Config::$downloaderProxy);
 		return $handle;
@@ -31,6 +32,8 @@ class Downloader
 		$headerLines = explode("\r\n", substr($result, 0, $pos));
 
 		preg_match('/\d{3}/', array_shift($headerLines), $matches);
+		if (!isset($matches[0]))
+			throw new DownloadFailureException($url, 'Server didn\'t return response code');
 		$code = intval($matches[0]);
 		$headers = HttpHeadersHelper::parseHeaderLines($headerLines);
 		return new Document($url, $code, $headers, $content);

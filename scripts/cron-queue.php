@@ -26,6 +26,11 @@ function processQueue($queue, $count, $maxAttempts, $logger, $callback)
 			$logger->log('error: ' . $e->getMessage());
 			$errors = true;
 		}
+		catch (DownloadFailureException $e)
+		{
+			$logger->log('error: ' . $e->getMessage());
+			$errors = true;
+		}
 		catch (Exception $e)
 		{
 			$logger->log('error');

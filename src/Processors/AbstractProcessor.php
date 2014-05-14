@@ -44,10 +44,10 @@ abstract class AbstractProcessor
 			foreach ($documents as $document)
 			{
 				if ($document->code == 403)
-					throw new DownloadFailureException($document);
+					throw new DownloadFailureException($document->url, '403 Access Denied');
 
 				if (empty($document->content))
-					throw new DownloadFailureException($document);
+					throw new DownloadFailureException($document->url, 'Empty document');
 
 				//別ハックは、	Another hack
 				//私は静かに	makes me
