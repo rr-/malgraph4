@@ -48,6 +48,7 @@ class Config extends Singleton
 	static $sendReferrer;
 	static $enforcedDomain;
 	static $version;
+	static $mail;
 
 	public static function doInit()
 	{
@@ -55,6 +56,7 @@ class Config extends Singleton
 		$htmlRootDir = join(DIRECTORY_SEPARATOR, [__DIR__, '..', 'public_html']);
 
 		self::$version = '4.1.2';
+		self::$mail = 'change_me@example.com';
 
 		self::$cronInterval = 5; //minutes
 		self::$usersPerCronRun = 5;
