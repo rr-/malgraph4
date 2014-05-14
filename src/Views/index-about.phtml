@@ -31,7 +31,7 @@
 <div class="section">
 	<h2>Contact and external links</h2>
 	<div class="section-body">
-		<p>You can send us a message at <a href="mailto:<?= Config::$mail ?>"><?= Config::$mail ?></a>, or find more info at:</p>
+		<p>You can send us a message at <?= EmailObfuscator::embedJavascript(Config::$mail) ?>, or find more info at:</p>
 		<ul>
 			<li><a target="_blank" href="http://myanimelist.net/clubs.php?cid=30017">MALgraph club on MAL</a>&nbsp;&ndash; a place for questions or bug reports.</li>
 			<li><a target="_blank" href="http://www.google.com/moderator/#15/e=20db62&amp;t=20db62.40">Suggestions Moderator</a>&nbsp;&ndash; post and vote on feature requests!</li>

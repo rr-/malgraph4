@@ -1,3 +1,6 @@
 [submodule "lib/redbean"]
 	path = lib/redbean
 	url = https://github.com/gabordemooij/redbean/
+[submodule "lib/EmailObfuscator"]
+	path = lib/EmailObfuscator
+	url = https://gist.github.com/rr-/7179962.git

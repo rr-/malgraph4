@@ -37,6 +37,8 @@ class AutoLoader
 AutoLoader::init();
 spl_autoload_register(['AutoLoader', 'load']);
 
+require_once 'lib/EmailObfuscator/EmailObfuscator.php';
+
 date_default_timezone_set('UTC');
 ini_set('memory_limit', '128M');
 ErrorHandler::init();
