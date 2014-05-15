@@ -92,48 +92,66 @@ class Downloader
 					self::$logger->log('Downloading ' . $url);
 			}
 
-			//prepare curl handles
-			$multiHandle = curl_multi_init();
-			foreach ($urls as $url)
+			if (Config::$downloaderUseMultiHandles)
 			{
-				$handle = self::prepareHandle($url);
-				curl_multi_add_handle($multiHandle, $handle);
-				$handles[$url] = $handle;
-			}
-
-			//run the query
-			$running = null;
-			do
-			{
-				$status = curl_multi_exec($multiHandle, $running);
-			}
-			while ($status == CURLM_CALL_MULTI_PERFORM);
-			while ($running and $status == CURLM_OK)
-			{
-				if (curl_multi_select($multiHandle) != -1)
+				//prepare curl handles
+				$multiHandle = curl_multi_init();
+				foreach ($urls as $url)
 				{
-					do
+					$handle = self::prepareHandle($url);
+					curl_multi_add_handle($multiHandle, $handle);
+					$handles[$url] = $handle;
+				}
+
+				//run the query
+				$running = null;
+				do
+				{
+					$status = curl_multi_exec($multiHandle, $running);
+				}
+				while ($status == CURLM_CALL_MULTI_PERFORM);
+				while ($running and $status == CURLM_OK)
+				{
+					if (curl_multi_select($multiHandle) != -1)
 					{
-						$status = curl_multi_exec($multiHandle, $running);
+						do
+						{
+							$status = curl_multi_exec($multiHandle, $running);
+						}
+						while ($status == CURLM_CALL_MULTI_PERFORM);
 					}
-					while ($status == CURLM_CALL_MULTI_PERFORM);
 				}
-			}
 
-			//get the documents from curl
-			foreach ($handles as $url => $handle)
-			{
-				$rawResult = curl_multi_getcontent($handle);
-				if (Config::$mirrorEnabled)
+				//get the documents from curl
+				foreach ($handles as $url => $handle)
 				{
-					file_put_contents(self::urlToPath($url), $rawResult);
+					$rawResult = curl_multi_getcontent($handle);
+					if (Config::$mirrorEnabled)
+					{
+						file_put_contents(self::urlToPath($url), $rawResult);
+					}
+					$documents[$url] = self::parseResult($rawResult, $url);
+					curl_multi_remove_handle($multiHandle, $handle);
 				}
-				$documents[$url] = self::parseResult($rawResult, $url);
-				curl_multi_remove_handle($multiHandle, $handle);
-			}
 
-			//close curl handles
-			curl_multi_close($multiHandle);
+				//close curl handles
+				curl_multi_close($multiHandle);
+			}
+			else
+			{
+				foreach ($urls as $url)
+				{
+					$handle = self::prepareHandle($url);
+					$rawResult = curl_exec($handle);
+					curl_close($handle);
+
+					if (Config::$mirrorEnabled)
+					{
+						file_put_contents(self::urlToPath($url), $rawResult);
+					}
+					$documents[$url] = self::parseResult($rawResult, $url);
+				}
+			}
 		}
 
 		return $documents;

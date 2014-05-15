@@ -15,6 +15,7 @@ class Config extends Singleton
 	static $downloaderCookieFilePath;
 	static $downloaderMaxParallelJobs;
 	static $downloaderMaxTimeout;
+	static $downloaderUseMultiHandles;
 	static $mirrorPath;
 	static $mirrorPurgeFailures;
 	static $mirrorEnabled;
@@ -74,6 +75,7 @@ class Config extends Singleton
 		self::$downloaderCookieFilePath = $dataRootDir . 'cookies.dat';
 		self::$downloaderMaxParallelJobs = 10;
 		self::$downloaderMaxTimeout = 10000;
+		self::$downloaderUseMultiHandles = true;
 
 		self::$mirrorEnabled = false;
 		self::$mirrorPath = $dataRootDir . 'mirror';
