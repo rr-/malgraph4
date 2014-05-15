@@ -39,9 +39,6 @@ class AnimeProcessor extends AbstractProcessor
 			Database::delete('animeproducer', ['media_id' => $context->media->id]);
 			Database::delete('media', ['id' => $context->media->id]);
 		}
-		else
-		{
-			throw $context->exception;
-		}
+		throw $context->exception;
 	}
 }

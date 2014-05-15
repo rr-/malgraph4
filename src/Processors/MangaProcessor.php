@@ -39,9 +39,6 @@ class MangaProcessor extends AbstractProcessor
 			Database::delete('mangaauthor', ['media_id' => $context->media->id]);
 			Database::delete('media', ['id' => $context->media->id]);
 		}
-		else
-		{
-			throw $context->exception;
-		}
+		throw $context->exception;
 	}
 }

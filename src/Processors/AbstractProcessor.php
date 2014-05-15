@@ -57,61 +57,61 @@ abstract class AbstractProcessor
 
 			$f = function() use ($subProcessors, $context, $urlMap, $documents)
 			{
-				try
+				foreach ($subProcessors as $subProcessor)
 				{
-					foreach ($subProcessors as $subProcessor)
+					$sourceDocuments = $documents;
+
+					$subUrls = [];
+					foreach ($urlMap as $url => $urlProcessors)
+						if (in_array($subProcessor, $urlProcessors))
+							$subUrls []= $url;
+
+					$attempts = 0;
+					while (true)
 					{
-						$sourceDocuments = $documents;
-
-						$subUrls = [];
-						foreach ($urlMap as $url => $urlProcessors)
-							if (in_array($subProcessor, $urlProcessors))
-								$subUrls []= $url;
-
-						$attempts = 0;
-						while (true)
+						try
 						{
-							try
-							{
-								$subDocuments = [];
-								foreach ($subUrls as $url)
-									$subDocuments []= $sourceDocuments[$url];
-								$subProcessor->process($subDocuments, $context);
-								break;
-							}
-							catch (BadProcessorKeyException $e)
-							{
-								throw $e;
-							}
-							catch (DocumentException $e)
-							{
-								$sourceDocuments[$e->getDocument()->url] = Downloader::download($e->getDocument()->url);
-							}
-							catch (Exception $e)
-							{
-								$sourceDocuments = Downloader::downloadMulti($subUrls);
-							}
-
-							++ $attempts;
-							if ($attempts > Config::$maxProcessingAttempts)
-							{
-								throw !isset($e)
-									? new Exception('Too many attempts')
-									: $e;
-							}
+							$subDocuments = [];
+							foreach ($subUrls as $url)
+								$subDocuments []= $sourceDocuments[$url];
+							$subProcessor->process($subDocuments, $context);
+							break;
+						}
+						catch (BadProcessorKeyException $e)
+						{
+							throw $e;
+						}
+						catch (DocumentException $e)
+						{
+							$sourceDocuments[$e->getDocument()->url] = Downloader::download($e->getDocument()->url);
+						}
+						catch (Exception $e)
+						{
+							$sourceDocuments = Downloader::downloadMulti($subUrls);
 						}
 
+						++ $attempts;
+						if ($attempts > Config::$maxProcessingAttempts)
+						{
+							throw !isset($e)
+								? new Exception('Too many attempts')
+								: $e;
+						}
 					}
-				}
-				catch (Exception $e)
-				{
-					$context->exception = $e;
-					$this->onProcessingError($context);
+
 				}
 			};
 
 			$this->beforeProcessing($context);
-			R::transaction($f);
+			try
+			{
+				R::transaction($f);
+			}
+			catch (Exception $e)
+			{
+				$context->exception = $e;
+				$this->onProcessingError($context);
+			}
 			$this->afterProcessing($context);
 		}
 		catch (Exception $e)
