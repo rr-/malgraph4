@@ -57,7 +57,7 @@ class Config extends Singleton
 		$dataRootDir = join(DIRECTORY_SEPARATOR, [__DIR__, '..', 'data', '']);
 		$htmlRootDir = join(DIRECTORY_SEPARATOR, [__DIR__, '..', 'public_html']);
 
-		self::$version = '4.1.2';
+		self::$version = '4.2.0';
 		self::$mail = 'change_me@example.com';
 
 		self::$cronInterval = 5; //minutes
