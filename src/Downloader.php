@@ -76,7 +76,8 @@ class Downloader
 				$path = self::urlToPath($url);
 				if (file_exists($path))
 				{
-					self::$logger->log('Loading from mirror ' . $url);
+					if (self::$logger)
+						self::$logger->log('Loading from mirror ' . $url);
 					$rawResult = file_get_contents($path);
 					$documents[$url] = self::parseResult($rawResult, $url);
 					unset($allUrls[$url]);
