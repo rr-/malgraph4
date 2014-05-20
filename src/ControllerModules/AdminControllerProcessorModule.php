@@ -167,11 +167,6 @@ class AdminControllerProcessorModule extends AbstractControllerModule
 			elseif ($action == 'reset-franchise')
 			{
 				$num = 0;
-				$mediaProcessors =
-				[
-					Media::Anime => new AnimeProcessor(),
-					Media::Manga => new MangaProcessor(),
-				];
 
 				foreach ($chosenMedia as $media => $ids)
 				{
@@ -182,6 +177,21 @@ class AdminControllerProcessorModule extends AbstractControllerModule
 
 				$viewContext->messageType = 'info';
 				$viewContext->message = sprintf('Successfully reset franchise for %d entities. Don\'t forget to refresh them now!', $num);
+			}
+
+			elseif ($action == 'remove')
+			{
+				$num = 0;
+
+				foreach ($chosenMedia as $media => $ids)
+				{
+					$query = 'DELETE FROM media WHERE media = ? AND mal_id IN (' . R::genSlots($ids) . ')';
+					R::exec($query, array_merge([$media], $ids));
+					$num += count($ids);
+				}
+
+				$viewContext->messageType = 'info';
+				$viewContext->message = sprintf('Successfully removed %d entities.', $num);
 			}
 
 			else
