@@ -17,7 +17,7 @@ function updatePosition()
 	var updatingBanned = $('#profile-details').attr('data-ban-state') == '1';
 	$.get(positionUrl, function(data)
 	{
-		text = '#' + data.pos;
+		text = 'Pos. in queue: ' + data.pos;
 		if (data.pos)
 			target.text(text).wrapInner('<span>');
 		else
@@ -34,7 +34,7 @@ function updatePosition()
 			}
 			else
 			{
-				var updateLink = $('<a href="#">Add to queue</a>');
+				var updateLink = $('<a href="#">Click to update</a>');
 				updateLink.click(function(e)
 					{
 						e.preventDefault();

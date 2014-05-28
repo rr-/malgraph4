@@ -13,11 +13,48 @@
 .updated span,
 .queue-pos span {
 	opacity: .25;
+	padding: 3px 6px;
+	display: inline-block;
+	margin-top: 2px;
 }
 .updated a,
 .queue-pos a {
 	opacity: .8;
+	padding: 3px 6px;
+	margin-top: 2px;
+	display: inline-block;
+	border-radius: 4px;
+	-webkit-animation: update-button-animation 2s infinite;
+	-ms-animation: update-button-animation 2s infinite;
+	-o-animation: update-button-animation 2s infinite;
+	animation: update-button-animation 2s infinite;
 }
+
+@-webkit-keyframes update-button-animation
+{
+	0% { background: none; }
+	20% { background: rgba(45, 125, 224, .3); }
+	100% { background: none; }
+}
+@-o-keyframes update-button-animation
+{
+	0% { background: none; }
+	20% { background: rgba(45, 125, 224, .3); }
+	100% { background: none; }
+}
+@-ms-keyframes update-button-animation
+{
+	0% { background: none; }
+	20% { background: rgba(45, 125, 224, .3); }
+	100% { background: none; }
+}
+@keyframes update-button-animation
+{
+	0% { background: none; }
+	20% { background: rgba(45, 125, 224, .3); }
+	100% { background: none; }
+}
+
 
 .list-views .suffix {
 	margin-left: 0.67em;
