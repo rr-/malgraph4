@@ -26,12 +26,12 @@
 
 	<?php if (isset($viewContext->meta->styles)): ?>
 		<?php foreach ($viewContext->meta->styles as $style): ?>
-			<link rel="stylesheet" type="text/css" href="<?php echo UrlHelper::absoluteUrl($style) ?>">
+			<link rel="stylesheet" type="text/css" href="<?php echo UrlHelper::absoluteUrl($style, ['date' => date('Y-m-d')]) ?>">
 		<?php endforeach ?>
 	<?php endif ?>
 	<?php if (isset($viewContext->meta->scripts)): ?>
 		<?php foreach ($viewContext->meta->scripts as $script): ?>
-			<script type="text/javascript" src="<?php echo UrlHelper::absoluteUrl($script) ?>">
+			<script type="text/javascript" src="<?php echo UrlHelper::absoluteUrl($script, ['date' => date('Y-m-d')]) ?>">
 			</script>
 		<?php endforeach ?>
 	<?php endif ?>
