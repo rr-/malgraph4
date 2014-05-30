@@ -21,7 +21,8 @@ class UrlHelper
 		}
 		if (!empty($params))
 		{
-			$absoluteUrl .= '?' . http_build_query($params);
+			$frag = strpos($absoluteUrl, '?') === false ? '?' : '&';
+			$absoluteUrl .= $frag . http_build_query($params);
 		}
 		$absoluteUrl = preg_replace('/(?<!:)\/\//', '/', $absoluteUrl);
 		return $absoluteUrl;
