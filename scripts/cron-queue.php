@@ -111,6 +111,23 @@ CronRunner::run(__FILE__, function($logger)
 			$logger->log('ok');
 		});
 
+	$mediaIds = [];
+	foreach (Media::getConstList() as $media)
+	{
+		$entries = Model_Media::getOldest($media, 100);
+		foreach ($entries as $entry)
+		{
+			$mediaAge = time() - strtotime($entry->processed);
+			if ($mediaAge > Config::$mediaQueueMinWait)
+				$mediaIds []= TextHelper::serializeMediaId($entry);
+		}
+	}
+	$mediaQueue->enqueueMultiple(array_map(function($mediaId)
+		{
+			return new QueueItem($mediaId);
+		}, $mediaIds));
+
+
 	#process media
 	processQueue(
 		$mediaQueue,
