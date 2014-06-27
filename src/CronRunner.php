@@ -15,17 +15,19 @@ class CronRunner
 
 	public static function run($fileName, $callback)
 	{
+		$logger = new Logger($fileName);
+
 		try
 		{
 			SingleInstance::run($fileName);
 		}
 		catch (InstanceAlreadyRunningException $e)
 		{
+			$logger->log('Already running');
 			self::$finished = true;
 			exit(1);
 		}
 
-		$logger = new Logger($fileName);
 		$logger->log('Working');
 
 		register_shutdown_function([get_class(), 'shutdown'], $logger);
