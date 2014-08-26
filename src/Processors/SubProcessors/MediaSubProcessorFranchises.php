@@ -15,6 +15,8 @@ class MediaSubProcessorFranchises extends MediaSubProcessor
 		{
 			if ($relation['media'] != $context->media->media)
 				continue;
+			if (($relation['type'] == MediaRelation::Character) or ($relation['type'] == MediaRelation::Other))
+				continue;
 			if (BanHelper::isFranchiseCouplingBanned($relation['media'], $relation['mal_id'], $context->media->media, $context->media->mal_id))
 				continue;
 
