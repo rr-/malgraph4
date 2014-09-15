@@ -30,6 +30,14 @@ class Strings
 		return $subject;
 	}
 
+	public static function extractInteger($subject)
+	{
+		preg_match('/\d+/', $subject, $matches);
+		if (!$matches)
+			return 0;
+		return intval($matches[0]);
+	}
+
 	public static function makeDate($str)
 	{
 		$str = trim(str_replace('  ', ' ', $str));

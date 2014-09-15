@@ -94,6 +94,7 @@ try
 		sub_type INTEGER,
 		picture_url VARCHAR(256),
 		average_score FLOAT,
+		average_score_users INTEGER,
 		ranking INTEGER,
 		popularity INTEGER,
 		members INTEGER,

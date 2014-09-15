@@ -43,6 +43,7 @@ class MediaSubProcessorBasic extends MediaSubProcessor
 
 		//rank
 		$averageScore = Strings::makeFloat(self::getNodeValue($xpath, '//span[starts-with(text(), \'Score\')]/following-sibling::node()[self::text()]'));
+		$averageScoreUsers = Strings::extractInteger(self::getNodeValue($xpath, '//small[starts-with(text(), \'(scored by\')]'));
 		$ranking = Strings::makeInteger(self::getNodeValue($xpath, '//span[starts-with(text(), \'Ranked\')]/following-sibling::node()[self::text()]'));
 		$popularity = Strings::makeInteger(self::getNodeValue($xpath, '//span[starts-with(text(), \'Popularity\')]/following-sibling::node()[self::text()]'));
 		$memberCount = Strings::makeInteger(self::getNodeValue($xpath, '//span[starts-with(text(), \'Members\')]/following-sibling::node()[self::text()]'));
@@ -82,6 +83,7 @@ class MediaSubProcessorBasic extends MediaSubProcessor
 		$media->sub_type = $subType;
 		$media->picture_url = $pictureUrl;
 		$media->average_score = $averageScore;
+		$media->average_score_users = $averageScoreUsers;
 		$media->publishing_status = $status;
 		$media->popularity = $popularity;
 		$media->members = $memberCount;
