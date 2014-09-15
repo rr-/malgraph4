@@ -151,7 +151,16 @@ class TextHelper
 
 	public static function serializeMediaId($entry)
 	{
-		return $entry->media . $entry->mal_id;
+		if (is_object($entry))
+		{
+			return $entry->media . $entry->mal_id;
+		}
+		else if (is_array($entry) and isset($entry['media']) and isset($entry['mal_id']))
+		{
+			return $entry['media'] . $entry['mal_id'];
+		}
+		else
+			throw new InvalidArgumentException();
 	}
 
 	public static function deserializeMediaId($id)
