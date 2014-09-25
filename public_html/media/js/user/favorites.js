@@ -25,7 +25,7 @@ $(function()
 		{
 			for (var i = 0; i < table.tBodies[0].rows.length; i ++)
 			{
-				$('tbody tr:eq(' + i + ') td.ord', table).text(i + 1);
+				$('tbody tr:not(.entries-wrapper-row):eq(' + i + ') td.ord', table).text(i + 1);
 			}
 		}
 	});
