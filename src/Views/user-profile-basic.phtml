@@ -60,7 +60,7 @@
 						<span class="desc">Years on MAL:</span>
 						<span class="value">
 							<?php if ($viewContext->yearsOnMal): ?>
-								<?php printf('%.1f', $viewContext->yearsOnMal) ?>
+								<?php echo TextHelper::floorDecimal($viewContext->yearsOnMal, 1) ?>
 							<?php else: ?>
 								unknown
 							<?php endif ?>

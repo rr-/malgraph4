@@ -169,4 +169,30 @@ class TextHelper
 		$malId = intval(substr($id, 1));
 		return [$media, $malId];
 	}
+
+	public static function roundDecimal($number, $places = 0)
+	{
+		return self::roundDecimalWithFunction($number, $places, 'round');
+	}
+
+	public static function floorDecimal($number, $places = 0)
+	{
+		return self::roundDecimalWithFunction($number, $places, 'floor');
+	}
+
+	public static function ceilDecimal($number, $places = 0)
+	{
+		return self::roundDecimalWithFunction($number, $places, 'ceil');
+	}
+
+	private static function roundDecimalWithFunction($number, $places, $function)
+	{
+		if ($places >= 0)
+		{
+			$multiplier = pow(10, $places);
+			return sprintf('%.' . $places . 'f', $function($number * $multiplier) / $multiplier);
+		}
+		else
+			throw new InvalidArgumentException();
+	}
 }
