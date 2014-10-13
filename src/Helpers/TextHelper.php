@@ -142,8 +142,11 @@ class TextHelper
 		{
 			assert(!empty($keys));
 			$key = array_shift($keys);
-			$percentagesRounded[$key] ++;
-			$sum ++;
+			if ($distribution[$key] != 0)
+			{
+				$percentagesRounded[$key] ++;
+				$sum ++;
+			}
 		}
 
 		return $percentagesRounded;
