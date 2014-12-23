@@ -40,31 +40,57 @@
 		"genre": 18,
 		"titles":
 		[
+			"A22729", #Aldnoah.Zero
 			"A5289",  #Beast Wars Second: LioConvoy in Imminent Danger!
-			#"A8728",  #Code Geass: Hangyaku no Lelouch - Kiseki no Birthday Picture Drama
+			"A22433", #Break Blade (TV)
+			"A21677", #Captain Earth
+			"A1575",  #Code Geass: Hangyaku no Lelouch
+			"A8728",  #Code Geass: Hangyaku no Lelouch - Kiseki no Birthday Picture Drama
 			"A9591",  #Code Geass: Hangyaku no Lelouch R2: Flash Specials
 			"A112",   #Cosprayers
 			"A765",   #Cosprayers Specials
 			"A705",   #Cosprayers the Movie
+			"A15583", #Date A Live
+			"A19163", #Date A Live II
+			"A17641", #Date A Live OVA
 			"A10534", #Doraemon: Nobita and the New Steel Troops - Angel Wings
 			"A2665",  #Doraemon: Nobita and the Platoon of Iron Men
+			"A2759",  #Evangelion: 1.0 You Are (Not) Alone
+			"A3784",  #Evangelion: 2.0 You Can (Not) Advance
+			"A21821", #Fuuun Ishin Dai☆Shogun
 			"A72",    #Full Metal Panic Fumoffu
 			"A1015",  #Full Metal Panic! The Second Raid OVA
+			"A6875",  #Iron Man
+			"A9041",  #IS: Infinite Stratos
+			"A18247", #IS: Infinite Stratos 2
+			"A20045", #IS: Infinite Stratos 2 - Hitonatsu no Omoide
+			"A21653", #IS: Infinite Stratos 2 - World Purge-hen
+			"A10794", #IS: Infinite Stratos Encore - Koi ni Kogareru Rokujuusou
 			"A10456", #Kyoukaisenjou no Horizon
 			"A12487", #Kyoukaisenjou no Horizon II
+			"A23133", #M3: Sono Kuroki Hagane
 			"A10050", #Macross Frontier Music Clip Shuu: Nyankuri
 			"A4939",  #Macross Fufonfia
 			"A1954",  #Magic Knight Rayearth OVA
 			"A2733",  #Mobile Police Patlabor Minimum
 			"A2743",  #Mobile Suit Gundam Seed: Seed Supernova - Tanekyara Gekijo
+			"A30",    #Neon Genesis Evangelion
+			"A31",    #Neon Genesis Evangelion: Death & Rebirth
+			"A32",    #Neon Genesis Evangelion: The End of Evangelion
 			"A1350",  #Parasite Dolls
 			"A4130",  #Petit Eva: Evangelion@School
 			"A559",   #RahXephon Interlude: Her and Herself // Thatness and Thereness
 			"A2168",  #Sakura Taisen: New York
+			"A19775", #Sidonia no Kishi
 			"A3252",  #Super Express Mazinger 7
-			"A5947",  #Tengen Toppa Gurren Lagann Gekijouban Zenyasai Special: Virals Sweet Dream
-			"A10622", #Tengen Toppa Gurren Lagann OVA
-			"A4705",  #Tengen Toppa Gurren Lagann Parallel Works
+			"A2001",  #Tengen Toppa Gurren Lagann
+			"A4107",  #Tengen Toppa Gurren Lagann Movie: Gurren-hen
+			"A4565",  #Tengen Toppa Gurren Lagann Movie: Lagann-hen
+			"A5947",  #Tengen Toppa Gurren Lagann Movie: Lagann-hen Special - Viral no Amai Yume
+			"A3352",  #Tengen Toppa Gurren Lagann: Mitee Mono wa Miteen da!!
+			"A10622", #Tengen Toppa Gurren Lagann: Ore no Gurren wa Pikka-Pika!!
+			"A4705",  #Tengen Toppa Gurren Lagann: Parallel Works
+			"A8348",  #Tengen Toppa Gurren Lagann: Parallel Works 2
 			"A1762",  #The Heroic Legend of Arslan
 			"A14401", #Titan Rain
 			"A5462"   #Top wo Nerae! Science Lesson
