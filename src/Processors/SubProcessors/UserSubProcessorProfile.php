@@ -22,6 +22,7 @@ class UserSubProcessorProfile extends UserSubProcessor
 
 		$userName = Strings::removeSpaces(self::getNodeValue($xpath, '//title'));
 		$userName = substr($userName, 0, strpos($userName, '\'s Profile'));
+		$userName = str_replace('Top - ', '', $userName);
 		$userName = Strings::removeSpaces($userName);
 		if (empty($userName))
 			throw new BadProcessorDocumentException($doc, 'User name missing');
