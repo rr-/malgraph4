@@ -48,6 +48,8 @@
 			"A7152",  #Anyamal Tantei Kiruminzoo
 			"A231",   #Asagiri no Miko
 			"A13931", #Bishoujo Senshi Sailor Moon: Sailor Stars - Hero Club
+			"A14751", #Bishoujo Senshi Sailor Moon: Crystal
+			"A30100", #Black Bullet Special
 			"A232",   #Cardcaptor Sakura
 			"A372",   #Cardcaptor Sakura Movie 2: The Sealed Card
 			"A2424",  #Cardcaptor Sakura Specials
@@ -72,6 +74,7 @@
 			"A16419", #Dokidoki! Precure
 			"A17357", #Dokidoki! Precure Movie
 			"A2259",  #Dr. Rin ni Kiitemite!
+			"A4003",  #Dream Hunter REM
 			"A812",   #Earth Maiden Arjuna
 			"A1930",  #Eiga Futari wa Precure Max Heart
 			"A1931",  #Eiga Futari wa Precure Max Heart 2: Yukizora no Tomodachi
@@ -88,6 +91,9 @@
 			"A15883", #Fantasista Doll
 			"A14829", #Fate/kaleid liner Prisma☆Illya
 			"A20509", #Fate/kaleid liner Prisma☆Illya 2wei!
+			"A27525", #Fate/kaleid liner Prisma☆Illya 2wei Herz!
+			"A26057", #Fate/kaleid liner Prisma☆Illya 2wei! OVA
+			"A25011", #Fate/kaleid liner Prisma☆Illya 2wei! Specials
 			"A19109", #Fate/kaleid liner Prisma☆Illya Specials
 			"A18851", #Fate/kaleid liner Prisma☆Illya: Undoukai de Dance!
 			"A1126",  #Figure 17
@@ -102,16 +108,22 @@
 			"A1534",  #Futari wa Precure Splash Star
 			"A74",    #Gakuen Alice
 			"A11809", #gdgd Fairies
+			"A16726", #gdgd Fairies 2
+			"A16912", #gdgd Fairies 2 Episode 0
+			"A24071", #gdgd Fairies Movie: tte Iu Eiga wa Dou kana...
 			"A17651", #Genei wo Kakeru Taiyou
 			"A20187", #Genei wo Kakeru Taiyou: Fumikome nai Kokoro
 			"A1865",  #Getsumen to Heiki Mina
 			"A7427",  #Getsumen to Heiki Mina Specials
 			"A980",   #Ground Defence Mao-chan
+			"A28669", #Go! Princess Precure
 			"A18713", #Haiyore! Nyaruko-san: Yasashii Teki no Shitome-kata
 			"A2230",  #Hana no Ko Lunlun
 			"A9264",  #Hana no Ko Lunlun: Konnichiwa Sakura no Sono
 			"A2804",  #Hana no Mahou Tsukai Mary Bell
 			"A9862",  #Hana no Mahou Tsukai Mary Bell: Phoenix no Kagi
+			"A21407", #Happiness Charge Precure!
+			"A23083", #Happiness Charge PreCure! Movie: Ningyou no Kuni no Ballerina
 			"A3320",  #Harbor Light Monogatari: Fashion Lala Yori
 			"A7645",  #Heartcatch Precure!
 			"A9288",  #Heartcatch Precure! Hana no Miyako de Fashion Show... Desu ka!
@@ -124,6 +136,7 @@
 			"A3839",  #Himitsu no Akko-chan 3
 			"A12971", #Himitsu no Akko-chan: Umi da! Obake da!! Natsu matsuri
 			"A9911",  #Houkago no Pleiades
+			"A10710", #Houkago no Pleiades: Manner Movie
 			"A588",   #Itsudatte My Santa!
 			"A6008",  #Jewelpet
 			"A12963", #Jewelpet Kira Deco!
@@ -137,12 +150,11 @@
 			"A1808",  #Kamichama Karin
 			"A142",   #Kamikaze Kaitou Jeanne
 			"A6318",  #Kigurumikku V3
-			"A766",   #Kishin Houkou Demonbane
-			"A1067",  #Kishin Houkou Demonbane (2006)
 			"A8841",  #Kore wa Zombie Desu ka
 			"A10209", #Kore wa Zombie Desu ka OVA
 			"A10790", #Kore wa Zombie Desu ka of the Dead
 			"A15437", #Kore wa Zombie Desu ka of the Dead OVA
+			"A13159", #Kuromajo-san ga Tooru!!
 			"A3577",  #Kyouran Kazoku Nikki
 			"A9792",  #Licca-chan Fushigi na Fushigi na Yunia Monogatari
 			"A7294",  #Licca-chan Fushigi na Mahou no Ring
@@ -162,6 +174,7 @@
 			"A518",   #Mahou no Princess Minky Momo
 			"A2272",  #Mahou no Princess Minky Momo: Yume no Naka no Rondo
 			"A5953",  #Mahou no Princess Minky Momo: Yume wo Dakishimete
+			"A8972",  #Mahou no Princess Minky Momo vs. Mahou no Tenshi Creamy Mami
 			"A5400",  #Mahou no Shiho-chan
 			"A2038",  #Mahou no Star Magical Emi
 			"A8443",  #Mahou no Star Magical Emi: Semishigure
@@ -198,6 +211,7 @@
 			"A630",   #Mahou Tsukai Tai!
 			"A629",   #Mahou Tsukai Tai! OVA
 			"A5466",  #Mahou Tsukai Tai! vs Shamanic Princess
+			"A21421", #Mahou Shoujo Taisen
 			"A2277",  #Mahou Yuugi 2D
 			"A2278",  #Mahou Yuugi 3D
 			"A98",    #Mai-HiME
@@ -205,14 +219,20 @@
 			"A8062",  #Mai-HiME: Kuro no Mai / Saigo no Bansan
 			"A99",    #Mai-Otome
 			"A3268",  #Mai-Otome 0: S.ifr
+			"A1659",  #Mai-Otome Specials
+			"A8518",  #Mai-Otome Special: Otome no Inori
 			"A1609",  #Mai-Otome Zwei
+			"A6199",  #Mai-Otome Zwei Special
 			"A14563", #Maji de Otaku na English! Ribbon-chan: Eigo de Tatakau Mahou Shoujo
 			"A19207", #Maji de Otaku na English! Ribbon-chan: Eigo de Tatakau Mahou Shoujo - The TV
+			"A23945", #Majimoji Rurumo
 			"A2457",  #Majokko Club Yoningumi: A Kuukan Kara no Alien X
 			"A3388",  #Majokko Megu-chan
 			"A3881",  #Majokko Tickle
 			"A2457",  #Majokko Tsukune-chan
 			"A15813", #Majokko Shimai no Yoyo to Nene
+			"A2081",  #Makeruna! Makendo
+			"A1280",  #Mamono Hunter Yohko
 			"A626",   #Mamotte Shugogetten!
 			"A1110",  #Mermaid Melody Pichi Pichi Pitch Pure
 			"A521",   #Mermaid Melody: Pichi Pichi Pitch
@@ -222,11 +242,15 @@
 			"A3573",  #Moegaku*5
 			"A2367",  #Moetan
 			"A4421",  #Moetan Specials
+			"A22225", #Momo Kyun Sword
+			"A25375", #MOON PRIDE
 			"A352",   #Motto! Ojamajo Doremi
 			"A2948",  #Motto! Ojamajo Doremi: Secret of the Frog Stone
 			"A623",   #Nana 7 of 7
 			"A3619",  #Nanako SOS
 			"A1688",  #Nanatsuiro Drops
+			"A5584",  #New Dream Hunter Rem: Setsuriku no Mudenmekyu
+			"A5585",  #New Dream Hunter Rem: Yume no Kishitachi
 			"A616",   #Nurse Angel Ririka SOS
 			"A615",   #Nurse Witch Komugi-chan
 			"A921",   #Nurse Witch Komugi-chan Magikarte Z
@@ -240,10 +264,12 @@
 			"A351",   #Ojamajo Doremi Sharp
 			"A2947",  #Ojamajo Doremi Sharp Movie
 			"A614",   #Okusama wa Mahou Shoujo
+			"A24705", #Ore Twintails ni Narimasu
 			"A3112",  #Papillon Rose
 			"A10549", #Precure All Stars GoGo Dream Live!
 			"A12221", #Precure All Stars New Stage: Mirai no Tomodachi
 			"A16442", #Precure All Stars New Stage 2: Kokoro no Tomodachi
+			"A21031", #Precure All Stars New Stage 3: Eien no Tomodachi
 			"A11569", #Precure All-Stars DX the Dance Live: Miracle Dance Stage e Youkoso
 			"A10736", #Precure kara Minna e no Ouen Movie
 			"A100",   #Pretear
@@ -252,6 +278,9 @@
 			"A9506",  #Prism Magical: Prism Generations!
 			"A327",   #Puchi Puri Yuushi
 			"A564",   #Puni Puni Poemi
+			"A5080",  #Quiz Magic Academy: The Original Animation
+			"A7549",  #Quiz Magic Academy: The Original Animation 2
+			"A2522",  #Rakushou! Hyper Doll
 			"A151",   #Re: Cutey Honey
 			"A941",   #Renkin San-kyuu Magical Pokaan
 			"A1489",  #Renkin San-kyuu Magical Pokaan Specials
@@ -276,6 +305,7 @@
 			"A1881",  #Sasami: Mahou Shoujo Club
 			"A1882",  #Sasami: Mahou Shoujo Club 2
 			"A3328",  #School Days: Magical Heart Kokoro-chan
+			"A18047", #Seiyuu Deka
 			"A11751", #Senki Zesshou Symphogear: Meteoroid-Falling Burning and Disappear Then...
 			"A15793", #Senki Zesshou Symphogear G: In the Distance That Day When the Star Became Music
 			"A20843", #Senki Zesshou Symphogear G: In the Distance That Day When the Star Became Music... OVA
@@ -307,10 +337,11 @@
 			"A2066",  #Super Doll Licca-chan
 			"A10199", #Super Doll Licca-Chan: Licca-chan Zettai Zetsumei! Doll Knights no Kiseki
 			"A2727",  #Sweet Valerian
-			"A3862",  #Sweet Valerian Specials
+			"A3863",  #Sweet Valerian Specials
 			"A687",   #Tokyo Mew Mew
 			"A9393",  #T.P. Sakura: Time Paladin Sakura
 			"A1613",  #Time Stranger Kyoko
+			"A354",   #UG Ultimate Girls
 			"A178",   #Ultra Maniac
 			"A179",   #Ultra Maniac OVA
 			"A6129",  #Umi Monogatari: Anata ga Ite Kureta Koto
@@ -319,12 +350,17 @@
 			"A14283", #Vividred Operation
 			"A1533",  #Wedding Peach
 			"A1957",  #Wedding Peach DX
+			"A26189", #Wedding Peach Specials
+			"A21085", #Witch Craft Works
+			"A22117", #Witch Craft Works OVA
+			"A23487", #Witch Craft Works Specials
 			"A1932",  #Yes! Precure 5
 			"A3692",  #Yes! Precure 5 GoGo!
 			"A3051",  #Yes! Pretty Cure 5 Movie: Kagami no Kuni no Miracle Daibouken!
 			"A5454",  #Yokuwakaru Gendaimahou
 			"A6748",  #Yokuwakaru Gendaimahou 00
 			"A4651",  #Yume no Crayon Oukoku
+			"A25519", #Yuuki Yuuna wa Yuusha de Aru
 			"A17681", #Zettai Bouei Leviathan
 			"A16656", #Zettai Junpaku: Mahou Shoujo
 			"A4038",  #Zettai Karen Children
