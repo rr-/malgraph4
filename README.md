@@ -59,7 +59,7 @@
 
 
 ## License
-MALgraph is licensed under [GPL3 License](http://www.gnu.org/licenses/).
+MALgraph is licensed under [GPLv3 License](http://www.gnu.org/licenses/).
 
 ## Other things worth mentioning
 This is the fourth version of Mg. The first one only showed the rating distribution, while its successor was a lot richer in content, but everything was presented in one overwhelming cluster of data. Mg3 had everything split into tabs, with more features and less distracting things, like humongous formulas shown in tooltips. Mg4 has a completely new caching engine and improves on its predecessor in speed, number of features, and layout clarity.
