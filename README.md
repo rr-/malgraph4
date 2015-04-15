@@ -1,4 +1,7 @@
-**MALgraph is an extension of your MyAnimeList profile**, showing you lots of stats, lists, favorites, and even recommendations. It works for anime and manga lists, and the more titles you have listed, the more accurate results you can expect.
+**MALgraph is an extension of your MyAnimeList profile**, showing you lots of
+stats, lists, favorites, and even recommendations. It works for anime and manga
+lists, and the more titles you have listed, the more accurate results you can
+expect.
 
 
 # [Click here to visit MALgraph!](http://mal.oko.im/)
@@ -62,10 +65,24 @@
 MALgraph is licensed under [GPLv3 License](http://www.gnu.org/licenses/).
 
 ## Other things worth mentioning
-This is the fourth version of Mg. The first one only showed the rating distribution, while its successor was a lot richer in content, but everything was presented in one overwhelming cluster of data. Mg3 had everything split into tabs, with more features and less distracting things, like humongous formulas shown in tooltips. Mg4 has a completely new caching engine and improves on its predecessor in speed, number of features, and layout clarity.
+This is the fourth version of Mg. The first one only showed the rating
+distribution, while its successor was a lot richer in content, but everything
+was presented in one overwhelming cluster of data. Mg3 had everything split
+into tabs, with more features and less distracting things, like humongous
+formulas shown in tooltips. Mg4 has a completely new caching engine and
+improves on its predecessor in speed, number of features, and layout clarity.
 
-All user's data is downloaded once a day at most. After a successful download, the HTML version of all pages is cached. This ensures that MALgraph won't be a huge threat to MAL's servers - we only download the data once per 24 hours, which is a tiny fraction of an average user's browsing activity. Anime and manga data is cached too, with its lifespan depending on airing state - whether it's airing, has finished airing or isn't out yet.
+All user's data is downloaded once a day at most. After a successful download,
+the HTML version of all pages is cached. This ensures that MALgraph won't be a
+huge threat to MAL's servers - we only download the data once per 24 hours,
+which is a tiny fraction of an average user's browsing activity. Anime and
+manga data is cached too, with its lifespan depending on airing state - whether
+it's airing, has finished airing or isn't out yet.
 
-We prefer to maintain the issues tab on GitHub ourselves. If you have any bug to report, please do so in our club on MAL. **[Click here to visit the club.](http://myanimelist.net/clubs.php?cid=30017)**
+We prefer to maintain the issues tab on GitHub ourselves. If you have any bug
+to report, please do so in our club on MAL. **[Click here to visit the
+club.](http://myanimelist.net/clubs.php?cid=30017)**
 
-Feature requests can be posted on our Moderator page. **[Click here to post and vote on suggestions.](http://www.google.com/moderator/#15/e=20db62&t=20db62.40)**
+Feature requests can be posted on our Moderator page. **[Click here to post and
+vote on
+suggestions.](http://www.google.com/moderator/#15/e=20db62&t=20db62.40)**
