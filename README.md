@@ -3,6 +3,11 @@ stats, lists, favorites, and even recommendations. It works for anime and manga
 lists, and the more titles you have listed, the more accurate results you can
 expect.
 
+[As of May 2015, this is a read only
+repository](http://myanimelist.net/forum/?topicid=1373476). Forks are
+appreciated, but what we truly would like to see would be merging some of
+MALgraph features into MAL itself.
+
 
 ## Features
 
