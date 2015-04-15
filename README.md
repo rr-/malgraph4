@@ -4,9 +4,6 @@ lists, and the more titles you have listed, the more accurate results you can
 expect.
 
 
-# [Click here to visit MALgraph!](http://mal.oko.im/)
-
-
 ## Features
 
 #### Profile
@@ -78,11 +75,3 @@ huge threat to MAL's servers - we only download the data once per 24 hours,
 which is a tiny fraction of an average user's browsing activity. Anime and
 manga data is cached too, with its lifespan depending on airing state - whether
 it's airing, has finished airing or isn't out yet.
-
-We prefer to maintain the issues tab on GitHub ourselves. If you have any bug
-to report, please do so in our club on MAL. **[Click here to visit the
-club.](http://myanimelist.net/clubs.php?cid=30017)**
-
-Feature requests can be posted on our Moderator page. **[Click here to post and
-vote on
-suggestions.](http://www.google.com/moderator/#15/e=20db62&t=20db62.40)**
