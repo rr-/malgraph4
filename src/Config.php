@@ -42,7 +42,6 @@ class Config extends Singleton
 	static $mediaDirectory;
 	static $mediaUrl;
 	static $baseUrl;
-	static $googleAdsEnabled;
 	static $googleAnalyticsEnabled;
 	static $adminPassword;
 	static $maintenanceMessage;
@@ -110,7 +109,6 @@ class Config extends Singleton
 			? 'http://' . $_SERVER['HTTP_HOST'] . '/'
 			: 'http://mal.oko.im/';
 
-		self::$googleAdsEnabled = true;
 		self::$googleAnalyticsEnabled = true;
 		self::$adminPassword = 'supersaiyan';
 		self::$maintenanceMessage = null;
