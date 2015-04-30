@@ -8,6 +8,9 @@ repository](http://myanimelist.net/forum/?topicid=1373476). Forks are
 appreciated, but what we truly would like to see would be merging some of
 MALgraph features into MAL itself.
 
+For hosting instructions, [see
+Wiki](https://github.com/rr-/malgraph4/wiki/Hosting-your-own-MALgraph).
+
 
 ## Features
 
