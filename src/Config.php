@@ -38,6 +38,7 @@ class Config extends Singleton
 	static $logsPath;
 	static $keepOldLogs;
 	static $globalsCachePath;
+	static $enqueueEnabled;
 	static $userQueueSizesPath;
 	static $mediaDirectory;
 	static $mediaUrl;
@@ -61,6 +62,7 @@ class Config extends Singleton
 
 		self::$cronInterval = 5; //minutes
 		self::$usersPerCronRun = 5;
+		self::$enqueueEnabled = true;
 		self::$userQueuePath = $dataRootDir . 'queue-users.lst';
 		self::$userQueueMinWait = 24 * 60 * 60; //seconds
 		self::$userQueueMaxAttempts = 20;

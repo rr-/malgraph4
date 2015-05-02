@@ -11,6 +11,12 @@ function updatePosition()
 {
 	var target = $('.queue-pos');
 	var positionUrl = $('#profile-details').attr('data-queue-pos-url');
+	var enqueueEnabled = $('#profile-details').attr('data-enqueue-enabled');
+	if (!enqueueEnabled)
+	{
+		target.hide();
+		return;
+	}
 	var enqueueUrl = $('#profile-details').attr('data-queue-add-url');
 	var queueMinWait = parseInt($('#profile-details').attr('data-queue-min-wait'));
 	var oldTooltip = target.attr('data-tooltip');
